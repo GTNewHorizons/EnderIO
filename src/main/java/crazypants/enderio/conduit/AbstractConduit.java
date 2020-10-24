@@ -36,6 +36,8 @@ import crazypants.enderio.conduit.item.ItemConduitNetwork;
 import crazypants.enderio.conduit.liquid.AdvancedLiquidConduit;
 import crazypants.enderio.conduit.liquid.AdvancedLiquidConduitNetwork;
 import crazypants.enderio.conduit.liquid.EnderLiquidConduit;
+import crazypants.enderio.conduit.liquid.EnderLiquidConduitAdvanced;
+import crazypants.enderio.conduit.liquid.EnderLiquidConduitAdvancedNetwork;
 import crazypants.enderio.conduit.liquid.EnderLiquidConduitNetwork;
 import crazypants.enderio.conduit.liquid.ILiquidConduit;
 import crazypants.enderio.conduit.liquid.LiquidConduitNetwork;
@@ -632,6 +634,8 @@ public abstract class AbstractConduit implements IConduit {
       return new RedstoneConduitNetwork();
     } else if (IPowerConduit.class.isAssignableFrom(type)) {
       return new PowerConduitNetwork();
+    } else if (EnderLiquidConduitAdvanced.class.isAssignableFrom(type)) {
+        return new EnderLiquidConduitAdvancedNetwork();
     } else if (EnderLiquidConduit.class.isAssignableFrom(type)) {
       return new EnderLiquidConduitNetwork();
     } else if (AdvancedLiquidConduit.class.isAssignableFrom(type)) {

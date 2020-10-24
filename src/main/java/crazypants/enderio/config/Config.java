@@ -121,6 +121,8 @@ public final class Config {
 
   public static int enderFluidConduitExtractRate = 200;
   public static int enderFluidConduitMaxIoRate = 800;
+  public static int enderFluidConduitAdvancedExtractRate = 1000;
+  public static int enderFluidConduitAdvancedMaxIoRate = 4000;
   public static int advancedFluidConduitExtractRate = 100;
   public static int advancedFluidConduitMaxIoRate = 400;
   public static int fluidConduitExtractRate = 50;
@@ -711,6 +713,12 @@ public final class Config {
     enderFluidConduitMaxIoRate = config.get(sectionEfficiency.name, "enderFluidConduitMaxIoRate", enderFluidConduitMaxIoRate,
         "Number of millibuckets per tick that can pass through a single connection to an ender fluid conduit.").getInt(enderFluidConduitMaxIoRate);
 
+    enderFluidConduitAdvancedExtractRate = config.get(sectionEfficiency.name, "enderFluidConduitAdvancedExtractRate", enderFluidConduitAdvancedExtractRate,
+            "Number of millibuckets per tick extracted by advanced ender fluid conduits auto extracting").getInt(enderFluidConduitAdvancedExtractRate);
+
+        enderFluidConduitAdvancedMaxIoRate = config.get(sectionEfficiency.name, "enderFluidConduitAdvancedMaxIoRate", enderFluidConduitAdvancedMaxIoRate,
+            "Number of millibuckets per tick that can pass through a single connection to an advanced ender fluid conduit.").getInt(enderFluidConduitAdvancedMaxIoRate);
+        
     gasConduitExtractRate = config.get(sectionEfficiency.name, "gasConduitExtractRate", gasConduitExtractRate,
         "Amount of gas per tick extracted by gas conduits auto extracting").getInt(gasConduitExtractRate);
 
