@@ -12,6 +12,7 @@ import net.minecraft.util.IIcon;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class EnderLiquidConduitAdvancedRenderer extends DefaultConduitRenderer {
+	
 	@Override
 	  public boolean isRendererForConduit(IConduit conduit) {
 	    if(conduit instanceof EnderLiquidConduitAdvanced) {      

@@ -33,8 +33,8 @@ import net.minecraftforge.fluids.FluidTankInfo;
 
 public class EnderLiquidConduitAdvanced extends AbstractLiquidConduit {
 
-	  public static final String ICON_KEY = "enderio:liquidConduitEnder";
-	  public static final String ICON_CORE_KEY = "enderio:liquidConduitCoreEnder";
+	  public static final String ICON_KEY = "enderio:liquidConduitEnderAdvanced";
+	  public static final String ICON_CORE_KEY = "enderio:liquidConduitCoreEnderAdvanced";
 	  public static final String ICON_EXTRACT_KEY = "enderio:liquidConduitAdvancedInput";
 	  public static final String ICON_INSERT_KEY = "enderio:liquidConduitAdvancedOutput";
 	  public static final String ICON_IN_OUT_KEY = "enderio:liquidConduitAdvancedInOut";
