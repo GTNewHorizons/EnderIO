@@ -39,6 +39,7 @@ import crazypants.enderio.conduit.item.ItemConduit;
 import crazypants.enderio.conduit.liquid.AdvancedLiquidConduit;
 import crazypants.enderio.conduit.liquid.AdvancedLiquidConduitRenderer;
 import crazypants.enderio.conduit.liquid.EnderLiquidConduit;
+import crazypants.enderio.conduit.liquid.EnderLiquidConduitAdvanced;
 import crazypants.enderio.conduit.liquid.EnderLiquidConduitRenderer;
 import crazypants.enderio.conduit.liquid.LiquidConduit;
 import crazypants.enderio.conduit.liquid.LiquidConduitRenderer;
@@ -213,6 +214,7 @@ public class ClientProxy extends CommonProxy {
     LiquidConduit.initIcons();
     AdvancedLiquidConduit.initIcons();
     EnderLiquidConduit.initIcons();
+    EnderLiquidConduitAdvanced.initIcons();
     ItemConduit.initIcons();
     if(GasUtil.isGasConduitEnabled()) {
       GasConduit.initIcons();
