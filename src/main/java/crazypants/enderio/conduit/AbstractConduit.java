@@ -635,7 +635,7 @@ public abstract class AbstractConduit implements IConduit {
     } else if (IPowerConduit.class.isAssignableFrom(type)) {
       return new PowerConduitNetwork();
     } else if (EnderLiquidConduitAdvanced.class.isAssignableFrom(type)) {
-        return new EnderLiquidConduitAdvancedNetwork();
+      return new EnderLiquidConduitAdvancedNetwork();
     } else if (EnderLiquidConduit.class.isAssignableFrom(type)) {
       return new EnderLiquidConduitNetwork();
     } else if (AdvancedLiquidConduit.class.isAssignableFrom(type)) {
