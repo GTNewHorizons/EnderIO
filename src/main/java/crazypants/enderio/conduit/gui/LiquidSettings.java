@@ -53,8 +53,8 @@ public class LiquidSettings extends BaseSettingsPanel {
 
   private final ILiquidConduit conduit;
 
-  private EnderLiquidConduit eConduit;
-  private boolean isEnder;
+  private EnderLiquidConduit eConduit;//Anything related to this would need to change for the second ender conduit's gui+filter to work
+  private boolean isEnder;//Unless it can be done in a better way?
   private static final int filterX = 59;
   private static final int filterY = 63;
   private static final Rectangle filterBounds = new Rectangle(filterX, filterY, 90, 18);

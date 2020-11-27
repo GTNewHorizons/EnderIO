@@ -22,7 +22,7 @@ public class PacketFluidFilter extends AbstractConduitPacket<ILiquidConduit> imp
   public PacketFluidFilter() {    
   }
   
-  public PacketFluidFilter(EnderLiquidConduit eConduit, ForgeDirection dir, FluidFilter filter, boolean isInput) {
+  public PacketFluidFilter(EnderLiquidConduit eConduit, ForgeDirection dir, FluidFilter filter, boolean isInput) {//needs a second one for the advanced one?
     super(eConduit.getBundle().getEntity(), ConTypeEnum.FLUID);
     this.dir = dir;
     this.filter = filter;
@@ -54,7 +54,7 @@ public class PacketFluidFilter extends AbstractConduitPacket<ILiquidConduit> imp
     ILiquidConduit conduit = message.getTileCasted(ctx);
     if(! (conduit instanceof EnderLiquidConduit)) {
       return null;
-    }    
+    }//add else if?
     EnderLiquidConduit eCon = (EnderLiquidConduit)conduit;
     eCon.setFilter(message.dir, message.filter, message.isInput);
     message.getWorld(ctx).markBlockForUpdate(message.x, message.y, message.z);
