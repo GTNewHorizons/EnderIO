@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import crazypants.enderio.conduit.gui.*;
 import mods.immibis.core.api.multipart.IMultipartRenderingBlockMarker;
 import mods.immibis.core.api.multipart.IMultipartSystem;
 import net.minecraft.block.Block;
@@ -51,12 +52,6 @@ import crazypants.enderio.api.tool.ITool;
 import crazypants.enderio.conduit.facade.ItemConduitFacade.FacadeType;
 import crazypants.enderio.conduit.geom.CollidableComponent;
 import crazypants.enderio.conduit.geom.ConduitConnectorType;
-import crazypants.enderio.conduit.gui.ExternalConnectionContainer;
-import crazypants.enderio.conduit.gui.GuiExternalConnection;
-import crazypants.enderio.conduit.gui.GuiExternalConnectionSelector;
-import crazypants.enderio.conduit.gui.PacketFluidFilter;
-import crazypants.enderio.conduit.gui.PacketOpenConduitUI;
-import crazypants.enderio.conduit.gui.PacketSlotVisibility;
 import crazypants.enderio.conduit.gui.item.PacketExistingItemFilterSnapshot;
 import crazypants.enderio.conduit.gui.item.PacketModItemFilter;
 import crazypants.enderio.conduit.liquid.PacketFluidLevel;
@@ -66,6 +61,7 @@ import crazypants.enderio.conduit.packet.PacketItemConduitFilter;
 import crazypants.enderio.conduit.packet.PacketOCConduitSignalColor;
 import crazypants.enderio.conduit.packet.PacketRedstoneConduitOutputStrength;
 import crazypants.enderio.conduit.packet.PacketRedstoneConduitSignalColor;
+import crazypants.enderio.conduit.packet.PacketRoundRobinMode;
 import crazypants.enderio.conduit.redstone.IInsulatedRedstoneConduit;
 import crazypants.enderio.conduit.redstone.IRedstoneConduit;
 import crazypants.enderio.conduit.redstone.InsulatedRedstoneConduit;
@@ -97,6 +93,7 @@ public class BlockConduitBundle extends BlockEio implements IGuiHandler, IFacade
     PacketHandler.INSTANCE.registerMessage(PacketExistingItemFilterSnapshot.class, PacketExistingItemFilterSnapshot.class, PacketHandler.nextID(), Side.SERVER);
     PacketHandler.INSTANCE.registerMessage(PacketModItemFilter.class, PacketModItemFilter.class, PacketHandler.nextID(), Side.SERVER);
     PacketHandler.INSTANCE.registerMessage(PacketFluidFilter.class, PacketFluidFilter.class, PacketHandler.nextID(), Side.SERVER);
+    PacketHandler.INSTANCE.registerMessage(PacketFluidChannel.class, PacketFluidChannel.class, PacketHandler.nextID(), Side.SERVER);
     PacketHandler.INSTANCE.registerMessage(PacketRedstoneConduitSignalColor.class, PacketRedstoneConduitSignalColor.class, PacketHandler.nextID(), Side.SERVER);
     PacketHandler.INSTANCE.registerMessage(PacketRedstoneConduitOutputStrength.class, PacketRedstoneConduitOutputStrength.class, PacketHandler.nextID(),
         Side.SERVER);
@@ -104,6 +101,7 @@ public class BlockConduitBundle extends BlockEio implements IGuiHandler, IFacade
     PacketHandler.INSTANCE.registerMessage(PacketSlotVisibility.class, PacketSlotVisibility.class, PacketHandler.nextID(), Side.SERVER);
     PacketHandler.INSTANCE.registerMessage(PacketOCConduitSignalColor.class, PacketOCConduitSignalColor.class,
         PacketHandler.nextID(), Side.SERVER);
+    PacketHandler.INSTANCE.registerMessage(PacketRoundRobinMode.class, PacketRoundRobinMode.class, PacketHandler.nextID(), Side.SERVER);
 
     BlockConduitBundle result = new BlockConduitBundle();
     result.init();
