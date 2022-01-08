@@ -149,7 +149,7 @@ enderio.conduitBinder.name=Связующий элемент труб
 enderio.binderComposite.name=Составной связующий элемент
 enderio.phasedIronNugget.name=Пульсирующий железный самородок
 tile.blockDarkIronBars.name=Решётка из тёмного железа
-tile.blockSoulariumBars.name=Решётка из призрачного металла
+tile.blockSoulariumBars.name=Решётка из призрачного сплава
 tile.blockEndSteelBars.name=Решётка из стали Края
 tile.blockEndermanSkull.name=Череп странника Края
 tile.blockEndermanSkull.base.name=Голова странника Края
@@ -225,7 +225,7 @@ enderio.vibrantCrystal.name=Вибрирующий кристалл
 enderio.enderCrystal.name=Кристалл Края
 enderio.attractorCrystal.name=Привлекающий кристалл
 enderio.weatherCrystal.name=Погодный кристалл
-enderio.soulMachineChassi.name=Корпус механизма из призрачного металла
+enderio.soulMachineChassi.name=Корпус механизма из призрачного сплава
 enderio.endSteelMachineChassi.name=Корпус механизма из стали Края
 
 
@@ -234,9 +234,9 @@ enderio.electricalGrindingBall.name=Шарик наэлектризованно�
 enderio.energeticGrindingBall.name=Шарик энергетического сплава
 enderio.vibrantGrindingBall.name=Шарик вибрирующего сплава
 enderio.redstoneGrindingBall.name=Шарик сплава из красного камня
-enderio.conductiveGrindingBall.name=Шарик соулария
+enderio.conductiveGrindingBall.name=Шарик проводящего железа
 enderio.pulsatingGrindingBall.name=Шарик пульсирующего железа
-enderio.soulariumGrindingBall.name=Шарик призрачного металла
+enderio.soulariumGrindingBall.name=Шарик призрачного сплава
 enderio.endSteelGrindingBall.name=Шарик стали Края
 
 
@@ -271,13 +271,13 @@ enderio.conductiveIron.name=Проводящее железо
 enderio.phasedIron.name=Пульсирующее железо
 enderio.vibrantNugget.name=Самородок вибрирующего сплава
 enderio.darkSteel.name=Тёмная сталь
-enderio.soularium.name=Призрачный металл
+enderio.soularium.name=Призрачный сплав
 enderio.endSteel.name=Сталь Края
 enderio.endSteelNugget.name=Самородок стали Края
 
 enderio.crudeSteel.name=Состав глины
 enderio.crystallineAlloy.name=Кристаллический сплав
-enderio.melodicAlloy.name=Медодичный сплав
+enderio.melodicAlloy.name=Мелодичный сплав
 enderio.stellarAlloy.name=Звёздный сплав
 enderio.crystallinePinkSlime.name=Кристаллическая розовая слизь
 enderio.energeticSilver.name=Энергетическое серебро
@@ -292,10 +292,10 @@ enderio.energeticSilverGrindingBall.name=Энергетический сереб
 enderio.vividAlloyGrindingBall.name=Шлифовальный шар из яркого сплава
 
 enderio.precientCrystal.name=Древний кристалл
-enderio.pulsatingPowder.name=Зерно пьезальности
-enderio.vibrantPowder.name=Зерно вибраций
-enderio.enderCrystalPowder.name=Зерно Края
-enderio.precientPowder.name=Зерно предвидения
+enderio.pulsatingPowder.name=Пыль пульсирующего сплава
+enderio.vibrantPowder.name=Пыль вибрирующего сплава
+enderio.enderCrystalPowder.name=Пыль кристалла Края
+enderio.precientPowder.name=Пыль древнего кристалла
 
 tile.blockIngotStorage.name=Хранилище слитков
 tile.enderio.electricalSteel.name=Блок наэлектризованной стали
@@ -306,7 +306,7 @@ tile.enderio.conductiveIron.name=Блок проводящего железа
 tile.enderio.phasedIron.name=Блок пульсирующего железа
 tile.enderio.vibrantNugget.name=Блок самородка вибрирующего сплава
 tile.enderio.darkSteel.name=Блок тёмной стали
-tile.enderio.soularium.name=Блок призрачного металла
+tile.enderio.soularium.name=Блок призрачного сплава
 tile.enderio.endSteel.name=Блок стали Края
 
 tile.enderio.crudeSteel.name=Блок глинистого состава
@@ -335,10 +335,10 @@ enderio.activatedCapacitor.name=Двухслойный конденсатор
 enderio.enderCapacitor.name=Восьмислойный конденсатор
 enderio.crystallineCapacitor.name=Кристаллический конденсатор
 enderio.melodicCapacitor.name=Мелодичный конденсатор
-enderio.stellarCapacitor.name=Звёздный Конденсатор
+enderio.stellarCapacitor.name=Звёздный конденсатор
 enderio.silverCapacitor.name=Серебряный конденсатор
 enderio.endergeticCapacitor.name=Эндергетический конденсатор
-enderio.endergisedCapacitor.name=Эндергизированный конденсатор
+enderio.endergisedCapacitor.name=Сияющий конденсатор
 enderio.totemicCapacitor.name=Тотемный конденсатор
 
 enderio.machine.tooltip.upgrade=Улучшение механизма
@@ -372,7 +372,7 @@ tile.blockSolarPanel.advanced.name=Продвинутая фотовольтов
 tile.blockSolarPanel.vibrant.name=Вибрирующая фотовольтовая панель
 tile.blockSolarPanel.tooltip.common.line1=Солнечная энергия!
 tile.blockSolarPanel.tooltip.detailed.line1=Производит энергию в светлое время суток
-tile.blockSolarPanel.tooltip.detailed.line2=Должна иметь доступ к небу
+tile.blockSolarPanel.tooltip.detailed.line2=Должна видеть небо
 enderio.maxSolorProduction=Макс. выход
 enderio.tooltip.efficiency=Эффективность
 enderio.tooltip.sunlightBlocked=Небо закрыто!
@@ -503,7 +503,7 @@ tile.blockFrankenzombieGenerator.tooltip.detailed.line1=Потребляет п�
 tile.blockFrankenzombieGenerator.tooltip.detailed.line2=для производства энергии
 enderio.frankenzombieGenerator.fuelTank=Резервуар для питательных веществ
 
-tile.blockEnderGenerator.name=Генератор Энда
+tile.blockEnderGenerator.name=Генератор Края
 tile.blockEnderGenerator.tooltip.detailed.line1=Потребляет росу пустоты
 tile.blockEnderGenerator.tooltip.detailed.line2=для производства энергии
 enderio.enderGenerator.fuelTank=Резервуар пустоты
@@ -850,15 +850,15 @@ enderio.item.darkSteel_shears.tooltip.multiHarvest=Стригут несколь
 
 enderio.item.darkSteel_sword.tooltip.line1=Увеличено выпадение черепов и жемчуга Края.
 enderio.item.darkSteel_sword.tooltip.line2=Странник Края не может телепортироваться после удара.
-enderio.item.darkSteel_sword.tooltip.line3=+1 Урон, при питании
+enderio.item.darkSteel_sword.tooltip.line3=+1 урон, если меч запитан
 
 enderio.item.endSteel_sword.tooltip.line1=Увеличено выпадение черепов и жемчуга Края.
 enderio.item.endSteel_sword.tooltip.line2=Странник Края не может телепортироваться после удара.
-enderio.item.endSteel_sword.tooltip.line3=+2 Урон, при питании
+enderio.item.endSteel_sword.tooltip.line3=+2 урона, если меч запитан
 
 enderio.item.stellar_sword.tooltip.line1=Увеличено выпадение черепов и жемчуга Края.
 enderio.item.stellar_sword.tooltip.line2=Странник Края не может телепортироваться после удара.
-enderio.item.stellar_sword.tooltip.line3=+2 Урон, при питании
+enderio.item.stellar_sword.tooltip.line3=+2 урона, если меч запитан
 
 enderio.item.darkSteel_armor.tooltip.line1=Алмазный уровень защиты,
 enderio.item.darkSteel_armor.tooltip.line2=если есть питание
