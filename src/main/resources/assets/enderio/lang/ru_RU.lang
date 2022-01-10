@@ -31,8 +31,8 @@ item.enderio.itemConduitFacade.tooltip.detailed.line4=экипированы
 item.enderio.itemConduitFacade.hardened.tooltip=Упрочнён: Выдерживает удары и взрывы
 
 enderio.itemPowerConduit.name=Энергопровод из проводящего железа
-enderio.itemPowerConduitEnhanced.name=Энергопровод и энергетического сплава
-enderio.itemPowerConduitEnder.name=Энергопровод и вибрирующего сплава
+enderio.itemPowerConduitEnhanced.name=Энергопровод из энергетического сплава
+enderio.itemPowerConduitEnder.name=Энергопровод из вибрирующего сплава
 
 
 enderio.itemPowerConduitEndergyCrude.name=Энергопровод из глинистого состава
@@ -916,7 +916,7 @@ enderio.darksteel.upgrade.empowered_five.tooltip.detailed.line3=если ест�
 
 enderio.darksteel.upgrade.travel.name=Путешествие
 enderio.darksteel.upgrade.travel.tooltip.detailed.line1=Зажмите shift и нажмите ПКМ, для телепорта. 
-enderio.darksteel.upgrade.travel.tooltip.detailed.line2=Так же можно телепортироваться на якори путишествия.
+enderio.darksteel.upgrade.travel.tooltip.detailed.line2=Так же можно телепортироваться на якори путешествия.
 
 enderio.darksteel.upgrade.spoon.name=Ложка
 enderio.darksteel.upgrade.spoon.tooltip.detailed.line1=Кому нужна лопата, когда
