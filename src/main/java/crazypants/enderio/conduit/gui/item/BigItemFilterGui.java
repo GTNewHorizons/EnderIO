@@ -75,12 +75,6 @@ public class BigItemFilterGui implements IItemFilterGui {
     useMetaB.setPaintSelectedBorder(false);
 
     y -= 20;
-    stickyB = new ToggleButton(gui, ID_STICKY + buttonIdOffset, x, y, IconEIO.FILTER_STICKY_OFF, IconEIO.FILTER_STICKY);
-    stickyB.setSelectedToolTip(EnderIO.lang.localizeList("gui.conduit.item.stickyEnabled"));
-    stickyB.setUnselectedToolTip(EnderIO.lang.localize("gui.conduit.item.stickyDisbaled"));
-    stickyB.setPaintSelectedBorder(false);
-
-    y -= 20;
     useOreDictB = new ToggleButton(gui, ID_ORE_DICT + buttonIdOffset, x, y, IconEIO.FILTER_ORE_DICT_OFF, IconEIO.FILTER_ORE_DICT);
     useOreDictB.setSelectedToolTip(EnderIO.lang.localize("gui.conduit.item.oreDicEnabled"));
     useOreDictB.setUnselectedToolTip(EnderIO.lang.localize("gui.conduit.item.oreDicDisabled"));
@@ -92,8 +86,14 @@ public class BigItemFilterGui implements IItemFilterGui {
     useNbtB.setUnselectedToolTip(EnderIO.lang.localize("gui.conduit.item.ignoreNBT"));
     useNbtB.setPaintSelectedBorder(false);
 
-    x -= 20;
+    y -= 20;
     fuzzyB = new CycleButton(gui, ID_FUZZY + buttonIdOffset, x, y, FuzzyMode.class);
+
+    x -= 20;
+    stickyB = new ToggleButton(gui, ID_STICKY + buttonIdOffset, x, y, IconEIO.FILTER_STICKY_OFF, IconEIO.FILTER_STICKY);
+    stickyB.setSelectedToolTip(EnderIO.lang.localizeList("gui.conduit.item.stickyEnabled"));
+    stickyB.setUnselectedToolTip(EnderIO.lang.localize("gui.conduit.item.stickyDisbaled"));
+    stickyB.setPaintSelectedBorder(false);
   }
 
   public void createFilterSlots() {
