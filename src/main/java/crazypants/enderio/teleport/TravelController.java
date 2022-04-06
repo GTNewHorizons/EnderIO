@@ -724,8 +724,11 @@ public class TravelController {
       int x = MathHelper.floor_double(player.posX);
       int y = MathHelper.floor_double(player.boundingBox.minY) - 1;
       int z = MathHelper.floor_double(player.posZ);
-      if(world.getBlock(x, y, z) == EnderIO.blockTravelPlatform) {
-        return new BlockCoord(x, y, z);
+      TileEntity tileEntity = world.getTileEntity(x, y, z);
+      if(tileEntity instanceof ITravelAccessable) {
+        if (((ITravelAccessable) tileEntity).isTravelSource()) {
+          return new BlockCoord(x, y, z);
+        }
       }
     }
     return null;

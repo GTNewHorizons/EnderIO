@@ -44,6 +44,8 @@ public class TileTravelAnchor extends TileEntityEio implements ITravelAccessable
 
   private List<UserIdent> authorisedUsers = new ArrayList<UserIdent>();
 
+  private boolean visible = true;
+
   @Override
   public boolean canBlockBeAccessed(EntityPlayer playerName) {
     if(accessMode == AccessMode.PUBLIC) {
@@ -307,5 +309,15 @@ public class TileTravelAnchor extends TileEntityEio implements ITravelAccessable
   @Override
   public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
     readCustomNBT(pkt.func_148857_g());
+  }
+
+  @Override
+  public boolean isVisible() {
+    return visible;
+  }
+
+  @Override
+  public void setVisible(boolean visible) {
+    this.visible = visible;
   }
 }
