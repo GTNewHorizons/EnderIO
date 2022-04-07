@@ -220,6 +220,11 @@ public class TileTravelAnchor extends TileEntityEio implements ITravelAccessable
       //keep behavior the same for blocks placed prior to this update
       accessMode = AccessMode.PUBLIC;
     }
+    if (root.hasKey("visible")) {
+      visible = root.getBoolean("visible");
+    } else {
+      visible = true;
+    }
     if (root.hasKey("placedBy")) {
       owner = UserIdent.create(root.getString("placedBy"));
     } else {
@@ -274,6 +279,7 @@ public class TileTravelAnchor extends TileEntityEio implements ITravelAccessable
   @Override
   protected void writeCustomNBT(NBTTagCompound root) {
     root.setShort("accessMode", (short) accessMode.ordinal());
+    root.setBoolean("visible", visible);
     owner.saveToNbt(root, "owner");
     for (int i = 0; i < password.length; i++) {
       ItemStack stack = password[i];

@@ -4,7 +4,6 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import crazypants.enderio.api.teleport.ITravelAccessable;
-import crazypants.enderio.teleport.anchor.TileTravelAnchor;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -12,6 +11,9 @@ import net.minecraft.tileentity.TileEntity;
 public class PacketVisibility implements IMessage, IMessageHandler<PacketVisibility, IMessage> {
     int x, y, z;
     boolean visible;
+
+    @SuppressWarnings("unused")
+    public PacketVisibility() {}
 
     public PacketVisibility(int x, int y, int z, boolean visible) {
         this.x = x;
@@ -21,7 +23,7 @@ public class PacketVisibility implements IMessage, IMessageHandler<PacketVisibil
     }
 
     @Override
-    public void fromBytes(ByteBuf buf) {
+    public void toBytes(ByteBuf buf) {
         buf.writeInt(x);
         buf.writeInt(y);
         buf.writeInt(z);
@@ -29,7 +31,7 @@ public class PacketVisibility implements IMessage, IMessageHandler<PacketVisibil
     }
 
     @Override
-    public void toBytes(ByteBuf buf) {
+    public void fromBytes(ByteBuf buf) {
         x = buf.readInt();
         y = buf.readInt();
         z = buf.readInt();
