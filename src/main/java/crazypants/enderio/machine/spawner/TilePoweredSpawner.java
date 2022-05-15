@@ -268,7 +268,7 @@ public class TilePoweredSpawner extends AbstractPoweredTaskEntity {
     } else {
       ticksDelay = TilePoweredSpawner.MAX_SPAWN_DELAY_BASE - ((TilePoweredSpawner.MAX_SPAWN_DELAY_BASE - TilePoweredSpawner.MIN_SPAWN_DELAY_BASE) / 2);
     }
-    ticksDelay >>= Math.min(3, getCapacitor().getTier() - 1);
+    ticksDelay >>= Math.min(3,getCapacitorType().ordinal());
     int powerPerTick = getPowerUsePerTick();
     res.setRequiredEnergy(powerPerTick * ticksDelay);
     return res;
