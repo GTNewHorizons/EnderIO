@@ -164,11 +164,15 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
     facadeMeta = nbtRoot.getInteger("facadeMeta");
 
     if(worldObj != null && worldObj.isRemote) {
-      if (conduits.size() == 1 && conduits.get(0) instanceof IItemConduit) {
+	  boolean stableConduit = true;
+	  for(IConduit iConduit: conduits) {
+	    if ((!iConduit instanceof IItemConduit) && (!iConduit instanceof IMEConduit) && (!iConduit instanceof IOCConduit)) stableConduit = false;
+	  }
+      if (stableConduit) {
         boolean itemConduitClientUpdated = false;
         for (Object o : Minecraft.getMinecraft().theWorld.playerEntities) {
           Entity e = ((Entity) o);
-          if (e.getDistanceSq(this.xCoord, yCoord, zCoord) < 36) {
+          if (e.getDistanceSq(this.xCoord, yCoord, zCoord) < 25) {
             itemConduitClientUpdated = true;
             break;
           }
