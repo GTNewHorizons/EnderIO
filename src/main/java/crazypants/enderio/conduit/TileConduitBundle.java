@@ -166,7 +166,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
     if(worldObj != null && worldObj.isRemote) {
 	  boolean stableConduit = true;
 	  for(IConduit iConduit: conduits) {
-	    if ((!iConduit instanceof IItemConduit) && (!iConduit instanceof IMEConduit) && (!iConduit instanceof IOCConduit)) stableConduit = false;
+	    if (!(iConduit instanceof IItemConduit) && !(iConduit instanceof IMEConduit) && !(iConduit instanceof IOCConduit)) stableConduit = false;
 	  }
       if (stableConduit) {
         boolean itemConduitClientUpdated = false;
