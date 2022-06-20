@@ -55,6 +55,8 @@ import crazypants.enderio.conduit.geom.Offset;
 import crazypants.enderio.conduit.geom.Offsets;
 import crazypants.enderio.conduit.item.IItemConduit;
 import crazypants.enderio.conduit.liquid.ILiquidConduit;
+import crazypants.enderio.conduit.liquid.AbstractTankConduit;
+import crazypants.enderio.conduit.redstone.IRedstoneConduit;
 import crazypants.enderio.conduit.me.IMEConduit;
 import crazypants.enderio.conduit.oc.IOCConduit;
 import crazypants.enderio.conduit.power.IPowerConduit;
@@ -166,7 +168,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
     if(worldObj != null && worldObj.isRemote) {
 	  boolean stableConduit = true;
 	  for(IConduit iConduit: conduits) {
-	    if (!(iConduit instanceof IItemConduit) && !(iConduit instanceof IMEConduit) && !(iConduit instanceof IOCConduit)) stableConduit = false;
+	    if ((iConduit instanceof IRedstoneConduit) || (iConduit instanceof AbstractTankConduit)) stableConduit = false;
 	  }
       if (stableConduit) {
         boolean itemConduitClientUpdated = false;
