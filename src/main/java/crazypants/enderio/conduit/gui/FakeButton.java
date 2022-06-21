@@ -2,7 +2,7 @@ package crazypants.enderio.conduit.gui;
 
 import javax.annotation.Nonnull;
 
-import crazypants.enderio.gui.TooltipButton;
+import com.enderio.core.client.gui.button.TooltipButton;
 import org.lwjgl.opengl.GL11;
 
 import com.enderio.core.api.client.gui.IGuiScreen;

@@ -2,6 +2,7 @@ package crazypants.enderio.conduit.gui;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -280,6 +281,10 @@ public class ExternalConnectionContainer extends ContainerEnder<InventoryUpgrade
       return inventory.isItemValidForSlot(getSlotIndex(), par1ItemStack);
     }
 
+  }
+
+  public List<String> getFunctionUpgradeToolTipText() {
+    return Collections.emptyList();
   }
 
 }
