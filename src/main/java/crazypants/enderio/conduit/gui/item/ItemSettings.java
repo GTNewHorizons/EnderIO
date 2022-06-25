@@ -65,6 +65,7 @@ public class ItemSettings extends BaseSettingsPanel {
   public ItemSettings(@Nonnull final GuiExternalConnection gui, @Nonnull IConduit con) {
     super(IconEIO.WRENCH_OVERLAY_ITEM, EnderIO.lang.localize("itemItemConduit.name"), gui, con, "filter_upgrade_settings");
     itemConduit = (IItemConduit) con;
+    this.textureHeight += 48;
 
     int x = leftColumn;
     int y = customTop;

@@ -205,12 +205,17 @@ public class GuiExternalConnection extends GuiContainerBaseEIO {
 
     tes.draw();
 
+    int textureHeight = 166 + 29;
     if (tabs.isEmpty()) {
       bindGuiTexture();
     } else {
-      RenderUtil.bindTexture(tabs.get(activeTab).getTexture());
+      ITabPanel tab = tabs.get(activeTab);
+      RenderUtil.bindTexture(tab.getTexture());
+      if (tab instanceof BaseSettingsPanel) {
+        textureHeight = ((BaseSettingsPanel) tab).getTextureHeight();
+      }
     }
-    drawTexturedModalRect(sx, sy, 0, 0, this.xSize, this.ySize);
+    drawTexturedModalRect(sx, sy, 0, 0, this.xSize, textureHeight);
 
     RenderUtil.bindTexture(IconEIO.TEXTURE);
     tes.startDrawingQuads();

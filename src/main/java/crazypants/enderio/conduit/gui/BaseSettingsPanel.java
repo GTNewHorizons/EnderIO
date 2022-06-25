@@ -69,6 +69,8 @@ public class BaseSettingsPanel implements ITabPanel {
 
   protected int customTop = 0;
 
+  protected int textureHeight = 166 + 29;
+
   private final @Nonnull GuiToolTip speedUpgradeTooltip;
   private final @Nonnull GuiToolTip functionUpgradeTooltip;
   protected @Nonnull GuiToolTip filterExtractUpgradeTooltip;
@@ -153,6 +155,10 @@ public class BaseSettingsPanel implements ITabPanel {
   @Override
   public ResourceLocation getTexture() {
     return texture;
+  }
+
+  public int getTextureHeight() {
+    return textureHeight;
   }
 
   protected void updateFilterButtons() {
