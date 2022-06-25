@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.enderio.core.client.gui.widget.GhostSlot;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
@@ -43,6 +44,12 @@ public class GuiExternalConnection extends GuiContainerBaseEIO {
     return nextButtonId++;
   }
 
+  public static int nextButtonIds(int count) {
+    int id = nextButtonId;
+    nextButtonId += count;
+    return id;
+  }
+
   private static final Map<Class<? extends IConduit>, Integer> TAB_ORDER = new HashMap<Class<? extends IConduit>, Integer>();
   static {
     TAB_ORDER.put(IItemConduit.class, 0);
@@ -73,11 +80,10 @@ public class GuiExternalConnection extends GuiContainerBaseEIO {
     this.bundle = bundle;
     this.dir = dir;
 
-    ySize = 166 + 29;
+    ySize = 166 + 29 + 48;
     xSize = 206;
 
     container.setInoutSlotsVisible(false, false);
-    container.setInventorySlotsVisible(true);
 
     List<IConduit> cons = new ArrayList<IConduit>(bundle.getConduits());
     Collections.sort(cons, new Comparator<IConduit>() {
@@ -92,8 +98,7 @@ public class GuiExternalConnection extends GuiContainerBaseEIO {
         if(int2 == null) {
           return 1;
         }
-        //NB: using Double.comp instead of Integer.comp as the int version is only from Java 1.7+
-        return Double.compare(int1, int2);
+        return Integer.compare(int1, int2);
 
       }
     });
@@ -109,6 +114,10 @@ public class GuiExternalConnection extends GuiContainerBaseEIO {
       }
     }
 
+  }
+
+  public IConduitBundle getBundle() {
+    return bundle;
   }
 
   @Override
@@ -132,6 +141,16 @@ public class GuiExternalConnection extends GuiContainerBaseEIO {
 
   @Override
   protected void mouseClicked(int x, int y, int par3) {
+    // handle out-of-bounds ghost slots
+    boolean outOfBounds = x < guiLeft || y < guiTop || x >= guiLeft + xSize || y >= guiTop + ySize;
+    boolean hasItem = playerInv.getItemStack() != null;
+    if (outOfBounds && hasItem && !getGhostSlots().isEmpty()) {
+      GhostSlot slot = getGhostSlot(x, y);
+      if (slot != null) {
+        ghostSlotClicked(slot, x, y, par3);
+        return;
+      }
+    }
     super.mouseClicked(x, y, par3);
 
     int tabLeftX = xSize;
@@ -220,13 +239,25 @@ public class GuiExternalConnection extends GuiContainerBaseEIO {
   @Override
   @Optional.Method(modid = "NotEnoughItems")
   public boolean hideItemPanelSlot(GuiContainer gc, int x, int y, int w, int h) {
+    int sx = (width - xSize) / 2;
+    int sy = (height - ySize) / 2;
     if(tabs.size() > 0) {
-      int sx = (width - xSize) / 2;
-      int sy = (height - ySize) / 2;
       int tabX = sx + xSize - 3;
       int tabY = sy + tabYOffset;
 
-      return (x+w) >= tabX && x < (tabX + 14) && (y+h) >= tabY && y < (tabY + tabs.size()*TAB_HEIGHT);
+      if((x+w) >= tabX && x < (tabX + 14) && (y+h) >= tabY && y < (tabY + tabs.size()*TAB_HEIGHT)) {
+        return true;
+      }
+    }
+    List<GhostSlot> slots = getGhostSlots();
+    if (slots != null && !slots.isEmpty()) {
+      for (GhostSlot slot : slots) {
+        int slotX = sx + slot.x;
+        int slotY = sy + slot.y;
+        if((x+w) >= slotX && x < (slotX + 20) && (y+h) >= slotY && y < (slotY + 20)) {
+          return true;
+        }
+      }
     }
     return false;
   }

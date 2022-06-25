@@ -1,22 +1,24 @@
 package crazypants.enderio.conduit.gui;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.enderio.core.client.gui.button.CheckBox;
 import com.enderio.core.client.gui.button.IconButton;
 import com.enderio.core.client.gui.widget.GuiToolTip;
+import com.enderio.core.client.handlers.SpecialTooltipHandler;
+import crazypants.enderio.conduit.item.FunctionUpgrade;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
+
 import javax.annotation.Nonnull;
 
 import com.enderio.core.api.client.gui.ITabPanel;
 import com.enderio.core.api.client.render.IWidgetIcon;
-import com.enderio.core.client.gui.button.MultiIconButton;
 import com.enderio.core.client.render.ColorUtil;
 
 import crazypants.enderio.EnderIO;
@@ -56,10 +58,6 @@ public class BaseSettingsPanel implements ITabPanel {
 
   private final @Nonnull CheckBox enabledB;
 
-  private @Nonnull IconButton insertFilterOptionsB;
-  private @Nonnull IconButton extractFilterOptionsB;
-  private @Nonnull FakeButton functionUpgradeOptionsB;
-
   protected int left = 0;
   protected int top = 0;
   protected int width = 0;
@@ -71,6 +69,7 @@ public class BaseSettingsPanel implements ITabPanel {
 
   protected int customTop = 0;
 
+  private final @Nonnull GuiToolTip speedUpgradeTooltip;
   private final @Nonnull GuiToolTip functionUpgradeTooltip;
   protected @Nonnull GuiToolTip filterExtractUpgradeTooltip;
   protected @Nonnull GuiToolTip filterInsertUpgradeTooltip;
@@ -109,33 +108,9 @@ public class BaseSettingsPanel implements ITabPanel {
     x = leftColumn;
     y = 92;
 
-    insertFilterOptionsB = new IconButton(gui, ID_INSERT_FILTER_OPTIONS, x, y, IconEIO.IO_CONFIG_UP);
-    insertFilterOptionsB.setToolTip(EnderIO.lang.localize("gui.edit_item_filter"));
-
     x = rightColumn;
 
-    extractFilterOptionsB = new IconButton(gui, ID_EXTRACT_FILTER_OPTIONS, x, y, IconEIO.IO_CONFIG_UP);
-    extractFilterOptionsB.setToolTip(EnderIO.lang.localize("gui.edit_item_filter"));
-
     x = rightColumn + 18 + 1;
-
-    functionUpgradeOptionsB = new FakeButton(gui, x, y, IconEIO.RECIPE) {
-      @Override
-      public boolean isVisible() {
-        return hasUpgrades() && super.isVisible();
-      }
-    };
-    functionUpgradeOptionsB.setToolTip(new GuiToolTip(new Rectangle(x, y, 18, 18), "") {
-      @Override
-      public boolean shouldDraw() {
-        return hasUpgrades() && super.shouldDraw();
-      }
-
-      @Override
-      public List<String> getToolTipText() {
-        return gui.getContainer().getFunctionUpgradeToolTipText();
-      }
-    });
 
     filterExtractUpgradeTooltip = new GuiToolTip(new Rectangle(rightColumn, 70, 18, 18),  EnderIO.lang.localize("gui.conduit.item.filterupgrade")) {
       @Override
@@ -151,8 +126,20 @@ public class BaseSettingsPanel implements ITabPanel {
       }
     };
 
-    functionUpgradeTooltip = new GuiToolTip(new Rectangle(rightColumn + 18, customTop + 43, 18, 18), EnderIO.lang.localize("gui.conduit.item.speedupgrade"),
+    speedUpgradeTooltip = new GuiToolTip(new Rectangle(rightColumn + 18, customTop + 43, 18, 18), EnderIO.lang.localize("gui.conduit.item.speedupgrade"),
       EnderIO.lang.localize("gui.conduit.item.speedupgrade2")) {
+      @Override
+      public boolean shouldDraw() {
+        return !gui.getContainer().hasSpeedUpgrades() && super.shouldDraw();
+      }
+    };
+
+    ArrayList<String> funcUpgradeTips = new ArrayList<String>();
+    SpecialTooltipHandler.addTooltipFromResources(funcUpgradeTips, "enderio.gui.conduit.item.functionupgrade.line");
+    for(FunctionUpgrade upgrade : FunctionUpgrade.values()) {
+      funcUpgradeTips.add(EnderIO.lang.localizeExact(upgrade.unlocName.concat(".name")));
+    }
+    functionUpgradeTooltip = new GuiToolTip(new Rectangle(rightColumn + 36, customTop + 43, 18, 18), funcUpgradeTips.toArray(new String[0])) {
       @Override
       public boolean shouldDraw() {
         return !gui.getContainer().hasFunctionUpgrades() && super.shouldDraw();
@@ -169,17 +156,6 @@ public class BaseSettingsPanel implements ITabPanel {
   }
 
   protected void updateFilterButtons() {
-    if (gui.getContainer().hasFilterUpgrades(true) && hasFilterGui(true)) {
-      insertFilterOptionsB.setVisible(true);
-    } else {
-      insertFilterOptionsB.setVisible(false);
-    }
-
-    if (gui.getContainer().hasFilterUpgrades(false) && hasFilterGui(false)) {
-      extractFilterOptionsB.setVisible(true);
-    } else {
-      extractFilterOptionsB.setVisible(false);
-    }
   }
 
   protected boolean hasFilterGui(boolean input) {
@@ -217,14 +193,10 @@ public class BaseSettingsPanel implements ITabPanel {
     if (hasFilters()) {
       gui.addToolTip(filterExtractUpgradeTooltip);
       gui.addToolTip(filterInsertUpgradeTooltip);
-      insertFilterOptionsB.onGuiInit();
-      extractFilterOptionsB.onGuiInit();
-      insertFilterOptionsB.setVisible(false);
-      extractFilterOptionsB.setVisible(false);
     }
     if (hasUpgrades()) {
+      gui.addToolTip(speedUpgradeTooltip);
       gui.addToolTip(functionUpgradeTooltip);
-      functionUpgradeOptionsB.onGuiInit();
     }
 
     initCustomOptions();
@@ -241,10 +213,8 @@ public class BaseSettingsPanel implements ITabPanel {
   public void deactivate() {
     insertEnabledB.detach();
     extractEnabledB.detach();
-    insertFilterOptionsB.detach();
-    extractFilterOptionsB.detach();
-    functionUpgradeOptionsB.detach();
 
+    gui.removeToolTip(speedUpgradeTooltip);
     gui.removeToolTip(functionUpgradeTooltip);
     gui.removeToolTip(filterExtractUpgradeTooltip);
     gui.removeToolTip(filterInsertUpgradeTooltip);

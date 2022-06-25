@@ -10,9 +10,11 @@ import crazypants.enderio.EnderIO;
 import crazypants.enderio.conduit.ConnectionMode;
 import crazypants.enderio.conduit.IConduit;
 import crazypants.enderio.conduit.gui.BaseSettingsPanel;
+import crazypants.enderio.conduit.gui.FilterChangeListener;
 import crazypants.enderio.conduit.gui.FilterGuiUtil;
 import crazypants.enderio.conduit.gui.GuiExternalConnection;
 import crazypants.enderio.conduit.item.IItemConduit;
+import crazypants.enderio.conduit.item.filter.IItemFilter;
 import crazypants.enderio.conduit.packet.PacketExtractMode;
 import crazypants.enderio.conduit.packet.PacketItemConduitFilter;
 import crazypants.enderio.gui.IconEIO;
@@ -20,6 +22,7 @@ import crazypants.enderio.gui.RedstoneModeButton;
 import crazypants.enderio.machine.IRedstoneModeControlable;
 import crazypants.enderio.machine.RedstoneControlMode;
 import crazypants.enderio.network.PacketHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import org.lwjgl.opengl.GL11;
@@ -54,6 +57,10 @@ public class ItemSettings extends BaseSettingsPanel {
 
   private int priLeft = 46;
   private int priWidth = 32;
+
+  private IItemFilterGui insertFilterGui;
+  private IItemFilterGui extractFilterGui;
+
 
   public ItemSettings(@Nonnull final GuiExternalConnection gui, @Nonnull IConduit con) {
     super(IconEIO.WRENCH_OVERLAY_ITEM, EnderIO.lang.localize("itemItemConduit.name"), gui, con, "filter_upgrade_settings");
@@ -112,12 +119,43 @@ public class ItemSettings extends BaseSettingsPanel {
     priUpB = MultiIconButton.createAddButton(gui, ID_PRIORITY_UP, x, y);
     priDownB = MultiIconButton.createMinusButton(gui, ID_PRIORITY_DOWN, x, y + 8);
 
+    FilterChangeListener fcl = new FilterChangeListener() {
+      @Override
+      public void onFilterChanged() {
+        if (insertFilterGui != null) {
+          insertFilterGui.deactivate();
+          insertFilterGui = null;
+        }
+        if (extractFilterGui != null) {
+          extractFilterGui.deactivate();
+          extractFilterGui = null;
+        }
+        gui.clearGhostSlots();
+        IItemFilter filt = gui.getContainer().getFilter(false);
+        if (filt != null) {
+          insertFilterGui = filt.getGui(gui, gui.getContainer().getInv().itemConduit, false);
+        }
+        filt = gui.getContainer().getFilter(true);
+        if (filt != null) {
+          extractFilterGui = filt.getGui(gui, gui.getContainer().getInv().itemConduit, true);
+        }
+        if (insertFilterGui != null) {
+          insertFilterGui.updateButtons();
+        }
+        if (extractFilterGui != null) {
+          extractFilterGui.updateButtons();
+        }
+      }
+    };
+    fcl.onFilterChanged();
+    gui.getContainer().addFilterListener(fcl);
   }
 
   @Override
   protected void initCustomOptions() {
     gui.getContainer().setInoutSlotsVisible(true, true);
     gui.getContainer().createGhostSlots(gui.getGhostSlots());
+    gui.getContainer().setInventorySlotsVisible(true);
     updateGuiVisibility();
   }
 
@@ -141,6 +179,9 @@ public class ItemSettings extends BaseSettingsPanel {
     insertChannelB.setColorIndex(itemConduit.getOutputColor(gui.getDir()).ordinal());
     extractChannelB.onGuiInit();
     extractChannelB.setColorIndex(itemConduit.getInputColor(gui.getDir()).ordinal());
+
+    if (insertFilterGui != null) insertFilterGui.updateButtons();
+    if (extractFilterGui != null) extractFilterGui.updateButtons();
   }
 
   @Override
@@ -164,13 +205,9 @@ public class ItemSettings extends BaseSettingsPanel {
     } else if(guiButton.id == ID_EXTRACT_CHANNEL) {
       DyeColor col = DyeColor.fromIndex(extractChannelB.getColorIndex());
       itemConduit.setInputColor(gui.getDir(), col);
-    } else if(guiButton.id == ID_INSERT_FILTER_OPTIONS) {
-      //doOpenFilterGui(FilterGuiUtil.INDEX_OUTPUT_ITEM);
-      return;
-    } else if(guiButton.id == ID_EXTRACT_FILTER_OPTIONS) {
-      //doOpenFilterGui(FilterGuiUtil.INDEX_INPUT_ITEM);
-      return;
     }
+    if (insertFilterGui != null) insertFilterGui.actionPerformed(guiButton);
+    if (extractFilterGui != null) extractFilterGui.actionPerformed(guiButton);
     PacketHandler.INSTANCE.sendToServer(new PacketItemConduitFilter(itemConduit, gui.getDir()));
   }
 
@@ -193,6 +230,16 @@ public class ItemSettings extends BaseSettingsPanel {
     String priority = EnderIO.lang.localize("gui.conduit.item.priority");
     fr.drawString(priority, left + 12, top1 + 25, ColorUtil.getRGB(Color.black));
     fr.drawString(str, left + priLeft + priWidth - sw - gap, top1 + 25, ColorUtil.getRGB(Color.black));
+
+    if (insertFilterGui != null) insertFilterGui.renderCustomOptions(top1, par1, par2, par3);
+    if (extractFilterGui != null) extractFilterGui.renderCustomOptions(top1, par1, par2, par3);
+  }
+
+  @Override
+  public void mouseClicked(int x, int y, int par3) {
+    super.mouseClicked(x, y, par3);
+    if (insertFilterGui != null) insertFilterGui.mouseClicked(x, y, par3);
+    if (extractFilterGui != null) extractFilterGui.mouseClicked(x, y, par3);
   }
 
   @Override
@@ -207,6 +254,8 @@ public class ItemSettings extends BaseSettingsPanel {
     priDownB.detach();
     insertChannelB.detach();
     extractChannelB.detach();
+    if (insertFilterGui != null) insertFilterGui.deactivate();
+    if (extractFilterGui != null) extractFilterGui.deactivate();
   }
 
   @Override

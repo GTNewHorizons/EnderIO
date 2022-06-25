@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import crazypants.enderio.conduit.item.filter.IItemFilter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
@@ -28,6 +29,7 @@ import crazypants.enderio.network.PacketHandler;
 public class ExternalConnectionContainer extends ContainerEnder<InventoryUpgrades> {
 
   private final IItemConduit itemConduit;
+  private final ForgeDirection direction;
 
   private int speedUpgradeSlotLimit = 15;
 
@@ -41,13 +43,14 @@ public class ExternalConnectionContainer extends ContainerEnder<InventoryUpgrade
   private Slot slotInputFilterUpgrades;
   private Slot slotOutputFilterUpgrades;
 
-  private final List<Point> slotLocations = new ArrayList<Point>();
+  private final List<Point> slotLocations = new ArrayList<>();
 
-  final List<FilterChangeListener> filterListeners = new ArrayList<FilterChangeListener>();
-  final List<GhostBackgroundItemSlot> bgSlots = new ArrayList<GhostBackgroundItemSlot>();
+  final List<FilterChangeListener> filterListeners = new ArrayList<>();
+  final List<GhostBackgroundItemSlot> bgSlots = new ArrayList<>();
 
   public ExternalConnectionContainer(InventoryPlayer playerInv, IConduitBundle bundle, ForgeDirection dir) {
     super(playerInv, new InventoryUpgrades(bundle.getConduit(IItemConduit.class), dir));
+    this.direction = dir;
     this.itemConduit = bundle.getConduit(IItemConduit.class);
     slotLocations.addAll(playerSlotLocations.values());
 
@@ -67,7 +70,7 @@ public class ExternalConnectionContainer extends ContainerEnder<InventoryUpgrade
       slotLocations.add(new Point(x, y));
       bgSlots.add(new GhostBackgroundItemSlot(EnderIO.itemBasicFilterUpgrade, slotInputFilterUpgrades));
 
-      x = 148;
+      x = 131;
       y = 71;
       slotSpeedUpgrades = addSlotToContainer(new Slot(getInv(), 0, x, y) {
         @Override
@@ -83,7 +86,7 @@ public class ExternalConnectionContainer extends ContainerEnder<InventoryUpgrade
       slotLocations.add(new Point(x, y));
       bgSlots.add(new GhostBackgroundItemSlot(EnderIO.itemExtractSpeedUpgrade, slotSpeedUpgrades));
 
-      x = 131;
+      x = 149;
       y = 71;
       slotFunctionUpgrades = addSlotToContainer(new Slot(getInv(), 1, x, y) {
         @Override
@@ -107,7 +110,7 @@ public class ExternalConnectionContainer extends ContainerEnder<InventoryUpgrade
 
   @Override
   public Point getPlayerInventoryOffset() {
-    return new Point(23, 113);
+    return new Point(23, 161);
   }
 
   public void addFilterListener(FilterChangeListener list) {
@@ -131,6 +134,17 @@ public class ExternalConnectionContainer extends ContainerEnder<InventoryUpgrade
   public boolean hasFilterUpgrades(boolean input) {
     Slot slot = input ? slotInputFilterUpgrades : slotOutputFilterUpgrades;
     return slot != null && slot.getHasStack();
+  }
+
+  public ForgeDirection getDirection() {
+    return direction;
+  }
+
+  public IItemFilter getFilter(boolean input) {
+    if (itemConduit == null) {
+      return null;
+    }
+    return input ? itemConduit.getInputFilter(direction) : itemConduit.getOutputFilter(direction);
   }
 
   public void setInoutSlotsVisible(boolean inputVisible, boolean outputVisible) {
