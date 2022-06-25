@@ -77,7 +77,7 @@ public class GuiExternalConnection extends GuiContainerBaseEIO {
     xSize = 206;
 
     container.setInoutSlotsVisible(false, false);
-    container.setInventorySlotsVisible(false);
+    container.setInventorySlotsVisible(true);
 
     List<IConduit> cons = new ArrayList<IConduit>(bundle.getConduits());
     Collections.sort(cons, new Comparator<IConduit>() {
@@ -186,7 +186,11 @@ public class GuiExternalConnection extends GuiContainerBaseEIO {
 
     tes.draw();
 
-    bindGuiTexture();
+    if (tabs.isEmpty()) {
+      bindGuiTexture();
+    } else {
+      RenderUtil.bindTexture(tabs.get(activeTab).getTexture());
+    }
     drawTexturedModalRect(sx, sy, 0, 0, this.xSize, this.ySize);
 
     RenderUtil.bindTexture(IconEIO.TEXTURE);

@@ -55,20 +55,20 @@ public class ExternalConnectionContainer extends ContainerEnder<InventoryUpgrade
     int y;
 
     if (itemConduit != null) {
-      x = 10;
-      y = 47;
+      x = 113;
+      y = 71;
       slotOutputFilterUpgrades = addSlotToContainer(new FilterSlot(getInv(), 3, x, y));
       slotLocations.add(new Point(x, y));
       bgSlots.add(new GhostBackgroundItemSlot(EnderIO.itemBasicFilterUpgrade, slotOutputFilterUpgrades));
 
-      x = 10;
-      y = 47;
+      x = 23;
+      y = 71;
       slotInputFilterUpgrades = addSlotToContainer(new FilterSlot(getInv(), 2, x, y));
       slotLocations.add(new Point(x, y));
       bgSlots.add(new GhostBackgroundItemSlot(EnderIO.itemBasicFilterUpgrade, slotInputFilterUpgrades));
 
-      x = 10;
-      y = 83;
+      x = 148;
+      y = 71;
       slotSpeedUpgrades = addSlotToContainer(new Slot(getInv(), 0, x, y) {
         @Override
         public boolean isItemValid(ItemStack par1ItemStack) {
@@ -83,8 +83,8 @@ public class ExternalConnectionContainer extends ContainerEnder<InventoryUpgrade
       slotLocations.add(new Point(x, y));
       bgSlots.add(new GhostBackgroundItemSlot(EnderIO.itemExtractSpeedUpgrade, slotSpeedUpgrades));
 
-      x = 10;
-      y = 65;
+      x = 131;
+      y = 71;
       slotFunctionUpgrades = addSlotToContainer(new Slot(getInv(), 1, x, y) {
         @Override
         public boolean isItemValid(ItemStack par1ItemStack) {

@@ -163,6 +163,11 @@ public class BaseSettingsPanel implements ITabPanel {
 
   }
 
+  @Override
+  public ResourceLocation getTexture() {
+    return texture;
+  }
+
   protected void updateFilterButtons() {
     if (gui.getContainer().hasFilterUpgrades(true) && hasFilterGui(true)) {
       insertFilterOptionsB.setVisible(true);
@@ -335,12 +340,13 @@ public class BaseSettingsPanel implements ITabPanel {
 
   @Nonnull
   protected String getInputHeading() {
-    return EnderIO.lang.localize("gui.conduit.ioMode.input");
+    // lang strings are nonintuitive for some reason
+    return EnderIO.lang.localize("gui.conduit.ioMode.output");
   }
 
   @Nonnull
   protected String getOutputHeading() {
-    return EnderIO.lang.localize("gui.conduit.ioMode.output");
+    return EnderIO.lang.localize("gui.conduit.ioMode.input");
   }
 
   @Nonnull
