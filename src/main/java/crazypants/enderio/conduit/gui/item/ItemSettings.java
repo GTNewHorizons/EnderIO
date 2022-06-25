@@ -255,6 +255,7 @@ public class ItemSettings extends BaseSettingsPanel {
     priDownB.detach();
     insertChannelB.detach();
     extractChannelB.detach();
+    gui.getContainer().setInventorySlotsVisible(false);
     if (insertFilterGui != null) insertFilterGui.deactivate();
     if (extractFilterGui != null) extractFilterGui.deactivate();
   }

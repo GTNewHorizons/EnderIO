@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.enderio.core.client.gui.GuiContainerBase;
 import com.enderio.core.client.gui.widget.GhostSlot;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -110,6 +111,7 @@ public class GuiExternalConnection extends GuiContainerBaseEIO {
         if(tab != null) {
           conduits.add(con);
           tabs.add(tab);
+          tab.deactivate();
         }
       }
     }
@@ -128,8 +130,6 @@ public class GuiExternalConnection extends GuiContainerBaseEIO {
     for (int i = 0; i < tabs.size(); i++) {
       if(i == activeTab) {
         tabs.get(i).onGuiInit(guiLeft + 10, guiTop, xSize - 20, ySize - 20);
-      } else {
-        tabs.get(i).deactivate();
       }
     }
   }
@@ -164,6 +164,7 @@ public class GuiExternalConnection extends GuiContainerBaseEIO {
 
     if(x > tabLeftX && x < tabRightX + 24) {
       if(y > minY && y < maxY) {
+        tabs.get(activeTab).deactivate();
         activeTab = (y - minY) / 24;
         initGui();
         return;
@@ -262,6 +263,25 @@ public class GuiExternalConnection extends GuiContainerBaseEIO {
         if((x+w) >= slotX && x < (slotX + 20) && (y+h) >= slotY && y < (slotY + 20)) {
           return true;
         }
+      }
+    }
+    return false;
+  }
+
+  @Override
+  @Optional.Method(modid = "NotEnoughItems")
+  public boolean handleDragNDrop(GuiContainer gc, int x, int y, ItemStack is, int button)
+  {
+    if (super.handleDragNDrop(gc, x, y, is, button)) {
+      return true;
+    }
+    x -= guiLeft;
+    y -= guiTop;
+    if (is != null && is.stackSize > 0 && !tabs.isEmpty() && tabs.get(activeTab) instanceof LiquidSettings) {
+      LiquidSettings settings = (LiquidSettings) tabs.get(activeTab);
+      if (settings.setFilterFromItem(x, y, is)) {
+        is.stackSize = 0;
+        return true;
       }
     }
     return false;
