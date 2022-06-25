@@ -165,6 +165,7 @@ public class GuiExternalConnection extends GuiContainerBaseEIO {
     if(x > tabLeftX && x < tabRightX + 24) {
       if(y > minY && y < maxY) {
         tabs.get(activeTab).deactivate();
+        getGhostSlots().clear();
         activeTab = (y - minY) / 24;
         initGui();
         return;
