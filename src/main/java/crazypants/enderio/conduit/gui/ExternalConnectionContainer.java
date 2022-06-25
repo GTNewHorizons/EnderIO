@@ -102,6 +102,8 @@ public class ExternalConnectionContainer extends ContainerEnder<InventoryUpgrade
       slotLocations.add(new Point(x, y));
       bgSlots.add(new GhostBackgroundItemSlot(EnderIO.itemFunctionUpgrade, slotFunctionUpgrades));
     }
+
+    setInventorySlotsVisible(false);
   }
 
   public void createGhostSlots(List<GhostSlot> slots) {
