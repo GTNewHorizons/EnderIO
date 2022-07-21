@@ -51,9 +51,14 @@ public class EntityWeatherRocket extends EntityFireworkRocket {
   @Override
   public void setDead() {
     super.setDead();
+
     WeatherTask task = WeatherTask.values()[getDataWatcher().getWatchableObjectInt(DATA_ID)];
-    WorldServer worldserver = MinecraftServer.getServer().worldServers[0];
-    task.complete(worldserver);
+    MinecraftServer server = MinecraftServer.getServer();
+
+    if(server != null && server.worldServers.length > 0) {
+      WorldServer worldserver = server.worldServers[0];
+      task.complete(worldserver);
+    }
   }
 
   @Override
