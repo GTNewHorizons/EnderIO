@@ -51,12 +51,6 @@ public class ItemInfiniteTravelStaff extends ItemTravelStaff {
     }
 
     @Override
-    public int extractEnergy(ItemStack container, int maxExtract, boolean simulate) {
-        int res = super.extractEnergy(container, maxExtract, simulate);
-        return res;
-    }
-
-    @Override
     public void extractInternal(ItemStack item, int powerUse) {
         return;
     }
@@ -73,9 +67,8 @@ public class ItemInfiniteTravelStaff extends ItemTravelStaff {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack itemStack, EntityPlayer par2EntityPlayer, List list, boolean par4) {
         super.addInformation(itemStack, par2EntityPlayer, list, par4);
-        list.remove(list.size() - 1); // remove the initial RF charge indicator
         String str = "Infinite " + PowerDisplayUtil.abrevation();
-        list.add(str);
+        list.set(list.size() - 1, str); // Changing charge indicator to infinite RF
     }
 
     @Override
