@@ -48,6 +48,8 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import javax.annotation.Nullable;
+
 public class TravelController {
 
     public static final TravelController instance = new TravelController();
@@ -120,6 +122,8 @@ public class TravelController {
     }
 
     public boolean doBlink(ItemStack equipped, EntityPlayer player) {
+        TravelSource source = TravelSource.STAFF_BLINK;
+
         Vector3d eye = Util.getEyePositionEio(player);
         Vector3d look = Util.getLookVecEio(player);
 
@@ -146,7 +150,7 @@ public class TravelController {
                 sample.add(eye);
                 // we test against our feets location
                 sample.y -= playerHeight;
-                if (doBlinkAround(player, sample, true)) {
+                if (doBlinkAround(player, source, sample, true)) {
                     return true;
                 }
             }
@@ -184,7 +188,7 @@ public class TravelController {
                 // we test against our feets location
                 sample.y -= playerHeight;
 
-                if (doBlinkAround(player, sample, false)) {
+                if (doBlinkAround(player, source, sample, false)) {
                     return true;
                 }
                 teleDistance++;
@@ -200,7 +204,7 @@ public class TravelController {
                 // we test against our feets location
                 sample.y -= playerHeight;
 
-                if (doBlinkAround(player, sample, false)) {
+                if (doBlinkAround(player, source, sample, false)) {
                     return true;
                 }
                 sampleDistance--;
@@ -209,6 +213,80 @@ public class TravelController {
         }
         return false;
     }
+
+  /** This is the teleport staff super-teleport. */
+  public boolean doTeleport(EntityPlayer player) {
+    TravelSource source = TravelSource.TELEPORT_STAFF_BLINK;
+
+    Vector3d eye = Util.getEyePositionEio(player);
+    Vector3d look = Util.getLookVecEio(player);
+
+    double playerHeight = player.yOffset;
+    // +2 to compensate for the standard distance decrement of -2
+    double teleDistance = Config.teleportStaffFailedBlinkDistance + 2;
+    Vec3 eye3 = Vec3.createVectorHelper(eye.x, eye.y, eye.z);
+
+    // rayTraceBlocks has a limit of 200 distance.
+    double maxDistance = Config.teleportStaffMaxBlinkDistance;
+    double currDistance = 0;
+    Vec3 pos = eye3;
+    boolean loop = true;
+    while (loop) {
+      double distance = 200;
+      if (maxDistance - currDistance < 200) {
+        distance = maxDistance - currDistance;
+        loop = false;
+      }
+
+      Vector3d sample = new Vector3d(look);
+      sample.scale(distance);
+      sample.add(eye);
+      Vec3 end = Vec3.createVectorHelper(sample.x, sample.y, sample.z);
+
+      MovingObjectPosition p =
+        player.worldObj.rayTraceBlocks(pos, end, !Config.travelStaffBlinkThroughClearBlocksEnabled);
+      if (p != null) {
+        teleDistance =
+          VecmathUtil.distance(eye, new Vector3d(p.blockX + 0.5, p.blockY + 0.5, p.blockZ + 0.5));
+        break;
+      }
+
+      pos = end;
+      currDistance += distance;
+    }
+
+    Vector3d sample = new Vector3d(look);
+    sample.scale(Config.teleportStaffMaxBlinkDistance);
+    sample.add(eye);
+    Vec3 end = Vec3.createVectorHelper(sample.x, sample.y, sample.z);
+    MovingObjectPosition p =
+      player.worldObj.rayTraceBlocks(eye3, end, !Config.travelStaffBlinkThroughClearBlocksEnabled);
+    if (p != null) {
+      teleDistance =
+        VecmathUtil.distance(eye, new Vector3d(p.blockX + 0.5, p.blockY + 0.5, p.blockZ + 0.5));
+    }
+
+    double distanceIncrement = -2;
+    // Special case: if the targeted block is too close, we'll try to teleport through it.
+    if (teleDistance < 3) {
+      distanceIncrement = 2;
+    }
+
+    for (int i = 0; i < 8; i++) {
+      teleDistance += distanceIncrement;
+
+      sample.set(look);
+      sample.scale(teleDistance);
+      sample.add(eye);
+      // we test against our feets location
+      sample.y -= playerHeight;
+
+      if (doBlinkAround(player, source, sample, false)) {
+        return true;
+      }
+    }
+    return false;
+  }
 
     private boolean isBlackListedBlock(EntityPlayer player, MovingObjectPosition pos, Block hitBlock) {
         UniqueIdentifier ui = GameRegistry.findUniqueIdentifierFor(hitBlock);
@@ -220,22 +298,26 @@ public class TravelController {
                         || !Config.travelStaffBlinkThroughUnbreakableBlocksEnabled);
     }
 
-    private boolean doBlinkAround(EntityPlayer player, Vector3d sample, boolean conserveMomentum) {
-        if (doBlink(
+    private boolean doBlinkAround(
+      EntityPlayer player, TravelSource source, Vector3d sample, boolean conserveMomentum) {
+        if (travelToLocation(
                 player,
+                source,
                 new BlockCoord((int) Math.floor(sample.x), (int) Math.floor(sample.y), (int) Math.floor(sample.z)),
                 conserveMomentum)) {
             return true;
         }
-        if (doBlink(
+        if (travelToLocation(
                 player,
+                source,
                 new BlockCoord((int) Math.floor(sample.x), (int) Math.floor(sample.y) + 1, (int) Math.floor(sample.z)),
                 conserveMomentum)) {
             return true;
         }
         if (!Config.travelStaffSearchOptimize) {
-            if (doBlink(
+            if (travelToLocation(
                     player,
+                    source,
                     new BlockCoord(
                             (int) Math.floor(sample.x), (int) Math.floor(sample.y) - 1, (int) Math.floor(sample.z)),
                     conserveMomentum)) {
@@ -243,10 +325,6 @@ public class TravelController {
             }
         }
         return false;
-    }
-
-    private boolean doBlink(EntityPlayer player, BlockCoord coord, boolean conserveMomentum) {
-        return travelToLocation(player, TravelSource.STAFF_BLINK, coord, conserveMomentum);
     }
 
     public boolean showTargets() {
@@ -410,15 +488,27 @@ public class TravelController {
     }
 
     public boolean isTravelItemActive(EntityPlayer ep) {
-        if (ep == null || ep.getCurrentEquippedItem() == null) {
-            return false;
-        }
-        ItemStack equipped = ep.getCurrentEquippedItem();
-        if (equipped.getItem() instanceof IItemOfTravel) {
-            return ((IItemOfTravel) equipped.getItem()).isActive(ep, equipped);
-        }
-        return false;
+        return getTravelItemTravelSource(ep) != null;
     }
+
+  /** Returns null if no travel item is equipped. */
+  @Nullable
+  public TravelSource getTravelItemTravelSource(EntityPlayer ep) {
+    if (ep == null || ep.getCurrentEquippedItem() == null) {
+      return null;
+    }
+    ItemStack equipped = ep.getCurrentEquippedItem();
+    if (equipped.getItem() instanceof ItemTravelStaff) {
+      if (((ItemTravelStaff) equipped.getItem()).isActive(ep, equipped)) {
+        return TravelSource.TELEPORT_STAFF;
+      }
+    } else if (equipped.getItem() instanceof IItemOfTravel) {
+      if (((IItemOfTravel) equipped.getItem()).isActive(ep, equipped)) {
+        return TravelSource.STAFF;
+      }
+    }
+    return null;
+  }
 
     public boolean travelToSelectedTarget(EntityPlayer player, TravelSource source, boolean conserveMomentum) {
         return travelToLocation(player, source, selectedCoord, conserveMomentum);
@@ -427,7 +517,7 @@ public class TravelController {
     public boolean travelToLocation(
             EntityPlayer player, TravelSource source, BlockCoord coord, boolean conserveMomentum) {
 
-        if (source != TravelSource.STAFF_BLINK) {
+        if (source != TravelSource.STAFF_BLINK && source != TravelSource.TELEPORT_STAFF_BLINK) {
             TileEntity te = player.worldObj.getTileEntity(coord.x, coord.y, coord.z);
             if (te instanceof ITravelAccessable) {
                 ITravelAccessable ta = (ITravelAccessable) te;
@@ -446,13 +536,13 @@ public class TravelController {
         }
 
         if (!isInRangeTarget(player, coord, source.getMaxDistanceTravelledSq())) {
-            if (source != TravelSource.STAFF_BLINK) {
+            if (source != TravelSource.STAFF_BLINK && source != TravelSource.TELEPORT_STAFF_BLINK) {
                 player.addChatComponentMessage(new ChatComponentTranslation("enderio.blockTravelPlatform.outOfRange"));
             }
             return false;
         }
         if (!isValidTarget(player, coord, source)) {
-            if (source != TravelSource.STAFF_BLINK) {
+            if (source != TravelSource.STAFF_BLINK && source != TravelSource.TELEPORT_STAFF_BLINK) {
                 player.addChatComponentMessage(
                         new ChatComponentTranslation("enderio.blockTravelPlatform.invalidTarget"));
             }
@@ -515,7 +605,7 @@ public class TravelController {
         }
         World w = player.worldObj;
         BlockCoord baseLoc = bc;
-        if (source != TravelSource.STAFF_BLINK) {
+        if (source != TravelSource.STAFF_BLINK && source != TravelSource.TELEPORT_STAFF_BLINK) {
             // targeting a block so go one up
             baseLoc = bc.getLocation(ForgeDirection.UP);
         }
@@ -757,10 +847,11 @@ public class TravelController {
 
     @SideOnly(Side.CLIENT)
     private int getMaxTravelDistanceSqForPlayer(EntityPlayer player) {
-        if (isTravelItemActive(player)) {
-            return TravelSource.STAFF.getMaxDistanceTravelledSq();
+        TravelSource source = getTravelItemTravelSource(player);
+        if (source == null) {
+          return TravelSource.BLOCK.getMaxDistanceTravelledSq();
         }
-        return TravelSource.BLOCK.getMaxDistanceTravelledSq();
+        return source.getMaxDistanceTravelledSq();
     }
 
     @SideOnly(Side.CLIENT)

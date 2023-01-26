@@ -122,7 +122,8 @@ public enum ModObject {
 
     itemEnderFood,
 
-    itemInfiniteTravelStaff;
+    itemInfiniteTravelStaff,
+    itemTeleportStaff;
 
     public final String unlocalisedName;
 
