@@ -66,6 +66,12 @@ public class ItemTeleportStaff extends ItemTravelStaff {
     }
 
     @Override
+    public int extractEnergy(ItemStack container, int maxExtract, boolean simulate) {
+        // Don't allow extracting energy.
+        return 0;
+    }
+
+    @Override
     public void extractInternal(ItemStack item, int powerUse) {
         // Do nothing, as we have infinite energy.
     }

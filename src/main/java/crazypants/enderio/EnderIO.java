@@ -17,6 +17,7 @@ import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLInterModComms.IMCEvent;
 import cpw.mods.fml.common.event.FMLInterModComms.IMCMessage;
 import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
+import cpw.mods.fml.common.event.FMLMissingMappingsEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
@@ -24,6 +25,7 @@ import cpw.mods.fml.common.event.FMLServerStoppedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import crazypants.enderio.api.IMC;
 import crazypants.enderio.block.BlockDarkSteelAnvil;
@@ -882,5 +884,15 @@ public class EnderIO {
     @EventHandler
     public void serverStopped(FMLServerStoppedEvent event) {
         HyperCubeRegister.unload();
+    }
+
+    @EventHandler
+    public void remap(FMLMissingMappingsEvent event) {
+        for (FMLMissingMappingsEvent.MissingMapping missingMapping : event.getAll()) {
+            if (missingMapping.type == GameRegistry.Type.ITEM
+                    && missingMapping.name.equals("EnderIO:itemInfiniteTravelStaff")) {
+                missingMapping.remap(itemTeleportStaff);
+            }
+        }
     }
 }
