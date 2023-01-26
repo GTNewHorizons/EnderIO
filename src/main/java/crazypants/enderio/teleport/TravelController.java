@@ -24,12 +24,19 @@ import crazypants.enderio.config.Config;
 import crazypants.enderio.enderface.TileEnderIO;
 import crazypants.enderio.network.PacketHandler;
 import crazypants.enderio.teleport.packet.PacketDrainStaff;
+import crazypants.enderio.teleport.packet.PacketLongDistanceTravelEvent;
 import crazypants.enderio.teleport.packet.PacketOpenAuthGui;
 import crazypants.enderio.teleport.packet.PacketTravelEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
+import java.util.TreeMap;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
@@ -53,6 +60,14 @@ import javax.annotation.Nullable;
 public class TravelController {
 
     public static final TravelController instance = new TravelController();
+
+    /**
+     * Server-side only list of valid travel destinations (travel anchors and active telepads).
+     *
+     * <p>This is used by {@code PacketLongDistanceTravelEvent} to try to find travel destinations that
+     * are out of client render range.
+     */
+    public Set<BlockCoord> travelDestinations = new HashSet<>();
 
     private Random rand = new Random();
 
@@ -101,7 +116,10 @@ public class TravelController {
 
     public boolean activateTravelAccessable(ItemStack equipped, World world, EntityPlayer player, TravelSource source) {
         if (!hasTarget()) {
-            return false;
+          PacketLongDistanceTravelEvent p = new PacketLongDistanceTravelEvent(player, false, source);
+          PacketHandler.INSTANCE.sendToServer(p);
+          // We have no way of knowing if it will succeed, so just return false.
+          return false;
         }
         BlockCoord target = selectedCoord;
         TileEntity te = world.getTileEntity(target.x, target.y, target.z);
@@ -286,6 +304,39 @@ public class TravelController {
       }
     }
     return false;
+  }
+
+  /** Returns empty optional if no travel destination was found. */
+  public Optional<BlockCoord> findTravelDestination(EntityPlayer player, TravelSource source) {
+    Vector3d eye = Util.getEyePositionEio(player);
+    Vector3d look = Util.getLookVecEio(player);
+
+    // Map of distance to coordinate for eligible travel destinations (within angle).
+    Map<Double, BlockCoord> distanceMap = new TreeMap<>();
+    boolean outOfRange = false;
+    for (BlockCoord p : travelDestinations) {
+      Vector3d block = new Vector3d(p.x + 0.5, p.y + 0.5, p.z + 0.5);
+      block.sub(eye);
+      double distance = block.length();
+      if (distance > source.getMaxDistanceTravelled()) {
+        outOfRange = true;
+        continue;
+      }
+      block.normalize();
+
+      double angle = Math.acos(look.dot(block));
+      // Roughly 5 degrees
+      if (angle < 0.087) {
+        distanceMap.put(distance, p);
+      }
+    }
+
+    if (outOfRange && distanceMap.isEmpty()) {
+      player.addChatComponentMessage(
+        new ChatComponentTranslation("enderio.blockTravelPlatform.outOfRange"));
+    }
+
+    return distanceMap.values().stream().findFirst();
   }
 
     private boolean isBlackListedBlock(EntityPlayer player, MovingObjectPosition pos, Block hitBlock) {
