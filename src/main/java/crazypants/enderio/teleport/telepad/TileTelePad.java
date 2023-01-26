@@ -324,7 +324,7 @@ public class TileTelePad extends TileTravelAnchor implements IInternalPowerRecei
         //    this.inNetwork = pkt.func_148857_g().getBoolean("inNetwork");
     }
 
-  @Override
+    @Override
     public void invalidate() {
         super.invalidate();
         if (worldObj.isRemote) {

@@ -11,6 +11,7 @@ import crazypants.enderio.api.teleport.TeleportEntityEvent;
 import crazypants.enderio.api.teleport.TravelSource;
 import crazypants.enderio.teleport.TravelController;
 import io.netty.buffer.ByteBuf;
+import java.util.Optional;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -18,9 +19,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraftforge.common.MinecraftForge;
 
-import java.util.Optional;
-
-public class PacketLongDistanceTravelEvent implements IMessage, IMessageHandler<PacketLongDistanceTravelEvent, IMessage> {
+public class PacketLongDistanceTravelEvent
+        implements IMessage, IMessageHandler<PacketLongDistanceTravelEvent, IMessage> {
 
     boolean conserveMotion;
     int entityId;
@@ -28,8 +28,7 @@ public class PacketLongDistanceTravelEvent implements IMessage, IMessageHandler<
 
     public PacketLongDistanceTravelEvent() {}
 
-    public PacketLongDistanceTravelEvent(
-            Entity entity, boolean conserveMotion, TravelSource source) {
+    public PacketLongDistanceTravelEvent(Entity entity, boolean conserveMotion, TravelSource source) {
         this.conserveMotion = conserveMotion;
         this.entityId = entity instanceof EntityPlayer ? -1 : entity.getEntityId();
         this.source = source.ordinal();
@@ -62,13 +61,11 @@ public class PacketLongDistanceTravelEvent implements IMessage, IMessageHandler<
         return null;
     }
 
-    public static boolean doServerTeleport(
-            Entity toTp, boolean conserveMotion, TravelSource source) {
+    public static boolean doServerTeleport(Entity toTp, boolean conserveMotion, TravelSource source) {
         EntityPlayer player = toTp instanceof EntityPlayer ? (EntityPlayer) toTp : null;
-        Optional<BlockCoord> travelDestination =
-          TravelController.instance.findTravelDestination(player, source);
+        Optional<BlockCoord> travelDestination = TravelController.instance.findTravelDestination(player, source);
         if (!travelDestination.isPresent()) {
-          return false;
+            return false;
         }
         BlockCoord destination = travelDestination.get();
         int x = destination.x;
@@ -76,7 +73,7 @@ public class PacketLongDistanceTravelEvent implements IMessage, IMessageHandler<
         int z = destination.z;
         int powerUse = TravelController.instance.getRequiredPower(player, source, destination);
         if (powerUse < 0) {
-          return false;
+            return false;
         }
 
         TeleportEntityEvent evt = new TeleportEntityEvent(toTp, source, x, y, z);

@@ -38,28 +38,28 @@ public enum TravelSource {
         }
     },
 
-  TELEPORT_STAFF() {
-    @Override
-    public int getMaxDistanceTravelled() {
-      return Config.teleportStaffMaxDistance;
-    }
+    TELEPORT_STAFF() {
+        @Override
+        public int getMaxDistanceTravelled() {
+            return Config.teleportStaffMaxDistance;
+        }
 
-    @Override
-    public float getPowerCostPerBlockTraveledRF() {
-      return 0f;
-    }
-  },
-  TELEPORT_STAFF_BLINK() {
-    @Override
-    public int getMaxDistanceTravelled() {
-      return Config.teleportStaffMaxBlinkDistance;
-    }
+        @Override
+        public float getPowerCostPerBlockTraveledRF() {
+            return 0f;
+        }
+    },
+    TELEPORT_STAFF_BLINK() {
+        @Override
+        public int getMaxDistanceTravelled() {
+            return Config.teleportStaffMaxBlinkDistance;
+        }
 
-    @Override
-    public float getPowerCostPerBlockTraveledRF() {
-      return 0f;
-    }
-  },
+        @Override
+        public float getPowerCostPerBlockTraveledRF() {
+            return 0f;
+        }
+    },
     TELEPAD(EnderIO.DOMAIN + ":telepad.teleport");
 
     public static int getMaxDistance() {
@@ -76,9 +76,9 @@ public enum TravelSource {
 
         TravelSource source = TravelController.instance.getTravelItemTravelSource(player);
         if (source == null) {
-          return TravelSource.BLOCK.getMaxDistanceTravelledSq();
+            return TravelSource.BLOCK.getMaxDistanceTravelledSq();
         } else {
-          return source.getMaxDistanceTravelledSq();
+            return source.getMaxDistanceTravelledSq();
         }
     }
 

@@ -157,7 +157,6 @@ public final class Config {
     public static float travelAnchorZoomScale = 0.2f;
     public static boolean travelStaffSearchOptimize = true;
 
-
     /** The max distance for travelling to a Travel Anchor. */
     public static int teleportStaffMaxDistance = 2048;
     /** The max distance for travelling to player look. */

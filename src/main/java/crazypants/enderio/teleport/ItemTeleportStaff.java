@@ -6,15 +6,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.api.teleport.TravelSource;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 public class ItemTeleportStaff extends ItemInfiniteTravelStaff {
 
@@ -52,7 +47,7 @@ public class ItemTeleportStaff extends ItemInfiniteTravelStaff {
         if (world.isRemote) {
             if (player.isSneaking()) {
                 TravelController.instance.activateTravelAccessable(
-                    equipped, world, player, TravelSource.TELEPORT_STAFF);
+                        equipped, world, player, TravelSource.TELEPORT_STAFF);
             } else {
                 TravelController.instance.doTeleport(player);
             }

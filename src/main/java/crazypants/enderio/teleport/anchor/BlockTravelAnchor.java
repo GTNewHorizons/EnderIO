@@ -62,8 +62,10 @@ public class BlockTravelAnchor extends BlockEio
         PacketHandler.INSTANCE.registerMessage(
                 PacketTravelEvent.class, PacketTravelEvent.class, PacketHandler.nextID(), Side.SERVER);
         PacketHandler.INSTANCE.registerMessage(
-                PacketLongDistanceTravelEvent.class, PacketLongDistanceTravelEvent.class,
-                PacketHandler.nextID(), Side.SERVER);
+                PacketLongDistanceTravelEvent.class,
+                PacketLongDistanceTravelEvent.class,
+                PacketHandler.nextID(),
+                Side.SERVER);
         PacketHandler.INSTANCE.registerMessage(
                 PacketDrainStaff.class, PacketDrainStaff.class, PacketHandler.nextID(), Side.SERVER);
         PacketHandler.INSTANCE.registerMessage(
