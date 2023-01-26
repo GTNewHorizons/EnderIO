@@ -6,12 +6,16 @@ import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.api.teleport.TravelSource;
+import crazypants.enderio.machine.power.PowerDisplayUtil;
+import java.util.List;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemTeleportStaff extends ItemInfiniteTravelStaff {
+public class ItemTeleportStaff extends ItemTravelStaff {
 
     protected ItemTeleportStaff() {
         super();
@@ -37,6 +41,11 @@ public class ItemTeleportStaff extends ItemInfiniteTravelStaff {
     }
 
     @Override
+    public void onCreated(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
+        setFull(itemStack);
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister IIconRegister) {
         itemIcon = IIconRegister.registerIcon("enderio:itemTeleportStaff");
@@ -54,6 +63,32 @@ public class ItemTeleportStaff extends ItemInfiniteTravelStaff {
         }
         player.swingItem();
         return equipped;
+    }
+
+    @Override
+    public void extractInternal(ItemStack item, int powerUse) {
+        // Do nothing, as we have infinite energy.
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List par3List) {
+        ItemStack is = new ItemStack(this);
+        setFull(is);
+        par3List.add(is);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack itemStack, EntityPlayer par2EntityPlayer, List list, boolean par4) {
+        super.addInformation(itemStack, par2EntityPlayer, list, par4);
+        String str = "Infinite " + PowerDisplayUtil.abrevation();
+        list.set(list.size() - 1, str); // Changing charge indicator to infinite RF
+    }
+
+    @Override
+    public String getUnlocalizedNameForTooltip(ItemStack stack) {
+        return getUnlocalizedName();
     }
 
     @Override

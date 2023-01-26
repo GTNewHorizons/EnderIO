@@ -52,7 +52,6 @@ public class NEIEnderIOConfig implements IConfigureNEI {
         }
         if (!Config.travelAnchorEnabled) {
             API.hideItem(new ItemStack(EnderIO.itemTravelStaff));
-            API.hideItem(new ItemStack(EnderIO.itemInfiniteTravelStaff));
             API.hideItem(new ItemStack(EnderIO.itemTeleportStaff));
         }
         if (!Config.reinforcedObsidianEnabled) {
