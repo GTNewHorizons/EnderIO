@@ -55,22 +55,22 @@ public class KeyTracker {
     public KeyTracker() {
         glideKey = new KeyBinding(
                 EnderIO.lang.localize("keybind.glidertoggle"),
-                Keyboard.KEY_G,
+                Keyboard.KEY_NONE,
                 EnderIO.lang.localize("category.darksteelarmor"));
         ClientRegistry.registerKeyBinding(glideKey);
         soundDetectorKey = new KeyBinding(
                 EnderIO.lang.localize("keybind.soundlocator"),
-                Keyboard.KEY_L,
+                Keyboard.KEY_NONE,
                 EnderIO.lang.localize("category.darksteelarmor"));
         ClientRegistry.registerKeyBinding(soundDetectorKey);
         nightVisionKey = new KeyBinding(
                 EnderIO.lang.localize("keybind.nightvision"),
-                Keyboard.KEY_P,
+                Keyboard.KEY_NONE,
                 EnderIO.lang.localize("category.darksteelarmor"));
         ClientRegistry.registerKeyBinding(nightVisionKey);
         gogglesKey = new KeyBinding(
                 EnderIO.lang.localize("keybind.gogglesofrevealing"),
-                Keyboard.KEY_R,
+                Keyboard.KEY_NONE,
                 EnderIO.lang.localize("category.darksteelarmor"));
         ClientRegistry.registerKeyBinding(gogglesKey);
 
@@ -94,12 +94,12 @@ public class KeyTracker {
 
         yetaWrenchMode = new KeyBinding(
                 EnderIO.lang.localize("keybind.yetawrenchmode"),
-                Keyboard.KEY_Y,
+                Keyboard.KEY_NONE,
                 EnderIO.lang.localize("category.tools"));
         ClientRegistry.registerKeyBinding(yetaWrenchMode);
 
         magnetKey = new KeyBinding(
-                EnderIO.lang.localize("keybind.magnet"), Keyboard.CHAR_NONE, EnderIO.lang.localize("category.tools"));
+                EnderIO.lang.localize("keybind.magnet"), Keyboard.KEY_NONE, EnderIO.lang.localize("category.tools"));
         ClientRegistry.registerKeyBinding(magnetKey);
     }
 
