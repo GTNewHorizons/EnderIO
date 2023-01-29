@@ -64,13 +64,13 @@ public class TravelController {
     public static final TravelController instance = new TravelController();
 
     /**
-     * Server-side only map of valid travel destinations (travel anchors and active telepads).
+     * Server-side only set multimap of dimension ID to valid travel destinations (travel anchors and active telepads).
      *
      * <p>
      * This is used by {@code PacketLongDistanceTravelEvent} to try to find travel destinations that are out of client
      * render range.
      */
-    public SetMultimap<World, BlockCoord> travelDestinations = MultimapBuilder.hashKeys().hashSetValues().build();
+    public SetMultimap<Integer, BlockCoord> travelDestinations = MultimapBuilder.hashKeys().hashSetValues().build();
 
     private Random rand = new Random();
 
@@ -317,7 +317,7 @@ public class TravelController {
         // Otherwise, you could trigger the message for any travel anchor on the entire server.
         double maxMessageDistance = 1.25 * source.getMaxDistanceTravelled();
         boolean displayOutOfRangeMessage = false;
-        for (BlockCoord p : travelDestinations.get(player.worldObj)) {
+        for (BlockCoord p : travelDestinations.get(player.worldObj.provider.dimensionId)) {
             Vector3d block = new Vector3d(p.x + 0.5, p.y + 0.5, p.z + 0.5);
             block.sub(eye);
             double distance = block.length();
