@@ -64,7 +64,7 @@ public class TravelController {
     public static final TravelController instance = new TravelController();
 
     /**
-     * Server-side only list of valid travel destinations (travel anchors and active telepads).
+     * Server-side only map of valid travel destinations (travel anchors and active telepads).
      *
      * <p>
      * This is used by {@code PacketLongDistanceTravelEvent} to try to find travel destinations that are out of client
