@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import cofh.api.energy.EnergyStorage;
+import crazypants.enderio.config.Config;
 
 import com.google.common.collect.Lists;
 
@@ -25,7 +26,7 @@ public class SolarPanelNetwork {
 
     public SolarPanelNetwork() {
         panels = Lists.newArrayList();
-        energy = new EnergyStorage(ENERGY_PER);
+        energy = new EnergyStorage(getCapacity());
     }
 
     SolarPanelNetwork(TileEntitySolarPanel initial) {
@@ -83,8 +84,33 @@ public class SolarPanelNetwork {
         destroyNetwork();
     }
 
+    private int getCapacity(){
+        int capacity = ENERGY_PER;
+
+        if (panels.size() > 0){
+            TileEntitySolarPanel masterPanel = getMaster();
+            int meta = masterPanel.getBlockMetadata();
+
+            switch(meta) {
+                case 0: // Default
+                    capacity = Config.photovoltaicCellCapacityRF;
+                    break;
+                case 1: // Advanced
+                    capacity = Config.photovoltaicAdvancedCellCapacityRF;
+                    break;
+                case 2: // Vibrant
+                    capacity = Config.photovoltaicVibrantCellCapacityRF;
+                    break;
+            }
+
+            capacity = capacity * panels.size();
+        }
+
+        return capacity;
+    }
+
     private void updateEnergy() {
-        energy.setCapacity(ENERGY_PER * panels.size());
+        energy.setCapacity(getCapacity());
         energy.setMaxExtract(energy.getMaxEnergyStored());
     }
 
