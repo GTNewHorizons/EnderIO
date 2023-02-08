@@ -98,18 +98,20 @@ public class SolarPanelNetwork {
 
     private static int getCapacity(TileEntitySolarPanel panel, int panelsCount) {
         int capacity = ENERGY_PER;
-        int meta = panel.getBlockMetadata();
 
-        switch (meta) {
-            case 0: // Default
-                capacity = Config.photovoltaicCellCapacityRF;
-                break;
-            case 1: // Advanced
-                capacity = Config.photovoltaicAdvancedCellCapacityRF;
-                break;
-            case 2: // Vibrant
-                capacity = Config.photovoltaicVibrantCellCapacityRF;
-                break;
+        if (panel != null) {
+            int meta = panel.getBlockMetadata();
+            switch (meta) {
+                case 0: // Default
+                    capacity = Config.photovoltaicCellCapacityRF;
+                    break;
+                case 1: // Advanced
+                    capacity = Config.photovoltaicAdvancedCellCapacityRF;
+                    break;
+                case 2: // Vibrant
+                    capacity = Config.photovoltaicVibrantCellCapacityRF;
+                    break;
+            }
         }
 
         capacity = capacity * panelsCount;
