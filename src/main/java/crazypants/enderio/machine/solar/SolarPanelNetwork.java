@@ -32,6 +32,7 @@ public class SolarPanelNetwork {
     SolarPanelNetwork(TileEntitySolarPanel initial) {
         this();
         panels.add(initial);
+        energy.setCapacity(getCapacity(initial, 1));
         empty = false;
     }
 
@@ -89,22 +90,29 @@ public class SolarPanelNetwork {
 
         if (panels.size() > 0) {
             TileEntitySolarPanel masterPanel = getMaster();
-            int meta = masterPanel.getBlockMetadata();
-
-            switch (meta) {
-                case 0: // Default
-                    capacity = Config.photovoltaicCellCapacityRF;
-                    break;
-                case 1: // Advanced
-                    capacity = Config.photovoltaicAdvancedCellCapacityRF;
-                    break;
-                case 2: // Vibrant
-                    capacity = Config.photovoltaicVibrantCellCapacityRF;
-                    break;
-            }
-
-            capacity = capacity * panels.size();
+            capacity = getCapacity(masterPanel, panels.size());
         }
+
+        return capacity;
+    }
+
+    private static int getCapacity(TileEntitySolarPanel panel, int panelsCount) {
+        int capacity = ENERGY_PER;
+        int meta = panel.getBlockMetadata();
+
+        switch (meta) {
+            case 0: // Default
+                capacity = Config.photovoltaicCellCapacityRF;
+                break;
+            case 1: // Advanced
+                capacity = Config.photovoltaicAdvancedCellCapacityRF;
+                break;
+            case 2: // Vibrant
+                capacity = Config.photovoltaicVibrantCellCapacityRF;
+                break;
+        }
+
+        capacity = capacity * panelsCount;
 
         return capacity;
     }
