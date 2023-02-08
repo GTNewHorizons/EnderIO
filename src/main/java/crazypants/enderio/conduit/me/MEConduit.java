@@ -44,6 +44,7 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
     public static IIcon[] longTextures;
 
     private boolean isDense;
+    private boolean isDenseUltra;
     private int playerID = -1;
 
     public MEConduit() {
@@ -51,7 +52,8 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
     }
 
     public MEConduit(int itemDamage) {
-        isDense = itemDamage == 1;
+        isDenseUltra = itemDamage == 2;
+        isDense = isDenseUltra || itemDamage == 1;
     }
 
     public static void initIcons() {
@@ -64,9 +66,11 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
 
                 coreTextures[0] = register.registerIcon(EnderIO.DOMAIN + ":meConduitCore");
                 coreTextures[1] = register.registerIcon(EnderIO.DOMAIN + ":meConduitCoreDense");
+                coreTextures[2] = register.registerIcon(EnderIO.DOMAIN + ":meConduitCoreDenseUltra");
 
                 longTextures[0] = register.registerIcon(EnderIO.DOMAIN + ":meConduit");
                 longTextures[1] = register.registerIcon(EnderIO.DOMAIN + ":meConduitDense");
+                longTextures[2] = register.registerIcon(EnderIO.DOMAIN + ":meConduitDenseUltra");
             }
 
             @Override
@@ -76,8 +80,14 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
         });
     }
 
-    public static int getDamageForState(boolean isDense) {
-        return isDense ? 1 : 0;
+    public static int getDamageForState(boolean isDense, boolean isDenseUltra) {
+        if (isDenseUltra) {
+            return 2;
+        }
+        if (isDense) {
+            return 1;
+        }
+        return 0;
     }
 
     @Override
@@ -87,7 +97,7 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
 
     @Override
     public ItemStack createItem() {
-        return new ItemStack(EnderIO.itemMEConduit, 1, getDamageForState(isDense));
+        return new ItemStack(EnderIO.itemMEConduit, 1, getDamageForState(isDense, isDenseUltra));
     }
 
     @Override
@@ -105,6 +115,7 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
     public void writeToNBT(NBTTagCompound nbtRoot) {
         super.writeToNBT(nbtRoot);
         nbtRoot.setBoolean("isDense", isDense);
+        nbtRoot.setBoolean("isDenseUltra", isDenseUltra);
         nbtRoot.setInteger("playerID", playerID);
     }
 
@@ -116,6 +127,9 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
             playerID = nbtRoot.getInteger("playerID");
         } else {
             playerID = -1;
+        }
+        if (nbtRoot.hasKey("isDenseUltra")) {
+            isDenseUltra = nbtRoot.getBoolean("isDenseUltra");
         }
     }
 
@@ -175,7 +189,7 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
 
     @Override
     public IIcon getTextureForState(CollidableComponent component) {
-        int state = getDamageForState(isDense);
+        int state = getDamageForState(isDense, isDenseUltra);
         if (component.dir == ForgeDirection.UNKNOWN) {
             return coreTextures[state];
         } else {
@@ -342,5 +356,10 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
     @Override
     public boolean isDense() {
         return isDense;
+    }
+
+    @Override
+    public boolean isDenseUltra() {
+        return isDenseUltra;
     }
 }
