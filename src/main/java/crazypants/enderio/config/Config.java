@@ -811,14 +811,12 @@ public final class Config {
                         maxPhotovoltaicVibrantOutputRF,
                         "Maximum output in RF/t of the Vibrant Photovoltaic Panels.")
                 .getInt(maxPhotovoltaicVibrantOutputRF);
-                
-        photovoltaicCellCapacityRF = config
-                .get(
-                        sectionPower.name,
-                        "photovoltaicCellCapacityRF",
-                        photovoltaicCellCapacityRF,
-                        "Maximum capacity in RF/t of the Photovoltaic Panels.")
-                .getInt(photovoltaicCellCapacityRF);
+
+        photovoltaicCellCapacityRF = config.get(
+                sectionPower.name,
+                "photovoltaicCellCapacityRF",
+                photovoltaicCellCapacityRF,
+                "Maximum capacity in RF/t of the Photovoltaic Panels.").getInt(photovoltaicCellCapacityRF);
         photovoltaicAdvancedCellCapacityRF = config
                 .get(
                         sectionPower.name,

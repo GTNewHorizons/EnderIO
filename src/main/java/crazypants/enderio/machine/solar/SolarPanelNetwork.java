@@ -8,9 +8,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import cofh.api.energy.EnergyStorage;
-import crazypants.enderio.config.Config;
 
 import com.google.common.collect.Lists;
+import crazypants.enderio.config.Config;
 
 public class SolarPanelNetwork {
 
@@ -84,14 +84,14 @@ public class SolarPanelNetwork {
         destroyNetwork();
     }
 
-    private int getCapacity(){
+    private int getCapacity() {
         int capacity = ENERGY_PER;
 
-        if (panels.size() > 0){
+        if (panels.size() > 0) {
             TileEntitySolarPanel masterPanel = getMaster();
             int meta = masterPanel.getBlockMetadata();
 
-            switch(meta) {
+            switch (meta) {
                 case 0: // Default
                     capacity = Config.photovoltaicCellCapacityRF;
                     break;
