@@ -53,7 +53,7 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
 
     public MEConduit(int itemDamage) {
         isDenseUltra = itemDamage == 2;
-        isDense = isDenseUltra || itemDamage == 1;
+        isDense = itemDamage == 1;
     }
 
     public static void initIcons() {
