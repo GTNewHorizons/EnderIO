@@ -61,8 +61,8 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
 
             @Override
             public void registerIcons(IIconRegister register) {
-                coreTextures = new IIcon[2];
-                longTextures = new IIcon[2];
+                coreTextures = new IIcon[3];
+                longTextures = new IIcon[3];
 
                 coreTextures[0] = register.registerIcon(EnderIO.DOMAIN + ":meConduitCore");
                 coreTextures[1] = register.registerIcon(EnderIO.DOMAIN + ":meConduitCoreDense");
