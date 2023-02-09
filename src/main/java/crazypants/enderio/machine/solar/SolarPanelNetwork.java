@@ -96,7 +96,7 @@ public class SolarPanelNetwork {
         return capacity;
     }
 
-    private int getCapacity(TileEntitySolarPanel panel, int panelsCount) {
+    private static int getCapacity(TileEntitySolarPanel panel, int panelsCount) {
         int capacity = ENERGY_PER;
 
         if (panel != null && panel.hasWorldObj()) {
