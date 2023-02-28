@@ -216,7 +216,6 @@ public class ItemSettings extends BaseSettingsPanel {
         }
         if (insertFilterGui != null) insertFilterGui.actionPerformed(guiButton);
         if (extractFilterGui != null) extractFilterGui.actionPerformed(guiButton);
-        PacketHandler.INSTANCE.sendToServer(new PacketItemConduitFilter(itemConduit, gui.getDir()));
     }
 
     @Override
