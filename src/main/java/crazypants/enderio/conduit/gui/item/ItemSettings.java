@@ -4,6 +4,7 @@ import java.awt.*;
 
 import javax.annotation.Nonnull;
 
+import crazypants.enderio.conduit.packet.PacketItemConduitFilter;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 
@@ -194,6 +195,7 @@ public class ItemSettings extends BaseSettingsPanel {
     @Override
     public void actionPerformed(@Nonnull GuiButton guiButton) {
         super.actionPerformed(guiButton);
+        boolean needUpdate = true;
         if (guiButton.id == ID_COLOR_BUTTON) {
             itemConduit.setExtractionSignalColor(gui.getDir(), DyeColor.fromIndex(colorB.getColorIndex()));
             PacketHandler.INSTANCE.sendToServer(new PacketExtractMode(itemConduit, gui.getDir()));
@@ -212,9 +214,13 @@ public class ItemSettings extends BaseSettingsPanel {
         } else if (guiButton.id == ID_EXTRACT_CHANNEL) {
             DyeColor col = DyeColor.fromIndex(extractChannelB.getColorIndex());
             itemConduit.setInputColor(gui.getDir(), col);
+        } else {
+            needUpdate = false;
+            if (insertFilterGui != null) insertFilterGui.actionPerformed(guiButton);
+            if (extractFilterGui != null) extractFilterGui.actionPerformed(guiButton);
         }
-        if (insertFilterGui != null) insertFilterGui.actionPerformed(guiButton);
-        if (extractFilterGui != null) extractFilterGui.actionPerformed(guiButton);
+        if (needUpdate)
+            PacketHandler.INSTANCE.sendToServer(new PacketItemConduitFilter(itemConduit, gui.getDir()));
     }
 
     @Override
