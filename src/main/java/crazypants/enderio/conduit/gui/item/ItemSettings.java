@@ -4,7 +4,6 @@ import java.awt.*;
 
 import javax.annotation.Nonnull;
 
-import crazypants.enderio.conduit.packet.PacketItemConduitFilter;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 
@@ -26,6 +25,7 @@ import crazypants.enderio.conduit.gui.GuiExternalConnection;
 import crazypants.enderio.conduit.item.IItemConduit;
 import crazypants.enderio.conduit.item.filter.IItemFilter;
 import crazypants.enderio.conduit.packet.PacketExtractMode;
+import crazypants.enderio.conduit.packet.PacketItemConduitFilter;
 import crazypants.enderio.gui.IconEIO;
 import crazypants.enderio.gui.RedstoneModeButton;
 import crazypants.enderio.machine.IRedstoneModeControlable;
@@ -219,8 +219,7 @@ public class ItemSettings extends BaseSettingsPanel {
             if (insertFilterGui != null) insertFilterGui.actionPerformed(guiButton);
             if (extractFilterGui != null) extractFilterGui.actionPerformed(guiButton);
         }
-        if (needUpdate)
-            PacketHandler.INSTANCE.sendToServer(new PacketItemConduitFilter(itemConduit, gui.getDir()));
+        if (needUpdate) PacketHandler.INSTANCE.sendToServer(new PacketItemConduitFilter(itemConduit, gui.getDir()));
     }
 
     @Override
