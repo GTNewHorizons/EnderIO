@@ -213,9 +213,11 @@ public class ItemSettings extends BaseSettingsPanel {
         } else if (guiButton.id == ID_EXTRACT_CHANNEL) {
             DyeColor col = DyeColor.fromIndex(extractChannelB.getColorIndex());
             itemConduit.setInputColor(gui.getDir(), col);
+        } else {
+            if (insertFilterGui != null) insertFilterGui.actionPerformed(guiButton);
+            if (extractFilterGui != null) extractFilterGui.actionPerformed(guiButton);
+            return;
         }
-        if (insertFilterGui != null) insertFilterGui.actionPerformed(guiButton);
-        if (extractFilterGui != null) extractFilterGui.actionPerformed(guiButton);
         PacketHandler.INSTANCE.sendToServer(new PacketItemConduitFilter(itemConduit, gui.getDir()));
     }
 
