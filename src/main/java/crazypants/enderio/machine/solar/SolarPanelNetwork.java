@@ -10,6 +10,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.EnergyStorage;
 
 import com.google.common.collect.Lists;
+import crazypants.enderio.config.Config;
 
 public class SolarPanelNetwork {
 
@@ -17,6 +18,7 @@ public class SolarPanelNetwork {
     private boolean empty = true;
 
     private EnergyStorage energy;
+    private boolean hasAppliedMaxEnergyConfig = false;
 
     public static final int ENERGY_PER = 10000;
 
@@ -25,12 +27,13 @@ public class SolarPanelNetwork {
 
     public SolarPanelNetwork() {
         panels = Lists.newArrayList();
-        energy = new EnergyStorage(ENERGY_PER);
+        energy = new EnergyStorage(getCapacity());
     }
 
     SolarPanelNetwork(TileEntitySolarPanel initial) {
         this();
         panels.add(initial);
+        energy.setCapacity(getCapacity(initial, 1));
         empty = false;
     }
 
@@ -83,8 +86,49 @@ public class SolarPanelNetwork {
         destroyNetwork();
     }
 
+    private int getCapacity() {
+        int capacity = ENERGY_PER;
+
+        if (panels.size() > 0) {
+            TileEntitySolarPanel masterPanel = getMaster();
+            capacity = getCapacity(masterPanel, panels.size());
+        }
+
+        return capacity;
+    }
+
+    private int getCapacity(TileEntitySolarPanel panel, int panelsCount) {
+        int capacity = ENERGY_PER;
+
+        if (panel != null && panel.hasWorldObj()) {
+            int meta = panel.getBlockMetadata();
+            switch (meta) {
+                case 0: // Default
+                    capacity = Config.photovoltaicCellCapacityRF;
+                    break;
+                case 1: // Advanced
+                    capacity = Config.photovoltaicAdvancedCellCapacityRF;
+                    break;
+                case 2: // Vibrant
+                    capacity = Config.photovoltaicVibrantCellCapacityRF;
+                    break;
+            }
+            hasAppliedMaxEnergyConfig = true;
+        }
+
+        capacity = capacity * panelsCount;
+
+        return capacity;
+    }
+
+    private void updateEnergyIfNeeded() {
+        if (!hasAppliedMaxEnergyConfig) {
+            updateEnergy();
+        }
+    }
+
     private void updateEnergy() {
-        energy.setCapacity(ENERGY_PER * panels.size());
+        energy.setCapacity(getCapacity());
         energy.setMaxExtract(energy.getMaxEnergyStored());
     }
 
@@ -119,6 +163,7 @@ public class SolarPanelNetwork {
     }
 
     public int setEnergyStored(int energy) {
+        updateEnergyIfNeeded();
         if (isValid()) {
             this.energy.setEnergyStored(energy);
         }
