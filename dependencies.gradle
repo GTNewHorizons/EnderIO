@@ -21,7 +21,4 @@ dependencies {
     compileOnly(deobf('https://media.forgecdn.net/files/2269/339/ComputerCraft1.75.jar')) // https://www.curseforge.com/minecraft/mc-mods/computercraft/files/2269339
     compileOnly(deobf('https://media.forgecdn.net/files/2426/270/Mekanism-1.7.10-9.1.0.281.jar')) // https://aidancbrady.com/mekanism/download/
     compileOnly(deobf('https://immibis.com/mcmoddl/files/immibis-microblocks-59.1.2.jar'))
-
-    // fix mouse event
-    runtimeOnlyNonPublishable('com.github.GTNewHorizons:lwjgl3ify:1.1.35:dev')
 }
