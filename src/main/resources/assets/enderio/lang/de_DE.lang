@@ -469,7 +469,7 @@ enderio.frankenzombieGenerator.fuelTank=Nahrhafter Tank
 tile.blockEnderGenerator.name=Ender-Generator
 tile.blockEnderGenerator.tooltip.detailed.line1=Konsumiert Tau des Voids,
 tile.blockEnderGenerator.tooltip.detailed.line2=um Energie zu erzeugen
-enderio.enderGenerator.fuelTank=Void-Tank
+enderio.enderGenerator.fuelTank=Leere-Tank
 
 tile.blockKillerJoe.name=Killer Joe
 tile.blockKillerJoe.tooltip.detailed.line1=Attackiert nahe Mobs und Spieler,
