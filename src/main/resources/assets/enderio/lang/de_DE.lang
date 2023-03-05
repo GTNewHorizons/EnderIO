@@ -784,7 +784,7 @@ item.endSteel_chestplate.name=Endstahl-Brustpanzer
 item.endSteel_leggings.name=Endstahl-Beinschutz
 item.endSteel_boots.name=Endstahl-Stiefel
 item.endSteel_sword.name=Endstahl-Schwert
-item.endSteel_pickaxe.name=EndstahlSpitzhacke
+item.endSteel_pickaxe.name=Endstahl-Spitzhacke
 item.endSteel_axe.name=Endstahl-Axt
 
 #Stellar
