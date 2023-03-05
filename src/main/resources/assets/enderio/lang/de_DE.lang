@@ -684,7 +684,7 @@ enderio.itemTravelStaff.notEnoughPower=Nicht genügend Energie
 item.itemTeleportStaff.name=Stab der Teleportation
 item.itemTeleportStaff.tooltip.detailed.line1=Rechtsklick, um zu teleportieren, wohin auch immer du schaust
 item.itemTeleportStaff.tooltip.detailed.line2=Shift-Rechtsklick, um zu Reiseankern zu telportieren
-item.itemTeleportStaff.tooltip.detailed.line3=Rechtsklick auf einen benachbarten Blcok, um zu versuchen
+item.itemTeleportStaff.tooltip.detailed.line3=Rechtsklick auf einen benachbarten Block, um zu versuchen
 item.itemTeleportStaff.tooltip.detailed.line4=zur anderen Seite zu teleportieren
 
 item.itemCoordSelector.name=Koordinatenselektor
