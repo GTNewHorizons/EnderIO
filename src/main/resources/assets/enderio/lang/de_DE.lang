@@ -41,12 +41,10 @@ enderio.itemPowerConduitEndergyCopper.name=Kupfer-Energieleitung
 enderio.itemPowerConduitEndergySilver.name=Silber-Energieleitung
 enderio.itemPowerConduitEndergyElectrum.name=Elektrum-Energieleitung
 enderio.itemPowerConduitEndergyEnergeticSilver.name=Elektrisches Silber-Energieleitung
-# BEGIN needs translation
-enderio.itemPowerConduitEndergyCrystalline.name=Crystalline Energy Conduit
-enderio.itemPowerConduitEndergyCrystallinePinkSlime.name=Crystalline Pink Slime Energy Conduit
-enderio.itemPowerConduitEndergyMelodic.name=Melodic Energy Conduit
-enderio.itemPowerConduitEndergyStellar.name=Stellar Energy Conduit
-# END needs translation
+enderio.itemPowerConduitEndergyCrystalline.name=Kristallin-Energieleitung
+enderio.itemPowerConduitEndergyCrystallinePinkSlime.name=Melodischer Rosa Schleim Energieleitung
+enderio.itemPowerConduitEndergyMelodic.name=Melodische Energieleitung
+enderio.itemPowerConduitEndergyStellar.name=Hervorragende Energieleitung
 
 enderio.itemRedstoneConduit.name=Redstone-Leitung
 enderio.itemRedstoneConduitSwitch.name=Leitungsschalter
@@ -55,12 +53,10 @@ enderio.itemRedstoneConduitInsulated.name=Isolierte Redstone-Leitung
 enderio.itemLiquidConduit.name=Flüssigkeitsleitung
 enderio.itemLiquidConduitAdvanced.name=Flüssigkeitsdruckleitung
 enderio.itemLiquidConduitEnder.name=Ender-Flüssigkeitsleitung
-# BEGIN needs translation
-enderio.itemLiquidConduitCrystallineEnder.name=Crystalline Ender Fluid Conduit
-enderio.itemLiquidConduitCrystallinePinkSlimeEnder.name=Crystalline Pink Slime Ender Fluid Conduit
-enderio.itemLiquidConduitMelodicEnder.name=Melodic Ender Fluid Conduit
-enderio.itemLiquidConduitStellarEnder.name=Stellar Ender Fluid Conduit
-# END needs translation
+enderio.itemLiquidConduitCrystallineEnder.name=Kristallin-Flüssigkeitsdruckleitung
+enderio.itemLiquidConduitCrystallinePinkSlimeEnder.name=Melodischer Rosa Schleim Flüssigkeitsdruckleitung
+enderio.itemLiquidConduitMelodicEnder.name=Melodische Flüssigkeitsdruckleitung
+enderio.itemLiquidConduitStellarEnder.name=Hervorragende Flüssigkeitsdruckleitung
 enderio.itemLiquidConduit.lockedType=Flüssigkeitstyp gebunden an
 enderio.itemLiquidConduit.unlockedType=Flüssigkeitstyp nicht mehr gebunden
 enderio.itemLiquidConduit.lockedWaila=Festgelegt auf
