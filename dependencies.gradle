@@ -9,7 +9,7 @@ dependencies {
     shadowImplementation('cglib:cglib-nodep:3.3.0')
 
     compileOnly('com.github.GTNewHorizons:waila:1.5.24:api') {transitive = false}
-    compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-1-GTNH:api') {transitive = false}
+    compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-175-GTNH:api') {transitive = false}
     compileOnly('com.github.GTNewHorizons:Baubles:1.0.1.16:dev') {transitive = false}
     compileOnly('com.github.GTNewHorizons:Railcraft:9.13.19:api') {transitive = false}
     compileOnly('com.github.GTNewHorizons:StorageDrawers:1.11.20-GTNH:api') {transitive = false}
