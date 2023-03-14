@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import appeng.api.AEApi;
+import appeng.api.networking.GridFlags;
 import appeng.api.networking.IGridConnection;
 import appeng.api.networking.IGridHost;
 import appeng.api.networking.IGridNode;
@@ -162,26 +163,40 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
 
         // because the AE2 API doesn't allow an easy query like "which side can connect to an ME cable" it needs this
         // mess
+        IGridNode node = null;
         if (te instanceof IPartHost) {
             IPart part = ((IPartHost) te).getPart(dir.getOpposite());
             if (part == null) {
                 part = ((IPartHost) te).getPart(ForgeDirection.UNKNOWN);
-                return part != null;
             }
-            if (part.getExternalFacingNode() != null) {
-                return true;
+            if (part != null) {
+                node = part.getExternalFacingNode();
+                if (node == null) {
+                    node = part.getGridNode();
+                }
             }
-            String name = part.getClass().getSimpleName();
-            return "PartP2PTunnelME".equals(name) || "PartQuartzFiber".endsWith(name)
-                    || "PartToggleBus".equals(name)
-                    || "PartInvertedToggleBus".equals(name);
         } else if (te instanceof IGridHost) {
-            IGridNode node = ((IGridHost) te).getGridNode(dir.getOpposite());
+            node = ((IGridHost) te).getGridNode(dir.getOpposite());
             if (node == null) {
                 node = ((IGridHost) te).getGridNode(ForgeDirection.UNKNOWN);
             }
-            if (node != null) {
-                return node.getGridBlock().getConnectableSides().contains(dir.getOpposite());
+        }
+        if (node != null) {
+            return canConnectToGridNode(node, dir);
+        }
+        return false;
+    }
+
+    @Method(modid = "appliedenergistics2")
+    private Boolean canConnectToGridNode(IGridNode node, ForgeDirection dir) {
+        if (node.getGridBlock().getConnectableSides().contains(dir.getOpposite())) {
+            if (isDenseUltra()) {
+                return node.hasFlag(GridFlags.ULTRA_DENSE_CAPACITY)
+                        || ((node.hasFlag(GridFlags.DENSE_CAPACITY)) && !node.hasFlag(GridFlags.CANNOT_CARRY));
+            } else if (isDense()) {
+                return true;
+            } else {
+                return !node.hasFlag(GridFlags.ULTRA_DENSE_CAPACITY);
             }
         }
         return false;
