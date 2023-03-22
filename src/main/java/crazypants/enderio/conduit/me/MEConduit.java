@@ -175,7 +175,7 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
                     node = part.getGridNode();
                 }
                 if (node == null) {
-                    return !isDenseUltra();
+                    needUpdateConnections();
                 }
             }
         } else if (te instanceof IGridHost) {
