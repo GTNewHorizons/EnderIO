@@ -314,7 +314,11 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
     private void onNodeChanged(BlockCoord location) {
         World world = getBundle().getWorld();
         for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
-            TileEntity te = location.getLocation(dir).getTileEntity(world);
+            BlockCoord dirLocation = location.getLocation(dir);
+            TileEntity te = null;
+            if (world.blockExists(dirLocation.x, dirLocation.y, dirLocation.z)) {
+                te = location.getLocation(dir).getTileEntity(world);
+            }
             if (te != null && te instanceof IGridHost && !(te instanceof IConduitBundle)) {
                 IGridNode node = ((IGridHost) te).getGridNode(ForgeDirection.UNKNOWN);
                 if (node == null) {
@@ -330,7 +334,12 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
     @Override
     public void onAddedToBundle() {
         for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
-            TileEntity te = getLocation().getLocation(dir).getTileEntity(getBundle().getWorld());
+            World world = getBundle().getWorld();
+            BlockCoord dirLocation = getLocation().getLocation(dir);
+            TileEntity te = null;
+            if (world.blockExists(dirLocation.x, dirLocation.y, dirLocation.z)) {
+                te = dirLocation.getTileEntity(world);
+            }
             if (te instanceof TileConduitBundle) {
                 IMEConduit cond = ((TileConduitBundle) te).getConduit(IMEConduit.class);
                 if (cond != null) {
