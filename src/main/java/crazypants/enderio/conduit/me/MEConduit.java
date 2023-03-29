@@ -155,7 +155,16 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
     public boolean canConnectToExternal(ForgeDirection dir, boolean ignoreDisabled) {
         World world = getBundle().getWorld();
         BlockCoord pos = getLocation();
-        TileEntity te = world.getTileEntity(pos.x + dir.offsetX, pos.y + dir.offsetY, pos.z + dir.offsetZ);
+
+        final int exactPosX = pos.x + dir.offsetX;
+        final int exactPosY = pos.y + dir.offsetY;
+        final int exactPosZ = pos.z + dir.offsetZ;
+        
+        if (!world.blockExists(exactPosX, exactPosY, exactPosZ)) {
+            return false;
+        }
+
+        TileEntity te = world.getTileEntity(exactPosX, exactPosY, exactPosZ);
 
         if (te instanceof TileConduitBundle) {
             return false;
