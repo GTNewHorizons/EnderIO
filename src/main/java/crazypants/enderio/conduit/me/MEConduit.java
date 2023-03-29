@@ -159,7 +159,7 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
         final int exactPosX = pos.x + dir.offsetX;
         final int exactPosY = pos.y + dir.offsetY;
         final int exactPosZ = pos.z + dir.offsetZ;
-        
+
         if (!world.blockExists(exactPosX, exactPosY, exactPosZ)) {
             return false;
         }
