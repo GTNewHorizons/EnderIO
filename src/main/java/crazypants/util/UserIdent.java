@@ -128,8 +128,7 @@ public class UserIdent {
         MinecraftServer server;
         if (FMLCommonHandler.instance().getEffectiveSide().isServer()) {
             server = FMLServerHandler.instance().getServer();
-        }
-        else {
+        } else {
             server = FMLClientHandler.instance().getServer();
         }
         return server.isServerInOnlineMode();
