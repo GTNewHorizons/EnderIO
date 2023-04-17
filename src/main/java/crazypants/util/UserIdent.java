@@ -12,7 +12,9 @@ import net.minecraftforge.common.UsernameCache;
 import com.enderio.core.common.util.PlayerUtil;
 import com.google.common.base.Charsets;
 import com.mojang.authlib.GameProfile;
+
 import crazypants.enderio.Log;
+import crazypants.enderio.config.Config;
 
 public class UserIdent {
 
@@ -76,7 +78,7 @@ public class UserIdent {
      * changes, implement them and write a log message.
      */
     public static @Nonnull UserIdent create(@Nonnull String suuid, @Nullable String playerName) {
-        if (NONE_MARKER.equals(suuid)) {
+        if (NONE_MARKER.equals(suuid) || Config.enforceOfflinePlayerUUID) {
             return new UserIdent(null, playerName);
         }
         try {
@@ -110,7 +112,7 @@ public class UserIdent {
      */
     public static @Nonnull UserIdent create(@Nullable GameProfile gameProfile) {
         if (gameProfile != null && (gameProfile.getId() != null || gameProfile.getName() != null)) {
-            if (gameProfile.getName() != null && !isOnlineMode()) {
+            if (gameProfile.getName() != null && (Config.enforceOfflinePlayerUUID || !isOnlineMode())) {
                 return new UserIdent(null, gameProfile.getName());
             } else {
                 return new UserIdent(gameProfile.getId(), gameProfile.getName());
@@ -122,7 +124,7 @@ public class UserIdent {
 
     private static boolean isOnlineMode() {
         MinecraftServer server = MinecraftServer.getServer();
-        return server.isServerInOnlineMode();
+        return server != null ? server.isServerInOnlineMode() : true;
     }
 
     private static @Nonnull UUID offlineUUID(String playerName) {
@@ -225,6 +227,9 @@ public class UserIdent {
 
         @Override
         public boolean equals(Object obj) {
+            if (obj instanceof UUID) {
+                return getUUID().equals(obj);
+            }
             return this == obj;
         }
 

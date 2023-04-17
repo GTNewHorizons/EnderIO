@@ -84,6 +84,8 @@ public final class Config {
     public static boolean reinforcedObsidianEnabled = true;
     public static boolean reinforcedObsidianUseDarkSteelBlocks = false;
 
+    public static boolean enforceOfflinePlayerUUID = false;
+
     public static boolean useAlternateBinderRecipe = false;
 
     public static boolean useAlternateTesseractModel = false;
@@ -1022,6 +1024,13 @@ public final class Config {
                 detailedPowerTrackingEnabled,
                 "Enable per tick sampling on individual power inputs and outputs. This allows slightly more detailed messages from the RF Reader but has a negative impact on server performance.")
                 .getBoolean(detailedPowerTrackingEnabled);
+
+        enforceOfflinePlayerUUID = config.get(
+                sectionAdvanced.name,
+                "enforceOfflinePlayerUUID",
+                false,
+                "Enforces to use the players offline UUID. Recommendet to use before creating your world, otherwise it might breaks all secuity related things.")
+                .getBoolean(enforceOfflinePlayerUUID);
 
         useSneakMouseWheelYetaWrench = config.get(
                 sectionPersonal.name,
