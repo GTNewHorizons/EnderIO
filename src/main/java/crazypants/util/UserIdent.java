@@ -6,11 +6,16 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.UsernameCache;
 
 import com.enderio.core.common.util.PlayerUtil;
 import com.google.common.base.Charsets;
 import com.mojang.authlib.GameProfile;
+
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.server.FMLServerHandler;
 import crazypants.enderio.Log;
 
 public class UserIdent {
@@ -109,8 +114,7 @@ public class UserIdent {
      */
     public static @Nonnull UserIdent create(@Nullable GameProfile gameProfile) {
         if (gameProfile != null && (gameProfile.getId() != null || gameProfile.getName() != null)) {
-            if (gameProfile.getId() != null && gameProfile.getName() != null
-                    && gameProfile.getId().equals(offlineUUID(gameProfile.getName()))) {
+            if (gameProfile.getName() != null && !isOnlineMode()) {
                 return new UserIdent(null, gameProfile.getName());
             } else {
                 return new UserIdent(gameProfile.getId(), gameProfile.getName());
@@ -118,6 +122,17 @@ public class UserIdent {
         } else {
             return nobody;
         }
+    }
+
+    private static boolean isOnlineMode() {
+        MinecraftServer server;
+        if (FMLCommonHandler.instance().getEffectiveSide().isServer()) {
+            server = FMLServerHandler.instance().getServer();
+        }
+        else {
+            server = FMLClientHandler.instance().getServer();
+        }
+        return server.isServerInOnlineMode();
     }
 
     private static @Nonnull UUID offlineUUID(String playerName) {
