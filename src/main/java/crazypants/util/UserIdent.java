@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.UsernameCache;
 
 import com.enderio.core.common.util.PlayerUtil;
@@ -109,8 +110,7 @@ public class UserIdent {
      */
     public static @Nonnull UserIdent create(@Nullable GameProfile gameProfile) {
         if (gameProfile != null && (gameProfile.getId() != null || gameProfile.getName() != null)) {
-            if (gameProfile.getId() != null && gameProfile.getName() != null
-                    && gameProfile.getId().equals(offlineUUID(gameProfile.getName()))) {
+            if (gameProfile.getName() != null && !isOnlineMode()) {
                 return new UserIdent(null, gameProfile.getName());
             } else {
                 return new UserIdent(gameProfile.getId(), gameProfile.getName());
@@ -118,6 +118,11 @@ public class UserIdent {
         } else {
             return nobody;
         }
+    }
+
+    private static boolean isOnlineMode() {
+        MinecraftServer server = MinecraftServer.getServer();
+        return server.isServerInOnlineMode();
     }
 
     private static @Nonnull UUID offlineUUID(String playerName) {
