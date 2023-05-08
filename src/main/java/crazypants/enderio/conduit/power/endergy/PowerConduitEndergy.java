@@ -5,12 +5,13 @@ import static crazypants.enderio.config.Config.powerConduitEndergyTiers;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.enderio.core.client.render.IconUtil;
-
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import com.enderio.core.client.render.IconUtil;
+
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.conduit.geom.CollidableComponent;
 import crazypants.enderio.conduit.power.PowerConduit;
