@@ -101,12 +101,12 @@ public class PowerConduitEndergy extends PowerConduit {
 
     @Override
     public IIcon getTextureForInputMode() {
-        return ICONS.get(ICON_KEY_INPUT);
+        return ICONS.get(ICON_KEY_INPUT + POSTFIX[subtype]);
     }
 
     @Override
     public IIcon getTextureForOutputMode() {
-        return ICONS.get(ICON_KEY_OUTPUT);
+        return ICONS.get(ICON_KEY_OUTPUT + POSTFIX[subtype]);
     }
 
     @Override
