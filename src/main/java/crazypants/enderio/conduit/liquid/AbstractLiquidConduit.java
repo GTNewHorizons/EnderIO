@@ -59,8 +59,7 @@ public abstract class AbstractLiquidConduit extends AbstractConduit implements I
         }
 
         if (EnderIO.hasGT5 && h instanceof IGregTechTileEntity) {
-            IGregTechTileEntity gtTE = (IGregTechTileEntity) h;
-            IMetaTileEntity mte = gtTE.getMetaTileEntity();
+            IMetaTileEntity mte = ((IGregTechTileEntity) h).getMetaTileEntity();
             return mte != null && mte.getCapacity() > 0;
         }
 
