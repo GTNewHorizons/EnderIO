@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import crazypants.enderio.EnderIO;
+import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
+import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -54,6 +57,13 @@ public abstract class AbstractLiquidConduit extends AbstractConduit implements I
         if (h == null) {
             return false;
         }
+
+        if (EnderIO.hasGT5 && h instanceof IGregTechTileEntity) {
+            IGregTechTileEntity gtTE = (IGregTechTileEntity) h;
+            IMetaTileEntity mte = gtTE.getMetaTileEntity();
+            return mte != null && mte.getCapacity() > 0;
+        }
+
         // TODO: This check was added to work around a bug in dynamic tanks, but
         // it causes issues with not conecting to empty tanks such as dim. trans +
         // BC fluid pipes, so I am removing it for now.
