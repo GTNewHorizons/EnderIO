@@ -1919,15 +1919,15 @@ public final class Config {
                 addFuelTooltipsToAllFluidContainers,
                 "If true, adds burn duration tooltips to furnace fuels").getBoolean(addFurnaceFuelTootip);
         renderChargeBar = config.get(
-            sectionPersonal.name,
-            "renderChargeBar",
-            renderChargeBar,
-            "If true, render the bar when an item has RF").getBoolean(renderChargeBar);
+                sectionPersonal.name,
+                "renderChargeBar",
+                renderChargeBar,
+                "If true, render the bar when an item has RF").getBoolean(renderChargeBar);
         renderDurabilityBar = config.get(
-            sectionPersonal.name,
-            "renderDurabilityBar",
-            renderDurabilityBar,
-            "If true, render the bar when an item is damaged").getBoolean(renderDurabilityBar);
+                sectionPersonal.name,
+                "renderDurabilityBar",
+                renderDurabilityBar,
+                "If true, render the bar when an item is damaged").getBoolean(renderDurabilityBar);
 
         farmContinuousEnergyUseRF = config.get(
                 sectionFarm.name,
