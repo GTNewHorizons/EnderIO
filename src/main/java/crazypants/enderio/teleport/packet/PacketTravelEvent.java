@@ -1,7 +1,5 @@
 package crazypants.enderio.teleport.packet;
 
-import crazypants.enderio.Log;
-import crazypants.enderio.teleport.TravelController;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -15,9 +13,11 @@ import com.enderio.core.common.vecmath.Vector3d;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import crazypants.enderio.Log;
 import crazypants.enderio.api.teleport.IItemOfTravel;
 import crazypants.enderio.api.teleport.TeleportEntityEvent;
 import crazypants.enderio.api.teleport.TravelSource;
+import crazypants.enderio.teleport.TravelController;
 import io.netty.buffer.ByteBuf;
 
 public class PacketTravelEvent implements IMessage, IMessageHandler<PacketTravelEvent, IMessage> {
@@ -70,7 +70,11 @@ public class PacketTravelEvent implements IMessage, IMessageHandler<PacketTravel
         if (message.entityId != -1) {
             // after checking the code base, this type of packet won't be sent at all,
             // so we can assume this to be an attempt to hack
-            Log.LOGGER.warn(Log.securityMarker, "Player {} tried to illegally tp other entity {}.", ctx.getServerHandler().playerEntity.getGameProfile(), message.entityId);
+            Log.LOGGER.warn(
+                    Log.securityMarker,
+                    "Player {} tried to illegally tp other entity {}.",
+                    ctx.getServerHandler().playerEntity.getGameProfile(),
+                    message.entityId);
             return null;
         }
         EntityPlayerMP toTp = ctx.getServerHandler().playerEntity;
@@ -79,8 +83,12 @@ public class PacketTravelEvent implements IMessage, IMessageHandler<PacketTravel
 
         TravelSource source = TravelSource.values()[message.source];
 
-        if (!TravelController.instance.validatePacketTravelEvent(toTp, x, y, z, message.powerUse, message.conserveMotion, source)) {
-            Log.LOGGER.warn(Log.securityMarker, "Player {} tried to tp without valid prereq.", ctx.getServerHandler().playerEntity.getGameProfile());
+        if (!TravelController.instance
+                .validatePacketTravelEvent(toTp, x, y, z, message.powerUse, message.conserveMotion, source)) {
+            Log.LOGGER.warn(
+                    Log.securityMarker,
+                    "Player {} tried to tp without valid prereq.",
+                    ctx.getServerHandler().playerEntity.getGameProfile());
             return null;
         }
 

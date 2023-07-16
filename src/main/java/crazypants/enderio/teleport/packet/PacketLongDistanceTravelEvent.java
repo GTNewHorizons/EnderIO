@@ -2,8 +2,6 @@ package crazypants.enderio.teleport.packet;
 
 import java.util.Optional;
 
-import crazypants.enderio.Log;
-import crazypants.enderio.teleport.ItemTeleportStaff;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -18,9 +16,11 @@ import com.enderio.core.common.vecmath.Vector3d;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import crazypants.enderio.Log;
 import crazypants.enderio.api.teleport.IItemOfTravel;
 import crazypants.enderio.api.teleport.TeleportEntityEvent;
 import crazypants.enderio.api.teleport.TravelSource;
+import crazypants.enderio.teleport.ItemTeleportStaff;
 import crazypants.enderio.teleport.TravelController;
 import io.netty.buffer.ByteBuf;
 
@@ -58,7 +58,11 @@ public class PacketLongDistanceTravelEvent
         if (message.entityId != -1) {
             // after checking the code base, this type of packet won't be sent at all,
             // so we can assume this to be an attempt to hack
-            Log.LOGGER.warn(Log.securityMarker, "Player {} tried to illegally tp other entity {}.", ctx.getServerHandler().playerEntity.getGameProfile(), message.entityId);
+            Log.LOGGER.warn(
+                    Log.securityMarker,
+                    "Player {} tried to illegally tp other entity {}.",
+                    ctx.getServerHandler().playerEntity.getGameProfile(),
+                    message.entityId);
             return null;
         }
         EntityPlayerMP toTp = ctx.getServerHandler().playerEntity;
@@ -66,7 +70,10 @@ public class PacketLongDistanceTravelEvent
         TravelSource source = TravelSource.values()[message.source];
 
         if (!validate(toTp, source)) {
-            Log.LOGGER.warn(Log.securityMarker, "Player {} tried to tp without valid prereq.", ctx.getServerHandler().playerEntity.getGameProfile());
+            Log.LOGGER.warn(
+                    Log.securityMarker,
+                    "Player {} tried to tp without valid prereq.",
+                    ctx.getServerHandler().playerEntity.getGameProfile());
             return null;
         }
 
@@ -79,8 +86,8 @@ public class PacketLongDistanceTravelEvent
         ItemStack equippedItem = toTp.getCurrentEquippedItem();
         switch (source) {
             case STAFF:
-                return equippedItem != null && equippedItem.getItem() instanceof IItemOfTravel &&
-                    ((IItemOfTravel) equippedItem.getItem()).isActive(toTp, equippedItem);
+                return equippedItem != null && equippedItem.getItem() instanceof IItemOfTravel
+                        && ((IItemOfTravel) equippedItem.getItem()).isActive(toTp, equippedItem);
             case TELEPORT_STAFF:
                 // tp staff is creative version of traveling staff
                 // no energy check or anything else needed
@@ -106,8 +113,10 @@ public class PacketLongDistanceTravelEvent
         if (powerUse < 0) {
             return false;
         }
-        if (player != null && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof IItemOfTravel) {
-            int used = ((IItemOfTravel) player.getCurrentEquippedItem().getItem()).canExtractInternal(player.getCurrentEquippedItem(), powerUse);
+        if (player != null && player.getCurrentEquippedItem() != null
+                && player.getCurrentEquippedItem().getItem() instanceof IItemOfTravel) {
+            int used = ((IItemOfTravel) player.getCurrentEquippedItem().getItem())
+                    .canExtractInternal(player.getCurrentEquippedItem(), powerUse);
             if (used != -1 && used != powerUse) {
                 return false;
             }

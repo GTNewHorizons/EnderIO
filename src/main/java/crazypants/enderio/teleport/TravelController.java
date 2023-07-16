@@ -10,7 +10,6 @@ import java.util.TreeMap;
 
 import javax.annotation.Nullable;
 
-import crazypants.enderio.Log;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
@@ -112,15 +111,13 @@ public class TravelController {
         }
     }
 
-    public boolean validatePacketTravelEvent(EntityPlayerMP toTp, int x, int y, int z, int powerUse, boolean conserveMotion,
-                                             TravelSource source) {
+    public boolean validatePacketTravelEvent(EntityPlayerMP toTp, int x, int y, int z, int powerUse,
+            boolean conserveMotion, TravelSource source) {
         BlockCoord target = new BlockCoord(x, y, z);
         double dist = getDistanceSquared(toTp, target);
         // allow 15% overshoot to account for rounding
-        if (dist * 100 > source.getMaxDistanceTravelledSq() * 115)
-            return false;
-        if (powerUse < getRequiredPower(toTp, source, target))
-            return false;
+        if (dist * 100 > source.getMaxDistanceTravelledSq() * 115) return false;
+        if (powerUse < getRequiredPower(toTp, source, target)) return false;
         ItemStack equippedItem = toTp.getCurrentEquippedItem();
         switch (source) {
             case TELEPAD:
@@ -129,24 +126,19 @@ public class TravelController {
             case BLOCK:
                 // this source is only triggered when player is on any active travel anchor
                 BlockCoord on = getActiveTravelBlock(toTp);
-                if (on == null)
-                    return false;
+                if (on == null) return false;
                 // target must be a valid selectedCoord
                 // selectedCoord can either be a block right above/below when the player is on anchor...
-                if (on.x == x && on.z == z)
-                    return true;
+                if (on.x == x && on.z == z) return true;
                 // or another anchor
                 TileEntity maybeAnchor = target.getTileEntity(toTp.worldObj);
-                if (!(maybeAnchor instanceof ITravelAccessable))
-                    return false;
+                if (!(maybeAnchor instanceof ITravelAccessable)) return false;
                 ITravelAccessable anchor = (ITravelAccessable) maybeAnchor;
                 return anchor.canBlockBeAccessed(toTp) || !isValidTarget(toTp, target, TravelSource.BLOCK);
             case STAFF:
             case STAFF_BLINK:
-                if (equippedItem == null || !(equippedItem.getItem() instanceof IItemOfTravel))
-                    return false;
-                if (!((IItemOfTravel) equippedItem.getItem()).isActive(toTp, equippedItem))
-                    return false;
+                if (equippedItem == null || !(equippedItem.getItem() instanceof IItemOfTravel)) return false;
+                if (!((IItemOfTravel) equippedItem.getItem()).isActive(toTp, equippedItem)) return false;
                 int energy = ((IItemOfTravel) equippedItem.getItem()).canExtractInternal(equippedItem, powerUse);
                 return energy == -1 || energy == powerUse;
             case TELEPORT_STAFF_BLINK:
@@ -807,9 +799,7 @@ public class TravelController {
                     showMessage(player, new ChatComponentTranslation("enderio.gui.travelAccessable.skipPrivate"));
                 }
                 if (!isValidTarget(player, targetBlock, TravelSource.BLOCK)) {
-                    showMessage(
-                        player,
-                            new ChatComponentTranslation("enderio.gui.travelAccessable.skipObstructed"));
+                    showMessage(player, new ChatComponentTranslation("enderio.gui.travelAccessable.skipObstructed"));
                 }
             }
             if (travelBlock.canBlockBeAccessed(player) && isValidTarget(player, targetBlock, TravelSource.BLOCK)) {
@@ -981,11 +971,9 @@ public class TravelController {
     }
 
     private BlockCoord getActiveTravelBlock(EntityPlayer player) {
-        if (player == null)
-            return null;
+        if (player == null) return null;
         World world = player.worldObj;
-        if (world == null)
-            return null;
+        if (world == null) return null;
         int x = MathHelper.floor_double(player.posX);
         int y = MathHelper.floor_double(player.boundingBox.minY) - 1;
         int z = MathHelper.floor_double(player.posZ);
