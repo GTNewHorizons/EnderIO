@@ -2891,7 +2891,7 @@ public final class Config {
                 "strictTPItemChecking",
                 strictTPItemChecking,
                 "If true, turn on strict checking of item energy checking. This might cause traveling tools from third party mods to fire fake security warnings on server side and not function correctly.")
-            .getBoolean(strictTPItemChecking);
+                .getBoolean(strictTPItemChecking);
     }
 
     public static void checkYetaAccess() {
