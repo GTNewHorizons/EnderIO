@@ -1,5 +1,7 @@
 package crazypants.enderio.teleport.packet;
 
+import crazypants.enderio.Log;
+import crazypants.enderio.teleport.TravelController;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -65,12 +67,22 @@ public class PacketTravelEvent implements IMessage, IMessageHandler<PacketTravel
 
     @Override
     public IMessage onMessage(PacketTravelEvent message, MessageContext ctx) {
-        Entity toTp = message.entityId == -1 ? ctx.getServerHandler().playerEntity
-                : ctx.getServerHandler().playerEntity.worldObj.getEntityByID(message.entityId);
+        if (message.entityId != -1) {
+            // after checking the code base, this type of packet won't be sent at all,
+            // so we can assume this to be an attempt to hack
+            Log.LOGGER.warn(Log.securityMarker, "Player {} tried to illegally tp other entity {}.", ctx.getServerHandler().playerEntity.getGameProfile(), message.entityId);
+            return null;
+        }
+        EntityPlayerMP toTp = ctx.getServerHandler().playerEntity;
 
         int x = message.x, y = message.y, z = message.z;
 
         TravelSource source = TravelSource.values()[message.source];
+
+        if (!TravelController.instance.validatePacketTravelEvent(toTp, x, y, z, message.powerUse, message.conserveMotion, source)) {
+            Log.LOGGER.warn(Log.securityMarker, "Player {} tried to tp without valid prereq.", ctx.getServerHandler().playerEntity.getGameProfile());
+            return null;
+        }
 
         doServerTeleport(toTp, x, y, z, message.powerUse, message.conserveMotion, source);
 
