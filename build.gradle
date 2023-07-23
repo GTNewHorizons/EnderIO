@@ -1,4 +1,4 @@
-//version: 1689878047
+//version: 1690104383
 /*
  DO NOT CHANGE THIS FILE!
  Also, you may replace this file at any time if there is an update available.
@@ -575,11 +575,26 @@ repositories {
         }
     }
     if (includeWellKnownRepositories.toBoolean()) {
-        maven {
-            name "CurseMaven"
-            url "https://cursemaven.com"
-            content {
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name "CurseMaven"
+                    url "https://cursemaven.com"
+                }
+            }
+            filter {
                 includeGroup "curse.maven"
+            }
+        }
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = "Modrinth"
+                    url = "https://api.modrinth.com/maven"
+                }
+            }
+            filter {
+                includeGroup "maven.modrinth"
             }
         }
         maven {
