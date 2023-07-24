@@ -10,10 +10,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-import cofh.api.energy.ItemEnergyContainer;
-
 import com.enderio.core.api.client.gui.IResourceTooltipProvider;
 
+import cofh.api.energy.ItemEnergyContainer;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -133,6 +132,11 @@ public class ItemTravelStaff extends ItemEnergyContainer implements IItemOfTrave
         setEnergy(item, res);
     }
 
+    @Override
+    public int canExtractInternal(ItemStack equipped, int power) {
+        return Math.min(getEnergyStored(equipped), power);
+    }
+
     void setEnergy(ItemStack container, int energy) {
         if (container.stackTagCompound == null) {
             container.stackTagCompound = new NBTTagCompound();
@@ -177,5 +181,10 @@ public class ItemTravelStaff extends ItemEnergyContainer implements IItemOfTrave
     @SideOnly(Side.CLIENT)
     public boolean isFull3D() {
         return true;
+    }
+
+    @Override
+    public boolean showDurabilityBar(ItemStack stack) {
+        return Config.renderDurabilityBar && super.showDurabilityBar(stack);
     }
 }

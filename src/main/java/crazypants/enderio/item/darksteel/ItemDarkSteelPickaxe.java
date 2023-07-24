@@ -18,12 +18,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 
-import cofh.api.energy.IEnergyContainerItem;
-
 import com.enderio.core.api.client.gui.IAdvancedTooltipProvider;
 import com.enderio.core.common.util.ItemUtil;
 import com.google.common.collect.Sets;
 
+import cofh.api.energy.IEnergyContainerItem;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -330,6 +329,11 @@ public class ItemDarkSteelPickaxe extends ItemPickaxe
     @Override
     public void extractInternal(ItemStack equipped, int power) {
         extractEnergy(equipped, power, false);
+    }
+
+    @Override
+    public int canExtractInternal(ItemStack equipped, int power) {
+        return Math.min(getEnergyStored(equipped), power);
     }
 
     private boolean isTravelUpgradeActive(EntityPlayer ep, ItemStack equipped) {

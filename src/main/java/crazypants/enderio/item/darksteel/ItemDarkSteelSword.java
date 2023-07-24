@@ -24,12 +24,11 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 
-import cofh.api.energy.IEnergyContainerItem;
-
 import com.enderio.core.api.client.gui.IAdvancedTooltipProvider;
 import com.enderio.core.common.util.ItemUtil;
 import com.enderio.core.common.util.Util;
 
+import cofh.api.energy.IEnergyContainerItem;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -393,6 +392,11 @@ public class ItemDarkSteelSword extends ItemSword
     @Override
     public void extractInternal(ItemStack equipped, int power) {
         extractEnergy(equipped, power, false);
+    }
+
+    @Override
+    public int canExtractInternal(ItemStack equipped, int power) {
+        return Math.min(getEnergyStored(equipped), power);
     }
 
     private boolean isTravelUpgradeActive(EntityPlayer ep, ItemStack equipped) {
