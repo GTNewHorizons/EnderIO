@@ -120,7 +120,8 @@ public class TravelController {
         double dist = getDistanceSquared(toTp, target);
         // allow 15% overshoot to account for rounding
         if (dist * 100 > source.getMaxDistanceTravelledSq() * 115) return "dist check fail";
-        if (getRequiredPower(toTp, source, target) > powerUse) return "power use to little";
+        // allow 4 blocks of c/s player pos desync
+        if (getPower(toTp, source, target, -4F) > powerUse) return "power use too little";
         ItemStack equippedItem = toTp.getCurrentEquippedItem();
         switch (source) {
             case TELEPAD:
@@ -674,7 +675,7 @@ public class TravelController {
         }
         int requiredPower;
         ItemStack staff = player.getCurrentEquippedItem();
-        requiredPower = (int) (getDistance(player, coord) * source.getPowerCostPerBlockTraveledRF());
+        requiredPower = getPower(player, source, coord, 0F);
         int canUsePower = getEnergyInTravelItem(staff);
         if (requiredPower > canUsePower) {
             // make sure chat is sent only once per trial
@@ -685,6 +686,10 @@ public class TravelController {
             return -1;
         }
         return requiredPower;
+    }
+
+    private int getPower(EntityPlayer player, TravelSource source, BlockCoord coord, float distanceWavier) {
+        return (int) ((getDistance(player, coord) + distanceWavier) * source.getPowerCostPerBlockTraveledRF());
     }
 
     private boolean isInRangeTarget(EntityPlayer player, BlockCoord bc, float maxSq) {
