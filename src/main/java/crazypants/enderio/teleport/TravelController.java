@@ -111,42 +111,54 @@ public class TravelController {
         }
     }
 
-    public boolean validatePacketTravelEvent(EntityPlayerMP toTp, int x, int y, int z, int powerUse,
+    /**
+     * @return the error message, or null if the packet is valid.
+     */
+    public String validatePacketTravelEvent(EntityPlayerMP toTp, int x, int y, int z, int powerUse,
             boolean conserveMotion, TravelSource source) {
         BlockCoord target = new BlockCoord(x, y, z);
         double dist = getDistanceSquared(toTp, target);
         // allow 15% overshoot to account for rounding
-        if (dist * 100 > source.getMaxDistanceTravelledSq() * 115) return false;
-        if (powerUse < getRequiredPower(toTp, source, target)) return false;
+        if (dist * 100 > source.getMaxDistanceTravelledSq() * 115) return "dist check fail";
+        if (getRequiredPower(toTp, source, target) > powerUse) return "power use to little";
         ItemStack equippedItem = toTp.getCurrentEquippedItem();
         switch (source) {
             case TELEPAD:
                 // this source is invalid for this type of packet
-                return false;
+                return "invalid travel source";
             case BLOCK:
                 // this source is only triggered when player is on any active travel anchor
                 BlockCoord on = getActiveTravelBlock(toTp);
-                if (on == null) return false;
+                if (on == null) return "on anchor is null";
                 // target must be a valid selectedCoord
                 // selectedCoord can either be a block right above/below when the player is on anchor...
-                if (on.x == x && on.z == z) return true;
+                if (on.x == x && on.z == z) return null;
                 // or another anchor
                 TileEntity maybeAnchor = target.getTileEntity(toTp.worldObj);
-                if (!(maybeAnchor instanceof ITravelAccessable)) return false;
+                if (!(maybeAnchor instanceof ITravelAccessable)) return "not anchor";
                 ITravelAccessable anchor = (ITravelAccessable) maybeAnchor;
-                return anchor.canBlockBeAccessed(toTp) || !isValidTarget(toTp, target, TravelSource.BLOCK);
+                if (!anchor.canBlockBeAccessed(toTp) && isValidTarget(toTp, target, TravelSource.BLOCK)) {
+                    return "not valid target";
+                }
+                return null;
             case STAFF:
             case STAFF_BLINK:
-                if (equippedItem == null || !(equippedItem.getItem() instanceof IItemOfTravel)) return false;
-                if (!((IItemOfTravel) equippedItem.getItem()).isActive(toTp, equippedItem)) return false;
+                if (equippedItem == null || !(equippedItem.getItem() instanceof IItemOfTravel)) return "not staff";
+                if (!((IItemOfTravel) equippedItem.getItem()).isActive(toTp, equippedItem)) return "staff not active";
                 int energy = ((IItemOfTravel) equippedItem.getItem()).canExtractInternal(equippedItem, powerUse);
-                return energy == -1 || energy == powerUse;
+                if (energy != -1 && energy != powerUse) {
+                    return "not enough power";
+                }
+                return null;
             case TELEPORT_STAFF_BLINK:
             case TELEPORT_STAFF:
                 // tp staff is creative version of traveling staff
                 // no energy check or anything else needed
                 // but the player must actually be equipped with one of these
-                return equippedItem != null && equippedItem.getItem() instanceof ItemTeleportStaff;
+                if (equippedItem != null && equippedItem.getItem() instanceof ItemTeleportStaff) {
+                    return "not staff";
+                }
+                return null;
             default:
                 throw new AssertionError("unidentified travel source");
         }
