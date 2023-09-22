@@ -157,9 +157,9 @@ public class TravelController {
                 // no energy check or anything else needed
                 // but the player must actually be equipped with one of these
                 if (equippedItem != null && equippedItem.getItem() instanceof ItemTeleportStaff) {
-                    return "not staff";
+                    return null;
                 }
-                return null;
+                return "not staff";
             default:
                 throw new AssertionError("unidentified travel source");
         }
