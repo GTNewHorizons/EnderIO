@@ -55,11 +55,10 @@ public class ConduitDisplayMode {
      * Use this constructor if you have custom display logic, it will use {@code IConduit.class} as the conduitType, and
      * the passed name as the override name.
      *
-     * @see #ConduitDisplayMode(Class, IWidgetIcon, IWidgetIcon)
-     *
      * @param name             The override name.
      * @param widgetSelected   The widget to render when this type is selected.
      * @param widgetUnselected The widget to render when this type is unselected.
+     * @see #ConduitDisplayMode(Class, IWidgetIcon, IWidgetIcon)
      */
     public ConduitDisplayMode(String name, IWidgetIcon widgetSelected, IWidgetIcon widgetUnselected) {
         this(IConduit.class, widgetSelected, widgetUnselected);

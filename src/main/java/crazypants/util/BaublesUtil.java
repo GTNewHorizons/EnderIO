@@ -66,7 +66,7 @@ public class BaublesUtil {
 
     /**
      * Do NOT modify this inventory on the client side of a singleplayer game!
-     *
+     * <p>
      * Wrap it in a ShadowInventory if you need to.
      */
     public IInventory getBaubles(EntityPlayer player) {

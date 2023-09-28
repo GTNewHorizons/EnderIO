@@ -2,7 +2,7 @@ package crazypants.enderio.item;
 
 import static crazypants.enderio.material.Alloy.*;
 import static crazypants.enderio.material.Material.VIBRANT_CYSTAL;
-import static crazypants.enderio.material.endergy.AlloyEndergy.*;
+import static crazypants.enderio.material.endergy.AlloyEndergy.STELLAR_ALLOY;
 import static crazypants.util.RecipeUtil.addShaped;
 
 import net.minecraft.init.Blocks;

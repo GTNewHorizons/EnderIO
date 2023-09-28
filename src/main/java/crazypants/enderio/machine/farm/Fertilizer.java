@@ -120,7 +120,6 @@ public enum Fertilizer {
     /**
      * Returns the singleton instance for the fertilizer that was given as parameter. If the given item is no
      * fertilizer, it will return an instance of Fertilizer.None.
-     *
      */
     public static Fertilizer getInstance(ItemStack stack) {
         for (Fertilizer fertilizer : validFertilizers) {
@@ -144,7 +143,7 @@ public enum Fertilizer {
 
     /**
      * Tries to apply the given item on the given block using the type-specific method. SFX is played on success.
-     *
+     * <p>
      * If the item was successfully applied, the stacksize will be decreased if appropriate. The caller will need to
      * check for stacksize 0 and null the inventory slot if needed.
      *

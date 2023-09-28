@@ -9,7 +9,10 @@ import com.enderio.core.common.vecmath.VecmathUtil;
 
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.network.PacketHandler;
-import crazypants.enderio.power.*;
+import crazypants.enderio.power.Capacitors;
+import crazypants.enderio.power.ICapacitor;
+import crazypants.enderio.power.IInternalPoweredTile;
+import crazypants.enderio.power.PowerHandlerUtil;
 
 public abstract class AbstractPoweredMachineEntity extends AbstractMachineEntity implements IInternalPoweredTile {
 

@@ -19,7 +19,6 @@ import crazypants.enderio.conduit.item.NetworkedInventory;
 import io.netty.buffer.ByteBuf;
 
 /**
- *
  * @author matthias
  */
 public class PowerItemFilter implements IItemFilter {

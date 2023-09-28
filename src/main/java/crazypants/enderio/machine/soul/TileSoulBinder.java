@@ -151,7 +151,7 @@ public class TileSoulBinder extends AbstractPoweredTaskEntity implements IHaveEx
 
     /**
      * Computes the required amount of XP to start the current recipe.
-     * 
+     *
      * @return 0 if no XP is required, negative when more than required XP is stored.
      */
     private int getXPRequired() {

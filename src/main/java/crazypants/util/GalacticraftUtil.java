@@ -10,9 +10,8 @@ import crazypants.enderio.Log;
 
 /**
  * This is a near-verbatim copy of Galacticraft's API class 'AccessInventoryGC'.
- *
+ * <p>
  * We don't need the extended functionality and already have more APIs included than is good for our sanity.
- *
  */
 public class GalacticraftUtil {
 

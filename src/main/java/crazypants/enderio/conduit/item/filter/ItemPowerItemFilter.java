@@ -13,7 +13,6 @@ import crazypants.enderio.EnderIOTab;
 import crazypants.enderio.ModObject;
 
 /**
- *
  * @author matthias
  */
 public class ItemPowerItemFilter extends Item implements IItemFilterUpgrade, IResourceTooltipProvider {

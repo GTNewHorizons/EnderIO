@@ -20,7 +20,6 @@ import crazypants.enderio.Log;
 
 /**
  * This is not in the FakePlayer hierarchy for reasons.
- *
  */
 public class FakeFarmPlayer extends EntityPlayerMP {
 

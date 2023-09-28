@@ -2,7 +2,8 @@ package crazypants.enderio.conduit;
 
 import static crazypants.enderio.ModObject.blockPainter;
 import static crazypants.enderio.material.Alloy.*;
-import static crazypants.enderio.material.Material.*;
+import static crazypants.enderio.material.Material.CONDUIT_BINDER;
+import static crazypants.enderio.material.Material.PHASED_IRON_NUGGET;
 import static crazypants.enderio.material.endergy.AlloyEndergy.*;
 import static crazypants.util.RecipeUtil.addShaped;
 

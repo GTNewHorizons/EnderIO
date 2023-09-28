@@ -1,6 +1,6 @@
 package crazypants.enderio.conduit.gui.item;
 
-import java.awt.*;
+import java.awt.Color;
 
 import javax.annotation.Nonnull;
 

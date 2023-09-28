@@ -41,9 +41,9 @@ public class AbstractMachineRenderer implements ISimpleBlockRenderingHandler, II
     private CustomCubeRenderer ccr = new CustomCubeRenderer();
 
     private PaintedBlockRenderer paintedRenderer = new PaintedBlockRenderer(this.getRenderId(), null); // passthrough
-                                                                                                       // renderer for
-                                                                                                       // paintable
-                                                                                                       // machines
+    // renderer for
+    // paintable
+    // machines
 
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type) {

@@ -12,7 +12,6 @@ import crazypants.enderio.machine.recipe.RecipeBonusType;
  * progress' recipe for a machine is stored to and retrieved from a machines TileEntity soley based on its UID.
  *
  * @author cp
- *
  */
 public interface IMachineRecipe {
 
@@ -50,7 +49,7 @@ public interface IMachineRecipe {
     /**
      * Returns the output from a single 'cycle' of the recipe (even if the inputs would allow the recipe to be crafted
      * several times).
-     *
+     * <p>
      * This method must not return null. If no output is generated an empty array should be returned.
      *
      * @param randomChance a random number to be used as a seed for determining whether '% chance' outputs are returned.

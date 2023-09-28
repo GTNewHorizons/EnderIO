@@ -301,7 +301,7 @@ public class TileInventoryPanel extends AbstractMachineEntity implements IFluidH
 
     /**
      * This is called by PacketUpdateExtractionDisabled on the client side
-     * 
+     *
      * @param extractionDisabled if extraction is disabled
      */
     void updateExtractionDisabled(boolean extractionDisabled) {
