@@ -88,7 +88,7 @@ public abstract class AbstractConduit implements IConduit {
      * If this is true, it will trigger a reconnection on the next Tick.
      * <p>
      * Use the method needUpdateConnections() instead of setting this to true.
-     * 
+     *
      * @see needUpdateConnections()
      */
     private boolean needUpdateConnections = false;
@@ -153,7 +153,7 @@ public abstract class AbstractConduit implements IConduit {
     }
 
     protected ConnectionMode getDefaultConnectionMode() {
-        return ConnectionMode.IN_OUT;
+        return ConnectionMode.INPUT;
     }
 
     @Override
