@@ -83,12 +83,14 @@ public class PacketTravelEvent implements IMessage, IMessageHandler<PacketTravel
 
         TravelSource source = TravelSource.values()[message.source];
 
-        if (!TravelController.instance
-                .validatePacketTravelEvent(toTp, x, y, z, message.powerUse, message.conserveMotion, source)) {
+        String error = TravelController.instance
+                .validatePacketTravelEvent(toTp, x, y, z, message.powerUse, message.conserveMotion, source);
+        if (error != null) {
             Log.LOGGER.warn(
                     Log.securityMarker,
-                    "Player {} tried to tp without valid prereq.",
-                    ctx.getServerHandler().playerEntity.getGameProfile());
+                    "Player {} tried to tp without valid prereq: {}",
+                    ctx.getServerHandler().playerEntity.getGameProfile(),
+                    error);
             return null;
         }
 
