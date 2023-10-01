@@ -30,7 +30,7 @@ public interface IItemFilter {
 
     /**
      * Checks if the given item passes the filter or not.
-     * 
+     *
      * @param inv  the attached inventory - or null when used without an inventory (eg for a GUI)
      * @param item the item to check
      * @return true if the item is allowed to pass

@@ -4,9 +4,8 @@ import net.minecraft.entity.player.EntityPlayer;
 
 /**
  * Values taken from OpenMods EnchantmentUtils to ensure consistent behavior
- * 
- * @see {@link https://github.com/OpenMods/OpenModsLib/blob/master/src/main/java/openmods/utils/EnchantmentUtils.java}
  *
+ * @see {@link https://github.com/OpenMods/OpenModsLib/blob/master/src/main/java/openmods/utils/EnchantmentUtils.java}
  */
 public class XpUtil {
 

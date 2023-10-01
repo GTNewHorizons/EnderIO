@@ -1,8 +1,6 @@
 package crazypants.enderio;
 
-import static crazypants.enderio.EnderIO.MODID;
-import static crazypants.enderio.EnderIO.MOD_NAME;
-import static crazypants.enderio.EnderIO.VERSION;
+import static crazypants.enderio.EnderIO.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -788,7 +786,7 @@ public class EnderIO {
     @EventHandler
     public void loadComplete(FMLLoadCompleteEvent event) {
         processImc(FMLInterModComms.fetchRuntimeMessages(this)); // Some mods send IMCs during PostInit, so we catch
-                                                                 // them here.
+        // them here.
     }
 
     private static String getXPJuiceName() {

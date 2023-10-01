@@ -601,19 +601,13 @@ public class ItemConduit extends AbstractConduit implements IItemConduit {
     }
 
     @Override
-    protected ConnectionMode getDefaultConnectionMode() {
-        return ConnectionMode.INPUT;
-    }
-
-    @Override
     public Class<? extends IConduit> getBaseConduitType() {
         return IItemConduit.class;
     }
 
     @Override
     public ItemStack createItem() {
-        ItemStack result = new ItemStack(EnderIO.itemItemConduit, 1, metaData);
-        return result;
+        return new ItemStack(EnderIO.itemItemConduit, 1, metaData);
     }
 
     @Override

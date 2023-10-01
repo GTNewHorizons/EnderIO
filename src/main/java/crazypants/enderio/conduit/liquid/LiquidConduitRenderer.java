@@ -1,7 +1,5 @@
 package crazypants.enderio.conduit.liquid;
 
-import static com.enderio.core.client.render.CubeRenderer.*;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -19,6 +17,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.enderio.core.client.render.BoundingBox;
+import com.enderio.core.client.render.CubeRenderer;
 import com.enderio.core.client.render.RenderUtil;
 import com.enderio.core.common.util.ForgeDirectionOffsets;
 import com.enderio.core.common.vecmath.Vector2f;
@@ -96,12 +95,12 @@ public class LiquidConduitRenderer extends DefaultConduitRenderer implements IRe
             List<Vertex> corners = component.bound
                     .getCornersWithUvForFace(component.dir, tex.getMinU(), tex.getMaxU(), tex.getMinV(), tex.getMaxV());
             for (Vertex c : corners) {
-                addVecWithUV(c.xyz, c.uv.x, c.uv.y);
+                CubeRenderer.addVecWithUV(c.xyz, c.uv.x, c.uv.y);
             }
             // back face
             for (int i = corners.size() - 1; i >= 0; i--) {
                 Vertex c = corners.get(i);
-                addVecWithUV(c.xyz, c.uv.x, c.uv.y);
+                CubeRenderer.addVecWithUV(c.xyz, c.uv.x, c.uv.y);
             }
         }
     }
@@ -304,7 +303,7 @@ public class LiquidConduitRenderer extends DefaultConduitRenderer implements IRe
         float transY = (bound.sizeY() - sizeY) / 2;
 
         Vector3d translation = new Vector3d(0, transY, 0);
-        setupVertices(bound.translate(translation));
+        CubeRenderer.setupVertices(bound.translate(translation));
     }
 
     private void calculateRatios(LiquidConduit conduit) {

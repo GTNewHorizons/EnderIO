@@ -94,11 +94,10 @@ public interface ITelePad extends ITravelAccessable {
     /**
      * Util method to set all coords using a {@link BlockCoord} object.
      *
+     * @param coords The coords to set this telepad to.
      * @see #setX(int)
      * @see #setY(int)
      * @see #setZ(int)
-     *
-     * @param coords The coords to set this telepad to.
      */
     void setCoords(BlockCoord coords);
 

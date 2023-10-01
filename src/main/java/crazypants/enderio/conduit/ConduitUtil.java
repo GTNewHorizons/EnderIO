@@ -92,7 +92,7 @@ public class ConduitUtil {
             }
         }
         if (con.getNetwork() != null) { // this should have been destroyed when destroying the neighbours network but
-                                        // lets just make
+            // lets just make
             // sure
             con.getNetwork().destroyNetwork();
         }

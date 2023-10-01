@@ -50,7 +50,6 @@ import crazypants.enderio.conduit.power.IPowerConduit;
 import crazypants.enderio.conduit.redstone.IRedstoneConduit;
 import crazypants.enderio.conduit.redstone.InsulatedRedstoneConduit;
 import crazypants.enderio.config.Config;
-import li.cil.oc.api.network.*;
 import li.cil.oc.api.network.Message;
 import li.cil.oc.api.network.Node;
 import mekanism.api.gas.Gas;

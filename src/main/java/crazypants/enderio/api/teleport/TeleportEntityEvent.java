@@ -14,9 +14,8 @@ import cpw.mods.fml.common.eventhandler.Cancelable;
  * <li>Staff of travelling</li>
  * <li>Telepad</li>
  * </ul>
- *
+ * <p>
  * As well as any externally added teleports, assuming they fire this event manually.
- *
  */
 @Cancelable
 public class TeleportEntityEvent extends EntityEvent {

@@ -37,7 +37,7 @@ public class NaturaBerryFarmer extends PickableFarmer {
             block = farm.getBlock(checkBlock);
 
             if (super.canHarvest(farm, bc, block, meta)) { // redundant check because our canHarvest checks all 5 blocks
-                                                           // so a bush may be invalid in
+                // so a bush may be invalid in
                 // the stack of 5
                 IHarvestResult blockRes = super.harvestBlock(farm, checkBlock, block, meta);
 

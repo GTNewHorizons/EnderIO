@@ -16,7 +16,7 @@ public interface IWailaInfoProvider {
 
     /**
      * Adds the block's info to the WAILA information
-     * 
+     *
      * @param tooltip - current list of strings in the WAILA body
      * @param world
      * @param x
