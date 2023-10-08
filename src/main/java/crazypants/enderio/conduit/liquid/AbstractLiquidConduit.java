@@ -76,6 +76,11 @@ public abstract class AbstractLiquidConduit extends AbstractConduit implements I
     }
 
     @Override
+    protected ConnectionMode getDefaultConnectionMode() {
+        return ConnectionMode.INPUT;
+    }
+
+    @Override
     public Class<? extends IConduit> getBaseConduitType() {
         return ILiquidConduit.class;
     }
