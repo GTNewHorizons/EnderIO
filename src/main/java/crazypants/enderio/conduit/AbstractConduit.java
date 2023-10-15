@@ -153,7 +153,7 @@ public abstract class AbstractConduit implements IConduit {
     }
 
     protected ConnectionMode getDefaultConnectionMode() {
-        return ConnectionMode.INPUT;
+        return ConnectionMode.IN_OUT;
     }
 
     @Override
