@@ -54,11 +54,6 @@ public abstract class AbstractGasConduit extends AbstractConduit implements IGas
     }
 
     @Override
-    protected ConnectionMode getDefaultConnectionMode() {
-        return ConnectionMode.INPUT;
-    }
-
-    @Override
     public Class<? extends IConduit> getBaseConduitType() {
         return IGasConduit.class;
     }
