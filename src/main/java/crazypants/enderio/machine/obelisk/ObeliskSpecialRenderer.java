@@ -114,7 +114,7 @@ public class ObeliskSpecialRenderer<T extends TileEntity> extends TileEntitySpec
 
     protected void renderItemStack(T te, World world, double x, double y, double z, float tick) {
         if (ei == null) {
-            ei = new EntityItem(world, 0, 0, 0, getFloatingItem(te));
+            ei = new EntityItem(null, 0, 0, 0, getFloatingItem(te));
         }
 
         ei.setEntityItemStack(getFloatingItem(te));
