@@ -125,8 +125,6 @@ public class WailaCompat implements IWailaDataProvider {
 
     public static final WailaCompat INSTANCE = new WailaCompat();
 
-    private static IWailaDataAccessor _accessor = null;
-
     public static void load(IWailaRegistrar registrar) {
         registrar.registerStackProvider(INSTANCE, IFacade.class);
         registrar.registerStackProvider(INSTANCE, BlockDarkSteelAnvil.class);
@@ -189,8 +187,6 @@ public class WailaCompat implements IWailaDataProvider {
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
-
-        _accessor = accessor;
 
         EntityPlayer player = accessor.getPlayer();
         MovingObjectPosition pos = accessor.getPosition();
@@ -267,7 +263,7 @@ public class WailaCompat implements IWailaDataProvider {
         }
 
         if (te instanceof IConduitBundle) {
-            getWailaBodyConduitBundle(itemStack, currenttip);
+            getWailaBodyConduitBundle(itemStack, currenttip, accessor);
 
         } else if (te instanceof IInternalPoweredTile && block == accessor.getBlock() && !(te instanceof TileCapBank)) {
             IInternalPoweredTile power = (IInternalPoweredTile) te;
@@ -297,13 +293,13 @@ public class WailaCompat implements IWailaDataProvider {
         return currenttip;
     }
 
-    private void getWailaBodyConduitBundle(ItemStack itemStack, List<String> currenttip) {
+    private void getWailaBodyConduitBundle(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor) {
         if (itemStack == null) {
             return;
         }
 
         if (itemStack.getItem() == EnderIO.itemPowerConduit || itemStack.getItem() == EnderIO.itemPowerConduitEndergy) {
-            NBTTagCompound nbtRoot = _accessor.getNBTData();
+            NBTTagCompound nbtRoot = accessor.getNBTData();
             if (nbtRoot.hasKey("storedEnergyRF")) {
                 int stored = nbtRoot.getInteger("storedEnergyRF");
                 int max = nbtRoot.getInteger("maxStoredRF");
@@ -320,7 +316,7 @@ public class WailaCompat implements IWailaDataProvider {
             }
 
         } else if (itemStack.getItem() == EnderIO.itemLiquidConduit) {
-            NBTTagCompound nbtRoot = _accessor.getNBTData();
+            NBTTagCompound nbtRoot = accessor.getNBTData();
             if (nbtRoot.hasKey("fluidLocked") && nbtRoot.hasKey("FluidName")) {
                 boolean fluidTypeLocked = nbtRoot.getBoolean("fluidLocked");
                 FluidStack fluid = FluidStack.loadFluidStackFromNBT(nbtRoot);
@@ -352,7 +348,7 @@ public class WailaCompat implements IWailaDataProvider {
             }
 
         } else if (itemStack.getItem() == EnderIO.itemMEConduit) {
-            NBTTagCompound nbtRoot = _accessor.getNBTData();
+            NBTTagCompound nbtRoot = accessor.getNBTData();
             if (nbtRoot.hasKey("isDense")) {
                 boolean isDenseUltra = nbtRoot.getBoolean("isDenseUltra");
                 boolean isDense = nbtRoot.getBoolean("isDense");
@@ -411,7 +407,4 @@ public class WailaCompat implements IWailaDataProvider {
         return tag;
     }
 
-    public static NBTTagCompound getNBTData() {
-        return _accessor.getNBTData();
-    }
 }
