@@ -4,12 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.world.WorldEvent;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import crazypants.enderio.machine.capbank.TileCapBank;
 
 public class ClientNetworkManager {
 
     private static final ClientNetworkManager instance = new ClientNetworkManager();
+
+    static {
+        MinecraftForge.EVENT_BUS.register(instance);
+    }
 
     public static ClientNetworkManager getInstance() {
         return instance;
@@ -52,5 +59,13 @@ public class ClientNetworkManager {
     public void addToNetwork(int id, TileCapBank tileCapBank) {
         CapBankClientNetwork network = getOrCreateNetwork(id);
         network.addMember(tileCapBank);
+    }
+
+    @SubscribeEvent
+    public void onWorldUnload(WorldEvent.Unload event) {
+        if (event.world.isRemote) {
+            networks.forEach((id, network) -> network.destroyNetwork());
+            networks.clear();
+        }
     }
 }
