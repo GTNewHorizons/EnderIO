@@ -641,8 +641,8 @@ public class BlockConduitBundle extends BlockEio
 
     @Override
     public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {
-        ItemStack equipped = player.getCurrentEquippedItem();
-        if (!player.isSneaking() || equipped == null || equipped.getItem() != EnderIO.itemYetaWench) {
+        ITool tool = ToolUtil.getEquippedTool(player);
+        if (!player.isSneaking() || tool == null || !tool.canUse(player.getCurrentEquippedItem(), player, x, y, z)) {
             return;
         }
         ConduitUtil.openConduitGui(world, x, y, z, player);
