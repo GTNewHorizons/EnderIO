@@ -489,11 +489,7 @@ public abstract class AbstractMachineEntity extends TileEntityEio
         if (stack == null || stack.stackTagCompound == null) {
             return;
         }
-        NBTTagCompound root = stack.stackTagCompound;
-        if (!root.hasKey("eio.abstractMachine")) {
-            return;
-        }
-        readCommon(root);
+        readCommon(stack.stackTagCompound);
     }
 
     @Override
