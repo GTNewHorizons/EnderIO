@@ -1199,12 +1199,6 @@ public final class Config {
                 sectionStaff.name,
                 travelStaffBlinkBlackList,
                 "Lists the blocks that cannot be teleported through in the form 'modID:blockName'");
-        validateTravelEventServerside = config.get(
-                sectionStaff.name,
-                "validateTravelEventServerside",
-                validateTravelEventServerside,
-                "If set to true: Server will validate if player actually can teleport. False will allow hacking, but also allows Staff of Traveling Keybind mod to work.")
-                .getBoolean(validateTravelEventServerside);
         travelAnchorZoomScale = config.getFloat(
                 "travelAnchorZoomScale",
                 sectionStaff.name,
@@ -1220,6 +1214,13 @@ public final class Config {
                         + "You can now teleport onto the roof. "
                         + "This config is experimental, so if you encounter any strange behavior, please report to GTNH developer.")
                 .getBoolean(travelStaffSearchOptimize);
+
+        validateTravelEventServerside = config.get(
+                sectionStaff.name,
+                "validateTravelEventServerside",
+                validateTravelEventServerside,
+                "If set to true: Server will validate if player actually can teleport. False will allow hacking, but also allows Staff of Traveling Keybind mod to work.")
+                .getBoolean(validateTravelEventServerside);
 
         teleportStaffMaxDistance = config
                 .get(
