@@ -161,6 +161,7 @@ public final class Config {
     public static String[] travelStaffBlinkBlackList = new String[] { "minecraft:bedrock", "Thaumcraft:blockWarded" };
     public static float travelAnchorZoomScale = 0.2f;
     public static boolean travelStaffSearchOptimize = true;
+    public static boolean validateTravelEventServerside = true;
 
     /** The max distance for travelling to a Travel Anchor. */
     public static int teleportStaffMaxDistance = 2048;
@@ -1198,6 +1199,12 @@ public final class Config {
                 sectionStaff.name,
                 travelStaffBlinkBlackList,
                 "Lists the blocks that cannot be teleported through in the form 'modID:blockName'");
+        validateTravelEventServerside = config.get(
+                sectionStaff.name,
+                "validateTravelEventServerside",
+                validateTravelEventServerside,
+                "If set to true: Server will validate if player actually can teleport. False will allow hacking, but also allows Staff of Traveling Keybind mod to work.")
+                .getBoolean(validateTravelEventServerside);
         travelAnchorZoomScale = config.getFloat(
                 "travelAnchorZoomScale",
                 sectionStaff.name,
