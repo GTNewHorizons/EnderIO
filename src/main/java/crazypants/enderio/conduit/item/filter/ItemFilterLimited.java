@@ -221,7 +221,7 @@ public class ItemFilterLimited extends ItemFilter {
                             stack.stackSize = MathHelper
                                     .clamp(stack.stackSize + adjustOnShift - 1, 1, stack.getMaxStackSize());
                         }
-                    } else if (Mouse.isButtonDown(1) || Mouse.getEventDWheel() == -1) {
+                    } else if (Mouse.isButtonDown(1) || Mouse.getEventDWheel() < 0) {
                         if (stack.stackSize + 1 == 1) {
                             stack.stackSize++;
                         } else {
