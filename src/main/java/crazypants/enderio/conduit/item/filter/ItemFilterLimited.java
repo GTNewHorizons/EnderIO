@@ -94,17 +94,7 @@ public class ItemFilterLimited extends ItemFilter {
     }
 
     public int getInsertLimitInv(ISidedInventory inv, ItemStack item) {
-        if (item == null || item.getItem() == null) {
-            return 0;
-        }
-        int count = 0;
-        for (int i = 0; i < inv.getSizeInventory(); i++) {
-            ItemStack invStack = inv.getStackInSlot(i);
-            if (invStack != null && itemStackMatched(invStack, item, i)) {
-                count += invStack.stackSize;
-            }
-        }
-        return count - getMaxCountThatCanPassFilter(item);
+        return -getInsertLimit(inv, item);
     }
 
     public boolean doesCountPassFilter(int maxCount) {
