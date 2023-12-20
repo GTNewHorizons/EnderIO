@@ -214,7 +214,7 @@ public class ItemFilterLimited extends ItemFilter {
                 stack = stack.copy();
                 System.out.println("StackSize" + stack.stackSize);
                 if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-                    if (Mouse.isButtonDown(0) || Mouse.getEventDWheel() == 1) {
+                    if (Mouse.isButtonDown(0) || Mouse.getEventDWheel() > 0) {
                         if (stack.stackSize - 1 == 1) {
                             stack.stackSize += adjustOnShift - 2;
                         } else {
