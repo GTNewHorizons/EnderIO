@@ -93,6 +93,11 @@ item.itemExistingItemFilter.tooltip.detailed.line5=content to the snapshot
 enderio.item.itemExistingItemFilter.filterUpdated=New items have been added to the snapshot
 enderio.item.itemExistingItemFilter.filterNotUpdated=The snapshot already covers all items in the inventory
 
+item.itemLimitedItemFilter.name=Limited Item Filter
+item.itemLimitedItemFilter.tooltip.basic.line1=Upgrade for item conduits
+item.itemLimitedItemFilter.tooltip.detailed.line1=Filters items based on
+item.itemLimitedItemFilter.tooltip.detailed.line2=their stack size
+
 item.itemModItemFilter.name=Mod Item Filter
 item.itemModItemFilter.tooltip.basic.line1=Upgrade for item conduits
 item.itemModItemFilter.tooltip.detailed.line1=Selects only items for a specified

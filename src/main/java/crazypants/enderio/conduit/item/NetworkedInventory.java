@@ -22,6 +22,7 @@ import com.enderio.core.common.util.RoundRobinIterator;
 
 import crazypants.enderio.conduit.ConnectionMode;
 import crazypants.enderio.conduit.item.filter.IItemFilter;
+import crazypants.enderio.conduit.item.filter.ItemFilterLimited;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.invpanel.TileInventoryPanel;
 
@@ -155,6 +156,7 @@ public class NetworkedInventory {
         int numSlots = slotIndices.length;
         ItemStack extractItem = null;
         int maxExtracted = con.getMaximumExtracted(conDir);
+        final IItemFilter filter = con.getInputFilter(conDir);
 
         int slot = -1;
         int slotChecksPerTick = Math.min(numSlots, ItemConduitNetwork.MAX_SLOT_CHECK_PER_TICK);
@@ -162,12 +164,23 @@ public class NetworkedInventory {
             int index = nextSlot(numSlots);
             slot = slotIndices[index];
             ItemStack item = getInventory().getStackInSlot(slot);
-            if (canExtractItem(item)) {
-                extractItem = item.copy();
-                if (getInventory().canExtractItem(slot, extractItem, inventorySide)) {
-                    if (doTransfer(extractItem, slot, maxExtracted)) {
-                        setNextStartingSlot(slot);
-                        return true;
+            if (item != null) {
+                if (filter != null && filter.isLimited()) {
+                    final int count = ((ItemFilterLimited) filter).getInsertLimitInv(getInventory(), item);
+                    if (count <= 0) {
+                        continue;
+                    } else if (count < item.stackSize) {
+                        item = item.copy();
+                        item.stackSize = count;
+                    }
+                }
+                if (canExtractItem(item)) {
+                    extractItem = item.copy();
+                    if (getInventory().canExtractItem(slot, extractItem, inventorySide)) {
+                        if (doTransfer(extractItem, slot, maxExtracted)) {
+                            setNextStartingSlot(slot);
+                            return true;
+                        }
                     }
                 }
             }
@@ -183,7 +196,11 @@ public class NetworkedInventory {
         if (filter == null) {
             return true;
         }
-        return filter.doesItemPassFilter(this, itemStack);
+        if (filter.isLimited()) {
+            return filter.isValid() && ((ItemFilterLimited) filter).doesItemPassFilterInv(this, itemStack);
+        } else {
+            return filter.doesItemPassFilter(this, itemStack);
+        }
     }
 
     private boolean doTransfer(ItemStack extractedItem, int slot, int maxExtract) {
@@ -278,7 +295,20 @@ public class NetworkedInventory {
         }
         IItemFilter filter = con.getOutputFilter(conDir);
         if (filter != null) {
-            if (!filter.doesItemPassFilter(this, item)) {
+            if (filter.isLimited()) {
+                final int count = filter.getMaxCountThatCanPassFilter(item);
+                if (count <= 0) {
+                    return 0;
+                } else {
+                    final int maxInsert = ((ItemFilterLimited) filter).getInsertLimit(getInventory(), item);
+                    if (maxInsert <= 0) {
+                        return 0;
+                    } else if (maxInsert < item.stackSize) {
+                        item = item.copy();
+                        item.stackSize = maxInsert;
+                    }
+                }
+            } else if (!filter.doesItemPassFilter(this, item)) {
                 return 0;
             }
         }

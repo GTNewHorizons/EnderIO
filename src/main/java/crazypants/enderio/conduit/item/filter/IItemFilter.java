@@ -41,9 +41,17 @@ public interface IItemFilter {
 
     boolean isValid();
 
+    default boolean isLimited() {
+        return false;
+    }
+
     boolean isSticky();
 
     void createGhostSlots(List<GhostSlot> slots, int xOffset, int yOffset, Runnable cb);
+
+    default int getMaxCountThatCanPassFilter(ItemStack item) {
+        return 1;
+    }
 
     int getSlotCount();
 

@@ -98,7 +98,7 @@ public class ItemFilter implements IInventory, IItemFilter {
         return isBlacklist ? !allow : allow;
     }
 
-    private boolean itemMatched(ItemStack item) {
+    protected boolean itemMatched(ItemStack item) {
         if (item == null) {
             return false;
         }
@@ -145,7 +145,7 @@ public class ItemFilter implements IInventory, IItemFilter {
         return matched;
     }
 
-    private boolean isOreDicMatch(int filterItemIndex, ItemStack item) {
+    protected boolean isOreDicMatch(int filterItemIndex, ItemStack item) {
         int[] ids1 = getCachedIds(filterItemIndex);
         if (ids1 == null || ids1.length == 0) {
             return false;
@@ -164,7 +164,7 @@ public class ItemFilter implements IInventory, IItemFilter {
         return false;
     }
 
-    private boolean isNBTMatch(ItemStack filter, ItemStack item) {
+    protected boolean isNBTMatch(ItemStack filter, ItemStack item) {
         if (filter.stackTagCompound == null && (item.stackTagCompound == null || item.stackTagCompound.hasNoTags()))
             return true;
         if (filter.stackTagCompound == null || item.stackTagCompound == null) return false;
@@ -203,7 +203,7 @@ public class ItemFilter implements IInventory, IItemFilter {
         return !isItemListEmpty();
     }
 
-    private boolean isItemListEmpty() {
+    protected boolean isItemListEmpty() {
         for (ItemStack item : items) {
             if (item != null) {
                 return false;
