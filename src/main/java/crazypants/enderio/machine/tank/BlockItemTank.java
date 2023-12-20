@@ -71,14 +71,12 @@ public class BlockItemTank extends ItemBlockWithMetadata implements IAdvancedToo
         EnderIO.blockTank.addDetailedEntries(itemstack, entityplayer, list, flag);
     }
 
-    private static final FluidTank dummy = new SmartTank(FluidRegistry.WATER, 16000);
-
     private FluidTank loadTank(ItemStack stack) {
         if (stack.hasTagCompound()) {
             FluidTank tank = TileTank.loadTank(stack.getTagCompound());
-            return tank != null ? tank : dummy;
+            return tank != null ? tank : new SmartTank(FluidRegistry.WATER, 16000);
         }
-        return dummy;
+        return new SmartTank(FluidRegistry.WATER, 16000);
     }
 
     private void saveTank(ItemStack stack, FluidTank tank) {

@@ -1,6 +1,10 @@
 package crazypants.enderio.material;
 
-import static com.enderio.core.common.util.OreDictionaryHelper.*;
+import static com.enderio.core.common.util.OreDictionaryHelper.DUST_ENDERPEARL;
+import static com.enderio.core.common.util.OreDictionaryHelper.INGOT_COPPER;
+import static com.enderio.core.common.util.OreDictionaryHelper.INGOT_ENDERIUM;
+import static com.enderio.core.common.util.OreDictionaryHelper.INGOT_TIN;
+import static com.enderio.core.common.util.OreDictionaryHelper.isRegistered;
 
 public enum PowderIngot {
 

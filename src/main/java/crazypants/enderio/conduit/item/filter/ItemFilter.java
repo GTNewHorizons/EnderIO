@@ -165,7 +165,8 @@ public class ItemFilter implements IInventory, IItemFilter {
     }
 
     private boolean isNBTMatch(ItemStack filter, ItemStack item) {
-        if (filter.stackTagCompound == null && item.stackTagCompound == null) return true;
+        if (filter.stackTagCompound == null && (item.stackTagCompound == null || item.stackTagCompound.hasNoTags()))
+            return true;
         if (filter.stackTagCompound == null || item.stackTagCompound == null) return false;
         if (!filter.getTagCompound().hasKey("GEN")) return filter.stackTagCompound.equals(item.stackTagCompound);
         NBTTagCompound filterTag = (NBTTagCompound) filter.getTagCompound().copy();

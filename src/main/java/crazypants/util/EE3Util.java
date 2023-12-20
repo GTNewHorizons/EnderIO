@@ -1,6 +1,9 @@
 package crazypants.util;
 
-import static crazypants.enderio.material.Material.*;
+import static crazypants.enderio.material.Material.BINDER_COMPOSITE;
+import static crazypants.enderio.material.Material.CONDUIT_BINDER;
+import static crazypants.enderio.material.Material.PHASED_IRON_NUGGET;
+import static crazypants.enderio.material.Material.SILICON;
 
 import java.util.ArrayList;
 import java.util.Arrays;

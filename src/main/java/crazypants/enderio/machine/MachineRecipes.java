@@ -1,8 +1,19 @@
 package crazypants.enderio.machine;
 
 import static crazypants.enderio.EnderIO.itemBasicCapacitor;
-import static crazypants.enderio.material.Alloy.*;
-import static crazypants.enderio.material.Material.*;
+import static crazypants.enderio.material.Alloy.DARK_STEEL;
+import static crazypants.enderio.material.Alloy.ELECTRICAL_STEEL;
+import static crazypants.enderio.material.Alloy.END_STEEL;
+import static crazypants.enderio.material.Alloy.ENERGETIC_ALLOY;
+import static crazypants.enderio.material.Alloy.PHASED_GOLD;
+import static crazypants.enderio.material.Alloy.PHASED_IRON;
+import static crazypants.enderio.material.Alloy.REDSTONE_ALLOY;
+import static crazypants.enderio.material.Alloy.SOULARIUM;
+import static crazypants.enderio.material.Material.CONDUIT_BINDER;
+import static crazypants.enderio.material.Material.ENDER_CRYSTAL;
+import static crazypants.enderio.material.Material.PULSATING_CYSTAL;
+import static crazypants.enderio.material.Material.SILICON;
+import static crazypants.enderio.material.Material.VIBRANT_CYSTAL;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;

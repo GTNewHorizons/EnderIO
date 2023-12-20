@@ -1,6 +1,8 @@
 package crazypants.enderio;
 
-import static crazypants.enderio.EnderIO.*;
+import static crazypants.enderio.EnderIO.MODID;
+import static crazypants.enderio.EnderIO.MOD_NAME;
+import static crazypants.enderio.EnderIO.VERSION;
 
 import java.io.BufferedWriter;
 import java.io.File;

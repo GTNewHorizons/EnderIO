@@ -1,9 +1,28 @@
 package crazypants.enderio.material;
 
-import static crazypants.enderio.material.Alloy.*;
-import static crazypants.enderio.material.Material.*;
-import static crazypants.enderio.material.endergy.AlloyEndergy.*;
-import static crazypants.enderio.power.Capacitors.*;
+import static crazypants.enderio.material.Alloy.DARK_STEEL;
+import static crazypants.enderio.material.Alloy.END_STEEL;
+import static crazypants.enderio.material.Alloy.ENERGETIC_ALLOY;
+import static crazypants.enderio.material.Alloy.PHASED_GOLD;
+import static crazypants.enderio.material.Alloy.PHASED_IRON;
+import static crazypants.enderio.material.Alloy.SOULARIUM;
+import static crazypants.enderio.material.Material.BINDER_COMPOSITE;
+import static crazypants.enderio.material.Material.CONDUIT_BINDER;
+import static crazypants.enderio.material.Material.PRECIENT_CRYSTAL;
+import static crazypants.enderio.material.endergy.AlloyEndergy.CRYSTALLINE_ALLOY;
+import static crazypants.enderio.material.endergy.AlloyEndergy.ENERGETIC_SILVER;
+import static crazypants.enderio.material.endergy.AlloyEndergy.MELODIC_ALLOY;
+import static crazypants.enderio.material.endergy.AlloyEndergy.STELLAR_ALLOY;
+import static crazypants.enderio.material.endergy.AlloyEndergy.VIVID_ALLOY;
+import static crazypants.enderio.power.Capacitors.ACTIVATED_CAPACITOR;
+import static crazypants.enderio.power.Capacitors.BASIC_CAPACITOR;
+import static crazypants.enderio.power.Capacitors.CRYSTALLINE_CAPACITOR;
+import static crazypants.enderio.power.Capacitors.ENDERGETIC_CAPACITOR;
+import static crazypants.enderio.power.Capacitors.ENDERGISED_CAPACITOR;
+import static crazypants.enderio.power.Capacitors.ENDER_CAPACITOR;
+import static crazypants.enderio.power.Capacitors.MELODIC_CAPACITOR;
+import static crazypants.enderio.power.Capacitors.SILVER_CAPACITOR;
+import static crazypants.enderio.power.Capacitors.STELLAR_CAPACITOR;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,11 @@
 package crazypants.enderio.item;
 
-import static crazypants.enderio.material.Alloy.*;
+import static crazypants.enderio.material.Alloy.CONDUCTIVE_IRON;
+import static crazypants.enderio.material.Alloy.DARK_STEEL;
+import static crazypants.enderio.material.Alloy.ELECTRICAL_STEEL;
+import static crazypants.enderio.material.Alloy.END_STEEL;
+import static crazypants.enderio.material.Alloy.ENERGETIC_ALLOY;
+import static crazypants.enderio.material.Alloy.SOULARIUM;
 import static crazypants.enderio.material.Material.VIBRANT_CYSTAL;
 import static crazypants.enderio.material.endergy.AlloyEndergy.STELLAR_ALLOY;
 import static crazypants.util.RecipeUtil.addShaped;

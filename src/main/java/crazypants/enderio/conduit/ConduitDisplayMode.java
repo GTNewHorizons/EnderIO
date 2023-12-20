@@ -1,6 +1,15 @@
 package crazypants.enderio.conduit;
 
-import static crazypants.enderio.gui.IconEIO.*;
+import static crazypants.enderio.gui.IconEIO.CROSS;
+import static crazypants.enderio.gui.IconEIO.TICK;
+import static crazypants.enderio.gui.IconEIO.WRENCH_OVERLAY_FLUID;
+import static crazypants.enderio.gui.IconEIO.WRENCH_OVERLAY_FLUID_OFF;
+import static crazypants.enderio.gui.IconEIO.WRENCH_OVERLAY_ITEM;
+import static crazypants.enderio.gui.IconEIO.WRENCH_OVERLAY_ITEM_OFF;
+import static crazypants.enderio.gui.IconEIO.WRENCH_OVERLAY_POWER;
+import static crazypants.enderio.gui.IconEIO.WRENCH_OVERLAY_POWER_OFF;
+import static crazypants.enderio.gui.IconEIO.WRENCH_OVERLAY_REDSTONE;
+import static crazypants.enderio.gui.IconEIO.WRENCH_OVERLAY_REDSTONE_OFF;
 
 import java.util.List;
 

@@ -1,6 +1,14 @@
 package crazypants.enderio.machine.obelisk;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_ALL_ATTRIB_BITS;
+import static org.lwjgl.opengl.GL11.glDepthMask;
+import static org.lwjgl.opengl.GL11.glPopAttrib;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushAttrib;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotatef;
+import static org.lwjgl.opengl.GL11.glScalef;
+import static org.lwjgl.opengl.GL11.glTranslated;
 
 import java.util.Random;
 
@@ -106,7 +114,7 @@ public class ObeliskSpecialRenderer<T extends TileEntity> extends TileEntitySpec
 
     protected void renderItemStack(T te, World world, double x, double y, double z, float tick) {
         if (ei == null) {
-            ei = new EntityItem(world, 0, 0, 0, getFloatingItem(te));
+            ei = new EntityItem(null, 0, 0, 0, getFloatingItem(te));
         }
 
         ei.setEntityItemStack(getFloatingItem(te));

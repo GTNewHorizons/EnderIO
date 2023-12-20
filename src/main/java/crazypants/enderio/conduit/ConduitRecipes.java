@@ -1,10 +1,20 @@
 package crazypants.enderio.conduit;
 
 import static crazypants.enderio.ModObject.blockPainter;
-import static crazypants.enderio.material.Alloy.*;
+import static crazypants.enderio.material.Alloy.CONDUCTIVE_IRON;
+import static crazypants.enderio.material.Alloy.ELECTRICAL_STEEL;
+import static crazypants.enderio.material.Alloy.END_STEEL;
+import static crazypants.enderio.material.Alloy.ENERGETIC_ALLOY;
+import static crazypants.enderio.material.Alloy.PHASED_GOLD;
+import static crazypants.enderio.material.Alloy.REDSTONE_ALLOY;
 import static crazypants.enderio.material.Material.CONDUIT_BINDER;
 import static crazypants.enderio.material.Material.PHASED_IRON_NUGGET;
-import static crazypants.enderio.material.endergy.AlloyEndergy.*;
+import static crazypants.enderio.material.endergy.AlloyEndergy.CRUDE_STEEL;
+import static crazypants.enderio.material.endergy.AlloyEndergy.CRYSTALLINE_ALLOY;
+import static crazypants.enderio.material.endergy.AlloyEndergy.CRYSTALLINE_PINK_SLIME;
+import static crazypants.enderio.material.endergy.AlloyEndergy.ENERGETIC_SILVER;
+import static crazypants.enderio.material.endergy.AlloyEndergy.MELODIC_ALLOY;
+import static crazypants.enderio.material.endergy.AlloyEndergy.STELLAR_ALLOY;
 import static crazypants.util.RecipeUtil.addShaped;
 
 import net.minecraft.init.Blocks;
