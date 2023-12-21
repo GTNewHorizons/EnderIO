@@ -163,6 +163,7 @@ public final class Config {
     public static String[] travelStaffBlinkBlackList = new String[] { "minecraft:bedrock", "Thaumcraft:blockWarded" };
     public static float travelAnchorZoomScale = 0.2f;
     public static boolean travelStaffSearchOptimize = true;
+    public static boolean validateTravelEventServerside = true;
 
     /** The max distance for travelling to a Travel Anchor. */
     public static int teleportStaffMaxDistance = 2048;
@@ -1222,6 +1223,13 @@ public final class Config {
                         + "You can now teleport onto the roof. "
                         + "This config is experimental, so if you encounter any strange behavior, please report to GTNH developer.")
                 .getBoolean(travelStaffSearchOptimize);
+
+        validateTravelEventServerside = config.get(
+                sectionStaff.name,
+                "validateTravelEventServerside",
+                validateTravelEventServerside,
+                "If set to true: Server will validate if player actually can teleport. False will allow hacking, but also allows Staff of Traveling Keybind mod to work.")
+                .getBoolean(validateTravelEventServerside);
 
         teleportStaffMaxDistance = config
                 .get(

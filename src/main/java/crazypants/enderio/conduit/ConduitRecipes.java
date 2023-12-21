@@ -601,6 +601,9 @@ public class ConduitRecipes {
                 'f',
                 advFilter);
 
+        ItemStack limitedFilter = new ItemStack(EnderIO.itemLimitedItemFilter, 1, 0);
+        addShaped(limitedFilter, "   ", "cfc", "   ", 'c', new ItemStack(Items.comparator, 1, 0), 'f', advFilter);
+
         ItemStack powerFilt = new ItemStack(EnderIO.itemPowerItemFilter);
         addShaped(powerFilt, " p ", "pcp", " p ", 'p', Items.paper, 'c', EnderIO.itemConduitProbe);
 

@@ -124,6 +124,10 @@ public class TravelController {
      */
     public String validatePacketTravelEvent(EntityPlayerMP toTp, int x, int y, int z, int powerUse,
             boolean conserveMotion, TravelSource source) {
+
+        // If config indicates to allow for 'hacking' the travel packet, then don't do any validation.
+        if (!Config.validateTravelEventServerside) return null;
+
         BlockCoord target = new BlockCoord(x, y, z);
         double dist = getDistanceSquared(toTp, target);
         // allow 15% overshoot to account for rounding
