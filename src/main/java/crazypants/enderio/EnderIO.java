@@ -186,7 +186,7 @@ import crazypants.util.EE3Util;
         modid = MODID,
         name = MOD_NAME,
         version = VERSION,
-        dependencies = "after:endercore;after:MineFactoryReloaded;after:Forestry;after:Waila@[1.5.8,);after:Thaumcraft;after:appliedenergistics2@[rv2-beta-8,);after:chisel",
+        dependencies = "required-after:CoFHLib@(1.0.3B3,);after:endercore;after:MineFactoryReloaded;after:Forestry;after:Waila@[1.5.8,);after:Thaumcraft;after:appliedenergistics2@[rv2-beta-8,);after:chisel",
         guiFactory = "crazypants.enderio.config.ConfigFactoryEIO")
 public class EnderIO {
 

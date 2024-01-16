@@ -3,6 +3,7 @@ package crazypants.enderio.teleport.packet;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraftforge.common.MinecraftForge;
@@ -18,6 +19,7 @@ import crazypants.enderio.api.teleport.IItemOfTravel;
 import crazypants.enderio.api.teleport.TeleportEntityEvent;
 import crazypants.enderio.api.teleport.TravelSource;
 import crazypants.enderio.teleport.TravelController;
+import crazypants.util.BaublesUtil;
 import io.netty.buffer.ByteBuf;
 
 public class PacketTravelEvent implements IMessage, IMessageHandler<PacketTravelEvent, IMessage> {
@@ -128,18 +130,35 @@ public class PacketTravelEvent implements IMessage, IMessageHandler<PacketTravel
             if (conserveMotion) {
                 Vector3d velocityVex = Util.getLookVecEio(player);
                 S12PacketEntityVelocity p = new S12PacketEntityVelocity(
-                        toTp.getEntityId(),
+                        player.getEntityId(),
                         velocityVex.x,
                         velocityVex.y,
                         velocityVex.z);
                 ((EntityPlayerMP) player).playerNetServerHandler.sendPacket(p);
             }
 
-            if (powerUse > 0 && player.getCurrentEquippedItem() != null
-                    && player.getCurrentEquippedItem().getItem() instanceof IItemOfTravel) {
-                ItemStack item = player.getCurrentEquippedItem().copy();
+            ItemStack travelItem = player.getCurrentEquippedItem();
+            int itemSlot = -1;
+            if (travelItem == null || travelItem.getItem() == null
+                    || !(travelItem.getItem() instanceof IItemOfTravel)) {
+                travelItem = TravelController.instance.findTravelItemInInventoryOrBaubles(player);
+                itemSlot = TravelController.instance.findTravelItemSlotInInventoryOrBaubles(player);
+            }
+            if (powerUse > 0 && travelItem != null && travelItem.getItem() instanceof IItemOfTravel) {
+                ItemStack item = travelItem.copy();
                 ((IItemOfTravel) item.getItem()).extractInternal(item, powerUse);
-                toTp.setCurrentItemOrArmor(0, item);
+                if (itemSlot == -1) {
+                    // Is held in players hand.
+                    player.setCurrentItemOrArmor(0, item);
+                } else if (itemSlot > -1) {
+                    // Greater than -1 is an inventory slot.
+                    player.inventory.setInventorySlotContents(itemSlot, item);
+                } else if (itemSlot < -1) {
+                    // Less than -1 is a bauble slot. Special calculation needed to determine ACTUAL Baubles slot
+                    int baubleSlot = Math.abs(itemSlot) - 2;
+                    IInventory baubles = BaublesUtil.instance().getBaubles(player);
+                    baubles.setInventorySlotContents(baubleSlot, item);
+                }
             }
         }
 

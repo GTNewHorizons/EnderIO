@@ -206,6 +206,7 @@ public class ItemMagnet extends ItemEnergyContainer implements IResourceTooltipP
     }
 
     @Override
+    @Method(modid = "Baubles|API")
     public void onWornTick(ItemStack itemstack, EntityLivingBase player) {
         if (player instanceof EntityPlayer && isActive(itemstack)
                 && hasPower(itemstack)
@@ -222,17 +223,21 @@ public class ItemMagnet extends ItemEnergyContainer implements IResourceTooltipP
     }
 
     @Override
+    @Method(modid = "Baubles|API")
     public void onEquipped(ItemStack itemstack, EntityLivingBase player) {}
 
     @Override
+    @Method(modid = "Baubles|API")
     public void onUnequipped(ItemStack itemstack, EntityLivingBase player) {}
 
     @Override
+    @Method(modid = "Baubles|API")
     public boolean canEquip(ItemStack itemstack, EntityLivingBase player) {
         return Config.magnetAllowInBaublesSlot && (Config.magnetAllowDeactivatedInBaublesSlot || isActive(itemstack));
     }
 
     @Override
+    @Method(modid = "Baubles|API")
     public boolean canUnequip(ItemStack itemstack, EntityLivingBase player) {
         return true;
     }

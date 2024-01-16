@@ -8,6 +8,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentTranslation;
 
 import org.lwjgl.input.Keyboard;
 
@@ -17,6 +18,7 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 import crazypants.enderio.EnderIO;
+import crazypants.enderio.api.teleport.IItemOfTravel;
 import crazypants.enderio.api.tool.IConduitControl;
 import crazypants.enderio.conduit.ConduitDisplayMode;
 import crazypants.enderio.config.Config;
@@ -30,6 +32,7 @@ import crazypants.enderio.item.darksteel.upgrade.JumpUpgrade;
 import crazypants.enderio.item.darksteel.upgrade.SoundDetectorUpgrade;
 import crazypants.enderio.item.darksteel.upgrade.SpeedUpgrade;
 import crazypants.enderio.network.PacketHandler;
+import crazypants.enderio.teleport.TravelController;
 import crazypants.enderio.thaumcraft.GogglesOfRevealingUpgrade;
 import crazypants.util.BaublesUtil;
 
@@ -54,6 +57,10 @@ public class KeyTracker {
     private final KeyBinding yetaWrenchMode;
 
     private final KeyBinding magnetKey;
+
+    private final KeyBinding staffOfTravelingTPKey;
+
+    private static long lastBlinkTick = -1;
 
     public KeyTracker() {
         glideKey = new KeyBinding(
@@ -106,6 +113,12 @@ public class KeyTracker {
                 Keyboard.KEY_NONE,
                 EnderIO.lang.localize("category.tools"));
         ClientRegistry.registerKeyBinding(magnetKey);
+
+        staffOfTravelingTPKey = new KeyBinding(
+                EnderIO.lang.localize("keybind.staffoftravelingtp"),
+                Keyboard.KEY_NONE,
+                EnderIO.lang.localize("category.tools"));
+        ClientRegistry.registerKeyBinding(staffOfTravelingTPKey);
     }
 
     @SubscribeEvent
@@ -119,6 +132,7 @@ public class KeyTracker {
         handleSpeed();
         handleJump();
         handleMagnet();
+        handleStaffOfTravelingTP();
     }
 
     private void sendEnabledChatMessage(String messageBase, boolean isActive) {
@@ -131,6 +145,37 @@ public class KeyTracker {
         sendEnabledChatMessage(messageBase, isActive);
         DarkSteelController.instance.setActive(Minecraft.getMinecraft().thePlayer, type, isActive);
         PacketHandler.INSTANCE.sendToServer(new PacketUpgradeState(type, isActive));
+    }
+
+    private void handleStaffOfTravelingTP() {
+        if (staffOfTravelingTPKey.isPressed()) {
+            if (Config.travelStaffKeybindEnabled) {
+                EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+                if (player != null) {
+                    ItemStack travelItem = player.getHeldItem();
+                    if (travelItem == null || travelItem.getItem() == null
+                            || !(travelItem.getItem() instanceof IItemOfTravel)) {
+                        travelItem = TravelController.instance.findTravelItemInInventoryOrBaubles(player);
+                    }
+
+                    if (travelItem != null && travelItem.getItem() != null) {
+                        long ticksSinceBlink = EnderIO.proxy.getTickCount() - lastBlinkTick;
+                        if (ticksSinceBlink < 0) {
+                            lastBlinkTick = -1;
+                        }
+                        if (ticksSinceBlink >= Config.travelStaffBlinkPauseTicks) {
+                            if (TravelController.instance.doBlink(travelItem, player)) {
+                                lastBlinkTick = EnderIO.proxy.getTickCount();
+                            }
+                        }
+                    }
+                }
+            } else {
+                TravelController.showMessage(
+                        Minecraft.getMinecraft().thePlayer,
+                        new ChatComponentTranslation("enderio.travelStaffKeybind.isDisabled"));
+            }
+        }
     }
 
     private void handleMagnet() {

@@ -27,6 +27,7 @@ public class PacketConfigSync implements IMessage, IMessageHandler<PacketConfigS
         buf.writeInt(Config.teleportStaffFailedBlinkDistance);
         buf.writeBoolean(Config.telepadLockCoords);
         buf.writeBoolean(Config.telepadLockDimension);
+        buf.writeBoolean(Config.travelStaffKeybindEnabled);
     }
 
     @Override
@@ -46,6 +47,7 @@ public class PacketConfigSync implements IMessage, IMessageHandler<PacketConfigS
         Config.teleportStaffFailedBlinkDistance = data.readInt();
         Config.telepadLockCoords = data.readBoolean();
         Config.telepadLockDimension = data.readBoolean();
+        Config.travelStaffKeybindEnabled = data.readBoolean();
     }
 
     @Override

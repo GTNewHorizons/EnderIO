@@ -731,6 +731,7 @@ item.itemTravelStaff.tooltip.detailed.line3=activated by R-Click
 item.itemTravelStaff.tooltip.detailed.line4=Shift-R-Click will teleport the
 item.itemTravelStaff.tooltip.detailed.line5=player a short distance
 enderio.itemTravelStaff.notEnoughPower=Not enough power
+enderio.travelStaffKeybind.isDisabled=Travel Staff Blink Keybind Disabled!
 
 item.itemTeleportStaff.name=Staff of Teleportation
 item.itemTeleportStaff.tooltip.detailed.line1=R-Click to teleport wherever you are looking
@@ -1391,6 +1392,7 @@ enderio.keybind.jump=Jump
 enderio.keybind.stepassist=Step Assist
 enderio.keybind.yetawrenchmode=Yeta Wrench Mode
 enderio.keybind.magnet=Toggle Electromagnet
+enderio.keybind.staffoftravelingtp=Travel Staff Blink
 enderio.nei.alloysmelter=Alloy Smelter
 enderio.nei.enchanter=Enchanter
 enderio.nei.sagmill=SAG Mill

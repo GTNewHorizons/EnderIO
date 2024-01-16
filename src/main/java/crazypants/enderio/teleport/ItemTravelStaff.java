@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -12,7 +13,11 @@ import net.minecraft.world.World;
 
 import com.enderio.core.api.client.gui.IResourceTooltipProvider;
 
+import baubles.api.BaubleType;
+import baubles.api.IBauble;
 import cofh.api.energy.ItemEnergyContainer;
+import cpw.mods.fml.common.Optional;
+import cpw.mods.fml.common.Optional.Method;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -24,7 +29,8 @@ import crazypants.enderio.api.teleport.TravelSource;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.power.PowerDisplayUtil;
 
-public class ItemTravelStaff extends ItemEnergyContainer implements IItemOfTravel, IResourceTooltipProvider {
+@Optional.Interface(iface = "baubles.api.IBauble", modid = "Baubles|API")
+public class ItemTravelStaff extends ItemEnergyContainer implements IItemOfTravel, IResourceTooltipProvider, IBauble {
 
     public static boolean isEquipped(EntityPlayer ep) {
         if (ep == null || ep.getCurrentEquippedItem() == null) {
@@ -174,7 +180,7 @@ public class ItemTravelStaff extends ItemEnergyContainer implements IItemOfTrave
 
     @Override
     public boolean isActive(EntityPlayer ep, ItemStack equipped) {
-        return isEquipped(ep);
+        return (ep != null && equipped != null);
     }
 
     @Override
@@ -184,7 +190,45 @@ public class ItemTravelStaff extends ItemEnergyContainer implements IItemOfTrave
     }
 
     @Override
+    @Method(modid = "Baubles|API")
+    public BaubleType getBaubleType(ItemStack itemstack) {
+        BaubleType t = null;
+        try {
+            t = BaubleType.valueOf(Config.travelStaffBaublesType);
+        } catch (Exception e) {
+            // NOP
+        }
+        return t != null ? t : BaubleType.AMULET;
+    }
+
+    @Override
+    @Method(modid = "Baubles|API")
+    public void onWornTick(ItemStack itemstack, EntityLivingBase player) {}
+
+    @Override
+    @Method(modid = "Baubles|API")
+    public void onEquipped(ItemStack itemstack, EntityLivingBase player) {}
+
+    @Override
+    @Method(modid = "Baubles|API")
+    public void onUnequipped(ItemStack itemstack, EntityLivingBase player) {}
+
+    @Override
+    @Method(modid = "Baubles|API")
+    public boolean canEquip(ItemStack itemstack, EntityLivingBase player) {
+        return Config.travelStaffAllowInBaublesSlot;
+    }
+
+    @Override
+    @Method(modid = "Baubles|API")
+    public boolean canUnequip(ItemStack itemstack, EntityLivingBase player) {
+        return true;
+    }
+
+    @Override
+    @Method(modid = "Baubles|API")
     public boolean showDurabilityBar(ItemStack stack) {
         return Config.renderDurabilityBar && super.showDurabilityBar(stack);
     }
+
 }

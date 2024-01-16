@@ -112,6 +112,6 @@ public class ItemTeleportStaff extends ItemTravelStaff {
 
     @Override
     public boolean isActive(EntityPlayer ep, ItemStack equipped) {
-        return isEquipped(ep);
+        return (ep != null && equipped != null);
     }
 }
