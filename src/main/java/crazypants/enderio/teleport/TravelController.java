@@ -627,10 +627,10 @@ public class TravelController {
         }
 
         ItemStack equipped = ep.getCurrentEquippedItem();
-        if(checkInventoryAndBaubles) {
-	        if (equipped == null || !(equipped.getItem() instanceof IItemOfTravel)) {
-	            equipped = findTravelItemInInventoryOrBaubles(ep);
-	        }
+        if (checkInventoryAndBaubles) {
+            if (equipped == null || !(equipped.getItem() instanceof IItemOfTravel)) {
+                equipped = findTravelItemInInventoryOrBaubles(ep);
+            }
         }
         if (equipped != null) {
             if (equipped.getItem() instanceof ItemTeleportStaff) {
@@ -1064,7 +1064,7 @@ public class TravelController {
 
     @SideOnly(Side.CLIENT)
     private int getMaxTravelDistanceSqForPlayer(EntityPlayer player) {
-        TravelSource source = getTravelItemTravelSource(player,false);
+        TravelSource source = getTravelItemTravelSource(player, false);
         if (source == null) {
             return TravelSource.BLOCK.getMaxDistanceTravelledSq();
         }
