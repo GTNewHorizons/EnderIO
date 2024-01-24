@@ -154,14 +154,11 @@ public final class Config {
     public static int travelStaffBlinkPauseTicks = 10;
 
     public static boolean travelStaffEnabled = true;
-    public static boolean travelStaffAllowInBaublesSlot = true;
-    public static boolean travelStaffKeybindEnabled = true;
     public static boolean travelStaffBlinkEnabled = true;
     public static boolean travelStaffBlinkThroughSolidBlocksEnabled = true;
     public static boolean travelStaffBlinkThroughClearBlocksEnabled = true;
     public static boolean travelStaffBlinkThroughUnbreakableBlocksEnabled = false;
     public static String[] travelStaffBlinkBlackList = new String[] { "minecraft:bedrock", "Thaumcraft:blockWarded" };
-    public static String travelStaffBaublesType = "UNIVERSAL";
     public static float travelAnchorZoomScale = 0.2f;
     public static boolean travelStaffSearchOptimize = true;
     public static boolean validateTravelEventServerside = true;
@@ -1169,19 +1166,6 @@ public final class Config {
                 "travelStaffEnabled",
                 travelAnchorEnabled,
                 "If set to false: the travel staff will not be craftable.").getBoolean(travelStaffEnabled);
-        travelStaffAllowInBaublesSlot = config
-                .get(
-                        sectionStaff.name,
-                        "travelStaffAllowInBaublesSlot",
-                        travelStaffAllowInBaublesSlot,
-                        "If true the travel staff can be put into Baubles slots (requires Baubles to be installed)")
-                .getBoolean(travelStaffAllowInBaublesSlot);
-        travelStaffKeybindEnabled = config.get(
-                sectionStaff.name,
-                "travelStaffKeybindEnabled",
-                travelStaffKeybindEnabled,
-                "If set to false: the Travel Staff Blink keybind will not be useable. (keybind allows when staff is anywhere in inventory, might not be wanted)")
-                .getBoolean(travelStaffKeybindEnabled);
         travelStaffBlinkEnabled = config
                 .get(
                         sectionStaff.name,
@@ -1215,13 +1199,6 @@ public final class Config {
                 sectionStaff.name,
                 travelStaffBlinkBlackList,
                 "Lists the blocks that cannot be teleported through in the form 'modID:blockName'");
-        travelStaffBaublesType = config.get(
-                sectionStaff.name,
-                "travelStaffBaublesType",
-                travelStaffBaublesType,
-                "The BaublesType the Travel Staff should be, 'AMULET', 'RING', 'BELT', or 'UNIVERSAL' (requires Baubles to be installed and travelStaffAllowInBaublesSlot to be on)")
-                .getString();
-
         travelAnchorZoomScale = config.getFloat(
                 "travelAnchorZoomScale",
                 sectionStaff.name,
@@ -2114,7 +2091,7 @@ public final class Config {
                 sectionMagnet.name,
                 "magnetAllowDeactivatedInBaublesSlot",
                 magnetAllowDeactivatedInBaublesSlot,
-                "If true the magnet can be put into a Baubles slot even if switched off (requires Baubles to be installed and magnetAllowInBaublesSlot to be on)")
+                "If true the magnet can be put into the 'amulet' Baubles slot even if switched off (requires Baubles to be installed and magnetAllowInBaublesSlot to be on)")
                 .getBoolean(magnetAllowDeactivatedInBaublesSlot);
 
         magnetAllowPowerExtraction = config.get(
@@ -2127,7 +2104,7 @@ public final class Config {
                 sectionMagnet.name,
                 "magnetBaublesType",
                 magnetBaublesType,
-                "The BaublesType the magnet should be, 'AMULET', 'RING', 'BELT', or UNIVERSAL (requires Baubles to be installed and magnetAllowInBaublesSlot to be on)")
+                "The BaublesType the magnet should be, 'AMULET', 'RING' or 'BELT' (requires Baubles to be installed and magnetAllowInBaublesSlot to be on)")
                 .getString();
 
         useCombustionGenModel = config

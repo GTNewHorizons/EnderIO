@@ -16,7 +16,6 @@ import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -65,7 +64,6 @@ import crazypants.enderio.teleport.packet.PacketDrainStaff;
 import crazypants.enderio.teleport.packet.PacketLongDistanceTravelEvent;
 import crazypants.enderio.teleport.packet.PacketOpenAuthGui;
 import crazypants.enderio.teleport.packet.PacketTravelEvent;
-import crazypants.util.BaublesUtil;
 
 public class TravelController {
 
@@ -158,12 +156,6 @@ public class TravelController {
                 return null;
             case STAFF:
             case STAFF_BLINK:
-                if (Config.travelStaffKeybindEnabled) {
-                    if (equippedItem == null || equippedItem.getItem() == null
-                            || !(equippedItem.getItem() instanceof IItemOfTravel)) {
-                        equippedItem = findTravelItemInInventoryOrBaubles(toTp);
-                    }
-                }
                 if (equippedItem == null || !(equippedItem.getItem() instanceof IItemOfTravel)) return "not staff";
                 if (!((IItemOfTravel) equippedItem.getItem()).isActive(toTp, equippedItem)) return "staff not active";
                 int energy = ((IItemOfTravel) equippedItem.getItem()).canExtractInternal(equippedItem, powerUse);
@@ -619,97 +611,23 @@ public class TravelController {
         return getTravelItemTravelSource(ep) != null;
     }
 
-    /** Returns null if no travel item is in inventory/baubles. */
+    /** Returns null if no travel item is equipped. */
     @Nullable
     public TravelSource getTravelItemTravelSource(EntityPlayer ep) {
-        if (ep == null) {
+        if (ep == null || ep.getCurrentEquippedItem() == null) {
             return null;
         }
-
         ItemStack equipped = ep.getCurrentEquippedItem();
-        if (equipped == null || !(equipped.getItem() instanceof IItemOfTravel)) {
-            equipped = findTravelItemInInventoryOrBaubles(ep);
-        }
-
-        if (equipped != null) {
-            if (equipped.getItem() instanceof ItemTeleportStaff) {
-                if (((ItemTeleportStaff) equipped.getItem()).isActive(ep, equipped)) {
-                    return TravelSource.TELEPORT_STAFF;
-                }
-            } else if (equipped.getItem() instanceof IItemOfTravel) {
-                if (((IItemOfTravel) equipped.getItem()).isActive(ep, equipped)) {
-                    return TravelSource.STAFF;
-                }
+        if (equipped.getItem() instanceof ItemTeleportStaff) {
+            if (((ItemTeleportStaff) equipped.getItem()).isActive(ep, equipped)) {
+                return TravelSource.TELEPORT_STAFF;
+            }
+        } else if (equipped.getItem() instanceof IItemOfTravel) {
+            if (((IItemOfTravel) equipped.getItem()).isActive(ep, equipped)) {
+                return TravelSource.STAFF;
             }
         }
-
         return null;
-    }
-
-    /**
-     * Returns null if no Travel item found in inventory/baubles. <br>
-     * DO NOT CHANGE THIS CODE WITHOUT ALSO CHANGING
-     * TravelController.{@link #findTravelItemSlotInInventoryOrBaubles(EntityPlayer)}
-     */
-    @Nullable
-    public ItemStack findTravelItemInInventoryOrBaubles(EntityPlayer ep) {
-        ItemStack travelItem = null;
-        for (int i = 0; i < ep.inventory.getSizeInventory(); i++) {
-            ItemStack stack = ep.inventory.getStackInSlot(i);
-            if (stack != null && stack.getItem() instanceof IItemOfTravel) {
-                travelItem = stack;
-                break;
-            }
-        }
-
-        if (travelItem == null) {
-            IInventory baubles = BaublesUtil.instance().getBaubles(ep);
-            if (baubles != null) {
-                for (int i = 0; i < baubles.getSizeInventory(); i++) {
-                    ItemStack stack = baubles.getStackInSlot(i);
-                    if (stack != null && stack.getItem() instanceof IItemOfTravel) {
-                        travelItem = stack;
-                        break;
-                    }
-                }
-            }
-        }
-
-        return travelItem;
-    }
-
-    /**
-     * Uses same code as {@link #findTravelItemInInventoryOrBaubles(EntityPlayer)}, but returns the slot of that
-     * item.<br>
-     * Baubles return value is unique/hacky, if <-1 return, then do the following to calculate the baubles slot:
-     * "Math.abs(returnval)-2" <br>
-     * Example: -3 return is Bauble slot 1, -2 return is Bauble slot 0
-     * 
-     * @return -1 if no travel item found. 0 or more if item found in inventory. -2 or less if item found in Baubles.
-     */
-    public int findTravelItemSlotInInventoryOrBaubles(EntityPlayer ep) {
-        int travelItemSlot = -1;
-        for (int i = 0; i < ep.inventory.getSizeInventory(); i++) {
-            ItemStack stack = ep.inventory.getStackInSlot(i);
-            if (stack != null && (stack.getItem() instanceof IItemOfTravel)) {
-                travelItemSlot = i;
-                break;
-            }
-        }
-
-        if (travelItemSlot == -1) {
-            IInventory baubles = BaublesUtil.instance().getBaubles(ep);
-            if (baubles != null) {
-                for (int i = 0; i < baubles.getSizeInventory(); i++) {
-                    ItemStack stack = baubles.getStackInSlot(i);
-                    if (stack != null && stack.getItem() instanceof IItemOfTravel) {
-                        travelItemSlot = -(i + 2);
-                        break;
-                    }
-                }
-            }
-        }
-        return travelItemSlot;
     }
 
     public boolean travelToSelectedTarget(EntityPlayer player, TravelSource source, boolean conserveMomentum) {
@@ -769,10 +687,6 @@ public class TravelController {
         }
         int requiredPower;
         ItemStack staff = player.getCurrentEquippedItem();
-        if (staff == null || !(staff.getItem() instanceof IItemOfTravel)) {
-            staff = findTravelItemInInventoryOrBaubles(player);
-        }
-
         requiredPower = getPower(player, source, coord, 0F);
         int canUsePower = getEnergyInTravelItem(staff);
         if (requiredPower > canUsePower) {
@@ -1099,7 +1013,7 @@ public class TravelController {
         return null;
     }
 
-    public static void showMessage(EntityPlayer player, IChatComponent chatComponent) {
+    private static void showMessage(EntityPlayer player, IChatComponent chatComponent) {
         if (Loader.isModLoaded("gtnhlib")) {
             if (player instanceof EntityPlayerMP) {
                 chatComponent.setChatStyle(new ChatStyle().setColor(EnumChatFormatting.WHITE));
