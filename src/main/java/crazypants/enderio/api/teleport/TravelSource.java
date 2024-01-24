@@ -81,7 +81,7 @@ public enum TravelSource {
             return 0;
         }
 
-        TravelSource source = TravelController.instance.getTravelItemTravelSource(player);
+        TravelSource source = TravelController.instance.getTravelItemTravelSource(player, false);
         if (source == null) {
             return TravelSource.BLOCK.getMaxDistanceTravelledSq();
         } else {

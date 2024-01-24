@@ -527,7 +527,7 @@ public class TravelController {
             }
             onBlockCoord = getActiveTravelBlock(player);
             boolean onBlock = onBlockCoord != null;
-            showTargets = onBlock || isTravelItemActive(player);
+            showTargets = onBlock || isTravelItemActive(player, false);
             if (showTargets) {
                 updateSelectedTarget(player);
             } else {
@@ -615,22 +615,23 @@ public class TravelController {
         return ((IItemOfTravel) equipped.getItem()).getEnergyStored(equipped);
     }
 
-    public boolean isTravelItemActive(EntityPlayer ep) {
-        return getTravelItemTravelSource(ep) != null;
+    public boolean isTravelItemActive(EntityPlayer ep, boolean checkInventoryAndBaubles) {
+        return getTravelItemTravelSource(ep, checkInventoryAndBaubles) != null;
     }
 
     /** Returns null if no travel item is in inventory/baubles. */
     @Nullable
-    public TravelSource getTravelItemTravelSource(EntityPlayer ep) {
+    public TravelSource getTravelItemTravelSource(EntityPlayer ep, boolean checkInventoryAndBaubles) {
         if (ep == null) {
             return null;
         }
 
         ItemStack equipped = ep.getCurrentEquippedItem();
-        if (equipped == null || !(equipped.getItem() instanceof IItemOfTravel)) {
-            equipped = findTravelItemInInventoryOrBaubles(ep);
+        if(checkInventoryAndBaubles) {
+	        if (equipped == null || !(equipped.getItem() instanceof IItemOfTravel)) {
+	            equipped = findTravelItemInInventoryOrBaubles(ep);
+	        }
         }
-
         if (equipped != null) {
             if (equipped.getItem() instanceof ItemTeleportStaff) {
                 if (((ItemTeleportStaff) equipped.getItem()).isActive(ep, equipped)) {
@@ -764,7 +765,7 @@ public class TravelController {
     }
 
     public int getRequiredPower(EntityPlayer player, TravelSource source, BlockCoord coord) {
-        if (!isTravelItemActive(player)) {
+        if (!isTravelItemActive(player, true)) {
             return 0;
         }
         int requiredPower;
@@ -1063,7 +1064,7 @@ public class TravelController {
 
     @SideOnly(Side.CLIENT)
     private int getMaxTravelDistanceSqForPlayer(EntityPlayer player) {
-        TravelSource source = getTravelItemTravelSource(player);
+        TravelSource source = getTravelItemTravelSource(player,false);
         if (source == null) {
             return TravelSource.BLOCK.getMaxDistanceTravelledSq();
         }
