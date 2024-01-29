@@ -152,7 +152,7 @@ public class TravelController {
                 TileEntity maybeAnchor = target.getTileEntity(toTp.worldObj);
                 if (!(maybeAnchor instanceof ITravelAccessable)) return "not anchor";
                 ITravelAccessable anchor = (ITravelAccessable) maybeAnchor;
-                if (!anchor.canBlockBeAccessed(toTp) && isValidTarget(toTp, target, TravelSource.BLOCK)) {
+                if (!isValidTarget(toTp, target, TravelSource.BLOCK)) {
                     return "not valid target";
                 }
                 return null;
@@ -685,7 +685,7 @@ public class TravelController {
      * Baubles return value is unique/hacky, if <-1 return, then do the following to calculate the baubles slot:
      * "Math.abs(returnval)-2" <br>
      * Example: -3 return is Bauble slot 1, -2 return is Bauble slot 0
-     * 
+     *
      * @return -1 if no travel item found. 0 or more if item found in inventory. -2 or less if item found in Baubles.
      */
     public int findTravelItemSlotInInventoryOrBaubles(EntityPlayer ep) {
