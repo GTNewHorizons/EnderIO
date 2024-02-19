@@ -140,30 +140,24 @@ public class WailaCompat implements IWailaDataProvider {
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
         MovingObjectPosition pos = accessor.getPosition();
-        if (config.getConfig("facades.hidden")) {
-            if (accessor.getBlock() instanceof IFacade) {
-                // If facades are hidden, we need to ignore it
-                if (accessor.getTileEntity() instanceof IConduitBundle && ConduitUtil
-                        .isFacadeHidden((IConduitBundle) accessor.getTileEntity(), accessor.getPlayer())) {
-                    return null;
-                }
-                IFacade bundle = (IFacade) accessor.getBlock();
-                Block facade = bundle.getFacade(
-                        accessor.getWorld(),
+        if (config.getConfig("facades.hidden") && accessor.getBlock() instanceof IFacade) {
+            // If facades are hidden, we need to ignore it
+            if (accessor.getTileEntity() instanceof IConduitBundle
+                    && ConduitUtil.isFacadeHidden((IConduitBundle) accessor.getTileEntity(), accessor.getPlayer())) {
+                return null;
+            }
+            IFacade bundle = (IFacade) accessor.getBlock();
+            Block facade = bundle
+                    .getFacade(accessor.getWorld(), pos.blockX, pos.blockY, pos.blockZ, accessor.getSide().ordinal());
+            if (facade != accessor.getBlock()) {
+                ItemStack ret = facade.getPickBlock(
+                        pos,
+                        new WailaWorldWrapper(accessor.getWorld()),
                         pos.blockX,
                         pos.blockY,
                         pos.blockZ,
-                        accessor.getSide().ordinal());
-                if (facade != accessor.getBlock()) {
-                    ItemStack ret = facade.getPickBlock(
-                            pos,
-                            new WailaWorldWrapper(accessor.getWorld()),
-                            pos.blockX,
-                            pos.blockY,
-                            pos.blockZ,
-                            accessor.getPlayer());
-                    return ret;
-                }
+                        accessor.getPlayer());
+                return ret;
             }
         } else if (accessor.getBlock() instanceof BlockDarkSteelAnvil) {
             return accessor.getBlock().getPickBlock(
