@@ -59,7 +59,8 @@ public class ConduitBundleRenderer extends TileEntitySpecialRenderer implements 
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTick) {
         IConduitBundle bundle = (IConduitBundle) te;
         EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
-        if (bundle == null || (bundle.hasFacade() && bundle.getFacadeId().isOpaqueCube() && !ConduitUtil.isFacadeHidden(bundle, player))) {
+        if (bundle == null || (bundle.hasFacade() && bundle.getFacadeId().isOpaqueCube()
+                && !ConduitUtil.isFacadeHidden(bundle, player))) {
             return;
         }
         final Tessellator tessellator = Tessellator.instance;
@@ -146,7 +147,7 @@ public class ConduitBundleRenderer extends TileEntitySpecialRenderer implements 
     private boolean renderFacade(int x, int y, int z, int pass, RenderBlocks rb, IConduitBundle bundle,
             EntityClientPlayerMP player) {
         boolean res = false;
-        if(bundle == null) {
+        if (bundle == null) {
             return false;
         }
         final Tessellator tessellator = Tessellator.instance;
@@ -198,7 +199,7 @@ public class ConduitBundleRenderer extends TileEntitySpecialRenderer implements 
     public void renderConduits(IConduitBundle bundle, double x, double y, double z, float partialTick, float brightness,
             RenderBlocks rb) {
 
-        if(bundle == null) return;
+        if (bundle == null) return;
 
         final Tessellator tessellator = Tessellator.instance;
         tessellator.setColorOpaque_F(1, 1, 1);
@@ -233,7 +234,7 @@ public class ConduitBundleRenderer extends TileEntitySpecialRenderer implements 
         // Internal conectors between conduits
         List<CollidableComponent> connectors = bundle.getConnectors();
         List<CollidableComponent> rendered = Lists.newArrayList();
-        for(int i = 0 ; i < connectors.size() ; i++) {
+        for (int i = 0; i < connectors.size(); i++) {
             final CollidableComponent component = connectors.get(i);
             if (component.conduitType != null) {
                 IConduit conduit = bundle.getConduit(component.conduitType);
@@ -270,7 +271,7 @@ public class ConduitBundleRenderer extends TileEntitySpecialRenderer implements 
             }
         }
         // render these after the 'normal' conduits so help with proper blending
-        for(int i = 0 ; i < wireBounds.size() ; i++) {
+        for (int i = 0; i < wireBounds.size(); i++) {
             final BoundingBox wireBound = wireBounds.get(i);
             tessellator.setColorRGBA_F(1, 1, 1, 0.25f);
             CubeRenderer.render(wireBound, EnderIO.blockConduitFacade.getIcon(0, 0));
@@ -289,7 +290,7 @@ public class ConduitBundleRenderer extends TileEntitySpecialRenderer implements 
     private void renderExternalConnection(ForgeDirection dir) {
         IIcon tex = EnderIO.blockConduitBundle.getConnectorIcon(ConduitConnectorType.EXTERNAL);
         BoundingBox[] bbs = ConduitGeometryUtil.instance.getExternalConnectorBoundingBoxes(dir);
-        for(int i = 0 ; i < bbs.length ; i++) {
+        for (int i = 0; i < bbs.length; i++) {
             final BoundingBox bb = bbs[i];
             CubeRenderer.render(bb, tex, true);
         }
