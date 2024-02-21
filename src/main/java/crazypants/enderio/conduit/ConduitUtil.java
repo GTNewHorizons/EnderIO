@@ -158,7 +158,7 @@ public class ConduitUtil {
     }
 
     public static boolean isFacadeHidden(IConduitBundle bundle, EntityPlayer player) {
-        return bundle.getFacadeId() != null && shouldHeldItemHideFacades(player);
+        return bundle != null && bundle.getFacadeId() != null && shouldHeldItemHideFacades(player);
     }
 
     public static ConduitDisplayMode getDisplayMode(EntityPlayer player) {
