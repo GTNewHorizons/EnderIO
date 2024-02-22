@@ -29,6 +29,7 @@ public class PaintedBlockRenderer implements ISimpleBlockRenderingHandler, Threa
     }
 
     @Override
+    @Optional.Method(modid = "angelica")
     public ThreadSafeISBRHFactory newInstance() {
         return new PaintedBlockRenderer(renderId, defaultBlock);
     }

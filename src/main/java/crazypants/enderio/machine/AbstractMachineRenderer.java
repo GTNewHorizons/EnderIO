@@ -2,6 +2,7 @@ package crazypants.enderio.machine;
 
 import java.util.List;
 
+import cpw.mods.fml.common.Optional;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
@@ -42,7 +43,7 @@ public class AbstractMachineRenderer implements ISimpleBlockRenderingHandler, II
 
     private CustomCubeRenderer ccr = new CustomCubeRenderer();
 
-    private PaintedBlockRenderer paintedRenderer = new PaintedBlockRenderer(this.getRenderId(), null); // passthrough
+    private final PaintedBlockRenderer paintedRenderer = new PaintedBlockRenderer(this.getRenderId(), null);
     // renderer for
     // paintable
     // machines
