@@ -29,6 +29,7 @@ import com.enderio.core.client.render.RenderUtil;
 import com.enderio.core.common.util.BlockCoord;
 import com.enderio.core.common.util.IBlockAccessWrapper;
 import com.google.common.collect.Lists;
+import com.gtnewhorizons.angelica.api.ThreadSafeISBRH;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -51,9 +52,12 @@ import crazypants.enderio.config.Config;
 import crazypants.util.RenderPassHelper;
 
 @SideOnly(Side.CLIENT)
+@ThreadSafeISBRH(perThread = false)
 public class ConduitBundleRenderer extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler {
 
     public ConduitBundleRenderer(float conduitScale) {}
+
+    public ConduitBundleRenderer() {}
 
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTick) {
@@ -68,7 +72,7 @@ public class ConduitBundleRenderer extends TileEntitySpecialRenderer implements 
         float brightness = -1;
         for (IConduit con : bundle.getConduits()) {
             if (ConduitUtil.renderConduit(player, con)) {
-                ConduitRenderer renderer = EnderIO.proxy.getRendererForConduit(con);
+                final ConduitRenderer renderer = con.getRenderer();
                 if (renderer.isDynamic()) {
                     if (brightness == -1) {
                         BlockCoord loc = bundle.getLocation();
@@ -144,6 +148,15 @@ public class ConduitBundleRenderer extends TileEntitySpecialRenderer implements 
         return renderedFacade || (bundle != null && bundle.hasFacade() && !bundle.getFacadeId().isOpaqueCube());
     }
 
+    private static final ThreadLocal<BlockConduitFacade> facade = ThreadLocal.withInitial(() -> {
+        try {
+            return EnderIO.blockConduitFacade.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+
+    });
+
     private boolean renderFacade(int x, int y, int z, int pass, RenderBlocks rb, IConduitBundle bundle,
             EntityClientPlayerMP player) {
         boolean res = false;
@@ -159,7 +172,7 @@ public class ConduitBundleRenderer extends TileEntitySpecialRenderer implements 
                 bundle.setFacadeId(null, false);
                 bundle.setFacadeRenderAs(FacadeRenderState.WIRE_FRAME);
 
-                BlockConduitFacade facb = EnderIO.blockConduitFacade;
+                BlockConduitFacade facb = facade.get();
                 facb.setBlockOverride(bundle);
                 facb.setBlockBounds(0, 0, 0, 1, 1, 1);
                 if (!rb.hasOverrideBlockTexture()) {
@@ -202,6 +215,7 @@ public class ConduitBundleRenderer extends TileEntitySpecialRenderer implements 
         if (bundle == null) return;
 
         final Tessellator tessellator = Tessellator.instance;
+        final CubeRenderer cr = CubeRenderer.get();
         tessellator.setColorOpaque_F(1, 1, 1);
         tessellator.addTranslation((float) x, (float) y, (float) z);
 
@@ -214,7 +228,7 @@ public class ConduitBundleRenderer extends TileEntitySpecialRenderer implements 
         for (IConduit con : bundle.getConduits()) {
 
             if (ConduitUtil.renderConduit(player, con)) {
-                ConduitRenderer renderer = EnderIO.proxy.getRendererForConduit(con);
+                final ConduitRenderer renderer = con.getRenderer();
                 renderer.renderEntity(this, bundle, con, x, y, z, partialTick, brightness, rb);
                 Set<ForgeDirection> extCons = con.getExternalConnections();
                 for (ForgeDirection dir : extCons) {
@@ -253,12 +267,12 @@ public class ConduitBundleRenderer extends TileEntitySpecialRenderer implements 
                                 if (r.component.conduitType == component.conduitType
                                         && !rendered.contains(r.component)) {
                                     rendered.add(r.component);
-                                    CubeRenderer.render(component.bound, rb.overrideBlockTexture, true);
+                                    cr.render(component.bound, rb.overrideBlockTexture, true);
                                 }
                             }
                         } else {
                             tessellator.setBrightness((int) (brightness));
-                            CubeRenderer.render(component.bound, conduit.getTextureForState(component), true);
+                            cr.render(component.bound, conduit.getTextureForState(component), true);
                         }
                     } else {
                         wireBounds.add(component.bound);
@@ -267,14 +281,15 @@ public class ConduitBundleRenderer extends TileEntitySpecialRenderer implements 
 
             } else if (ConduitUtil.getDisplayMode(player) == ConduitDisplayMode.ALL && !rb.hasOverrideBlockTexture()) {
                 IIcon tex = EnderIO.blockConduitBundle.getConnectorIcon(component.data);
-                CubeRenderer.render(component.bound, tex);
+                cr.render(component.bound, tex);
             }
         }
         // render these after the 'normal' conduits so help with proper blending
+        BlockConduitFacade facb = facade.get();
         for (int i = 0; i < wireBounds.size(); i++) {
             final BoundingBox wireBound = wireBounds.get(i);
             tessellator.setColorRGBA_F(1, 1, 1, 0.25f);
-            CubeRenderer.render(wireBound, EnderIO.blockConduitFacade.getIcon(0, 0));
+            cr.render(wireBound, facb.getIcon(0, 0));
         }
 
         tessellator.setColorRGBA_F(1, 1, 1, 1f);
@@ -290,9 +305,10 @@ public class ConduitBundleRenderer extends TileEntitySpecialRenderer implements 
     private void renderExternalConnection(ForgeDirection dir) {
         IIcon tex = EnderIO.blockConduitBundle.getConnectorIcon(ConduitConnectorType.EXTERNAL);
         BoundingBox[] bbs = ConduitGeometryUtil.instance.getExternalConnectorBoundingBoxes(dir);
+        final CubeRenderer cr = CubeRenderer.get();
         for (int i = 0; i < bbs.length; i++) {
             final BoundingBox bb = bbs[i];
-            CubeRenderer.render(bb, tex, true);
+            cr.render(bb, tex, true);
         }
     }
 

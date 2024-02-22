@@ -17,10 +17,12 @@ import com.enderio.core.client.render.CubeRenderer;
 import com.enderio.core.client.render.RenderUtil;
 import com.enderio.core.client.render.VertexRotation;
 import com.enderio.core.common.vecmath.Vector3d;
+import com.gtnewhorizons.angelica.api.ThreadSafeISBRH;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import crazypants.enderio.EnderIO;
 
+@ThreadSafeISBRH(perThread = false)
 public class EndermanSkullRenderer implements ISimpleBlockRenderingHandler, IItemRenderer {
 
     public EndermanSkullRenderer() {}
@@ -75,9 +77,9 @@ public class EndermanSkullRenderer implements ISimpleBlockRenderingHandler, IIte
         float height = 0.5f;
         BoundingBox bb = new BoundingBox(size, 0, size, 1 - size, height, 1 - size);
         if (renderer.hasOverrideBlockTexture()) {
-            CubeRenderer.render(bb, renderer.overrideBlockTexture, rot);
+            CubeRenderer.get().render(bb, renderer.overrideBlockTexture, rot);
         } else {
-            CubeRenderer.render(bb, icons, rot, true);
+            CubeRenderer.get().render(bb, icons, rot, true);
 
             if (meta > 1) {
                 renderBolts(rot, size);
@@ -94,27 +96,28 @@ public class EndermanSkullRenderer implements ISimpleBlockRenderingHandler, IIte
         float boltSize = size / 3;
         BoundingBox baseBolt = BoundingBox.UNIT_CUBE.scale(boltSize, boltSize, boltSize);
         IIcon icon = EnderIO.blockSoulFuser.getIcon(ForgeDirection.EAST.ordinal(), 0);
+        final CubeRenderer cr = CubeRenderer.get();
 
         float offset = 0.15f;
         bb = baseBolt.translate(size + boltSize / 2, -0.15f, offset);
-        CubeRenderer.render(bb, icon, rot, true);
+        cr.render(bb, icon, rot, true);
         bb = baseBolt.translate(size + boltSize / 2, -0.15f, -offset);
-        CubeRenderer.render(bb, icon, rot, true);
+        cr.render(bb, icon, rot, true);
 
         bb = baseBolt.translate(-(size + boltSize / 2), -0.15f, offset);
-        CubeRenderer.render(bb, icon, rot, true);
+        cr.render(bb, icon, rot, true);
         bb = baseBolt.translate(-(size + boltSize / 2), -0.15f, -offset);
-        CubeRenderer.render(bb, icon, rot, true);
+        cr.render(bb, icon, rot, true);
 
         bb = baseBolt.translate(-offset, -0.15f, -(size + boltSize / 2));
-        CubeRenderer.render(bb, icon, rot, true);
+        cr.render(bb, icon, rot, true);
         bb = baseBolt.translate(offset, -0.15f, -(size + boltSize / 2));
-        CubeRenderer.render(bb, icon, rot, true);
+        cr.render(bb, icon, rot, true);
 
         bb = baseBolt.translate(offset, -0.15f, (size + boltSize / 2));
-        CubeRenderer.render(bb, icon, rot, true);
+        cr.render(bb, icon, rot, true);
         bb = baseBolt.translate(-offset, -0.15f, (size + boltSize / 2));
-        CubeRenderer.render(bb, icon, rot, true);
+        cr.render(bb, icon, rot, true);
     }
 
     @Override

@@ -1,7 +1,7 @@
 // Add your dependencies here
 
 dependencies {
-    api('com.github.GTNewHorizons:EnderCore:0.3.1:dev') {transitive = false}
+    api('com.github.GTNewHorizons:EnderCore:0.4.0-pre:dev') {transitive = false}
     compileOnly('com.github.GTNewHorizons:ForestryMC:4.8.2:dev')
     compileOnly('com.github.GTNewHorizons:NotEnoughItems:2.5.18-GTNH:dev')
     compileOnly("com.github.GTNewHorizons:GTNHLib:0.2.4:dev")
@@ -23,4 +23,6 @@ dependencies {
     compileOnly(rfg.deobf('curse.maven:computercraft-67504:2269339')) // https://www.curseforge.com/minecraft/mc-mods/computercraft/files/2269339
     compileOnly(rfg.deobf('curse.maven:mekanism-268560:2475797')) // https://www.curseforge.com/minecraft/mc-mods/mekanism/files/2475797
     compileOnly(rfg.deobf('maven.modrinth:immibis-microblocks:59.1.2')) // https://modrinth.com/mod/immibis-microblocks/version/59.1.2
+
+    api('com.github.GTNewHorizons:Angelica:1.0.0-alpha29:api') {transitive = false}
 }

@@ -17,6 +17,7 @@ import com.enderio.core.common.util.BlockCoord;
 
 import crazypants.enderio.conduit.geom.CollidableCache.CacheKey;
 import crazypants.enderio.conduit.geom.CollidableComponent;
+import crazypants.enderio.conduit.render.ConduitRenderer;
 
 public interface IConduit {
 
@@ -141,4 +142,6 @@ public interface IConduit {
      * Should the texture of the conduit connectors be mirrored around the conduit node?
      */
     boolean shouldMirrorTexture();
+
+    ConduitRenderer getRenderer();
 }

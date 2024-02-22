@@ -31,9 +31,12 @@ import crazypants.enderio.conduit.IConduit;
 import crazypants.enderio.conduit.IConduitBundle;
 import crazypants.enderio.conduit.geom.CollidableComponent;
 import crazypants.enderio.conduit.render.ConduitBundleRenderer;
+import crazypants.enderio.conduit.render.ConduitRenderer;
 import crazypants.enderio.conduit.render.DefaultConduitRenderer;
 
 public class LiquidConduitRenderer extends DefaultConduitRenderer implements IResourceManagerReloadListener {
+
+    public static final ThreadLocal<ConduitRenderer> instance = ThreadLocal.withInitial(LiquidConduitRenderer::new);
 
     private float downRatio;
 
@@ -41,22 +44,9 @@ public class LiquidConduitRenderer extends DefaultConduitRenderer implements IRe
 
     private float upRatio;
 
-    private LiquidConduitRenderer() {
+    public LiquidConduitRenderer() {
         super();
-    }
-
-    public static LiquidConduitRenderer create() {
-        LiquidConduitRenderer result = new LiquidConduitRenderer();
-        RenderUtil.registerReloadListener(result);
-        return result;
-    }
-
-    @Override
-    public boolean isRendererForConduit(IConduit conduit) {
-        if (conduit instanceof LiquidConduit) {
-            return true;
-        }
-        return false;
+        RenderUtil.registerReloadListener(this);
     }
 
     @Override
@@ -91,16 +81,19 @@ public class LiquidConduitRenderer extends DefaultConduitRenderer implements IRe
         }
 
         if (conduit.getConnectionMode(component.dir) == ConnectionMode.DISABLED) {
+            final CubeRenderer cr = CubeRenderer.get();
+            int i;
             tex = EnderIO.blockConduitBundle.getConnectorIcon(component.data);
             List<Vertex> corners = component.bound
                     .getCornersWithUvForFace(component.dir, tex.getMinU(), tex.getMaxU(), tex.getMinV(), tex.getMaxV());
-            for (Vertex c : corners) {
-                CubeRenderer.addVecWithUV(c.xyz, c.uv.x, c.uv.y);
+            for (i = corners.size() - 1; i >= 0; i--) {
+                Vertex c = corners.get(i);
+                cr.addVecWithUV(c.xyz, c.uv.x, c.uv.y);
             }
             // back face
-            for (int i = corners.size() - 1; i >= 0; i--) {
+            for (i = corners.size() - 1; i >= 0; i--) {
                 Vertex c = corners.get(i);
-                CubeRenderer.addVecWithUV(c.xyz, c.uv.x, c.uv.y);
+                cr.addVecWithUV(c.xyz, c.uv.x, c.uv.y);
             }
         }
     }
@@ -303,7 +296,7 @@ public class LiquidConduitRenderer extends DefaultConduitRenderer implements IRe
         float transY = (bound.sizeY() - sizeY) / 2;
 
         Vector3d translation = new Vector3d(0, transY, 0);
-        CubeRenderer.setupVertices(bound.translate(translation));
+        CubeRenderer.get().setupVertices(bound.translate(translation));
     }
 
     private void calculateRatios(LiquidConduit conduit) {

@@ -42,11 +42,12 @@ public class TankItemRenderer implements IItemRenderer {
         GL11.glEnable(GL11.GL_ALPHA_TEST);
         Block block = EnderIO.blockTank;
         int meta = item.getItemDamage();
+        final Tessellator tessellator = Tessellator.instance;
 
         IIcon[] icons = RenderUtil.getBlockTextures(block, meta);
         BoundingBox bb = BoundingBox.UNIT_CUBE.translate(0, -0.1f, 0);
-        Tessellator.instance.startDrawingQuads();
-        CubeRenderer.render(bb, icons, null, RenderUtil.getDefaultPerSideBrightness());
-        Tessellator.instance.draw();
+        tessellator.startDrawingQuads();
+        CubeRenderer.get().render(bb, icons, null, RenderUtil.getDefaultPerSideBrightness());
+        tessellator.draw();
     }
 }

@@ -7,9 +7,12 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.IBlockAccess;
 
+import com.gtnewhorizons.angelica.api.ThreadSafeISBRH;
+
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import crazypants.enderio.EnderIO;
 
+@ThreadSafeISBRH(perThread = false)
 public class BlockPaintedFenceGateRenderer implements ISimpleBlockRenderingHandler {
 
     @Override

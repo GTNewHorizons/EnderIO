@@ -89,7 +89,7 @@ public class ZombieGeneratorRenderer extends TileEntitySpecialRenderer implement
             }
             tes.setBrightness(brightness);
 
-            CubeRenderer.render(bb, icon);
+            CubeRenderer.get().render(bb, icon);
 
             GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
             GL11.glEnable(GL11.GL_BLEND);

@@ -62,8 +62,9 @@ public class ItemConduitRenderer implements IItemRenderer {
     }
 
     private void renderToInventory(ItemStack item, RenderBlocks renderBlocks) {
-        Tessellator.instance.startDrawingQuads();
-        CubeRenderer.render(bb, item.getItem().getIconFromDamage(item.getItemDamage()));
-        Tessellator.instance.draw();
+        final Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
+        CubeRenderer.get().render(bb, item.getItem().getIconFromDamage(item.getItemDamage()));
+        tessellator.draw();
     }
 }

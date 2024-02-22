@@ -19,12 +19,14 @@ import com.enderio.core.client.render.CustomRenderBlocks;
 import com.enderio.core.client.render.IconUtil;
 import com.enderio.core.client.render.RenderUtil;
 import com.enderio.core.common.vecmath.Vertex;
+import com.gtnewhorizons.angelica.api.ThreadSafeISBRH;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import crazypants.enderio.machine.painter.IPaintableTileEntity;
 import crazypants.enderio.machine.painter.PaintedBlockRenderer;
 import crazypants.enderio.machine.painter.PainterUtil;
 
+@ThreadSafeISBRH(perThread = true)
 public class AbstractMachineRenderer implements ISimpleBlockRenderingHandler, IItemRenderer {
 
     private OverlayRenderer overlayRenderer = new OverlayRenderer() {
@@ -75,8 +77,9 @@ public class AbstractMachineRenderer implements ISimpleBlockRenderingHandler, II
 
         BoundingBox bb = BoundingBox.UNIT_CUBE;
         bb = bb.translate(0, -0.1f, 0);
+        final Tessellator tessellator = Tessellator.instance;
 
-        Tessellator.instance.startDrawingQuads();
+        tessellator.startDrawingQuads();
 
         IIcon[] textures = RenderUtil.getBlockTextures(block, metadata);
 
@@ -84,8 +87,8 @@ public class AbstractMachineRenderer implements ISimpleBlockRenderingHandler, II
         for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
             brightnessPerSide[dir.ordinal()] = Math.max(RenderUtil.getColorMultiplierForFace(dir) + 0.1f, 1f);
         }
-        CubeRenderer.render(bb, textures, null, brightnessPerSide);
-        Tessellator.instance.draw();
+        CubeRenderer.get().render(bb, textures, null, brightnessPerSide);
+        tessellator.draw();
     }
 
     @Override

@@ -11,8 +11,14 @@ import cofh.api.transport.IItemDuct;
 import crazypants.enderio.conduit.IConduit;
 import crazypants.enderio.conduit.IExtractor;
 import crazypants.enderio.conduit.item.filter.IItemFilter;
+import crazypants.enderio.conduit.render.ConduitRenderer;
 
 public interface IItemConduit extends IConduit, IItemDuct, IExtractor {
+
+    @Override
+    default ConduitRenderer getRenderer() {
+        return ItemConduitRenderer.instance.get();
+    }
 
     IIcon getTextureForInputMode();
 

@@ -33,9 +33,16 @@ import crazypants.enderio.conduit.IConduitBundle;
 import crazypants.enderio.conduit.RaytraceResult;
 import crazypants.enderio.conduit.TileConduitBundle;
 import crazypants.enderio.conduit.geom.CollidableComponent;
+import crazypants.enderio.conduit.render.ConduitRenderer;
+import crazypants.enderio.conduit.render.DefaultConduitRenderer;
 import crazypants.enderio.tool.ToolUtil;
 
 public class MEConduit extends AbstractConduit implements IMEConduit {
+
+    @Override
+    public ConduitRenderer getRenderer() {
+        return DefaultConduitRenderer.instance.get();
+    }
 
     protected MEConduitNetwork network;
     protected MEConduitGrid grid;

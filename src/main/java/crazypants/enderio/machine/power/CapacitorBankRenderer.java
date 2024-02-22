@@ -109,7 +109,8 @@ public class CapacitorBankRenderer extends TileEntitySpecialRenderer implements 
         }
 
         tes.startDrawingQuads();
-        CubeRenderer.render(BoundingBox.UNIT_CUBE, EnderIO.blockCapacitorBank.getIcon(0, 0), null, brightness, true);
+        CubeRenderer.get()
+                .render(BoundingBox.UNIT_CUBE, EnderIO.blockCapacitorBank.getIcon(0, 0), null, brightness, true);
         tes.draw();
 
         GL11.glEnable(GL11.GL_POLYGON_OFFSET_FILL);

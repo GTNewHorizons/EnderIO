@@ -55,7 +55,7 @@ public class EnderIoRenderer extends TileEntitySpecialRenderer implements IItemR
     }
 
     public void render(double x, double y, double z, Matrix4d lookMat, int brightness) {
-
+        final Tessellator tessellator = Tessellator.instance;
         GL11.glPushMatrix();
         GL11.glTranslated(x + 0.5, y + 0.5, z + 0.5);
 
@@ -111,8 +111,8 @@ public class EnderIoRenderer extends TileEntitySpecialRenderer implements IItemR
         GL11.glTranslated(x, y, z);
 
         RenderUtil.bindBlockTexture();
-        Tessellator.instance.startDrawingQuads();
-        Tessellator.instance.setBrightness(brightness);
+        tessellator.startDrawingQuads();
+        tessellator.setBrightness(brightness);
 
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -120,8 +120,8 @@ public class EnderIoRenderer extends TileEntitySpecialRenderer implements IItemR
         GL11.glEnable(GL11.GL_POLYGON_OFFSET_FILL);
         GL11.glPolygonOffset(-1.0f, -1.0f);
 
-        CubeRenderer.render(BoundingBox.UNIT_CUBE, EnderIO.blockEnderIo.frameIcon);
-        Tessellator.instance.draw();
+        CubeRenderer.get().render(BoundingBox.UNIT_CUBE, EnderIO.blockEnderIo.frameIcon);
+        tessellator.draw();
         GL11.glPopMatrix();
 
         GL11.glDisable(GL11.GL_POLYGON_OFFSET_FILL);

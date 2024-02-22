@@ -7,6 +7,7 @@ import com.enderio.core.common.util.DyeColor;
 import cpw.mods.fml.common.Optional.Interface;
 import cpw.mods.fml.common.Optional.InterfaceList;
 import crazypants.enderio.conduit.IConduit;
+import crazypants.enderio.conduit.render.ConduitRenderer;
 import li.cil.oc.api.network.Environment;
 import li.cil.oc.api.network.SidedEnvironment;
 
@@ -14,11 +15,16 @@ import li.cil.oc.api.network.SidedEnvironment;
         @Interface(iface = "li.cil.oc.api.network.SidedEnvironment", modid = "OpenComputersAPI|Network") })
 public interface IOCConduit extends IConduit, Environment, SidedEnvironment {
 
-    public static final String COLOR_CONTROLLER_ID = "ColorController";
+    String COLOR_CONTROLLER_ID = "ColorController";
+
+    @Override
+    default ConduitRenderer getRenderer() {
+        return OCConduitRenderer.instance.get();
+    }
 
     void invalidate();
 
-    public abstract void setSignalColor(ForgeDirection dir, DyeColor col);
+    void setSignalColor(ForgeDirection dir, DyeColor col);
 
-    public abstract DyeColor getSignalColor(ForgeDirection dir);
+    DyeColor getSignalColor(ForgeDirection dir);
 }

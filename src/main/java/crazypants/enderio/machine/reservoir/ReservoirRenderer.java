@@ -74,18 +74,19 @@ public class ReservoirRenderer extends TileEntitySpecialRenderer implements IRes
         GL11.glTranslatef((float) x + offset.x, (float) y + offset.y, (float) z + offset.z);
 
         BoundingBox bb = res.getLiquidRenderBounds();
+        final Tessellator tessellator = Tessellator.instance;
 
         if (res.isAutoEject()) {
 
             // switch
             RenderUtil.bindBlockTexture();
 
-            Tessellator.instance.startDrawingQuads();
-            Tessellator.instance.setColorRGBA_F(val, val, val, 1);
+            tessellator.startDrawingQuads();
+            tessellator.setColorRGBA_F(val, val, val, 1);
             for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
                 drawSwitch(dir, bb);
             }
-            Tessellator.instance.draw();
+            tessellator.draw();
         }
 
         if (fullness > 0) {
@@ -96,9 +97,9 @@ public class ReservoirRenderer extends TileEntitySpecialRenderer implements IRes
             IIcon tex = getLiquidTexture();
             float maxV = tex.getMinV() + ((tex.getMaxV() - tex.getMinV()) * fullness);
 
-            Tessellator.instance.startDrawingQuads();
-            Tessellator.instance.setColorRGBA_F(val, val, val, 1);
-            CubeRenderer.render(
+            tessellator.startDrawingQuads();
+            tessellator.setColorRGBA_F(val, val, val, 1);
+            CubeRenderer.get().render(
                     new BoundingBox(
                             bb.minX + margin,
                             bb.minY + margin,
@@ -110,7 +111,7 @@ public class ReservoirRenderer extends TileEntitySpecialRenderer implements IRes
                     tex.getMaxU(),
                     tex.getMinV(),
                     maxV);
-            Tessellator.instance.draw();
+            tessellator.draw();
         }
 
         GL11.glPopAttrib();
@@ -119,10 +120,10 @@ public class ReservoirRenderer extends TileEntitySpecialRenderer implements IRes
         Minecraft.getMinecraft().entityRenderer.enableLightmap(0);
     }
 
-    private Vector3d forward = new Vector3d();
-    private Vector3d left = new Vector3d();
-    private Vector3d up = new Vector3d();
-    private Vector3d offset = new Vector3d();
+    private final Vector3d forward = new Vector3d();
+    private final Vector3d left = new Vector3d();
+    private final Vector3d up = new Vector3d();
+    private final Vector3d offset = new Vector3d();
 
     private void drawSwitch(ForgeDirection dir, BoundingBox bb) {
         Tessellator tes = Tessellator.instance;

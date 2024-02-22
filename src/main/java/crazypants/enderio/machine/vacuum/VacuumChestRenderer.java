@@ -11,18 +11,22 @@ import net.minecraftforge.client.IItemRenderer;
 
 import com.enderio.core.client.render.BoundingBox;
 import com.enderio.core.client.render.CubeRenderer;
+import com.gtnewhorizons.angelica.api.ThreadSafeISBRH;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import crazypants.enderio.EnderIO;
 
+@ThreadSafeISBRH(perThread = false)
 public class VacuumChestRenderer implements ISimpleBlockRenderingHandler, IItemRenderer {
 
     @Override
     public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
-        Tessellator.instance.startDrawingQuads();
-        CubeRenderer.render(BoundingBox.UNIT_CUBE.scale(0.6, 0.6, 0.6), EnderIO.blockHyperCube.getIcon(0, 0));
-        CubeRenderer.render(BoundingBox.UNIT_CUBE.scale(0.90, 0.90, 0.90), EnderIO.blockVacuumChest.getIcon(0, 0));
-        Tessellator.instance.draw();
+        final Tessellator tessellator = Tessellator.instance;
+        final CubeRenderer cr = CubeRenderer.get();
+        tessellator.startDrawingQuads();
+        cr.render(BoundingBox.UNIT_CUBE.scale(0.6, 0.6, 0.6), EnderIO.blockHyperCube.getIcon(0, 0));
+        cr.render(BoundingBox.UNIT_CUBE.scale(0.90, 0.90, 0.90), EnderIO.blockVacuumChest.getIcon(0, 0));
+        tessellator.draw();
     }
 
     @Override

@@ -23,6 +23,7 @@ import crazypants.enderio.conduit.AbstractConduitNetwork;
 import crazypants.enderio.conduit.ConnectionMode;
 import crazypants.enderio.conduit.IConduit;
 import crazypants.enderio.conduit.geom.CollidableComponent;
+import crazypants.enderio.conduit.render.ConduitRenderer;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.RedstoneControlMode;
 
@@ -37,7 +38,12 @@ public class AdvancedLiquidConduit extends AbstractTankConduit {
     public static final String ICON_INSERT_KEY = "enderio:liquidConduitAdvancedOutput";
     public static final String ICON_EMPTY_EDGE = "enderio:liquidConduitAdvancedEdge";
 
-    static final Map<String, IIcon> ICONS = new HashMap<String, IIcon>();
+    static final Map<String, IIcon> ICONS = new HashMap<>();
+
+    @Override
+    public ConduitRenderer getRenderer() {
+        return AdvancedLiquidConduitRenderer.instance.get();
+    }
 
     @SideOnly(Side.CLIENT)
     public static void initIcons() {

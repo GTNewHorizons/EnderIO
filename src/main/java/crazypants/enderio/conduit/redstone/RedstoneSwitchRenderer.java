@@ -17,29 +17,21 @@ import crazypants.enderio.conduit.geom.CollidableComponent;
 import crazypants.enderio.conduit.geom.ConduitConnectorType;
 import crazypants.enderio.conduit.geom.ConduitGeometryUtil;
 import crazypants.enderio.conduit.render.ConduitBundleRenderer;
+import crazypants.enderio.conduit.render.ConduitRenderer;
 import crazypants.enderio.conduit.render.DefaultConduitRenderer;
 
 public class RedstoneSwitchRenderer extends DefaultConduitRenderer {
 
-    private static final RedstoneSwitchRenderer instance = new RedstoneSwitchRenderer();
-
-    public static RedstoneSwitchRenderer getInstance() {
-        return instance;
-    }
+    public static final ThreadLocal<ConduitRenderer> instance = ThreadLocal.withInitial(RedstoneSwitchRenderer::new);
 
     private final VertexTransform[] xForms;
     private final BoundingBox switchBounds;
     private final BoundingBox connectorBounds;
 
-    private RedstoneSwitchRenderer() {
-        xForms = RedstoneSwitchBounds.getInstance().xForms;
-        switchBounds = RedstoneSwitchBounds.getInstance().switchBounds;
-        connectorBounds = RedstoneSwitchBounds.getInstance().connectorBounds;
-    }
-
-    @Override
-    public boolean isRendererForConduit(IConduit conduit) {
-        return conduit.getClass() == RedstoneSwitch.class;
+    public RedstoneSwitchRenderer() {
+        xForms = RedstoneSwitchBounds.get().xForms;
+        switchBounds = RedstoneSwitchBounds.get().switchBounds;
+        connectorBounds = RedstoneSwitchBounds.get().connectorBounds;
     }
 
     @Override
@@ -49,13 +41,15 @@ public class RedstoneSwitchRenderer extends DefaultConduitRenderer {
         super.renderEntity(conduitBundleRenderer, bundle, conduit, x, y, z, partialTick, worldLight, rb);
 
         RedstoneSwitch sw = (RedstoneSwitch) conduit;
+        int i;
 
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
+        final CubeRenderer cr = CubeRenderer.get();
         float selfIllum = Math.max(worldLight, conduit.getSelfIlluminationForState(null));
         tessellator.setColorOpaque_F(selfIllum, selfIllum, selfIllum);
 
         IIcon[] icons = new IIcon[6];
-        for (int i = 0; i < icons.length; i++) {
+        for (i = 0; i < icons.length; i++) {
             icons[i] = EnderIO.blockConduitBundle.getConnectorIcon(ConduitConnectorType.INTERNAL);
         }
         icons[3] = sw.getSwitchIcon();
@@ -65,12 +59,12 @@ public class RedstoneSwitchRenderer extends DefaultConduitRenderer {
                 bundle.getOffset(IRedstoneConduit.class, ForgeDirection.UNKNOWN));
         BoundingBox bb = switchBounds.translate(trans);
 
-        for (VertexTransform tf : xForms) {
-            CubeRenderer.render(bb, icons, tf, null);
+        for (i = 0; i < xForms.length; i++) {
+            cr.render(bb, icons, xForms[i], null);
         }
         bb = connectorBounds.translate(trans);
-        for (VertexTransform tf : xForms) {
-            CubeRenderer.render(bb, icons[0], tf);
+        for (i = 0; i < xForms.length; i++) {
+            cr.render(bb, icons[0], xForms[i]);
         }
     }
 

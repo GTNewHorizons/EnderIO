@@ -19,7 +19,6 @@ import com.enderio.core.common.vecmath.Vertex;
 
 public class OverlayRenderer implements IRenderFace {
 
-    private static final CustomCubeRenderer ccr = CustomCubeRenderer.instance;
     private AbstractMachineEntity te;
 
     public void setTile(AbstractMachineEntity te) {
@@ -30,6 +29,7 @@ public class OverlayRenderer implements IRenderFace {
     @Override
     public void renderFace(CustomRenderBlocks rb, ForgeDirection face, Block par1Block, double x, double y, double z,
             IIcon texture, List<Vertex> refVertices, boolean translateToXyz) {
+        CustomCubeRenderer ccr = CustomCubeRenderer.get();
 
         if (te != null && par1Block instanceof AbstractMachineBlock) {
             BlockCoord bc = new BlockCoord(x, y, z);

@@ -7,14 +7,12 @@ import com.enderio.core.client.render.CubeRenderer;
 
 import crazypants.enderio.conduit.IConduit;
 import crazypants.enderio.conduit.geom.CollidableComponent;
+import crazypants.enderio.conduit.render.ConduitRenderer;
 import crazypants.enderio.conduit.render.DefaultConduitRenderer;
 
 public class OCConduitRenderer extends DefaultConduitRenderer {
 
-    @Override
-    public boolean isRendererForConduit(IConduit conduit) {
-        return conduit instanceof IOCConduit;
-    }
+    public static final ThreadLocal<ConduitRenderer> instance = ThreadLocal.withInitial(OCConduitRenderer::new);
 
     @Override
     protected void renderConduit(IIcon tex, IConduit conduit, CollidableComponent component, float selfIllum) {
@@ -23,7 +21,7 @@ public class OCConduitRenderer extends DefaultConduitRenderer {
                 int c = ((IOCConduit) conduit).getSignalColor(component.dir).getColor();
                 Tessellator tessellator = Tessellator.instance;
                 tessellator.setColorOpaque_I(c);
-                CubeRenderer.render(component.bound, tex);
+                CubeRenderer.get().render(component.bound, tex);
                 tessellator.setColorOpaque(255, 255, 255);
             }
         } else {

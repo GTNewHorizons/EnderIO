@@ -34,6 +34,7 @@ public class CommonProxy {
         return null;
     }
 
+    @Deprecated
     public ConduitRenderer getRendererForConduit(IConduit conduit) {
         return null;
     }

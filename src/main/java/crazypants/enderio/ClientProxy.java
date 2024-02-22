@@ -1,8 +1,5 @@
 package crazypants.enderio;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,36 +30,27 @@ import crazypants.enderio.conduit.IConduit;
 import crazypants.enderio.conduit.TileConduitBundle;
 import crazypants.enderio.conduit.facade.FacadeRenderer;
 import crazypants.enderio.conduit.gas.GasConduit;
-import crazypants.enderio.conduit.gas.GasConduitRenderer;
 import crazypants.enderio.conduit.gas.GasUtil;
 import crazypants.enderio.conduit.item.ItemConduit;
 import crazypants.enderio.conduit.liquid.AbstractEnderLiquidConduit;
 import crazypants.enderio.conduit.liquid.AdvancedLiquidConduit;
-import crazypants.enderio.conduit.liquid.AdvancedLiquidConduitRenderer;
 import crazypants.enderio.conduit.liquid.CrystallineEnderLiquidConduit;
 import crazypants.enderio.conduit.liquid.CrystallinePinkSlimeEnderLiquidConduit;
 import crazypants.enderio.conduit.liquid.EnderLiquidConduit;
-import crazypants.enderio.conduit.liquid.EnderLiquidConduitRenderer;
 import crazypants.enderio.conduit.liquid.LiquidConduit;
-import crazypants.enderio.conduit.liquid.LiquidConduitRenderer;
 import crazypants.enderio.conduit.liquid.MelodicEnderLiquidConduit;
 import crazypants.enderio.conduit.liquid.StellarEnderLiquidConduit;
 import crazypants.enderio.conduit.me.MEConduit;
 import crazypants.enderio.conduit.me.MEUtil;
 import crazypants.enderio.conduit.oc.OCConduit;
-import crazypants.enderio.conduit.oc.OCConduitRenderer;
 import crazypants.enderio.conduit.oc.OCUtil;
 import crazypants.enderio.conduit.power.PowerConduit;
-import crazypants.enderio.conduit.power.PowerConduitRenderer;
 import crazypants.enderio.conduit.power.endergy.PowerConduitEndergy;
 import crazypants.enderio.conduit.redstone.InsulatedRedstoneConduit;
-import crazypants.enderio.conduit.redstone.InsulatedRedstoneConduitRenderer;
 import crazypants.enderio.conduit.redstone.RedstoneConduit;
 import crazypants.enderio.conduit.redstone.RedstoneSwitch;
-import crazypants.enderio.conduit.redstone.RedstoneSwitchRenderer;
 import crazypants.enderio.conduit.render.ConduitBundleRenderer;
 import crazypants.enderio.conduit.render.ConduitRenderer;
-import crazypants.enderio.conduit.render.DefaultConduitRenderer;
 import crazypants.enderio.conduit.render.ItemConduitRenderer;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.enderface.EnderIoRenderer;
@@ -165,10 +153,6 @@ public class ClientProxy extends CommonProxy {
         {5, 4, 5, 4, 2, 3}
     };
     // @formatter:on
-
-    private final List<ConduitRenderer> conduitRenderers = new ArrayList<ConduitRenderer>();
-
-    private final DefaultConduitRenderer dcr = new DefaultConduitRenderer();
 
     private ConduitBundleRenderer cbr;
 
@@ -403,20 +387,6 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerBlockHandler(esk);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockEndermanSkull), esk);
 
-        conduitRenderers.add(RedstoneSwitchRenderer.getInstance());
-        conduitRenderers.add(new AdvancedLiquidConduitRenderer());
-        conduitRenderers.add(LiquidConduitRenderer.create());
-        conduitRenderers.add(new PowerConduitRenderer());
-        conduitRenderers.add(new InsulatedRedstoneConduitRenderer());
-        conduitRenderers.add(new EnderLiquidConduitRenderer());
-        conduitRenderers.add(new crazypants.enderio.conduit.item.ItemConduitRenderer());
-        if (GasUtil.isGasConduitEnabled()) {
-            conduitRenderers.add(new GasConduitRenderer());
-        }
-        if (OCUtil.isOCEnabled()) {
-            conduitRenderers.add(new OCConduitRenderer());
-        }
-
         EnderIoRenderer eior = new EnderIoRenderer();
         ClientRegistry.bindTileEntitySpecialRenderer(TileEnderIO.class, eior);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockEnderIo), eior);
@@ -480,12 +450,7 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public ConduitRenderer getRendererForConduit(IConduit conduit) {
-        for (ConduitRenderer renderer : conduitRenderers) {
-            if (renderer.isRendererForConduit(conduit)) {
-                return renderer;
-            }
-        }
-        return dcr;
+        return conduit.getRenderer();
     }
 
     @Override

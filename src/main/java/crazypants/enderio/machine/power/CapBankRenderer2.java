@@ -24,18 +24,20 @@ import com.enderio.core.common.vecmath.Vector3d;
 import com.enderio.core.common.vecmath.Vector4d;
 import com.enderio.core.common.vecmath.Vector4f;
 import com.enderio.core.common.vecmath.Vertex;
+import com.gtnewhorizons.angelica.api.ThreadSafeISBRH;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.machine.power.GaugeBounds.VPos;
 
+@ThreadSafeISBRH(perThread = true)
 public class CapBankRenderer2 implements ISimpleBlockRenderingHandler {
 
     private static final BlockCoord DEFAULT_BC = new BlockCoord(0, 0, 0);
     private static final BlockCoord[] DEFAULT_MB = new BlockCoord[] { DEFAULT_BC };
     private static final double PIXEL_SIZE = 1 / 16d;
 
-    private final List<IRenderFace> renderers = new ArrayList<IRenderFace>(2);
+    private final List<IRenderFace> renderers = new ArrayList<>(2);
 
     private ConnectedTextureRenderer connectedTexRenderer;
 
@@ -67,7 +69,7 @@ public class CapBankRenderer2 implements ISimpleBlockRenderingHandler {
             connectedTexRenderer.setEdgeTexture(EnderIO.blockAlloySmelter.getBlockTextureFromSide(3));
             connectedTexRenderer.setForceAllEdges(false);
         }
-        CustomCubeRenderer.instance.renderBlock(world, block, x, y, z, renderers);
+        CustomCubeRenderer.get().renderBlock(world, block, x, y, z, renderers);
         return true;
     }
 

@@ -9,9 +9,11 @@ import net.minecraft.world.IBlockAccess;
 import com.enderio.core.client.render.BoundingBox;
 import com.enderio.core.client.render.CubeRenderer;
 import com.enderio.core.client.render.RenderUtil;
+import com.gtnewhorizons.angelica.api.ThreadSafeISBRH;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
+@ThreadSafeISBRH(perThread = false)
 public class ElectricLightRenderer implements ISimpleBlockRenderingHandler {
 
     @Override
@@ -19,13 +21,13 @@ public class ElectricLightRenderer implements ISimpleBlockRenderingHandler {
 
         BoundingBox bb = new BoundingBox(0, 0, 0, 1, 0.2, 1);
         boolean doDraw = false;
-
-        Tessellator.instance.startDrawingQuads();
+        final Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
 
         IIcon[] textures = RenderUtil.getBlockTextures(block, metadata);
-        CubeRenderer.render(bb, textures, null, null);
+        CubeRenderer.get().render(bb, textures, null, null);
 
-        Tessellator.instance.draw();
+        tessellator.draw();
     }
 
     @Override
@@ -45,9 +47,9 @@ public class ElectricLightRenderer implements ISimpleBlockRenderingHandler {
 
         IIcon[] textures = RenderUtil.getBlockTextures(world, x, y, z);
         if (renderer.hasOverrideBlockTexture()) {
-            CubeRenderer.render(bb, renderer.overrideBlockTexture);
+            CubeRenderer.get().render(bb, renderer.overrideBlockTexture);
         } else {
-            CubeRenderer.render(bb, textures, null, null);
+            CubeRenderer.get().render(bb, textures, null, null);
         }
 
         return true;

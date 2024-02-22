@@ -5,19 +5,25 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import crazypants.enderio.conduit.IConduit;
 import crazypants.enderio.conduit.IExtractor;
+import crazypants.enderio.conduit.render.ConduitRenderer;
 import crazypants.enderio.power.ICapacitor;
 import crazypants.enderio.power.IInternalPowerHandler;
 import crazypants.enderio.power.IPowerInterface;
 
 public interface IPowerConduit extends IConduit, IInternalPowerHandler, IExtractor {
 
-    public static final String ICON_KEY = "enderio:powerConduit";
-    public static final String ICON_KEY_INPUT = "enderio:powerConduitInput";
-    public static final String ICON_KEY_OUTPUT = "enderio:powerConduitOutput";
-    public static final String ICON_CORE_KEY = "enderio:powerConduitCore";
-    public static final String ICON_TRANSMISSION_KEY = "enderio:powerConduitTransmission";
+    String ICON_KEY = "enderio:powerConduit";
+    String ICON_KEY_INPUT = "enderio:powerConduitInput";
+    String ICON_KEY_OUTPUT = "enderio:powerConduitOutput";
+    String ICON_CORE_KEY = "enderio:powerConduitCore";
+    String ICON_TRANSMISSION_KEY = "enderio:powerConduitTransmission";
 
-    public static final String COLOR_CONTROLLER_ID = "ColorController";
+    String COLOR_CONTROLLER_ID = "ColorController";
+
+    @Override
+    default ConduitRenderer getRenderer() {
+        return PowerConduitRenderer.instance.get();
+    }
 
     IPowerInterface getExternalPowerReceptor(ForgeDirection direction);
 

@@ -11,10 +11,13 @@ import net.minecraftforge.common.util.ForgeDirection;
 import com.enderio.core.client.render.CubeRenderer;
 import com.enderio.core.client.render.IconUtil;
 import com.enderio.core.common.util.BlockCoord;
+import com.gtnewhorizons.angelica.api.ThreadSafeISBRHFactory;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import cpw.mods.fml.common.Optional;
 
-public class PaintedBlockRenderer implements ISimpleBlockRenderingHandler {
+@Optional.Interface(modid = "angelica", iface = "com.gtnewhorizons.angelica.api.ThreadSafeISBRHFactory")
+public class PaintedBlockRenderer implements ISimpleBlockRenderingHandler, ThreadSafeISBRHFactory {
 
     private int renderId;
     private Block defaultBlock;
@@ -22,6 +25,12 @@ public class PaintedBlockRenderer implements ISimpleBlockRenderingHandler {
     public PaintedBlockRenderer(int renderId, Block defaultBlock) {
         this.renderId = renderId;
         this.defaultBlock = defaultBlock;
+
+    }
+
+    @Override
+    public ThreadSafeISBRHFactory newInstance() {
+        return new PaintedBlockRenderer(renderId, defaultBlock);
     }
 
     @Override
@@ -31,9 +40,10 @@ public class PaintedBlockRenderer implements ISimpleBlockRenderingHandler {
 
     @Override
     public void renderInventoryBlock(Block blk, int meta, int modelId, RenderBlocks arg3) {
-        Tessellator.instance.startDrawingQuads();
-        CubeRenderer.render(blk, meta);
-        Tessellator.instance.draw();
+        final Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
+        CubeRenderer.get().render(blk, meta);
+        tessellator.draw();
     }
 
     @Override

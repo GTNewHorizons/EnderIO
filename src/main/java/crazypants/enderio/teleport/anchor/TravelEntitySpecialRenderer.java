@@ -47,7 +47,6 @@ public class TravelEntitySpecialRenderer extends TileEntitySpecialRenderer {
 
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
-
         if (!TravelController.instance.showTargets()) {
             return;
         }
@@ -65,6 +64,8 @@ public class TravelEntitySpecialRenderer extends TileEntitySpecialRenderer {
         if (!ta.canSeeBlock(Minecraft.getMinecraft().thePlayer)) {
             return;
         }
+        final CubeRenderer cr = CubeRenderer.get();
+        final Tessellator tessellator = Tessellator.instance;
 
         Vector3d eye = Util.getEyePositionEio(Minecraft.getMinecraft().thePlayer);
         Vector3d loc = new Vector3d(tileentity.xCoord + 0.5, tileentity.yCoord + 0.5, tileentity.zCoord + 0.5);
@@ -102,20 +103,20 @@ public class TravelEntitySpecialRenderer extends TileEntitySpecialRenderer {
         GL11.glPushMatrix();
         GL11.glTranslated(x, y, z);
 
-        Tessellator.instance.startDrawingQuads();
+        tessellator.startDrawingQuads();
         renderBlock(tileentity.getWorldObj(), sf);
-        Tessellator.instance.draw();
+        tessellator.draw();
 
-        Tessellator.instance.startDrawingQuads();
-        Tessellator.instance.setBrightness(15 << 20 | 15 << 4);
+        tessellator.startDrawingQuads();
+        tessellator.setBrightness(15 << 20 | 15 << 4);
         if (TravelController.instance.isBlockSelected(bc)) {
-            Tessellator.instance.setColorRGBA_F(selectedColor.x, selectedColor.y, selectedColor.z, selectedColor.w);
-            CubeRenderer.render(BoundingBox.UNIT_CUBE.scale(sf + 0.05, sf + 0.05, sf + 0.05), getSelectedIcon());
+            tessellator.setColorRGBA_F(selectedColor.x, selectedColor.y, selectedColor.z, selectedColor.w);
+            cr.render(BoundingBox.UNIT_CUBE.scale(sf + 0.05, sf + 0.05, sf + 0.05), getSelectedIcon());
         } else {
-            Tessellator.instance.setColorRGBA_F(highlightColor.x, highlightColor.y, highlightColor.z, highlightColor.w);
-            CubeRenderer.render(BoundingBox.UNIT_CUBE.scale(sf + 0.05, sf + 0.05, sf + 0.05), getHighlightIcon());
+            tessellator.setColorRGBA_F(highlightColor.x, highlightColor.y, highlightColor.z, highlightColor.w);
+            cr.render(BoundingBox.UNIT_CUBE.scale(sf + 0.05, sf + 0.05, sf + 0.05), getHighlightIcon());
         }
-        Tessellator.instance.draw();
+        tessellator.draw();
         GL11.glPopMatrix();
 
         renderLabel(tileentity, x, y, z, ta, sf);
@@ -200,7 +201,7 @@ public class TravelEntitySpecialRenderer extends TileEntitySpecialRenderer {
 
     protected void renderBlock(IBlockAccess world, double sf) {
         Tessellator.instance.setColorRGBA_F(1, 1, 1, 0.75f);
-        CubeRenderer.render(BoundingBox.UNIT_CUBE.scale(sf, sf, sf), EnderIO.blockTravelPlatform.getIcon(0, 0));
+        CubeRenderer.get().render(BoundingBox.UNIT_CUBE.scale(sf, sf, sf), EnderIO.blockTravelPlatform.getIcon(0, 0));
     }
 
     public Vector4f getSelectedColor() {

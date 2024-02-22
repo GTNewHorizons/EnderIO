@@ -82,7 +82,7 @@ public class TelePadSpecialRenderer extends TravelEntitySpecialRenderer {
     @Override
     protected void renderBlock(IBlockAccess world, double sf) {
         Tessellator.instance.setColorRGBA_F(1, 1, 1, 0.75f);
-        CubeRenderer.render(BoundingBox.UNIT_CUBE.scale(sf, sf, sf), EnderIO.blockTelePad.getHighlightIcon());
+        CubeRenderer.get().render(BoundingBox.UNIT_CUBE.scale(sf, sf, sf), EnderIO.blockTelePad.getHighlightIcon());
     }
 
     @Override

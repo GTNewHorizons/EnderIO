@@ -27,6 +27,7 @@ import crazypants.enderio.conduit.ConduitUtil;
 import crazypants.enderio.conduit.ConnectionMode;
 import crazypants.enderio.conduit.IConduit;
 import crazypants.enderio.conduit.geom.CollidableComponent;
+import crazypants.enderio.conduit.render.ConduitRenderer;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.network.PacketHandler;
 
@@ -42,7 +43,12 @@ public class LiquidConduit extends AbstractTankConduit {
     public static final String ICON_INSERT_KEY = "enderio:liquidConduitInsert";
     public static final String ICON_EMPTY_INSERT_KEY = "enderio:emptyLiquidConduitInsert";
 
-    static final Map<String, IIcon> ICONS = new HashMap<String, IIcon>();
+    static final Map<String, IIcon> ICONS = new HashMap<>();
+
+    @Override
+    public ConduitRenderer getRenderer() {
+        return LiquidConduitRenderer.instance.get();
+    }
 
     @SideOnly(Side.CLIENT)
     public static void initIcons() {

@@ -18,13 +18,15 @@ import com.enderio.core.client.render.CubeRenderer;
 import com.enderio.core.client.render.CustomCubeRenderer;
 import com.enderio.core.client.render.IconUtil;
 import com.enderio.core.client.render.RenderUtil;
+import com.gtnewhorizons.angelica.api.ThreadSafeISBRH;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import crazypants.enderio.EnderIO;
 
+@ThreadSafeISBRH(perThread = true)
 public class SolarPanelRenderer implements ISimpleBlockRenderingHandler {
 
-    private ConnectedTextureRenderer ctr;
+    private final ConnectedTextureRenderer ctr;
 
     public SolarPanelRenderer() {
         ctr = new ConnectedTextureRenderer();
@@ -40,7 +42,7 @@ public class SolarPanelRenderer implements ISimpleBlockRenderingHandler {
         float offset = -0.5f;
         tes.addTranslation(offset, 0, offset);
         tes.startDrawingQuads();
-        CubeRenderer.render(
+        CubeRenderer.get().render(
                 new BoundingBox(EnderIO.blockSolarPanel),
                 RenderUtil.getBlockTextures(EnderIO.blockSolarPanel, metadata),
                 false);
@@ -62,19 +64,23 @@ public class SolarPanelRenderer implements ISimpleBlockRenderingHandler {
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
             RenderBlocks renderer) {
+        CustomCubeRenderer ccr = CustomCubeRenderer.get();
+        final Tessellator tessellator = Tessellator.instance;
+
         renderer.renderStandardBlock(block, x, y, z);
-        Tessellator.instance.addTranslation(0, 0.0001f, 0);
+        tessellator.addTranslation(0, 0.0001f, 0);
         int meta = world.getBlockMetadata(x, y, z);
         meta = MathHelper.clamp_int(meta, 0, 1);
         ctr.setEdgeTexture(EnderIO.blockSolarPanel.getBorderIcon(0, meta));
-        CustomCubeRenderer.instance.setOverrideTexture(IconUtil.blankTexture);
+
+        ccr.setOverrideTexture(IconUtil.blankTexture);
         if (!renderer.hasOverrideBlockTexture()) {
-            CustomCubeRenderer.instance.renderBlock(world, block, x, y, z, ctr);
+            ccr.renderBlock(world, block, x, y, z, ctr);
         } else {
-            CustomCubeRenderer.instance.renderBlock(world, block, x, y, z);
+            ccr.renderBlock(world, block, x, y, z);
         }
-        CustomCubeRenderer.instance.setOverrideTexture(null);
-        Tessellator.instance.addTranslation(0, -0.0001f, 0);
+        ccr.setOverrideTexture(null);
+        tessellator.addTranslation(0, -0.0001f, 0);
         return true;
     }
 

@@ -34,6 +34,7 @@ public class TankFluidRenderer extends TileEntitySpecialRenderer {
         }
         IIcon icon = tank.getFluid().getFluid().getStillIcon();
         if (icon != null) {
+            final Tessellator tessellator = Tessellator.instance;
             float fullness = tank.getFilledRatio();
             y += 0.01f; // prevent bottom side z-fighting
             float scale = 0.98f;
@@ -49,11 +50,11 @@ public class TankFluidRenderer extends TileEntitySpecialRenderer {
 
             RenderUtil.bindBlockTexture();
 
-            Tessellator.instance.startDrawingQuads();
-            Tessellator.instance.addTranslation(x, y, z);
-            CubeRenderer.render(bb, icon);
-            Tessellator.instance.addTranslation(-x, -y, -z);
-            Tessellator.instance.draw();
+            tessellator.startDrawingQuads();
+            tessellator.addTranslation(x, y, z);
+            CubeRenderer.get().render(bb, icon);
+            tessellator.addTranslation(-x, -y, -z);
+            tessellator.draw();
 
             GL11.glPopAttrib();
         }

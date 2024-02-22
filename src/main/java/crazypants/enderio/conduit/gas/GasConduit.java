@@ -20,6 +20,7 @@ import crazypants.enderio.conduit.AbstractConduitNetwork;
 import crazypants.enderio.conduit.ConnectionMode;
 import crazypants.enderio.conduit.IConduit;
 import crazypants.enderio.conduit.geom.CollidableComponent;
+import crazypants.enderio.conduit.render.ConduitRenderer;
 import crazypants.enderio.config.Config;
 import mekanism.api.gas.Gas;
 import mekanism.api.gas.GasStack;
@@ -34,7 +35,12 @@ public class GasConduit extends AbstractGasTankConduit {
     public static final String ICON_INSERT_KEY = "enderio:gasConduitOutput";
     public static final String ICON_EMPTY_EDGE = "enderio:gasConduitEdge";
 
-    static final Map<String, IIcon> ICONS = new HashMap<String, IIcon>();
+    static final Map<String, IIcon> ICONS = new HashMap<>();
+
+    @Override
+    public ConduitRenderer getRenderer() {
+        return GasConduitRenderer.instance.get();
+    }
 
     @SideOnly(Side.CLIENT)
     public static void initIcons() {

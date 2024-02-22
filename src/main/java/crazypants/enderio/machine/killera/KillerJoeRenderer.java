@@ -142,7 +142,7 @@ public class KillerJoeRenderer extends TileEntitySpecialRenderer implements IIte
             tes.setBrightness(brightness);
             tes.setColorOpaque_F(1, 1, 1);
 
-            CubeRenderer.render(bb, icon);
+            CubeRenderer.get().render(bb, icon);
 
             GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
             GL11.glEnable(GL11.GL_BLEND);

@@ -14,11 +14,13 @@ import com.enderio.core.client.render.BoundingBox;
 import com.enderio.core.client.render.CubeRenderer;
 import com.enderio.core.client.render.IconUtil;
 import com.enderio.core.common.util.ForgeDirectionOffsets;
+import com.gtnewhorizons.angelica.api.ThreadSafeISBRH;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import crazypants.enderio.ClientProxy;
 import crazypants.enderio.EnderIO;
 
+@ThreadSafeISBRH(perThread = true)
 public class SoulBinderRenderer implements ISimpleBlockRenderingHandler {
 
     private float skullScale = 0.5f;
@@ -30,9 +32,10 @@ public class SoulBinderRenderer implements ISimpleBlockRenderingHandler {
     public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
 
         GL11.glDisable(GL11.GL_LIGHTING);
-        Tessellator.instance.startDrawingQuads();
+        final Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
         renderWorldBlock(null, 0, 0, 0, block, 0, renderer);
-        Tessellator.instance.draw();
+        tessellator.draw();
         GL11.glEnable(GL11.GL_LIGHTING);
     }
 
@@ -42,6 +45,8 @@ public class SoulBinderRenderer implements ISimpleBlockRenderingHandler {
 
         IIcon soulariumIcon = EnderIO.blockSoulFuser.getIcon(ForgeDirection.EAST.ordinal(), 0);
         override = renderer.overrideBlockTexture;
+        final Tessellator tessellator = Tessellator.instance;
+        final CubeRenderer cr = CubeRenderer.get();
 
         // Horrible hack to get the MC lighting engine to set the correct values for me
         if (renderer != null && world != null) {
@@ -51,23 +56,23 @@ public class SoulBinderRenderer implements ISimpleBlockRenderingHandler {
         }
         BoundingBox bb;
 
-        Tessellator.instance.addTranslation(x, y, z);
+        tessellator.addTranslation(x, y, z);
 
         bb = BoundingBox.UNIT_CUBE.scale(0.85, 0.85, 0.85);
         setIcons(soulariumIcon, soulariumIcon, ForgeDirection.NORTH);
-        CubeRenderer.render(bb, icons, true);
+        cr.render(bb, icons, true);
 
         float slabWidth = 0.15f;
         bb = BoundingBox.UNIT_CUBE.scale(1, slabWidth, 1);
         bb = bb.translate(0, 0.5f - (slabWidth / 2), 0);
         setIcons(soulariumIcon, EnderIO.blockSoulFuser.getIcon(ForgeDirection.UP.ordinal(), 0), ForgeDirection.UP);
-        CubeRenderer.render(bb, icons, true);
+        cr.render(bb, icons, true);
 
         bb = BoundingBox.UNIT_CUBE.scale(1, slabWidth, 1);
         bb = bb.translate(0, -0.5f + (slabWidth / 2), 0);
         setIcons(soulariumIcon, soulariumIcon, ForgeDirection.NORTH);
 
-        CubeRenderer.render(bb, icons, true);
+        cr.render(bb, icons, true);
 
         IIcon endermanIcon;
         int facing = ForgeDirection.SOUTH.ordinal();
@@ -86,7 +91,7 @@ public class SoulBinderRenderer implements ISimpleBlockRenderingHandler {
         renderSkull(forFacing(ForgeDirection.NORTH, facing), soulariumIcon, EnderIO.blockSoulFuser.zombieSkullIcon);
         renderSkull(forFacing(ForgeDirection.EAST, facing), soulariumIcon, EnderIO.blockSoulFuser.creeperSkullIcon);
 
-        Tessellator.instance.addTranslation(-x, -y, -z);
+        tessellator.addTranslation(-x, -y, -z);
 
         return true;
     }
@@ -99,7 +104,7 @@ public class SoulBinderRenderer implements ISimpleBlockRenderingHandler {
         BoundingBox bb;
         bb = scaledBB.translate(ForgeDirectionOffsets.offsetScaled(face, 0.5 - skullScale / 2));
         setIcons(soulariumIcon, faceIcon, face);
-        CubeRenderer.render(bb, icons, true);
+        CubeRenderer.get().render(bb, icons, true);
     }
 
     private void setIcons(IIcon defaultIcon, IIcon faceIcon, ForgeDirection faceSide) {

@@ -24,6 +24,7 @@ import crazypants.enderio.conduit.RaytraceResult;
 import crazypants.enderio.conduit.geom.CollidableComponent;
 import crazypants.enderio.conduit.geom.ConduitGeometryUtil;
 import crazypants.enderio.conduit.geom.Offset;
+import crazypants.enderio.conduit.render.ConduitRenderer;
 
 public class RedstoneSwitch extends RedstoneConduit {
 
@@ -32,6 +33,11 @@ public class RedstoneSwitch extends RedstoneConduit {
     public static final String SWITCH_ICON_ON_KEY = "enderio:redstoneConduitSwitchOn";
 
     private boolean isOn;
+
+    @Override
+    public ConduitRenderer getRenderer() {
+        return RedstoneSwitchRenderer.instance.get();
+    }
 
     @SideOnly(Side.CLIENT)
     public static void initIcons() {
@@ -97,7 +103,7 @@ public class RedstoneSwitch extends RedstoneConduit {
         Vector3d trans = ConduitGeometryUtil.instance.getTranslation(ForgeDirection.UNKNOWN, o);
 
         List<CollidableComponent> result = super.getCollidableComponents();
-        BoundingBox[] aabb = RedstoneSwitchBounds.getInstance().getAABB();
+        BoundingBox[] aabb = RedstoneSwitchBounds.get().getAABB();
 
         for (BoundingBox bb : aabb) {
             result.add(

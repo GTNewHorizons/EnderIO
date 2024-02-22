@@ -111,7 +111,7 @@ public class HyperCubeRenderer extends TileEntitySpecialRenderer implements IIte
         } else {
             GL11.glColor4f(1, 1, 1, 1f);
         }
-        CubeRenderer.render(bb, icon);
+        CubeRenderer.get().render(bb, icon);
         tessellator.draw();
 
         GL11.glPopMatrix();

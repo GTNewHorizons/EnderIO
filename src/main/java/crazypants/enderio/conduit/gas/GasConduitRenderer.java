@@ -1,15 +1,13 @@
 package crazypants.enderio.conduit.gas;
 
-import static com.enderio.core.client.render.CubeRenderer.addVecWithUV;
-
 import java.util.List;
 
 import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.enderio.core.client.render.BoundingBox;
+import com.enderio.core.client.render.CubeRenderer;
 import com.enderio.core.client.render.RenderUtil;
 import com.enderio.core.common.vecmath.Vector3d;
 import com.enderio.core.common.vecmath.Vertex;
@@ -22,15 +20,13 @@ import crazypants.enderio.conduit.geom.CollidableComponent;
 import crazypants.enderio.conduit.geom.ConnectionModeGeometry;
 import crazypants.enderio.conduit.geom.Offset;
 import crazypants.enderio.conduit.render.ConduitBundleRenderer;
+import crazypants.enderio.conduit.render.ConduitRenderer;
 import crazypants.enderio.conduit.render.DefaultConduitRenderer;
 import mekanism.api.gas.GasStack;
 
 public class GasConduitRenderer extends DefaultConduitRenderer {
 
-    @Override
-    public boolean isRendererForConduit(IConduit conduit) {
-        return conduit instanceof GasConduit;
-    }
+    public static final ThreadLocal<ConduitRenderer> instance = ThreadLocal.withInitial(GasConduitRenderer::new);
 
     @Override
     public void renderEntity(ConduitBundleRenderer conduitBundleRenderer, IConduitBundle te, IConduit conduit, double x,
@@ -58,6 +54,8 @@ public class GasConduitRenderer extends DefaultConduitRenderer {
     @Override
     protected void renderConduit(IIcon tex, IConduit conduit, CollidableComponent component, float brightness) {
         super.renderConduit(tex, conduit, component, brightness);
+        final CubeRenderer cr = CubeRenderer.get();
+        int i;
 
         if (isNSEWUD(component.dir)) {
             GasConduit lc = (GasConduit) conduit;
@@ -103,15 +101,17 @@ public class GasConduitRenderer extends DefaultConduitRenderer {
                     List<Vertex> corners = bb.getCornersWithUvForFace(d, minU, maxU, minV, maxV);
                     moveEdgeCorners(corners, vDir, width);
                     moveEdgeCorners(corners, component.dir.getOpposite(), sideScale);
-                    for (Vertex c : corners) {
-                        addVecWithUV(c.xyz, c.uv.x, c.uv.y);
+                    for (i = 0; i < corners.size(); i++) {
+                        final Vertex c = corners.get(i);
+                        cr.addVecWithUV(c.xyz, c.uv.x, c.uv.y);
                     }
 
                     corners = bb.getCornersWithUvForFace(d, minU, maxU, minV, maxV);
                     moveEdgeCorners(corners, vDir.getOpposite(), width);
                     moveEdgeCorners(corners, component.dir.getOpposite(), sideScale);
-                    for (Vertex c : corners) {
-                        addVecWithUV(c.xyz, c.uv.x, c.uv.y);
+                    for (i = 0; i < corners.size(); i++) {
+                        final Vertex c = corners.get(i);
+                        cr.addVecWithUV(c.xyz, c.uv.x, c.uv.y);
                     }
                 }
             }
@@ -124,14 +124,15 @@ public class GasConduitRenderer extends DefaultConduitRenderer {
                         tex.getMaxU(),
                         tex.getMinV(),
                         tex.getMaxV());
-                Tessellator tessellator = Tessellator.instance;
-                for (Vertex c : corners) {
-                    addVecWithUV(c.xyz, c.uv.x, c.uv.y);
+
+                for (i = 0; i < corners.size(); i++) {
+                    final Vertex c = corners.get(i);
+                    cr.addVecWithUV(c.xyz, c.uv.x, c.uv.y);
                 }
                 // back face
-                for (int i = corners.size() - 1; i >= 0; i--) {
-                    Vertex c = corners.get(i);
-                    addVecWithUV(c.xyz, c.uv.x, c.uv.y);
+                for (i = corners.size() - 1; i >= 0; i--) {
+                    final Vertex c = corners.get(i);
+                    cr.addVecWithUV(c.xyz, c.uv.x, c.uv.y);
                 }
             }
         }

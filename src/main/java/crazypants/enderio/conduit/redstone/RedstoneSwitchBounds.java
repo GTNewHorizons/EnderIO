@@ -9,13 +9,11 @@ import crazypants.enderio.config.Config;
 
 public class RedstoneSwitchBounds {
 
-    private static RedstoneSwitchBounds instance;
+    private static final ThreadLocal<RedstoneSwitchBounds> instance = ThreadLocal
+            .withInitial(RedstoneSwitchBounds::new);
 
-    public static final RedstoneSwitchBounds getInstance() {
-        if (instance == null) {
-            instance = new RedstoneSwitchBounds();
-        }
-        return instance;
+    public static RedstoneSwitchBounds get() {
+        return RedstoneSwitchBounds.instance.get();
     }
 
     final VertexTransform[] xForms;

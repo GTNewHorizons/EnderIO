@@ -13,17 +13,13 @@ import crazypants.enderio.conduit.IConduitBundle;
 import crazypants.enderio.conduit.geom.ConnectionModeGeometry;
 import crazypants.enderio.conduit.geom.Offset;
 import crazypants.enderio.conduit.render.ConduitBundleRenderer;
+import crazypants.enderio.conduit.render.ConduitRenderer;
 import crazypants.enderio.conduit.render.DefaultConduitRenderer;
 
 public class EnderLiquidConduitRenderer extends DefaultConduitRenderer {
 
-    @Override
-    public boolean isRendererForConduit(IConduit conduit) {
-        if (conduit instanceof AbstractEnderLiquidConduit) {
-            return true;
-        }
-        return false;
-    }
+    public static final ThreadLocal<ConduitRenderer> instance = ThreadLocal
+            .withInitial(EnderLiquidConduitRenderer::new);
 
     @Override
     public void renderEntity(ConduitBundleRenderer conduitBundleRenderer, IConduitBundle te, IConduit conduit, double x,

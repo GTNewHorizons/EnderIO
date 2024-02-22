@@ -17,15 +17,13 @@ import crazypants.enderio.conduit.geom.CollidableComponent;
 import crazypants.enderio.conduit.geom.ConnectionModeGeometry;
 import crazypants.enderio.conduit.geom.Offset;
 import crazypants.enderio.conduit.render.ConduitBundleRenderer;
+import crazypants.enderio.conduit.render.ConduitRenderer;
 import crazypants.enderio.conduit.render.DefaultConduitRenderer;
 import crazypants.enderio.machine.RedstoneControlMode;
 
 public class PowerConduitRenderer extends DefaultConduitRenderer {
 
-    @Override
-    public boolean isRendererForConduit(IConduit conduit) {
-        return conduit instanceof IPowerConduit;
-    }
+    public static final ThreadLocal<ConduitRenderer> instance = ThreadLocal.withInitial(PowerConduitRenderer::new);
 
     @Override
     public void renderEntity(ConduitBundleRenderer conduitBundleRenderer, IConduitBundle te, IConduit conduit, double x,
@@ -68,7 +66,7 @@ public class PowerConduitRenderer extends DefaultConduitRenderer {
                     Vector3d trans = ForgeDirectionOffsets.offsetScaled(component.dir, -0.075);
                     bound = bound.translate(trans);
                 }
-                CubeRenderer.render(bound, tex);
+                CubeRenderer.get().render(bound, tex);
                 tessellator.setColorOpaque(255, 255, 255);
             }
         } else {

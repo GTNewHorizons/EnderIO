@@ -428,7 +428,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
         if (worldObj.isRemote) {
             return;
         }
-        List<IConduit> copy = new ArrayList<IConduit>(conduits);
+        List<IConduit> copy = new ArrayList<>(conduits);
         for (IConduit con : copy) {
             removeConduit(con, false);
         }

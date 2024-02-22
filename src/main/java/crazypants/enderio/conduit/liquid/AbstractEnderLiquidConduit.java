@@ -34,6 +34,7 @@ import crazypants.enderio.conduit.IConduit;
 import crazypants.enderio.conduit.RaytraceResult;
 import crazypants.enderio.conduit.geom.CollidableComponent;
 import crazypants.enderio.conduit.item.ItemConduit;
+import crazypants.enderio.conduit.render.ConduitRenderer;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.RedstoneControlMode;
 import crazypants.enderio.tool.ToolUtil;
@@ -46,8 +47,13 @@ public abstract class AbstractEnderLiquidConduit extends AbstractLiquidConduit {
     public static final String ICON_KEY_IN_OUT_OUT = ItemConduit.ICON_KEY_IN_OUT_OUT;
     public static final String ICON_KEY_IN_OUT_IN = ItemConduit.ICON_KEY_IN_OUT_IN;
 
-    static final Map<String, IIcon> ICONS = new HashMap<String, IIcon>();
+    static final Map<String, IIcon> ICONS = new HashMap<>();
     private final Set<BlockCoord> filledFromThisTick = new HashSet<>();
+
+    @Override
+    public ConduitRenderer getRenderer() {
+        return EnderLiquidConduitRenderer.instance.get();
+    }
 
     @SideOnly(Side.CLIENT)
     public static void initIcons() {

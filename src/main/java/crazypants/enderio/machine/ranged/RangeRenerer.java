@@ -21,6 +21,7 @@ public class RangeRenerer extends RenderEntity {
     public void doRender(Entity entity, double x, double y, double z, float p_76986_8_, float p_76986_9_) {
 
         RangeEntity se = ((RangeEntity) entity);
+        final Tessellator tessellator = Tessellator.instance;
 
         GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
         GL11.glDisable(GL11.GL_LIGHTING);
@@ -43,10 +44,10 @@ public class RangeRenerer extends RenderEntity {
         GL11.glColor4f(1, 1, 1, 0.4f);
 
         RenderUtil.bindBlockTexture();
-        Tessellator.instance.startDrawingQuads();
-        Tessellator.instance.setBrightness(15 << 20 | 15 << 4);
-        CubeRenderer.render(BoundingBox.UNIT_CUBE, IconUtil.whiteTexture);
-        Tessellator.instance.draw();
+        tessellator.startDrawingQuads();
+        tessellator.setBrightness(15 << 20 | 15 << 4);
+        CubeRenderer.get().render(BoundingBox.UNIT_CUBE, IconUtil.whiteTexture);
+        tessellator.draw();
 
         RenderUtil.bindItemTexture();
 

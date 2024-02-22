@@ -1,8 +1,5 @@
 package crazypants.enderio.conduit.render;
 
-import static com.enderio.core.client.render.CubeRenderer.addVecWithUV;
-import static com.enderio.core.client.render.CubeRenderer.setupVertices;
-import static com.enderio.core.client.render.CubeRenderer.verts;
 import static net.minecraftforge.common.util.ForgeDirection.DOWN;
 import static net.minecraftforge.common.util.ForgeDirection.EAST;
 import static net.minecraftforge.common.util.ForgeDirection.NORTH;
@@ -19,6 +16,7 @@ import net.minecraft.util.IIcon;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.enderio.core.client.render.BoundingBox;
+import com.enderio.core.client.render.CubeRenderer;
 import com.enderio.core.client.render.RenderUtil;
 import com.enderio.core.common.vecmath.Vertex;
 
@@ -30,12 +28,9 @@ import crazypants.enderio.conduit.geom.CollidableComponent;
 
 public class DefaultConduitRenderer implements ConduitRenderer {
 
-    protected float transmissionScaleFactor;
+    public static final ThreadLocal<ConduitRenderer> instance = ThreadLocal.withInitial(DefaultConduitRenderer::new);
 
-    @Override
-    public boolean isRendererForConduit(IConduit conduit) {
-        return true;
-    }
+    protected float transmissionScaleFactor;
 
     @Override
     public void renderEntity(ConduitBundleRenderer conduitBundleRenderer, IConduitBundle te, IConduit conduit, double x,
@@ -73,6 +68,7 @@ public class DefaultConduitRenderer implements ConduitRenderer {
             double x, double y, double z, float partialTick, float worldLight) {}
 
     protected void renderConduit(IIcon tex, IConduit conduit, CollidableComponent component, float brightness) {
+        final CubeRenderer cr = CubeRenderer.get();
 
         if (isNSEWUD(component.dir)) {
 
@@ -103,7 +99,7 @@ public class DefaultConduitRenderer implements ConduitRenderer {
                         tex.getMaxV());
                 Tessellator tessellator = Tessellator.instance;
                 for (Vertex c : corners) {
-                    addVecWithUV(c.xyz, c.uv.x, c.uv.y);
+                    cr.addVecWithUV(c.xyz, c.uv.x, c.uv.y);
                 }
             }
 
@@ -150,12 +146,13 @@ public class DefaultConduitRenderer implements ConduitRenderer {
     protected void drawSection(BoundingBox bound, float minU, float maxU, float minV, float maxV, ForgeDirection dir,
             boolean isTransmission, boolean mirrorTexture) {
 
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
+        final CubeRenderer cr = CubeRenderer.get();
 
         if (isTransmission) {
             setVerticesForTransmission(bound, dir);
         } else {
-            setupVertices(bound);
+            cr.setupVertices(bound);
         }
 
         if (mirrorTexture && (dir == NORTH || dir == UP || dir == EAST)) {
@@ -175,15 +172,15 @@ public class DefaultConduitRenderer implements ConduitRenderer {
                 tessellator.setColorOpaque_F(cm, cm, cm);
             }
             if (rotateSides) {
-                addVecWithUV(verts[1], maxU, maxV);
-                addVecWithUV(verts[0], maxU, minV);
-                addVecWithUV(verts[3], minU, minV);
-                addVecWithUV(verts[2], minU, maxV);
+                cr.addVecWithUV(cr.verts[1], maxU, maxV);
+                cr.addVecWithUV(cr.verts[0], maxU, minV);
+                cr.addVecWithUV(cr.verts[3], minU, minV);
+                cr.addVecWithUV(cr.verts[2], minU, maxV);
             } else {
-                addVecWithUV(verts[1], minU, minV);
-                addVecWithUV(verts[0], maxU, minV);
-                addVecWithUV(verts[3], maxU, maxV);
-                addVecWithUV(verts[2], minU, maxV);
+                cr.addVecWithUV(cr.verts[1], minU, minV);
+                cr.addVecWithUV(cr.verts[0], maxU, minV);
+                cr.addVecWithUV(cr.verts[3], maxU, maxV);
+                cr.addVecWithUV(cr.verts[2], minU, maxV);
             }
             if (dir == WEST || dir == EAST) {
                 float tmp = minU;
@@ -196,15 +193,15 @@ public class DefaultConduitRenderer implements ConduitRenderer {
                 tessellator.setColorOpaque_F(cm, cm, cm);
             }
             if (rotateSides) {
-                addVecWithUV(verts[4], maxU, maxV);
-                addVecWithUV(verts[5], maxU, minV);
-                addVecWithUV(verts[6], minU, minV);
-                addVecWithUV(verts[7], minU, maxV);
+                cr.addVecWithUV(cr.verts[4], maxU, maxV);
+                cr.addVecWithUV(cr.verts[5], maxU, minV);
+                cr.addVecWithUV(cr.verts[6], minU, minV);
+                cr.addVecWithUV(cr.verts[7], minU, maxV);
             } else {
-                addVecWithUV(verts[4], minU, minV);
-                addVecWithUV(verts[5], maxU, minV);
-                addVecWithUV(verts[6], maxU, maxV);
-                addVecWithUV(verts[7], minU, maxV);
+                cr.addVecWithUV(cr.verts[4], minU, minV);
+                cr.addVecWithUV(cr.verts[5], maxU, minV);
+                cr.addVecWithUV(cr.verts[6], maxU, maxV);
+                cr.addVecWithUV(cr.verts[7], minU, maxV);
             }
             if (dir == WEST || dir == EAST) {
                 float tmp = minU;
@@ -221,15 +218,15 @@ public class DefaultConduitRenderer implements ConduitRenderer {
                 tessellator.setColorOpaque_F(cm, cm, cm);
             }
             if (rotateTopBottom) {
-                addVecWithUV(verts[6], maxU, maxV);
-                addVecWithUV(verts[2], minU, maxV);
-                addVecWithUV(verts[3], minU, minV);
-                addVecWithUV(verts[7], maxU, minV);
+                cr.addVecWithUV(cr.verts[6], maxU, maxV);
+                cr.addVecWithUV(cr.verts[2], minU, maxV);
+                cr.addVecWithUV(cr.verts[3], minU, minV);
+                cr.addVecWithUV(cr.verts[7], maxU, minV);
             } else {
-                addVecWithUV(verts[6], minU, minV);
-                addVecWithUV(verts[2], minU, maxV);
-                addVecWithUV(verts[3], maxU, maxV);
-                addVecWithUV(verts[7], maxU, minV);
+                cr.addVecWithUV(cr.verts[6], minU, minV);
+                cr.addVecWithUV(cr.verts[2], minU, maxV);
+                cr.addVecWithUV(cr.verts[3], maxU, maxV);
+                cr.addVecWithUV(cr.verts[7], maxU, minV);
             }
 
             tessellator.setNormal(0, -1, 0);
@@ -238,15 +235,15 @@ public class DefaultConduitRenderer implements ConduitRenderer {
                 tessellator.setColorOpaque_F(cm, cm, cm);
             }
             if (rotateTopBottom) {
-                addVecWithUV(verts[0], minU, minV);
-                addVecWithUV(verts[1], minU, maxV);
-                addVecWithUV(verts[5], maxU, maxV);
-                addVecWithUV(verts[4], maxU, minV);
+                cr.addVecWithUV(cr.verts[0], minU, minV);
+                cr.addVecWithUV(cr.verts[1], minU, maxV);
+                cr.addVecWithUV(cr.verts[5], maxU, maxV);
+                cr.addVecWithUV(cr.verts[4], maxU, minV);
             } else {
-                addVecWithUV(verts[0], maxU, maxV);
-                addVecWithUV(verts[1], minU, maxV);
-                addVecWithUV(verts[5], minU, minV);
-                addVecWithUV(verts[4], maxU, minV);
+                cr.addVecWithUV(cr.verts[0], maxU, maxV);
+                cr.addVecWithUV(cr.verts[1], minU, maxV);
+                cr.addVecWithUV(cr.verts[5], minU, minV);
+                cr.addVecWithUV(cr.verts[4], maxU, minV);
             }
         }
 
@@ -258,15 +255,15 @@ public class DefaultConduitRenderer implements ConduitRenderer {
                 tessellator.setColorOpaque_F(cm, cm, cm);
             }
             if (rotateSides) {
-                addVecWithUV(verts[2], minU, maxV);
-                addVecWithUV(verts[6], minU, minV);
-                addVecWithUV(verts[5], maxU, minV);
-                addVecWithUV(verts[1], maxU, maxV);
+                cr.addVecWithUV(cr.verts[2], minU, maxV);
+                cr.addVecWithUV(cr.verts[6], minU, minV);
+                cr.addVecWithUV(cr.verts[5], maxU, minV);
+                cr.addVecWithUV(cr.verts[1], maxU, maxV);
             } else {
-                addVecWithUV(verts[2], minU, maxV);
-                addVecWithUV(verts[6], maxU, maxV);
-                addVecWithUV(verts[5], maxU, minV);
-                addVecWithUV(verts[1], minU, minV);
+                cr.addVecWithUV(cr.verts[2], minU, maxV);
+                cr.addVecWithUV(cr.verts[6], maxU, maxV);
+                cr.addVecWithUV(cr.verts[5], maxU, minV);
+                cr.addVecWithUV(cr.verts[1], minU, minV);
             }
 
             tessellator.setNormal(-1, 0, 0);
@@ -275,15 +272,15 @@ public class DefaultConduitRenderer implements ConduitRenderer {
                 tessellator.setColorOpaque_F(cm, cm, cm);
             }
             if (rotateSides) {
-                addVecWithUV(verts[0], maxU, maxV);
-                addVecWithUV(verts[4], maxU, minV);
-                addVecWithUV(verts[7], minU, minV);
-                addVecWithUV(verts[3], minU, maxV);
+                cr.addVecWithUV(cr.verts[0], maxU, maxV);
+                cr.addVecWithUV(cr.verts[4], maxU, minV);
+                cr.addVecWithUV(cr.verts[7], minU, minV);
+                cr.addVecWithUV(cr.verts[3], minU, maxV);
             } else {
-                addVecWithUV(verts[0], minU, minV);
-                addVecWithUV(verts[4], maxU, minV);
-                addVecWithUV(verts[7], maxU, maxV);
-                addVecWithUV(verts[3], minU, maxV);
+                cr.addVecWithUV(cr.verts[0], minU, minV);
+                cr.addVecWithUV(cr.verts[4], maxU, minV);
+                cr.addVecWithUV(cr.verts[7], maxU, maxV);
+                cr.addVecWithUV(cr.verts[3], minU, maxV);
             }
         }
         tessellator.setColorOpaque_F(1, 1, 1);
@@ -293,7 +290,7 @@ public class DefaultConduitRenderer implements ConduitRenderer {
         float xs = dir.offsetX == 0 ? transmissionScaleFactor : 1;
         float ys = dir.offsetY == 0 ? transmissionScaleFactor : 1;
         float zs = dir.offsetZ == 0 ? transmissionScaleFactor : 1;
-        setupVertices(bound.scale(xs, ys, zs));
+        CubeRenderer.get().setupVertices(bound.scale(xs, ys, zs));
     }
 
     // TODO: This is a really hacky, imprecise and slow way to do this

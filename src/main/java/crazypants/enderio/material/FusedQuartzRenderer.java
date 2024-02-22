@@ -14,6 +14,7 @@ import com.enderio.core.client.render.ConnectedTextureRenderer;
 import com.enderio.core.client.render.ConnectedTextureRenderer.DefaultTextureCallback;
 import com.enderio.core.client.render.CustomCubeRenderer;
 import com.enderio.core.client.render.RenderUtil;
+import com.gtnewhorizons.angelica.api.ThreadSafeISBRH;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import crazypants.enderio.EnderIO;
@@ -22,6 +23,7 @@ import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.painter.PainterUtil;
 import crazypants.enderio.machine.painter.TileEntityPaintedBlock;
 
+@ThreadSafeISBRH(perThread = false)
 public class FusedQuartzRenderer implements ISimpleBlockRenderingHandler {
 
     static int renderPass;
@@ -115,19 +117,19 @@ public class FusedQuartzRenderer implements ISimpleBlockRenderingHandler {
             return;
         }
 
-        CustomCubeRenderer.instance.setOverrideTexture(EnderIO.blockFusedQuartz.getIcon(0, meta));
+        final CustomCubeRenderer ccr = CustomCubeRenderer.get();
+
+        ccr.setOverrideTexture(EnderIO.blockFusedQuartz.getIcon(0, meta));
 
         if (tecb != null && tecb.getSourceBlock() != null) {
             connectedTextureRenderer.setEdgeTexureCallback(
                     new DefaultTextureCallback(tecb.getSourceBlock(), tecb.getSourceBlockMetadata()));
-            CustomCubeRenderer.instance
-                    .renderBlock(blockAccess, EnderIO.blockFusedQuartz, x, y, z, connectedTextureRenderer);
+            ccr.renderBlock(blockAccess, EnderIO.blockFusedQuartz, x, y, z, connectedTextureRenderer);
         } else {
             connectedTextureRenderer.setEdgeTexture(EnderIO.blockFusedQuartz.getDefaultFrameIcon(meta));
-            CustomCubeRenderer.instance
-                    .renderBlock(blockAccess, EnderIO.blockFusedQuartz, x, y, z, connectedTextureRenderer);
+            ccr.renderBlock(blockAccess, EnderIO.blockFusedQuartz, x, y, z, connectedTextureRenderer);
         }
 
-        CustomCubeRenderer.instance.setOverrideTexture(null);
+        ccr.setOverrideTexture(null);
     }
 }

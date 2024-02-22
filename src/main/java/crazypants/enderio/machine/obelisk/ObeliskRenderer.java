@@ -17,13 +17,15 @@ import com.enderio.core.client.render.RenderUtil;
 import com.enderio.core.common.vecmath.Vector3d;
 import com.enderio.core.common.vecmath.Vector3f;
 import com.enderio.core.common.vecmath.Vertex;
+import com.gtnewhorizons.angelica.api.ThreadSafeISBRH;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
+@ThreadSafeISBRH(perThread = true)
 public class ObeliskRenderer implements ISimpleBlockRenderingHandler {
 
-    private static final VertXForm2 xform2 = new VertXForm2();
-    private static final VertXForm3 xform3 = new VertXForm3();
+    private final VertXForm2 xform2 = new VertXForm2();
+    private final VertXForm3 xform3 = new VertXForm3();
 
     private static final float WIDE_PINCH = 0.9f;
     private static final float WIDTH = 18f / 32f * WIDE_PINCH;
@@ -39,11 +41,12 @@ public class ObeliskRenderer implements ISimpleBlockRenderingHandler {
 
     @Override
     public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
+        final Tessellator tessellator = Tessellator.instance;
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glEnable(GL11.GL_ALPHA_TEST);
-        Tessellator.instance.startDrawingQuads();
+        tessellator.startDrawingQuads();
         renderWorldBlock(null, 0, 0, 0, block, 0, renderer);
-        Tessellator.instance.draw();
+        tessellator.draw();
         GL11.glDisable(GL11.GL_ALPHA_TEST);
         GL11.glEnable(GL11.GL_LIGHTING);
     }
@@ -66,6 +69,8 @@ public class ObeliskRenderer implements ISimpleBlockRenderingHandler {
         } else { // item
             icons = RenderUtil.getBlockTextures(block, 0);
         }
+        final Tessellator tessellator = Tessellator.instance;
+        final CubeRenderer cr = CubeRenderer.get();
 
         // bottom texture goes into its own BB
         IIcon[] bottomIcons = new IIcon[6];
@@ -75,18 +80,18 @@ public class ObeliskRenderer implements ISimpleBlockRenderingHandler {
         bottomIcons[BOTTOM] = icons[BOTTOM];
         icons[BOTTOM] = IconUtil.blankTexture;
 
-        Tessellator.instance.addTranslation(x, y, z);
+        tessellator.addTranslation(x, y, z);
 
         xform2.isX = false;
-        CubeRenderer.render(bb1, icons, xform2, true);
+        cr.render(bb1, icons, xform2, true);
 
         xform2.isX = true;
         icons[TOP] = IconUtil.blankTexture;
-        CubeRenderer.render(bb2, icons, xform2, true);
+        cr.render(bb2, icons, xform2, true);
 
-        CubeRenderer.render(BoundingBox.UNIT_CUBE, bottomIcons, xform3, true);
+        cr.render(BoundingBox.UNIT_CUBE, bottomIcons, xform3, true);
 
-        Tessellator.instance.addTranslation(-x, -y, -z);
+        tessellator.addTranslation(-x, -y, -z);
 
         return true;
     }

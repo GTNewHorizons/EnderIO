@@ -16,12 +16,16 @@ import crazypants.enderio.ModObject;
 import crazypants.enderio.conduit.IConduitBundle;
 import crazypants.enderio.machine.painter.IPaintedBlock;
 
-public class BlockConduitFacade extends BlockEio implements IPaintedBlock {
+public class BlockConduitFacade extends BlockEio implements IPaintedBlock, Cloneable {
 
     public static BlockConduitFacade create() {
         BlockConduitFacade result = new BlockConduitFacade();
         result.init();
         return result;
+    }
+
+    public BlockConduitFacade clone() throws CloneNotSupportedException {
+        return (BlockConduitFacade) super.clone();
     }
 
     private Block blockOverride;

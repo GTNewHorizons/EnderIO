@@ -21,6 +21,7 @@ import com.enderio.core.client.render.ConnectedTextureRenderer;
 import com.enderio.core.client.render.CubeRenderer;
 import com.enderio.core.client.render.CustomCubeRenderer;
 import com.enderio.core.client.render.RenderUtil;
+import com.gtnewhorizons.angelica.api.ThreadSafeISBRH;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -36,6 +37,7 @@ import crazypants.enderio.machine.capbank.render.FillGauge.GaugeKey;
 import crazypants.enderio.power.PowerHandlerUtil;
 
 @SideOnly(Side.CLIENT)
+@ThreadSafeISBRH(perThread = true)
 public class CapBankRenderer extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler, IItemRenderer {
 
     private ConnectedTextureRenderer connectedTexRenderer;
@@ -47,7 +49,7 @@ public class CapBankRenderer extends TileEntitySpecialRenderer implements ISimpl
         connectedTexRenderer = new ConnectedTextureRenderer();
         connectedTexRenderer.setMatchMeta(true);
         fillGaugeRenderer = new FillGauge();
-        infoRenderers = new HashMap<InfoDisplayType, IInfoRenderer>();
+        infoRenderers = new HashMap<>();
         infoRenderers.put(InfoDisplayType.LEVEL_BAR, fillGaugeRenderer);
         infoRenderers.put(InfoDisplayType.IO, new IoDisplay());
     }
@@ -60,6 +62,7 @@ public class CapBankRenderer extends TileEntitySpecialRenderer implements ISimpl
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
             RenderBlocks renderer) {
+        CustomCubeRenderer ccr = CustomCubeRenderer.get();
 
         int meta = world.getBlockMetadata(x, y, z);
         meta = MathHelper.clamp_int(meta, 0, CapBankType.types().size() - 1);
@@ -70,13 +73,13 @@ public class CapBankRenderer extends TileEntitySpecialRenderer implements ISimpl
             connectedTexRenderer.setForceAllEdges(false);
         }
         connectedTexRenderer.setEdgeTexture(EnderIO.blockCapBank.getBorderIcon(0, meta));
-        CustomCubeRenderer.instance.setOverrideTexture(renderer.overrideBlockTexture);
+        ccr.setOverrideTexture(renderer.overrideBlockTexture);
         if (renderer.overrideBlockTexture == null) {
-            CustomCubeRenderer.instance.renderBlock(world, block, x, y, z, connectedTexRenderer);
+            ccr.renderBlock(world, block, x, y, z, connectedTexRenderer);
         } else {
-            CustomCubeRenderer.instance.renderBlock(world, block, x, y, z);
+            ccr.renderBlock(world, block, x, y, z);
         }
-        CustomCubeRenderer.instance.setOverrideTexture(null);
+        ccr.setOverrideTexture(null);
         return true;
     }
 
@@ -108,7 +111,7 @@ public class CapBankRenderer extends TileEntitySpecialRenderer implements ISimpl
         Tessellator tes = Tessellator.instance;
 
         tes.startDrawingQuads();
-        CubeRenderer.render(EnderIO.blockCapBank, item.getItemDamage());
+        CubeRenderer.get().render(EnderIO.blockCapBank, item.getItemDamage());
         tes.draw();
 
         GL11.glEnable(GL11.GL_POLYGON_OFFSET_FILL);

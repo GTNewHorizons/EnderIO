@@ -162,7 +162,7 @@ public class TransceiverRenderer extends TileEntitySpecialRenderer implements II
         } else {
             GL11.glColor4f(1, 1, 1, 1f);
         }
-        CubeRenderer.render(bb, icon);
+        CubeRenderer.get().render(bb, icon);
         tessellator.draw();
 
         GL11.glPopMatrix();

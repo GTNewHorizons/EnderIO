@@ -5,14 +5,20 @@ import net.minecraftforge.common.util.ForgeDirection;
 import com.enderio.core.common.util.DyeColor;
 
 import crazypants.enderio.conduit.ConnectionMode;
+import crazypants.enderio.conduit.render.ConduitRenderer;
 
 public interface IInsulatedRedstoneConduit extends IRedstoneConduit {
 
-    static final String KEY_INS_CONDUIT_ICON = "enderio:redstoneInsulatedConduit";
-    static final String KEY_INS_CORE_OFF_ICON = "enderio:redstoneInsulatedConduitCoreOff";
-    static final String KEY_INS_CORE_ON_ICON = "enderio:redstoneInsulatedConduitCoreOn";
+    String KEY_INS_CONDUIT_ICON = "enderio:redstoneInsulatedConduit";
+    String KEY_INS_CORE_OFF_ICON = "enderio:redstoneInsulatedConduitCoreOff";
+    String KEY_INS_CORE_ON_ICON = "enderio:redstoneInsulatedConduitCoreOn";
 
-    public static final String COLOR_CONTROLLER_ID = "ColorController";
+    String COLOR_CONTROLLER_ID = "ColorController";
+
+    @Override
+    default ConduitRenderer getRenderer() {
+        return InsulatedRedstoneConduitRenderer.instance.get();
+    }
 
     void onInputsChanged(ForgeDirection side, int[] inputValues);
 

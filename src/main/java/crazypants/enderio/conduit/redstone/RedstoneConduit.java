@@ -33,12 +33,19 @@ import crazypants.enderio.conduit.AbstractConduitNetwork;
 import crazypants.enderio.conduit.ConduitUtil;
 import crazypants.enderio.conduit.IConduit;
 import crazypants.enderio.conduit.geom.CollidableComponent;
+import crazypants.enderio.conduit.render.ConduitRenderer;
+import crazypants.enderio.conduit.render.DefaultConduitRenderer;
 import dan200.computercraft.api.ComputerCraftAPI;
 import powercrystals.minefactoryreloaded.api.rednet.IRedNetOutputNode;
 
 public class RedstoneConduit extends AbstractConduit implements IRedstoneConduit {
 
-    static final Map<String, IIcon> ICONS = new HashMap<String, IIcon>();
+    static final Map<String, IIcon> ICONS = new HashMap<>();
+
+    @Override
+    public ConduitRenderer getRenderer() {
+        return DefaultConduitRenderer.instance.get();
+    }
 
     @SideOnly(Side.CLIENT)
     public static void initIcons() {
