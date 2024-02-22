@@ -193,7 +193,7 @@ public class EnderIO {
     public static final String MODID = "EnderIO";
     public static final String DOMAIN = MODID.toLowerCase(Locale.US);
     public static final String MOD_NAME = "Ender IO";
-    public static final String VERSION = "GRADLETOKEN_VERSION";
+    public static final String VERSION = Tags.VERSION;
 
     @Instance(MODID)
     public static EnderIO instance;
