@@ -20,6 +20,13 @@ import crazypants.enderio.machine.capbank.network.CapBankClientNetwork;
 import crazypants.enderio.machine.power.PowerDisplayUtil;
 
 public class IoDisplay implements IInfoRenderer {
+    private float previousAverageInput;
+    private float previousAverageOutput;
+
+    String averageInputText = "0";
+    String averageOutputText = "0";
+    HeadingText heading1;
+    HeadingText heading2;
 
     @Override
     public void render(TileCapBank cb, ForgeDirection dir, double x, double y, double z, float partialTick) {
@@ -137,10 +144,8 @@ public class IoDisplay implements IInfoRenderer {
 
         nw.requestPowerUpdate(cb, 20);
 
-        HeadingText heading1 = HeadingText.STABLE;
-        HeadingText heading2 = null;
-        String text1;
-        String text2 = "";
+        heading1 = HeadingText.STABLE;
+        heading2 = null;
 
         FontRenderer fr = Minecraft.getMinecraft().fontRenderer;
         float size = 0.15f * Math.min(info.width, info.height);
@@ -150,17 +155,27 @@ public class IoDisplay implements IInfoRenderer {
         if (info.height * 3 >= info.width * 4) {
             heading1 = HeadingText.INPUT;
             heading2 = HeadingText.OUTPUT;
-            text1 = getChangeText(nw.getAverageInputPerTick(), fr);
-            text2 = getChangeText(nw.getAverageOutputPerTick(), fr);
+            if (previousAverageInput != nw.getAverageInputPerTick()){
+                averageInputText = getChangeText(nw.getAverageInputPerTick(), fr);
+                previousAverageInput = nw.getAverageInputPerTick();
+            }
+            if (previousAverageOutput != nw.getAverageOutputPerTick()){
+                averageOutputText = getChangeText(nw.getAverageOutputPerTick(), fr);
+                previousAverageOutput = nw.getAverageOutputPerTick();
+            }
             offset = -size * 2.5f;
-        } else {
+        }
+        else {
             int change = Math.round(nw.getAverageChangePerTick());
             if (change > 0) {
                 heading1 = HeadingText.GAIN;
             } else if (change < 0) {
                 heading1 = HeadingText.LOSS;
             }
-            text1 = getChangeText(change, fr);
+            if (change != previousAverageInput) {
+                averageInputText = getChangeText(change, fr);
+                previousAverageInput = change;
+            }
             offset = -size;
         }
 
@@ -184,9 +199,9 @@ public class IoDisplay implements IInfoRenderer {
         GL11.glDisable(GL11.GL_LIGHTING);
         OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
 
-        offset = drawText(heading1, text1, offset, scale, size, fr);
+        offset = drawText(heading1, averageInputText, offset, scale, size, fr);
         if (heading2 != null) {
-            drawText(heading2, text2, offset, scale, size, fr);
+            drawText(heading2, averageOutputText, offset, scale, size, fr);
         }
 
         GL11.glEnable(GL11.GL_LIGHTING);

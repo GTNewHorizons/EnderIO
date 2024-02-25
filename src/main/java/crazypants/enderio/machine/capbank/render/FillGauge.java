@@ -1,6 +1,5 @@
 package crazypants.enderio.machine.capbank.render;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +31,7 @@ public class FillGauge implements IInfoRenderer, IResourceManagerReloadListener 
     private static final double HEIGHT = 0.75;
     private static final double VERT_BORDER = (1 - HEIGHT) / 2;
     private static final double WIDTH = 0.25;
+    private final Vertex[] newVerts = new Vertex[]{new Vertex(), new Vertex(), new Vertex(), new Vertex()};
 
     enum Type {
         SINGLE,
@@ -95,8 +95,8 @@ public class FillGauge implements IInfoRenderer, IResourceManagerReloadListener 
         if (ratio <= 0) {
             return;
         }
-        double maxY = ratio * info.height;
-        if (maxY <= info.yPosition) {
+        double maxY = ratio * info.getHeight();
+        if (maxY <= info.getyPosition()) {
             // empty
             return;
         }
@@ -105,26 +105,24 @@ public class FillGauge implements IInfoRenderer, IResourceManagerReloadListener 
         Tessellator.instance.addTranslation((float) offset.x, (float) offset.y, (float) offset.z);
 
         List<Vertex> verts = levelVertexCache.get(key);
-        if (maxY >= info.yPosition + 1) {
+        if (maxY >= info.getyPosition() + 1) {
             // full bar
             RenderUtil.addVerticesToTessellator(verts, Tessellator.instance);
 
         } else {
             // need to render partial bar
-            double myMaxY = maxY - info.yPosition;
+            double myMaxY = maxY - info.getyPosition();
 
             if (info.type == Type.BOTTOM || info.type == Type.SINGLE) {
                 // If we have some power and we are the bottom bit of the display,
                 // always show at least a little bit in the bar
                 myMaxY = Math.max(0.2, myMaxY);
             }
-            List<Vertex> newVerts = new ArrayList<Vertex>();
-            for (Vertex v : verts) {
-                v = new Vertex(v);
-                newVerts.add(v);
-                if (v.y() > myMaxY) {
-                    v.setXYZ(v.x(), myMaxY, v.z());
-                    v.setUV(v.u(), barMinV + (float) (myMaxY * barHeightV));
+            for (int i=0; i<verts.size(); i++){
+                newVerts[i].set(verts.get(i));
+                if (newVerts[i].y() > myMaxY) {
+                    newVerts[i].setXYZ(newVerts[i].x(), myMaxY, newVerts[i].z());
+                    newVerts[i].setUV(newVerts[i].u(), barMinV + (float) (myMaxY * barHeightV));
                 }
             }
             RenderUtil.addVerticesToTessellator(newVerts, Tessellator.instance);
@@ -136,7 +134,7 @@ public class FillGauge implements IInfoRenderer, IResourceManagerReloadListener 
     private GaugeInfo getGaugeInfo(TileCapBank cb, ForgeDirection dir) {
 
         if (!cb.getType().isMultiblock()) {
-            return new GaugeInfo(1, 0);
+            return GaugeInfo.DEFAULT;
         }
 
         int height = 1;
@@ -239,9 +237,10 @@ public class FillGauge implements IInfoRenderer, IResourceManagerReloadListener 
     }
 
     static class GaugeInfo {
+        public static final GaugeInfo DEFAULT = new GaugeInfo(1, 0);
 
-        int height;
-        int yPosition;
+        private int height;
+        private int yPosition;
         Type type;
 
         GaugeInfo(int height, int position) {
@@ -261,6 +260,14 @@ public class FillGauge implements IInfoRenderer, IResourceManagerReloadListener 
                 return Type.TOP;
             }
             return Type.MIDDLE;
+        }
+
+        private int getHeight(){
+            return height;
+        }
+
+        private int getyPosition(){
+            return yPosition;
         }
     }
 

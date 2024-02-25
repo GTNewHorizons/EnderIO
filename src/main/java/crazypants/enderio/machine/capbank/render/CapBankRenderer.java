@@ -129,7 +129,7 @@ public class CapBankRenderer extends TileEntitySpecialRenderer implements ISimpl
         nw.setMaxEnergyStoredL(CapBankType.getTypeFromMeta(item.getItemDamage()).getMaxEnergyStored());
         nw.setEnergyStored(PowerHandlerUtil.getStoredEnergyForItem(item));
 
-        GaugeInfo gi = new GaugeInfo(1, 0);
+        GaugeInfo gi = GaugeInfo.DEFAULT;
         GaugeKey key = new GaugeKey(ForgeDirection.SOUTH, FillGauge.Type.SINGLE);
         fillGaugeRenderer.doRender(nw, RenderUtil.BRIGHTNESS_MAX, gi, key);
         // key = new GaugeKey(ForgeDirection.EAST, FillGauge.Type.SINGLE);
