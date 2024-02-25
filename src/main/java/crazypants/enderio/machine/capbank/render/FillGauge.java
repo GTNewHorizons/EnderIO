@@ -262,11 +262,11 @@ public class FillGauge implements IInfoRenderer, IResourceManagerReloadListener 
             return Type.MIDDLE;
         }
 
-        private int getHeight(){
+        public int getHeight(){
             return height;
         }
 
-        private int getyPosition(){
+        public int getyPosition(){
             return yPosition;
         }
     }
