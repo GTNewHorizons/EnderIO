@@ -31,7 +31,7 @@ public class FillGauge implements IInfoRenderer, IResourceManagerReloadListener 
     private static final double HEIGHT = 0.75;
     private static final double VERT_BORDER = (1 - HEIGHT) / 2;
     private static final double WIDTH = 0.25;
-    private final Vertex[] newVerts = new Vertex[]{new Vertex(), new Vertex(), new Vertex(), new Vertex()};
+    private final Vertex[] newVerts = new Vertex[] { new Vertex(), new Vertex(), new Vertex(), new Vertex() };
 
     enum Type {
         SINGLE,
@@ -118,7 +118,7 @@ public class FillGauge implements IInfoRenderer, IResourceManagerReloadListener 
                 // always show at least a little bit in the bar
                 myMaxY = Math.max(0.2, myMaxY);
             }
-            for (int i=0; i<verts.size(); i++){
+            for (int i = 0; i < verts.size(); i++) {
                 newVerts[i].set(verts.get(i));
                 if (newVerts[i].y() > myMaxY) {
                     newVerts[i].setXYZ(newVerts[i].x(), myMaxY, newVerts[i].z());
@@ -237,6 +237,7 @@ public class FillGauge implements IInfoRenderer, IResourceManagerReloadListener 
     }
 
     static class GaugeInfo {
+
         public static final GaugeInfo DEFAULT = new GaugeInfo(1, 0);
 
         private int height;
@@ -262,11 +263,11 @@ public class FillGauge implements IInfoRenderer, IResourceManagerReloadListener 
             return Type.MIDDLE;
         }
 
-        public int getHeight(){
+        public int getHeight() {
             return height;
         }
 
-        public int getyPosition(){
+        public int getyPosition() {
             return yPosition;
         }
     }

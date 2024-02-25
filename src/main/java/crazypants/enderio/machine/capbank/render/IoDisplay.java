@@ -20,6 +20,7 @@ import crazypants.enderio.machine.capbank.network.CapBankClientNetwork;
 import crazypants.enderio.machine.power.PowerDisplayUtil;
 
 public class IoDisplay implements IInfoRenderer {
+
     private float previousAverageInput;
     private float previousAverageOutput;
 
@@ -155,17 +156,16 @@ public class IoDisplay implements IInfoRenderer {
         if (info.height * 3 >= info.width * 4) {
             heading1 = HeadingText.INPUT;
             heading2 = HeadingText.OUTPUT;
-            if (previousAverageInput != nw.getAverageInputPerTick()){
+            if (previousAverageInput != nw.getAverageInputPerTick()) {
                 averageInputText = getChangeText(nw.getAverageInputPerTick(), fr);
                 previousAverageInput = nw.getAverageInputPerTick();
             }
-            if (previousAverageOutput != nw.getAverageOutputPerTick()){
+            if (previousAverageOutput != nw.getAverageOutputPerTick()) {
                 averageOutputText = getChangeText(nw.getAverageOutputPerTick(), fr);
                 previousAverageOutput = nw.getAverageOutputPerTick();
             }
             offset = -size * 2.5f;
-        }
-        else {
+        } else {
             int change = Math.round(nw.getAverageChangePerTick());
             if (change > 0) {
                 heading1 = HeadingText.GAIN;
