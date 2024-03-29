@@ -35,7 +35,12 @@ public class FarmingStationRenderer extends TechneMachineRenderer<TileFarmStatio
                 bb = bb.translate(x, y, z);
                 tessellator.setColorOpaque_F(1, 1, 1);
                 tessellator.setBrightness(0xF000F0);
-                CubeRenderer.get().render(bb, override != null ? override : Blocks.portal.getBlockTextureFromSide(1));
+                IIcon ico = override != null ? override : Blocks.portal.getBlockTextureFromSide(1);
+                float x1 = ico.getInterpolatedU(3);
+                float x2 = ico.getInterpolatedU(13);
+                float y1 = ico.getInterpolatedV(6);
+                float y2 = ico.getInterpolatedV(10);
+                CubeRenderer.get().render(bb, x1, x2, y1, y2);
             }
         }
 
