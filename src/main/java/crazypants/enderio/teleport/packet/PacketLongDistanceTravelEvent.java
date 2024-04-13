@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -120,6 +121,12 @@ public class PacketLongDistanceTravelEvent
 
         // We're teleporting to a block, so go one above.
         BlockCoord destination = travelDestination.get().getLocation(ForgeDirection.UP);
+        if (!TravelController.instance.isValidTarget(player, destination, source)) {
+            TravelController
+                    .showMessage(player, new ChatComponentTranslation("enderio.blockTravelPlatform.invalidTarget"));
+            return false;
+        }
+
         int x = destination.x;
         int y = destination.y;
         int z = destination.z;
