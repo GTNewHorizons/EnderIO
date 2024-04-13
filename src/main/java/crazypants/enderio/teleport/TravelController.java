@@ -3,10 +3,8 @@ package crazypants.enderio.teleport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
-import java.util.TreeMap;
 
 import javax.annotation.Nullable;
 
@@ -41,7 +39,10 @@ import com.enderio.core.common.vecmath.VecmathUtil;
 import com.enderio.core.common.vecmath.Vector2d;
 import com.enderio.core.common.vecmath.Vector3d;
 import com.google.common.collect.MultimapBuilder;
+import com.google.common.collect.RowSortedTable;
 import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Table;
+import com.google.common.collect.TreeBasedTable;
 import com.gtnewhorizon.gtnhlib.GTNHLib;
 
 import cpw.mods.fml.common.Loader;
@@ -132,8 +133,14 @@ public class TravelController {
 
         BlockCoord target = new BlockCoord(x, y, z);
         double dist = getDistanceSquared(toTp, target);
+        // Due to a quirk of how the teleport staff works, it can try to blink and do a long-distance
+        // teleport at the same time. If both succeed, we can end up seeing an overly long blink, so
+        // allow it.
+        double maxDist = source == TravelSource.TELEPORT_STAFF_BLINK
+                ? TravelSource.TELEPORT_STAFF.getMaxDistanceTravelledSq()
+                : source.getMaxDistanceTravelledSq();
         // allow 15% overshoot to account for rounding
-        if (dist * 100 > source.getMaxDistanceTravelledSq() * 115) return "dist check fail";
+        if (dist * 100 > maxDist * 115) return "dist check fail";
         // allow 4 blocks of c/s player pos desync
         if (getPower(toTp, source, target, -4F) > powerUse) return "power use too little";
         ItemStack equippedItem = toTp.getCurrentEquippedItem();
@@ -148,8 +155,9 @@ public class TravelController {
                 // target must be a valid selectedCoord
                 // selectedCoord can either be a block right above/below when the player is on anchor...
                 if (on.x == x && on.z == z) return null;
-                // or another anchor
-                TileEntity maybeAnchor = target.getTileEntity(toTp.worldObj);
+                // or another anchor. We need to look one block below because TP goes above the anchor.
+                BlockCoord belowTarget = target.getLocation(ForgeDirection.DOWN);
+                TileEntity maybeAnchor = belowTarget.getTileEntity(toTp.worldObj);
                 if (!(maybeAnchor instanceof ITravelAccessable)) return "not anchor";
                 ITravelAccessable anchor = (ITravelAccessable) maybeAnchor;
                 if (!isValidTarget(toTp, target, TravelSource.BLOCK)) {
@@ -359,10 +367,10 @@ public class TravelController {
         double distanceIncrement = -2;
         // Special case: if the targeted block is too close, we'll try to teleport through it.
         if (teleDistance < 4) {
-            distanceIncrement = 2;
+            distanceIncrement = 0.5;
         }
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 32; i++) {
             teleDistance += distanceIncrement;
 
             sample.set(look);
@@ -380,40 +388,27 @@ public class TravelController {
 
     /** Returns empty optional if no travel destination was found. */
     public Optional<BlockCoord> findTravelDestination(EntityPlayer player, TravelSource source) {
-        Vector3d eye = Util.getEyePositionEio(player);
-        Vector3d look = Util.getLookVecEio(player);
+        double maxDistance = source.getMaxDistanceTravelled();
+        double maxMessageDistance = 1.25 * maxDistance;
+        // Find possible destinations within about 5 degrees.
+        RowSortedTable<Double, Double, BlockCoord> possibleDestinations = findBlocksWithinAngle(
+                player,
+                travelDestinations.get(player.worldObj.provider.dimensionId),
+                0.087,
+                maxMessageDistance);
 
-        // Map of distance to coordinate for eligible travel destinations (within angle).
-        Map<Double, BlockCoord> distanceMap = new TreeMap<>();
-        // Limit the max distance at which we'll display an out of range message.
-        // Otherwise, you could trigger the message for any travel anchor on the entire server.
-        double maxMessageDistance = 1.25 * source.getMaxDistanceTravelled();
-        boolean displayOutOfRangeMessage = false;
-        for (BlockCoord p : travelDestinations.get(player.worldObj.provider.dimensionId)) {
-            Vector3d block = new Vector3d(p.x + 0.5, p.y + 0.5, p.z + 0.5);
-            block.sub(eye);
-            double distance = block.length();
-            if (distance > maxMessageDistance) {
-                continue;
-            }
-            block.normalize();
-
-            double angle = Math.acos(look.dot(block));
-            // Roughly 5 degrees
-            if (angle < 0.087) {
-                if (distance > source.getMaxDistanceTravelled()) {
-                    displayOutOfRangeMessage = true;
-                } else {
-                    distanceMap.put(distance, p);
-                }
+        for (Table.Cell<Double, Double, BlockCoord> cell : possibleDestinations.cellSet()) {
+            if (cell.getColumnKey() <= maxDistance) {
+                return Optional.of(cell.getValue());
             }
         }
 
-        if (displayOutOfRangeMessage && distanceMap.isEmpty()) {
+        if (!possibleDestinations.isEmpty()) {
+            // We found at least one block within maxMessageDistance, but no blocks within maxDistance.
             showMessage(player, new ChatComponentTranslation("enderio.blockTravelPlatform.outOfRange"));
         }
 
-        return distanceMap.values().stream().findFirst();
+        return Optional.empty();
     }
 
     private boolean isBlackListedBlock(EntityPlayer player, MovingObjectPosition pos, Block hitBlock) {
@@ -729,8 +724,11 @@ public class TravelController {
 
     public boolean travelToLocation(EntityPlayer player, TravelSource source, BlockCoord coord,
             boolean conserveMomentum) {
+        // Are we trying to travel to a block (anchor or telepad)?
+        boolean travelToBlock = source != TravelSource.STAFF_BLINK && source != TravelSource.TELEPORT_STAFF_BLINK;
 
-        if (source != TravelSource.STAFF_BLINK && source != TravelSource.TELEPORT_STAFF_BLINK) {
+        BlockCoord destination = coord;
+        if (travelToBlock) {
             TileEntity te = player.worldObj.getTileEntity(coord.x, coord.y, coord.z);
             if (te instanceof ITravelAccessable) {
                 ITravelAccessable ta = (ITravelAccessable) te;
@@ -739,27 +737,30 @@ public class TravelController {
                     return false;
                 }
             }
+
+            // We actually want to go on top of the block.
+            destination = coord.getLocation(ForgeDirection.UP);
         }
 
         int requiredPower = 0;
-        requiredPower = getRequiredPower(player, source, coord);
+        requiredPower = getRequiredPower(player, source, destination);
         if (requiredPower < 0) {
             return false;
         }
 
-        if (!isInRangeTarget(player, coord, source.getMaxDistanceTravelledSq())) {
-            if (source != TravelSource.STAFF_BLINK && source != TravelSource.TELEPORT_STAFF_BLINK) {
+        if (!isInRangeTarget(player, destination, source.getMaxDistanceTravelledSq())) {
+            if (travelToBlock) {
                 showMessage(player, new ChatComponentTranslation("enderio.blockTravelPlatform.outOfRange"));
             }
             return false;
         }
-        if (!isValidTarget(player, coord, source)) {
-            if (source != TravelSource.STAFF_BLINK && source != TravelSource.TELEPORT_STAFF_BLINK) {
+        if (!isValidTarget(player, destination, source)) {
+            if (travelToBlock) {
                 showMessage(player, new ChatComponentTranslation("enderio.blockTravelPlatform.invalidTarget"));
             }
             return false;
         }
-        if (doClientTeleport(player, coord, source, requiredPower, conserveMomentum)) {
+        if (doClientTeleport(player, destination, source, requiredPower, conserveMomentum)) {
             for (int i = 0; i < 6; ++i) {
                 player.worldObj.spawnParticle(
                         "portal",
@@ -824,10 +825,6 @@ public class TravelController {
         }
         World w = player.worldObj;
         BlockCoord baseLoc = bc;
-        if (source != TravelSource.STAFF_BLINK && source != TravelSource.TELEPORT_STAFF_BLINK) {
-            // targeting a block so go one up
-            baseLoc = bc.getLocation(ForgeDirection.UP);
-        }
 
         return canTeleportTo(player, source, baseLoc, w)
                 && canTeleportTo(player, source, baseLoc.getLocation(ForgeDirection.UP), w);
@@ -914,6 +911,7 @@ public class TravelController {
         if (selectedBlock instanceof ITravelAccessable) {
             ITravelAccessable travelBlock = (ITravelAccessable) selectedBlock;
             BlockCoord targetBlock = new BlockCoord(currentBlock.x, y, currentBlock.z);
+            BlockCoord destination = targetBlock.getLocation(ForgeDirection.UP);
 
             if (Config.travelAnchorSkipWarning) {
                 if (travelBlock.getRequiresPassword(player)) {
@@ -924,55 +922,67 @@ public class TravelController {
                         && !travelBlock.canUiBeAccessed(player)) {
                     showMessage(player, new ChatComponentTranslation("enderio.gui.travelAccessable.skipPrivate"));
                 }
-                if (!isValidTarget(player, targetBlock, TravelSource.BLOCK)) {
+                if (!isValidTarget(player, destination, TravelSource.BLOCK)) {
                     showMessage(player, new ChatComponentTranslation("enderio.gui.travelAccessable.skipObstructed"));
                 }
             }
-            if (travelBlock.canBlockBeAccessed(player) && isValidTarget(player, targetBlock, TravelSource.BLOCK)) {
+            if (travelBlock.canBlockBeAccessed(player) && isValidTarget(player, destination, TravelSource.BLOCK)) {
                 return targetBlock;
             }
         }
         return null;
     }
 
+    /**
+     * Returns a row-sorted table with angle in radians as the row, distance as the column, and block coordinate as the
+     * value, holding all blocks which lie within the specified viewing angle and distance.
+     *
+     * <p>
+     * The table is sorted by angle ascending, so the smallest angle will be first.
+     *
+     * @param player      The player to search from.
+     * @param blocks      The blocks to search through.
+     * @param maxAngle    The maximum allowed angle, in radians.
+     * @param maxDistance The maximum allowed distance.
+     */
+    private RowSortedTable<Double, Double, BlockCoord> findBlocksWithinAngle(EntityPlayer player,
+            Iterable<BlockCoord> blocks, double maxAngle, double maxDistance) {
+        Vector3d eye = Util.getEyePositionEio(player);
+        Vector3d look = Util.getLookVecEio(player);
+
+        // Table of angle, distance, and block coordinate holding found blocks.
+        // Angle is the row, so this table will automatically be sorted by angle ascending.
+        RowSortedTable<Double, Double, BlockCoord> foundBlocks = TreeBasedTable.create();
+
+        for (BlockCoord p : blocks) {
+            Vector3d block = new Vector3d(p.x + 0.5, p.y + 0.5, p.z + 0.5);
+            block.sub(eye);
+            double distance = block.length();
+            if (distance > maxDistance) {
+                continue;
+            }
+            block.normalize();
+
+            double angle = Math.acos(look.dot(block));
+            if (angle <= maxAngle) {
+                foundBlocks.put(angle, distance, p);
+            }
+        }
+
+        return foundBlocks;
+    }
+
     @SideOnly(Side.CLIENT)
     private void updateSelectedTarget(EntityPlayer player) {
-        selectedCoord = null;
         if (candidates.isEmpty()) {
+            selectedCoord = null;
             return;
         }
 
-        double closestDistance = Double.MAX_VALUE;
-        for (BlockCoord bc : candidates.keySet()) {
-            if (!bc.equals(onBlockCoord)) {
-
-                double d = addRatio(bc);
-                if (d < closestDistance) {
-                    selectedCoord = bc;
-                    closestDistance = d;
-                }
-            }
-        }
-
-        if (selectedCoord != null) {
-
-            Vector3d blockCenter = new Vector3d(selectedCoord.x + 0.5, selectedCoord.y + 0.5, selectedCoord.z + 0.5);
-            Vector2d blockCenterPixel = currentView.getScreenPoint(blockCenter);
-
-            Vector2d screenMidPixel = new Vector2d(
-                    Minecraft.getMinecraft().displayWidth,
-                    Minecraft.getMinecraft().displayHeight);
-            screenMidPixel.scale(0.5);
-
-            double pixDist = blockCenterPixel.distance(screenMidPixel);
-            double rat = pixDist / Minecraft.getMinecraft().displayHeight;
-            if (rat != rat) {
-                rat = 0;
-            }
-            if (rat > 0.07) {
-                selectedCoord = null;
-            }
-        }
+        // Find the nearest travel anchor within roughly 10 degrees.
+        Optional<BlockCoord> selectedBlock = findBlocksWithinAngle(player, candidates.keySet(), 0.175, Double.MAX_VALUE)
+                .values().stream().findFirst();
+        selectedCoord = selectedBlock.orElse(null);
     }
 
     @SideOnly(Side.CLIENT)

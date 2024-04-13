@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import com.enderio.core.common.util.BlockCoord;
 import com.enderio.core.common.util.Util;
@@ -105,7 +106,9 @@ public class PacketLongDistanceTravelEvent
         if (!travelDestination.isPresent()) {
             return false;
         }
-        BlockCoord destination = travelDestination.get();
+
+        // We're teleporting to a block, so go one above.
+        BlockCoord destination = travelDestination.get().getLocation(ForgeDirection.UP);
         int x = destination.x;
         int y = destination.y;
         int z = destination.z;
@@ -135,7 +138,7 @@ public class PacketLongDistanceTravelEvent
         toTp.playSound(source.sound, 1.0F, 1.0F);
 
         if (player != null) {
-            player.setPositionAndUpdate(x + 0.5, y + 1.1, z + 0.5);
+            player.setPositionAndUpdate(x + 0.5, y + 0.1, z + 0.5);
         } else {
             toTp.setPosition(x, y, z);
         }
