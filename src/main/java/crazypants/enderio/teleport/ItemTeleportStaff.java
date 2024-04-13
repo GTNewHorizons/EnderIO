@@ -64,12 +64,35 @@ public class ItemTeleportStaff extends ItemTravelStaff {
                 } else {
                     TravelController.instance.doTeleport(player);
                 }
-            } else if (player.isSneaking() || !TravelController.instance
-                    .activateTravelAccessable(equipped, world, player, TravelSource.TELEPORT_STAFF)) {
+                player.swingItem();
+            } else {
+                int action = player.isSneaking() ? Config.teleportStaffSneakAction : Config.teleportStaffAction;
+                switch (action) {
+                    case 0:
+                        // Do nothing.
+                        break;
+
+                    case 1:
                         TravelController.instance.doTeleport(player);
-                    }
+                        player.swingItem();
+                        break;
+
+                    case 2:
+                        TravelController.instance
+                            .activateTravelAccessable(equipped, world, player, TravelSource.TELEPORT_STAFF);
+                        player.swingItem();
+                        break;
+
+                    case 3:
+                        if (!TravelController.instance
+                                .activateTravelAccessable(equipped, world, player, TravelSource.TELEPORT_STAFF)) {
+                            TravelController.instance.doTeleport(player);
+                        }
+                        player.swingItem();
+                        break;
+                }
+            }
         }
-        player.swingItem();
         return equipped;
     }
 

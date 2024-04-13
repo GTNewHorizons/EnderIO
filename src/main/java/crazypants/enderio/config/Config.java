@@ -177,6 +177,40 @@ public final class Config {
     /** If true, use the original staff of teleportation controls. */
     public static boolean teleportStaffOriginalControls = false;
 
+    /**
+     * Sets the teleport staff right-click action.
+     *
+     * <p>
+     * Values:
+     * <ul>
+     * <li><b>0:</b> Do nothing
+     * <li><b>1:</b> Teleport to look
+     * <li><b>2:</b> Teleport to anchor
+     * <li><b>3:</b> Teleport to anchor, or to look if no anchor <em>(default)</em>
+     * </ul>
+     *
+     * <p>
+     * Overridden if {@link #teleportStaffOriginalControls} is true.
+     */
+    public static int teleportStaffAction = 3;
+
+    /**
+     * Sets the teleport staff sneak right-click action.
+     *
+     * <p>
+     * Values:
+     * <ul>
+     * <li><b>0:</b> Do nothing
+     * <li><b>1:</b> Teleport to look <em>(default)</em>
+     * <li><b>2:</b> Teleport to anchor
+     * <li><b>3:</b> Teleport to anchor, or to look if no anchor
+     * </ul>
+     *
+     * <p>
+     * Overridden if {@link #teleportStaffOriginalControls} is true.
+     */
+    public static int teleportStaffSneakAction = 1;
+
     public static int enderIoRange = 8;
     public static boolean enderIoMeAccessEnabled = true;
 
@@ -1277,6 +1311,30 @@ public final class Config {
                 teleportStaffOriginalControls,
                 "If true, the staff of teleportation will use its original controls: R-Click for teleport to look, Shift R-Click for teleport to anchor.")
                 .getBoolean(teleportStaffOriginalControls);
+
+        teleportStaffAction = config.get(
+                sectionPersonal.name,
+                "teleportStaffAction",
+                teleportStaffAction,
+                "Sets the action for right-click with the staff of teleportation. Values:\n" + "    0: Do nothing\n"
+                        + "    1: Teleport to look\n"
+                        + "    2: Teleport to anchor\n"
+                        + "    3: Teleport to anchor, or look if no anchor (default)\n"
+                        + "Overridden if teleportStaffOriginalControls is true.")
+                .getInt(teleportStaffAction);
+
+        teleportStaffSneakAction = config
+                .get(
+                        sectionPersonal.name,
+                        "teleportStaffSneakAction",
+                        teleportStaffSneakAction,
+                        "Sets the action for sneak right-click with the staff of teleportation. Values:\n"
+                                + "    0: Do nothing\n"
+                                + "    1: Teleport to look (default)\n"
+                                + "    2: Teleport to anchor\n"
+                                + "    3: Teleport to anchor, or look if no anchor\n"
+                                + "Overridden if teleportStaffOriginalControls is true.")
+                .getInt(teleportStaffSneakAction);
 
         enderIoRange = config.get(
                 sectionEfficiency.name,
