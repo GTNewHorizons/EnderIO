@@ -767,7 +767,22 @@ public class TravelController {
             }
             return false;
         }
-        if (doClientTeleport(player, destination, source, requiredPower, conserveMomentum)) {
+
+        boolean teleportSuccessful;
+        if (player.worldObj.isRemote) {
+            teleportSuccessful = doClientTeleport(player, destination, source, requiredPower, conserveMomentum);
+        } else {
+            teleportSuccessful = PacketTravelEvent.doServerTeleport(
+                    player,
+                    destination.x,
+                    destination.y,
+                    destination.z,
+                    requiredPower,
+                    conserveMomentum,
+                    source);
+        }
+
+        if (teleportSuccessful) {
             for (int i = 0; i < 6; ++i) {
                 player.worldObj.spawnParticle(
                         "portal",
