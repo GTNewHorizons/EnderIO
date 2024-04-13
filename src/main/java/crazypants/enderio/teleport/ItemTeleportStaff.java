@@ -2,7 +2,6 @@ package crazypants.enderio.teleport;
 
 import java.util.List;
 
-import crazypants.enderio.config.Config;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,6 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.api.teleport.TravelSource;
+import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.power.PowerDisplayUtil;
 
 public class ItemTeleportStaff extends ItemTravelStaff {
@@ -60,16 +60,14 @@ public class ItemTeleportStaff extends ItemTravelStaff {
             if (Config.teleportStaffOriginalControls) {
                 if (player.isSneaking()) {
                     TravelController.instance
-                        .activateTravelAccessable(equipped, world, player, TravelSource.TELEPORT_STAFF);
+                            .activateTravelAccessable(equipped, world, player, TravelSource.TELEPORT_STAFF);
                 } else {
                     TravelController.instance.doTeleport(player);
                 }
-            } else if (
-                    player.isSneaking()
-                        || !TravelController.instance
-                            .activateTravelAccessable(equipped, world, player, TravelSource.TELEPORT_STAFF)) {
-                TravelController.instance.doTeleport(player);
-            }
+            } else if (player.isSneaking() || !TravelController.instance
+                    .activateTravelAccessable(equipped, world, player, TravelSource.TELEPORT_STAFF)) {
+                        TravelController.instance.doTeleport(player);
+                    }
         }
         player.swingItem();
         return equipped;
