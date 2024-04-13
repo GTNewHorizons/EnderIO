@@ -30,6 +30,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.event.world.WorldEvent;
 
 import com.enderio.core.common.util.BlockCoord;
 import com.enderio.core.common.util.Util;
@@ -484,6 +485,13 @@ public class TravelController {
         }
         return EnderIO.instance.proxy.getClientPlayer().worldObj
                 .getBlock(selectedCoord.x, selectedCoord.y, selectedCoord.z) == EnderIO.blockEnderIo;
+    }
+
+    @SubscribeEvent
+    public void onWorldLoad(WorldEvent.Load e) {
+        if (!e.world.isRemote) {
+            travelDestinations.removeAll(e.world.provider.dimensionId);
+        }
     }
 
     @SubscribeEvent
