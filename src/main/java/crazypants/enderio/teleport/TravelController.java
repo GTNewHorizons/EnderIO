@@ -133,14 +133,8 @@ public class TravelController {
 
         BlockCoord target = new BlockCoord(x, y, z);
         double dist = getDistanceSquared(toTp, target);
-        // Due to a quirk of how the teleport staff works, it can try to blink and do a long-distance
-        // teleport at the same time. If both succeed, we can end up seeing an overly long blink, so
-        // allow it.
-        double maxDist = source == TravelSource.TELEPORT_STAFF_BLINK
-                ? TravelSource.TELEPORT_STAFF.getMaxDistanceTravelledSq()
-                : source.getMaxDistanceTravelledSq();
         // allow 15% overshoot to account for rounding
-        if (dist * 100 > maxDist * 115) return "dist check fail";
+        if (dist * 100 > source.getMaxDistanceTravelledSq() * 115) return "dist check fail";
         // allow 4 blocks of c/s player pos desync
         if (getPower(toTp, source, target, -4F) > powerUse) return "power use too little";
         ItemStack equippedItem = toTp.getCurrentEquippedItem();
@@ -198,8 +192,13 @@ public class TravelController {
     }
 
     public boolean activateTravelAccessable(ItemStack equipped, World world, EntityPlayer player, TravelSource source) {
+        return activateTravelAccessable(equipped, world, player, source, false);
+    }
+
+    public boolean activateTravelAccessable(ItemStack equipped, World world, EntityPlayer player, TravelSource source,
+            boolean alsoDoTeleport) {
         if (!hasTarget()) {
-            PacketLongDistanceTravelEvent p = new PacketLongDistanceTravelEvent(player, false, source);
+            PacketLongDistanceTravelEvent p = new PacketLongDistanceTravelEvent(player, false, source, alsoDoTeleport);
             PacketHandler.INSTANCE.sendToServer(p);
             // We have no way of knowing if it will succeed, so just return false.
             return false;
@@ -775,6 +774,17 @@ public class TravelController {
         return true;
     }
 
+    public boolean isValidTarget(EntityPlayer player, BlockCoord bc, TravelSource source) {
+        if (bc == null) {
+            return false;
+        }
+        World w = player.worldObj;
+        BlockCoord baseLoc = bc;
+
+        return canTeleportTo(player, source, baseLoc, w)
+                && canTeleportTo(player, source, baseLoc.getLocation(ForgeDirection.UP), w);
+    }
+
     public int getRequiredPower(EntityPlayer player, TravelSource source, BlockCoord coord) {
         if (!isTravelItemActive(player, true)) {
             return 0;
@@ -817,17 +827,6 @@ public class TravelController {
 
     private double getDistance(EntityPlayer player, BlockCoord coord) {
         return Math.sqrt(getDistanceSquared(player, coord));
-    }
-
-    private boolean isValidTarget(EntityPlayer player, BlockCoord bc, TravelSource source) {
-        if (bc == null) {
-            return false;
-        }
-        World w = player.worldObj;
-        BlockCoord baseLoc = bc;
-
-        return canTeleportTo(player, source, baseLoc, w)
-                && canTeleportTo(player, source, baseLoc.getLocation(ForgeDirection.UP), w);
     }
 
     private boolean canTeleportTo(EntityPlayer player, TravelSource source, BlockCoord bc, World w) {

@@ -79,15 +79,13 @@ public class ItemTeleportStaff extends ItemTravelStaff {
 
                     case 2:
                         TravelController.instance
-                            .activateTravelAccessable(equipped, world, player, TravelSource.TELEPORT_STAFF);
+                                .activateTravelAccessable(equipped, world, player, TravelSource.TELEPORT_STAFF);
                         player.swingItem();
                         break;
 
                     case 3:
-                        if (!TravelController.instance
-                                .activateTravelAccessable(equipped, world, player, TravelSource.TELEPORT_STAFF)) {
-                            TravelController.instance.doTeleport(player);
-                        }
+                        TravelController.instance
+                                .activateTravelAccessable(equipped, world, player, TravelSource.TELEPORT_STAFF, true);
                         player.swingItem();
                         break;
                 }
