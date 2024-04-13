@@ -174,6 +174,8 @@ public final class Config {
      * The distance travelled when no block is found within {@link #teleportStaffMaxBlinkDistance}.
      */
     public static int teleportStaffFailedBlinkDistance = 64;
+    /** If true, don't invert the staff of teleportation controls. */
+    public static boolean teleportStaffOriginalControls = false;
 
     public static int enderIoRange = 8;
     public static boolean enderIoMeAccessEnabled = true;
@@ -1268,6 +1270,14 @@ public final class Config {
                         teleportStaffFailedBlinkDistance,
                         "Number of blocks teleported when no block is being looked at.")
                 .getInt(teleportStaffFailedBlinkDistance);
+
+        teleportStaffOriginalControls = config
+                .get(
+                        sectionPersonal.name,
+                        "teleportStaffOriginalControls",
+                        teleportStaffOriginalControls,
+                        "If true, the staff of teleportation will use its original controls: R-Click for teleport to look, Shift R-Click for teleport to anchor.")
+                .getBoolean(teleportStaffOriginalControls);
 
         enderIoRange = config.get(
                 sectionEfficiency.name,

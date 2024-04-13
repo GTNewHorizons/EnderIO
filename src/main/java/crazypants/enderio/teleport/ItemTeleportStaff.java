@@ -2,6 +2,7 @@ package crazypants.enderio.teleport;
 
 import java.util.List;
 
+import crazypants.enderio.config.Config;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -56,10 +57,17 @@ public class ItemTeleportStaff extends ItemTravelStaff {
     @Override
     public ItemStack onItemRightClick(ItemStack equipped, World world, EntityPlayer player) {
         if (world.isRemote) {
-            if (player.isSneaking()) {
-                TravelController.instance
+            if (Config.teleportStaffOriginalControls) {
+                if (player.isSneaking()) {
+                    TravelController.instance
                         .activateTravelAccessable(equipped, world, player, TravelSource.TELEPORT_STAFF);
-            } else {
+                } else {
+                    TravelController.instance.doTeleport(player);
+                }
+            } else if (
+                    player.isSneaking()
+                        || !TravelController.instance
+                            .activateTravelAccessable(equipped, world, player, TravelSource.TELEPORT_STAFF)) {
                 TravelController.instance.doTeleport(player);
             }
         }

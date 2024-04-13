@@ -358,7 +358,7 @@ public class TravelController {
 
         double distanceIncrement = -2;
         // Special case: if the targeted block is too close, we'll try to teleport through it.
-        if (teleDistance < 3) {
+        if (teleDistance < 4) {
             distanceIncrement = 2;
         }
 
@@ -527,7 +527,7 @@ public class TravelController {
             }
             onBlockCoord = getActiveTravelBlock(player);
             boolean onBlock = onBlockCoord != null;
-            showTargets = onBlock || isTravelItemActive(player, false);
+            showTargets = onBlock || (isTravelItemActive(player, false) && !shouldHideTargets(player));
             if (showTargets) {
                 updateSelectedTarget(player);
             } else {
@@ -617,6 +617,11 @@ public class TravelController {
 
     public boolean isTravelItemActive(EntityPlayer ep, boolean checkInventoryAndBaubles) {
         return getTravelItemTravelSource(ep, checkInventoryAndBaubles) != null;
+    }
+
+    public boolean shouldHideTargets(EntityPlayer ep) {
+        return getTravelItemTravelSource(ep, false) != TravelSource.TELEPORT_STAFF
+            || (!Config.teleportStaffOriginalControls && ep.isSneaking());
     }
 
     /** Returns null if no travel item is in inventory/baubles. */
