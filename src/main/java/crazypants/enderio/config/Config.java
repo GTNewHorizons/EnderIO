@@ -174,7 +174,7 @@ public final class Config {
      * The distance travelled when no block is found within {@link #teleportStaffMaxBlinkDistance}.
      */
     public static int teleportStaffFailedBlinkDistance = 64;
-    /** If true, don't invert the staff of teleportation controls. */
+    /** If true, use the original staff of teleportation controls. */
     public static boolean teleportStaffOriginalControls = false;
 
     public static int enderIoRange = 8;
