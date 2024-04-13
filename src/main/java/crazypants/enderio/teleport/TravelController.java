@@ -620,8 +620,8 @@ public class TravelController {
     }
 
     public boolean shouldHideTargets(EntityPlayer ep) {
-        return getTravelItemTravelSource(ep, false) != TravelSource.TELEPORT_STAFF
-            || (!Config.teleportStaffOriginalControls && ep.isSneaking());
+        return getTravelItemTravelSource(ep, false) == TravelSource.TELEPORT_STAFF
+            && !Config.teleportStaffOriginalControls && ep.isSneaking();
     }
 
     /** Returns null if no travel item is in inventory/baubles. */
