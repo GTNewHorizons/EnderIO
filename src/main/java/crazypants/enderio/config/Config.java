@@ -1271,12 +1271,11 @@ public final class Config {
                         "Number of blocks teleported when no block is being looked at.")
                 .getInt(teleportStaffFailedBlinkDistance);
 
-        teleportStaffOriginalControls = config
-                .get(
-                        sectionPersonal.name,
-                        "teleportStaffOriginalControls",
-                        teleportStaffOriginalControls,
-                        "If true, the staff of teleportation will use its original controls: R-Click for teleport to look, Shift R-Click for teleport to anchor.")
+        teleportStaffOriginalControls = config.get(
+                sectionPersonal.name,
+                "teleportStaffOriginalControls",
+                teleportStaffOriginalControls,
+                "If true, the staff of teleportation will use its original controls: R-Click for teleport to look, Shift R-Click for teleport to anchor.")
                 .getBoolean(teleportStaffOriginalControls);
 
         enderIoRange = config.get(
