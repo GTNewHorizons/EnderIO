@@ -365,12 +365,14 @@ public class TravelController {
         }
 
         double distanceIncrement = -2;
+        int maxIter = Math.min(8, (int) teleDistance / 2);
         // Special case: if the targeted block is too close, we'll try to teleport through it.
         if (teleDistance < 4) {
             distanceIncrement = 0.5;
+            maxIter = 32;
         }
 
-        for (int i = 0; i < 32; i++) {
+        for (int i = 0; i < maxIter; i++) {
             teleDistance += distanceIncrement;
 
             sample.set(look);
