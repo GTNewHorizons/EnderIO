@@ -67,7 +67,6 @@ public abstract class AbstractItemConduit extends Item implements IConduitItem {
         if (MicroblocksUtil.supportMicroblocks() && tryAddToMicroblocks(stack, player, world, x, y, z, side)) {
             return true;
         }
-
         BlockCoord placeAt = Util.canPlaceItem(stack, EnderIO.blockConduitBundle, player, world, x, y, z, side);
         if (placeAt != null) {
             if (!world.isRemote) {
@@ -84,9 +83,7 @@ public abstract class AbstractItemConduit extends Item implements IConduitItem {
                 stack.stackSize--;
             }
             return true;
-
         } else {
-
             ForgeDirection dir = ForgeDirection.values()[side];
             int placeX = x + dir.offsetX;
             int placeY = y + dir.offsetY;
@@ -116,7 +113,6 @@ public abstract class AbstractItemConduit extends Item implements IConduitItem {
                 }
             }
         }
-
         return false;
     }
 
@@ -162,8 +158,7 @@ public abstract class AbstractItemConduit extends Item implements IConduitItem {
                     System.out.println("AbstractItemConduit.onItemUse: Conduit null.");
                     return false;
                 }
-                bundle.removeConduit(existingConduit);
-                bundle.addConduit(newConduit);
+                bundle.replaceConduit(existingConduit, newConduit);
                 if (!player.capabilities.isCreativeMode) {
                     stack.stackSize--;
                     for (ItemStack drop : existingConduit.getDrops()) {

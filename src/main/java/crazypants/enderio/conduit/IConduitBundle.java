@@ -49,6 +49,8 @@ public interface IConduitBundle extends IInternalPowerHandler, IFluidHandler, II
 
     void addConduit(IConduit conduit);
 
+    void replaceConduit(IConduit original, IConduit replacement);
+
     void removeConduit(IConduit conduit);
 
     Collection<IConduit> getConduits();

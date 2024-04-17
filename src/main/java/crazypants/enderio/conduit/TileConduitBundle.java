@@ -405,6 +405,19 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
     }
 
     @Override
+    public void replaceConduit(IConduit original, IConduit replacement) {
+        if (worldObj.isRemote) {
+            return;
+        }
+
+        NBTTagCompound originalData = new NBTTagCompound();
+        original.writeToNBT(originalData);
+        removeConduit(original);
+        addConduit(replacement);
+        replacement.readFromNBT(originalData, originalData.getShort("nbtVersion"));
+    }
+
+    @Override
     public void removeConduit(IConduit conduit) {
         if (conduit != null) {
             removeConduit(conduit, true);
