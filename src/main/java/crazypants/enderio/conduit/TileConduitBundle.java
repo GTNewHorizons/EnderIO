@@ -412,7 +412,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
         // If you're wondering why I am not using conduit.writeToNBT, it is because there is some data that should not
         // persist, some of which causes crashes with energy conduits.
         NBTTagCompound[] originalData = new NBTTagCompound[ForgeDirection.values().length];
-        for (ForgeDirection conduitConnection : original.getConduitConnections()) {
+        for (ForgeDirection conduitConnection : original.getExternalConnections()) {
             NBTTagCompound tag = new NBTTagCompound();
             original.writeConnectionSettingsToNBT(conduitConnection, tag);
             originalData[conduitConnection.ordinal()] = tag;
