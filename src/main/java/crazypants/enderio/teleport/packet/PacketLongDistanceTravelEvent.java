@@ -34,16 +34,27 @@ public class PacketLongDistanceTravelEvent
     boolean conserveMotion;
     int entityId;
     int source;
+    // Below values are for also attempting a regular blink if the long-distance anchor check fails.
     boolean alsoDoTeleport;
+    int tpX;
+    int tpY;
+    int tpZ;
 
     public PacketLongDistanceTravelEvent() {}
 
+    public PacketLongDistanceTravelEvent(Entity entity, boolean conserveMotion, TravelSource source) {
+        this(entity, conserveMotion, source, false, 0, 0, 0);
+    }
+
     public PacketLongDistanceTravelEvent(Entity entity, boolean conserveMotion, TravelSource source,
-            boolean alsoDoTeleport) {
+            boolean alsoDoTeleport, int tpX, int tpY, int tpZ) {
         this.conserveMotion = conserveMotion;
         this.entityId = entity instanceof EntityPlayer ? -1 : entity.getEntityId();
         this.source = source.ordinal();
         this.alsoDoTeleport = alsoDoTeleport;
+        this.tpX = tpX;
+        this.tpY = tpY;
+        this.tpZ = tpZ;
     }
 
     @Override
@@ -52,6 +63,9 @@ public class PacketLongDistanceTravelEvent
         buf.writeInt(entityId);
         buf.writeInt(source);
         buf.writeBoolean(alsoDoTeleport);
+        buf.writeInt(tpX);
+        buf.writeInt(tpY);
+        buf.writeInt(tpZ);
     }
 
     @Override
@@ -60,6 +74,9 @@ public class PacketLongDistanceTravelEvent
         entityId = buf.readInt();
         source = buf.readInt();
         alsoDoTeleport = buf.readBoolean();
+        tpX = buf.readInt();
+        tpY = buf.readInt();
+        tpZ = buf.readInt();
     }
 
     @Override
@@ -78,7 +95,14 @@ public class PacketLongDistanceTravelEvent
 
         TravelSource source = TravelSource.values()[message.source];
 
-        if (!validate(toTp, source, message.alsoDoTeleport)) {
+        if (!validate(
+                toTp,
+                source,
+                message.conserveMotion,
+                message.alsoDoTeleport,
+                message.tpX,
+                message.tpY,
+                message.tpZ)) {
             Log.LOGGER.warn(
                     Log.securityMarker,
                     "Player {} tried to tp without valid prereq.",
@@ -86,24 +110,42 @@ public class PacketLongDistanceTravelEvent
             return null;
         }
 
-        doServerTeleport(toTp, message.conserveMotion, source, message.alsoDoTeleport);
+        doServerTeleport(
+                toTp,
+                message.conserveMotion,
+                source,
+                message.alsoDoTeleport,
+                message.tpX,
+                message.tpY,
+                message.tpZ);
 
         return null;
     }
 
-    private static boolean validate(EntityPlayerMP toTp, TravelSource source, boolean alsoDoTeleport) {
+    private static boolean validate(EntityPlayerMP toTp, TravelSource source, boolean conserveMotion,
+            boolean alsoDoTeleport, int tpX, int tpY, int tpZ) {
         ItemStack equippedItem = toTp.getCurrentEquippedItem();
         switch (source) {
             case STAFF:
                 // Not allowed to do teleport staff teleport with regular staff.
-                if (alsoDoTeleport) return false;
+                if (alsoDoTeleport) {
+                    return false;
+                }
                 return equippedItem != null && equippedItem.getItem() instanceof IItemOfTravel
                         && ((IItemOfTravel) equippedItem.getItem()).isActive(toTp, equippedItem);
             case TELEPORT_STAFF:
                 // tp staff is creative version of traveling staff
                 // no energy check or anything else needed
                 // but the player must actually be equipped with one of these
+                if (alsoDoTeleport) {
+                    String error = TravelController.instance
+                            .validatePacketTravelEvent(toTp, tpX, tpY, tpZ, 0, conserveMotion, source);
+                    if (error != null) {
+                        return false;
+                    }
+                }
                 return equippedItem != null && equippedItem.getItem() instanceof ItemTeleportStaff;
+
             default:
                 // all other types are not allowed
                 return false;
@@ -111,7 +153,7 @@ public class PacketLongDistanceTravelEvent
     }
 
     public static boolean doServerTeleport(Entity toTp, boolean conserveMotion, TravelSource source,
-            boolean alsoDoTeleport) {
+            boolean alsoDoTeleport, int tpX, int tpY, int tpZ) {
         if (!(toTp instanceof EntityPlayer)) {
             return false;
         }
@@ -120,7 +162,7 @@ public class PacketLongDistanceTravelEvent
         Optional<BlockCoord> travelDestination = TravelController.instance.findTravelDestination(player, source);
         if (!travelDestination.isPresent()) {
             if (alsoDoTeleport) {
-                return TravelController.instance.doTeleport(player);
+                return PacketTravelEvent.doServerTeleport(toTp, tpX, tpY, tpZ, 0, conserveMotion, source);
             }
             return false;
         }

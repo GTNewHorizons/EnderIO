@@ -199,7 +199,21 @@ public class TravelController {
     public boolean activateTravelAccessable(ItemStack equipped, World world, EntityPlayer player, TravelSource source,
             boolean alsoDoTeleport) {
         if (!hasTarget()) {
-            PacketLongDistanceTravelEvent p = new PacketLongDistanceTravelEvent(player, false, source, alsoDoTeleport);
+            PacketLongDistanceTravelEvent p = new PacketLongDistanceTravelEvent(player, false, source);
+            if (alsoDoTeleport) {
+                Optional<BlockCoord> destinationOptional = findTeleportDestination(player);
+                if (destinationOptional.isPresent()) {
+                    BlockCoord destination = destinationOptional.get();
+                    p = new PacketLongDistanceTravelEvent(
+                            player,
+                            false,
+                            source,
+                            true,
+                            destination.x,
+                            destination.y,
+                            destination.z);
+                }
+            }
             PacketHandler.INSTANCE.sendToServer(p);
             // We have no way of knowing if it will succeed, so just return false.
             return false;
@@ -251,7 +265,10 @@ public class TravelController {
                 sample.add(eye);
                 // we test against our feets location
                 sample.y -= playerHeight;
-                if (doBlinkAround(player, source, sample, true)) {
+
+                Optional<BlockCoord> destinationOptional = findNearbyDestination(player, source, sample);
+                if (destinationOptional.isPresent()
+                        && travelToLocation(player, source, destinationOptional.get(), true)) {
                     return true;
                 }
             }
@@ -288,7 +305,9 @@ public class TravelController {
                 // we test against our feets location
                 sample.y -= playerHeight;
 
-                if (doBlinkAround(player, source, sample, false)) {
+                Optional<BlockCoord> destinationOptional = findNearbyDestination(player, source, sample);
+                if (destinationOptional.isPresent()
+                        && travelToLocation(player, source, destinationOptional.get(), false)) {
                     return true;
                 }
                 teleDistance++;
@@ -304,7 +323,9 @@ public class TravelController {
                 // we test against our feets location
                 sample.y -= playerHeight;
 
-                if (doBlinkAround(player, source, sample, false)) {
+                Optional<BlockCoord> destinationOptional = findNearbyDestination(player, source, sample);
+                if (destinationOptional.isPresent()
+                        && travelToLocation(player, source, destinationOptional.get(), false)) {
                     return true;
                 }
                 sampleDistance--;
@@ -316,6 +337,15 @@ public class TravelController {
 
     /** This is the teleport staff super-teleport. */
     public boolean doTeleport(EntityPlayer player) {
+        Optional<BlockCoord> destinationOptional = findTeleportDestination(player);
+        if (destinationOptional.isPresent()) {
+            return travelToLocation(player, TravelSource.TELEPORT_STAFF_BLINK, destinationOptional.get(), true);
+        }
+        return false;
+    }
+
+    /** Finds the destination for the teleport staff super-teleport, or returns empty optional if unsuccessful. */
+    public Optional<BlockCoord> findTeleportDestination(EntityPlayer player) {
         TravelSource source = TravelSource.TELEPORT_STAFF_BLINK;
 
         Vector3d eye = Util.getEyePositionEio(player);
@@ -381,14 +411,15 @@ public class TravelController {
             // we test against our feets location
             sample.y -= playerHeight;
 
-            if (doBlinkAround(player, source, sample, false)) {
-                return true;
+            Optional<BlockCoord> destinationOptional = findNearbyDestination(player, source, sample);
+            if (destinationOptional.isPresent()) {
+                return destinationOptional;
             }
         }
-        return false;
+        return Optional.empty();
     }
 
-    /** Returns empty optional if no travel destination was found. */
+    /** Finds a long-distance travel anchor, or returns empty optional if unsuccessful. */
     public Optional<BlockCoord> findTravelDestination(EntityPlayer player, TravelSource source) {
         double maxDistance = source.getMaxDistanceTravelled();
         double maxMessageDistance = 1.25 * maxDistance;
@@ -421,36 +452,6 @@ public class TravelController {
         return blackList.contains(ui)
                 && (hitBlock.getBlockHardness(player.worldObj, pos.blockX, pos.blockY, pos.blockZ) < 0
                         || !Config.travelStaffBlinkThroughUnbreakableBlocksEnabled);
-    }
-
-    private boolean doBlinkAround(EntityPlayer player, TravelSource source, Vector3d sample, boolean conserveMomentum) {
-        if (travelToLocation(
-                player,
-                source,
-                new BlockCoord((int) Math.floor(sample.x), (int) Math.floor(sample.y), (int) Math.floor(sample.z)),
-                conserveMomentum)) {
-            return true;
-        }
-        if (travelToLocation(
-                player,
-                source,
-                new BlockCoord((int) Math.floor(sample.x), (int) Math.floor(sample.y) + 1, (int) Math.floor(sample.z)),
-                conserveMomentum)) {
-            return true;
-        }
-        if (!Config.travelStaffSearchOptimize) {
-            if (travelToLocation(
-                    player,
-                    source,
-                    new BlockCoord(
-                            (int) Math.floor(sample.x),
-                            (int) Math.floor(sample.y) - 1,
-                            (int) Math.floor(sample.z)),
-                    conserveMomentum)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public boolean showTargets() {
@@ -727,12 +728,47 @@ public class TravelController {
         return travelItemSlot;
     }
 
-    public boolean travelToSelectedTarget(EntityPlayer player, TravelSource source, boolean conserveMomentum) {
-        return travelToLocation(player, source, selectedCoord, conserveMomentum);
+    /** Finds a valid destination near the provided vector, or returns empty optional if unsuccessful. */
+    private Optional<BlockCoord> findNearbyDestination(EntityPlayer player, TravelSource source, Vector3d sample) {
+        Optional<BlockCoord> destinationOptional = findValidDestination(
+                player,
+                source,
+                new BlockCoord((int) Math.floor(sample.x), (int) Math.floor(sample.y), (int) Math.floor(sample.z)));
+        if (destinationOptional.isPresent()) {
+            return destinationOptional;
+        }
+
+        destinationOptional = findValidDestination(
+                player,
+                source,
+                new BlockCoord((int) Math.floor(sample.x), (int) Math.floor(sample.y) + 1, (int) Math.floor(sample.z)));
+        if (destinationOptional.isPresent()) {
+            return destinationOptional;
+        }
+
+        if (!Config.travelStaffSearchOptimize) {
+            destinationOptional = findValidDestination(
+                    player,
+                    source,
+                    new BlockCoord(
+                            (int) Math.floor(sample.x),
+                            (int) Math.floor(sample.y) - 1,
+                            (int) Math.floor(sample.z)));
+            if (destinationOptional.isPresent()) {
+                return destinationOptional;
+            }
+        }
+
+        return Optional.empty();
     }
 
-    public boolean travelToLocation(EntityPlayer player, TravelSource source, BlockCoord coord,
-            boolean conserveMomentum) {
+    /**
+     * Returns the provided position if it's valid, or returns empty optional if unsuccessful.
+     *
+     * <p>To be precise: if the destination is a travel anchor or other block, then the returned
+     * coordinates will be one block higher, to place the player on top of the block.
+     */
+    public Optional<BlockCoord> findValidDestination(EntityPlayer player, TravelSource source, BlockCoord coord) {
         // Are we trying to travel to a block (anchor or telepad)?
         boolean travelToBlock = source != TravelSource.STAFF_BLINK && source != TravelSource.TELEPORT_STAFF_BLINK;
 
@@ -743,7 +779,7 @@ public class TravelController {
                 ITravelAccessable ta = (ITravelAccessable) te;
                 if (!ta.canBlockBeAccessed(player)) {
                     showMessage(player, new ChatComponentTranslation("enderio.gui.travelAccessable.unauthorised"));
-                    return false;
+                    return Optional.empty();
                 }
             }
 
@@ -751,40 +787,41 @@ public class TravelController {
             destination = coord.getLocation(ForgeDirection.UP);
         }
 
+        if (!isInRangeTarget(player, destination, source.getMaxDistanceTravelledSq())) {
+            if (travelToBlock) {
+                showMessage(player, new ChatComponentTranslation("enderio.blockTravelPlatform.outOfRange"));
+            }
+            return Optional.empty();
+        }
+        if (!isValidTarget(player, destination, source)) {
+            if (travelToBlock) {
+                showMessage(player, new ChatComponentTranslation("enderio.blockTravelPlatform.invalidTarget"));
+            }
+            return Optional.empty();
+        }
+
+        return Optional.of(destination);
+    }
+
+    public boolean travelToSelectedTarget(EntityPlayer player, TravelSource source, boolean conserveMomentum) {
+        return travelToLocation(player, source, selectedCoord, conserveMomentum);
+    }
+
+    public boolean travelToLocation(EntityPlayer player, TravelSource source, BlockCoord coord,
+            boolean conserveMomentum) {
+        Optional<BlockCoord> destinationOptional = findValidDestination(player, source, coord);
+        if (!destinationOptional.isPresent()) {
+            return false;
+        }
+        BlockCoord destination = destinationOptional.get();
+
         int requiredPower = 0;
         requiredPower = getRequiredPower(player, source, destination);
         if (requiredPower < 0) {
             return false;
         }
 
-        if (!isInRangeTarget(player, destination, source.getMaxDistanceTravelledSq())) {
-            if (travelToBlock) {
-                showMessage(player, new ChatComponentTranslation("enderio.blockTravelPlatform.outOfRange"));
-            }
-            return false;
-        }
-        if (!isValidTarget(player, destination, source)) {
-            if (travelToBlock) {
-                showMessage(player, new ChatComponentTranslation("enderio.blockTravelPlatform.invalidTarget"));
-            }
-            return false;
-        }
-
-        boolean teleportSuccessful;
-        if (player.worldObj.isRemote) {
-            teleportSuccessful = doClientTeleport(player, destination, source, requiredPower, conserveMomentum);
-        } else {
-            teleportSuccessful = PacketTravelEvent.doServerTeleport(
-                    player,
-                    destination.x,
-                    destination.y,
-                    destination.z,
-                    requiredPower,
-                    conserveMomentum,
-                    source);
-        }
-
-        if (teleportSuccessful) {
+        if (doClientTeleport(player, destinationOptional.get(), source, requiredPower, conserveMomentum)) {
             for (int i = 0; i < 6; ++i) {
                 player.worldObj.spawnParticle(
                         "portal",
