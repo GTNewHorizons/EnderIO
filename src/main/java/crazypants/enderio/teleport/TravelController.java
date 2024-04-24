@@ -765,8 +765,9 @@ public class TravelController {
     /**
      * Returns the provided position if it's valid, or returns empty optional if unsuccessful.
      *
-     * <p>To be precise: if the destination is a travel anchor or other block, then the returned
-     * coordinates will be one block higher, to place the player on top of the block.
+     * <p>
+     * To be precise: if the destination is a travel anchor or other block, then the returned coordinates will be one
+     * block higher, to place the player on top of the block.
      */
     public Optional<BlockCoord> findValidDestination(EntityPlayer player, TravelSource source, BlockCoord coord) {
         // Are we trying to travel to a block (anchor or telepad)?
