@@ -15,6 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.api.teleport.TravelSource;
+import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.power.PowerDisplayUtil;
 
 public class ItemTeleportStaff extends ItemTravelStaff {
@@ -56,14 +57,40 @@ public class ItemTeleportStaff extends ItemTravelStaff {
     @Override
     public ItemStack onItemRightClick(ItemStack equipped, World world, EntityPlayer player) {
         if (world.isRemote) {
-            if (player.isSneaking()) {
-                TravelController.instance
-                        .activateTravelAccessable(equipped, world, player, TravelSource.TELEPORT_STAFF);
+            if (Config.teleportStaffOriginalControls) {
+                if (player.isSneaking()) {
+                    TravelController.instance
+                            .activateTravelAccessable(equipped, world, player, TravelSource.TELEPORT_STAFF);
+                } else {
+                    TravelController.instance.doTeleport(player);
+                }
+                player.swingItem();
             } else {
-                TravelController.instance.doTeleport(player);
+                int action = player.isSneaking() ? Config.teleportStaffSneakAction : Config.teleportStaffAction;
+                switch (action) {
+                    case 0:
+                        // Do nothing.
+                        break;
+
+                    case 1:
+                        TravelController.instance.doTeleport(player);
+                        player.swingItem();
+                        break;
+
+                    case 2:
+                        TravelController.instance
+                                .activateTravelAccessable(equipped, world, player, TravelSource.TELEPORT_STAFF);
+                        player.swingItem();
+                        break;
+
+                    case 3:
+                        TravelController.instance
+                                .activateTravelAccessable(equipped, world, player, TravelSource.TELEPORT_STAFF, true);
+                        player.swingItem();
+                        break;
+                }
             }
         }
-        player.swingItem();
         return equipped;
     }
 

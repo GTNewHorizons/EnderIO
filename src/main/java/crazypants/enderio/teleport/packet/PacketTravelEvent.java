@@ -118,7 +118,7 @@ public class PacketTravelEvent implements IMessage, IMessageHandler<PacketTravel
         toTp.playSound(source.sound, 1.0F, 1.0F);
 
         if (player != null) {
-            player.setPositionAndUpdate(x + 0.5, y + 1.1, z + 0.5);
+            player.setPositionAndUpdate(x + 0.5, y + 0.1, z + 0.5);
         } else {
             toTp.setPosition(x, y, z);
         }
