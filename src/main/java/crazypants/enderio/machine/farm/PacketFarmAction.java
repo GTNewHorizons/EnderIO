@@ -9,6 +9,7 @@ import com.enderio.core.common.util.BlockCoord;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import crazypants.enderio.config.Config;
 import crazypants.util.ClientUtil;
 import io.netty.buffer.ByteBuf;
 
@@ -51,7 +52,7 @@ public class PacketFarmAction implements IMessage, IMessageHandler<PacketFarmAct
 
     @Override
     public IMessage onMessage(PacketFarmAction message, MessageContext ctx) {
-        ClientUtil.spawnFarmParticles(rand, message.coords);
+        ClientUtil.spawnFarmParticles(rand, message.coords, Config.farmParticlesCount);
         return null;
     }
 }

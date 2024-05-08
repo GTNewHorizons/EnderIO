@@ -51,14 +51,15 @@ public class ClientUtil {
         con.readFromNBT(pkt.tc, TileConduitBundle.NBT_VERSION);
     }
 
-    public static void spawnFarmParticles(Random rand, List<BlockCoord> coords) {
+    public static void spawnFarmParticles(Random rand, List<BlockCoord> coords, int particlesCount) {
         // 0 = All, 1 = Decreased, 2 = Minimal
         int particleSetting = Minecraft.getMinecraft().gameSettings.particleSetting;
         if (particleSetting >= 2 /* Minimal */) {
             return;
         }
 
-        int particles = particleSetting == 0 ? 6 /* All */ : 3 /* Decreased */;
+        int particles = particleSetting == 0 ? particlesCount /* All */
+                : (particlesCount / 2) /* Decreased */;
 
         World world = Minecraft.getMinecraft().theWorld;
         EffectRenderer effectRenderer = Minecraft.getMinecraft().effectRenderer;

@@ -361,7 +361,8 @@ public final class Config {
             "TwilightForest:item.steeleafHoe", "TwilightForest:item.ironwoodHoe", "IC2:itemToolBronzeHoe" };
     public static List<ItemStack> farmHoes = new ArrayList<ItemStack>();
     public static int farmSaplingReserveAmount = 8;
-    public static double farmParticlesMaxRange = 20;
+    public static double farmParticlesMaxRange = 64;
+    public static int farmParticlesCount = 15;
 
     public static int magnetPowerUsePerSecondRF = 1;
     public static int magnetPowerCapacityRF = 100000;
@@ -2066,6 +2067,12 @@ public final class Config {
                 "farmParticlesMaxRange",
                 farmParticlesMaxRange,
                 "The max range of the farm action particles.").getDouble(farmParticlesMaxRange);
+
+        farmParticlesCount = config.get(
+                sectionFarm.name,
+                "farmParticlesCount",
+                farmParticlesCount,
+                "The number of particles produces by farm action.").getInt(farmParticlesCount);
 
         combustionGeneratorUseOpaqueModel = config
                 .get(
