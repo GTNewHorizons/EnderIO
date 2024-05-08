@@ -361,6 +361,7 @@ public final class Config {
             "TwilightForest:item.steeleafHoe", "TwilightForest:item.ironwoodHoe", "IC2:itemToolBronzeHoe" };
     public static List<ItemStack> farmHoes = new ArrayList<ItemStack>();
     public static int farmSaplingReserveAmount = 8;
+    public static double farmParticlesMaxRange = 20;
 
     public static int magnetPowerUsePerSecondRF = 1;
     public static int magnetPowerCapacityRF = 100000;
@@ -2059,6 +2060,12 @@ public final class Config {
                         + "saplings in store, it will only shear part the leaves and break the others for spalings. Set this to 0 to "
                         + "always shear all leaves.")
                 .getInt(farmSaplingReserveAmount);
+
+        farmParticlesMaxRange = config.get(
+                sectionFarm.name,
+                "farmParticlesMaxRange",
+                farmParticlesMaxRange,
+                "The max range of the farm action particles.").getDouble(farmParticlesMaxRange);
 
         combustionGeneratorUseOpaqueModel = config
                 .get(

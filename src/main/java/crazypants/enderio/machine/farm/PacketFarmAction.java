@@ -51,11 +51,7 @@ public class PacketFarmAction implements IMessage, IMessageHandler<PacketFarmAct
 
     @Override
     public IMessage onMessage(PacketFarmAction message, MessageContext ctx) {
-        for (BlockCoord bc : message.coords) {
-            for (int i = 0; i < 15; i++) {
-                ClientUtil.spawnFarmParcticles(rand, bc);
-            }
-        }
+        ClientUtil.spawnFarmParticles(rand, message.coords);
         return null;
     }
 }
