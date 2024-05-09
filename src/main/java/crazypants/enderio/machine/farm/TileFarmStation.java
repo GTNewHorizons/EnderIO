@@ -458,8 +458,9 @@ public class TileFarmStation extends AbstractPoweredTaskEntity {
             IHarvestResult harvest = FarmersCommune.instance.harvestBlock(this, bc, block, meta);
             if (harvest != null && harvest.getDrops() != null) {
                 PacketFarmAction pkt = new PacketFarmAction(harvest.getHarvestedBlocks());
-                PacketHandler.INSTANCE
-                        .sendToAllAround(pkt, new TargetPoint(worldObj.provider.dimensionId, bc.x, bc.y, bc.z, 64));
+                PacketHandler.INSTANCE.sendToAllAround(
+                        pkt,
+                        new TargetPoint(worldObj.provider.dimensionId, bc.x, bc.y, bc.z, Config.farmParticlesMaxRange));
                 for (EntityItem ei : harvest.getDrops()) {
                     if (ei != null) {
                         insertHarvestDrop(ei, bc);
@@ -487,7 +488,12 @@ public class TileFarmStation extends AbstractPoweredTaskEntity {
                     inventory[minFirtSlot] = farmerJoe.inventory.mainInventory[0];
                     PacketHandler.INSTANCE.sendToAllAround(
                             new PacketFarmAction(bc),
-                            new TargetPoint(worldObj.provider.dimensionId, bc.x, bc.y, bc.z, 64));
+                            new TargetPoint(
+                                    worldObj.provider.dimensionId,
+                                    bc.x,
+                                    bc.y,
+                                    bc.z,
+                                    Config.farmParticlesMaxRange));
                     if (inventory[minFirtSlot] != null && inventory[minFirtSlot].stackSize == 0) {
                         inventory[minFirtSlot] = null;
                     }

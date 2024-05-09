@@ -1,10 +1,14 @@
 package crazypants.util;
 
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.EffectRenderer;
+import net.minecraft.client.particle.EntityPortalFX;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 import com.enderio.core.common.util.BlockCoord;
 
@@ -47,18 +51,35 @@ public class ClientUtil {
         con.readFromNBT(pkt.tc, TileConduitBundle.NBT_VERSION);
     }
 
-    public static void spawnFarmParcticles(Random rand, BlockCoord bc) {
-        double xOff = 0.5 + (rand.nextDouble() - 0.5) * 1.1;
-        double yOff = 0.5 + (rand.nextDouble() - 0.5) * 0.2;
-        double zOff = 0.5 + (rand.nextDouble() - 0.5) * 1.1;
-        Minecraft.getMinecraft().theWorld.spawnParticle(
-                "portal",
-                bc.x + xOff,
-                bc.y + yOff,
-                bc.z + zOff,
-                (rand.nextDouble() - 0.5) * 1.5,
-                -rand.nextDouble(),
-                (rand.nextDouble() - 0.5) * 1.5);
+    public static void spawnFarmParticles(Random rand, List<BlockCoord> coords, int particlesCount) {
+        // 0 = All, 1 = Decreased, 2 = Minimal
+        int particleSetting = Minecraft.getMinecraft().gameSettings.particleSetting;
+        if (particleSetting >= 2 /* Minimal */) {
+            return;
+        }
+
+        int particles = particleSetting == 0 ? particlesCount /* All */
+                : (particlesCount / 2) /* Decreased */;
+
+        World world = Minecraft.getMinecraft().theWorld;
+        EffectRenderer effectRenderer = Minecraft.getMinecraft().effectRenderer;
+
+        for (BlockCoord bc : coords) {
+            for (int i = 0; i < particles; i++) {
+                double xOff = 0.5 + (rand.nextDouble() - 0.5) * 1.1;
+                double yOff = 0.5 + (rand.nextDouble() - 0.5) * 0.2;
+                double zOff = 0.5 + (rand.nextDouble() - 0.5) * 1.1;
+                effectRenderer.addEffect(
+                        new EntityPortalFX(
+                                world,
+                                bc.x + xOff,
+                                bc.y + yOff,
+                                bc.z + zOff,
+                                (rand.nextDouble() - 0.5) * 1.5,
+                                -rand.nextDouble(),
+                                (rand.nextDouble() - 0.5) * 1.5));
+            }
+        }
     }
 
     public static void setTankNBT(PacketCombustionTank message, int x, int y, int z) {
