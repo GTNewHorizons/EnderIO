@@ -339,7 +339,7 @@ public class TravelController {
     public boolean doTeleport(EntityPlayer player) {
         Optional<BlockCoord> destinationOptional = findTeleportDestination(player);
         if (destinationOptional.isPresent()) {
-            return travelToLocation(player, TravelSource.TELEPORT_STAFF_BLINK, destinationOptional.get(), true);
+            return travelToLocation(player, TravelSource.TELEPORT_STAFF_BLINK, destinationOptional.get(), false);
         }
         return false;
     }
