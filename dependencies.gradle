@@ -10,9 +10,9 @@ dependencies {
     shadowImplementation('cglib:cglib-nodep:3.3.0')
 
     compileOnly('com.github.GTNewHorizons:waila:1.7.3:api') {transitive = false}
-    compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-350-GTNH:api') {transitive = false}
+    compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-357-GTNH:api') {transitive = false}
     compileOnly('com.github.GTNewHorizons:Baubles:1.0.4:dev') {transitive = false}
-    compileOnly('com.github.GTNewHorizons:GT5-Unofficial:5.09.45.159:dev') {transitive = false}
+    compileOnly('com.github.GTNewHorizons:GT5-Unofficial:5.09.45.166:dev') {transitive = false}
     compileOnly('com.github.GTNewHorizons:Railcraft:9.15.8:api') {transitive = false}
     compileOnly('com.github.GTNewHorizons:StorageDrawers:1.13.5-GTNH:api') {transitive = false}
     compileOnly('com.github.GTNewHorizons:Chisel:2.14.1-GTNH:dev') {transitive = false}
@@ -24,5 +24,5 @@ dependencies {
     compileOnly(rfg.deobf('curse.maven:mekanism-268560:2475797')) // https://www.curseforge.com/minecraft/mc-mods/mekanism/files/2475797
     compileOnly(rfg.deobf('maven.modrinth:immibis-microblocks:59.1.2')) // https://modrinth.com/mod/immibis-microblocks/version/59.1.2
 
-    compileOnlyApi('com.github.GTNewHorizons:Angelica:1.0.0-alpha38:api') {transitive = false}
+    compileOnlyApi('com.github.GTNewHorizons:Angelica:1.0.0-alpha50:api') {transitive = false}
 }
