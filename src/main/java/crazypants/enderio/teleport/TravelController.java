@@ -340,109 +340,9 @@ public class TravelController {
     public boolean doTeleport(EntityPlayer player) {
         Optional<BlockCoord> destinationOptional = findTeleportDestination(player);
         if (destinationOptional.isPresent()) {
-            return travelToLocation(player, TravelSource.TELEPORT_STAFF_BLINK, destinationOptional.get(), true);
+            return travelToLocation(player, TravelSource.TELEPORT_STAFF_BLINK, destinationOptional.get(), false);
         }
         return false;
-    }
-
-    /** Finds the destination for the teleport staff super-teleport, or returns empty optional if unsuccessful. */
-    public Optional<BlockCoord> findTeleportDestination(EntityPlayer player) {
-        TravelSource source = TravelSource.TELEPORT_STAFF_BLINK;
-
-        Vector3d eye = Util.getEyePositionEio(player);
-        Vector3d look = Util.getLookVecEio(player);
-
-        double playerHeight = player.yOffset;
-        // +2 to compensate for the standard distance decrement of -2
-        double teleDistance = Config.teleportStaffFailedBlinkDistance + 2;
-        Vec3 eye3 = Vec3.createVectorHelper(eye.x, eye.y, eye.z);
-
-        // rayTraceBlocks has a limit of 200 distance.
-        double maxDistance = Config.teleportStaffMaxBlinkDistance;
-        double currDistance = 0;
-        Vec3 pos = eye3;
-        boolean loop = true;
-        while (loop) {
-            double distance = 200;
-            if (maxDistance - currDistance < 200) {
-                distance = maxDistance - currDistance;
-                loop = false;
-            }
-
-            Vector3d sample = new Vector3d(look);
-            sample.scale(distance);
-            sample.add(eye);
-            Vec3 end = Vec3.createVectorHelper(sample.x, sample.y, sample.z);
-
-            MovingObjectPosition p = player.worldObj
-                    .rayTraceBlocks(pos, end, !Config.travelStaffBlinkThroughClearBlocksEnabled);
-            if (p != null) {
-                teleDistance = VecmathUtil.distance(eye, new Vector3d(p.blockX + 0.5, p.blockY + 0.5, p.blockZ + 0.5));
-                break;
-            }
-
-            pos = end;
-            currDistance += distance;
-        }
-
-        Vector3d sample = new Vector3d(look);
-        sample.scale(Config.teleportStaffMaxBlinkDistance);
-        sample.add(eye);
-        Vec3 end = Vec3.createVectorHelper(sample.x, sample.y, sample.z);
-        MovingObjectPosition p = player.worldObj
-                .rayTraceBlocks(eye3, end, !Config.travelStaffBlinkThroughClearBlocksEnabled);
-        if (p != null) {
-            teleDistance = VecmathUtil.distance(eye, new Vector3d(p.blockX + 0.5, p.blockY + 0.5, p.blockZ + 0.5));
-        }
-
-        double distanceIncrement = -2;
-        int maxIter = Math.min(8, (int) teleDistance / 2);
-        // Special case: if the targeted block is too close, we'll try to teleport through it.
-        if (teleDistance < 4) {
-            distanceIncrement = 0.5;
-            maxIter = 32;
-        }
-
-        for (int i = 0; i < maxIter; i++) {
-            teleDistance += distanceIncrement;
-
-            sample.set(look);
-            sample.scale(teleDistance);
-            sample.add(eye);
-            // we test against our feets location
-            sample.y -= playerHeight;
-
-            Optional<BlockCoord> destinationOptional = findNearbyDestination(player, source, sample);
-            if (destinationOptional.isPresent()) {
-                return destinationOptional;
-            }
-        }
-        return Optional.empty();
-    }
-
-    /** Finds a long-distance travel anchor, or returns empty optional if unsuccessful. */
-    public Optional<BlockCoord> findTravelDestination(EntityPlayer player, TravelSource source) {
-        double maxDistance = source.getMaxDistanceTravelled();
-        double maxMessageDistance = 1.25 * maxDistance;
-        // Find possible destinations within about 5 degrees.
-        RowSortedTable<Double, Double, BlockCoord> possibleDestinations = findBlocksWithinAngle(
-                player,
-                travelDestinations.get(player.worldObj.provider.dimensionId),
-                0.087,
-                maxMessageDistance);
-
-        for (Table.Cell<Double, Double, BlockCoord> cell : possibleDestinations.cellSet()) {
-            if (cell.getColumnKey() <= maxDistance) {
-                return Optional.of(cell.getValue());
-            }
-        }
-
-        if (!possibleDestinations.isEmpty()) {
-            // We found at least one block within maxMessageDistance, but no blocks within maxDistance.
-            showMessage(player, new ChatComponentTranslation("enderio.blockTravelPlatform.outOfRange"));
-        }
-
-        return Optional.empty();
     }
 
     private boolean isBlackListedBlock(EntityPlayer player, MovingObjectPosition pos, Block hitBlock) {
@@ -625,9 +525,9 @@ public class TravelController {
         return getTravelItemTravelSource(ep, checkInventoryAndBaubles) != null;
     }
 
+    /** Currently, we only hide travel targets for the teleport staff, in certain action modes. */
     public boolean shouldHideTargets(EntityPlayer ep) {
-        if (getTravelItemTravelSource(ep, false) != TravelSource.TELEPORT_STAFF
-                || Config.teleportStaffOriginalControls) {
+        if (getTravelItemTravelSource(ep, false) != TravelSource.TELEPORT_STAFF) {
             return false;
         }
 
@@ -732,6 +632,106 @@ public class TravelController {
             }
         }
         return travelItemSlot;
+    }
+
+    /** Finds the destination for the teleport staff super-teleport, or returns empty optional if unsuccessful. */
+    public Optional<BlockCoord> findTeleportDestination(EntityPlayer player) {
+        TravelSource source = TravelSource.TELEPORT_STAFF_BLINK;
+
+        Vector3d eye = Util.getEyePositionEio(player);
+        Vector3d look = Util.getLookVecEio(player);
+
+        double playerHeight = player.yOffset;
+        // +2 to compensate for the standard distance decrement of -2
+        double teleDistance = Config.teleportStaffFailedBlinkDistance + 2;
+        Vec3 eye3 = Vec3.createVectorHelper(eye.x, eye.y, eye.z);
+
+        // rayTraceBlocks has a limit of 200 distance.
+        double maxDistance = Config.teleportStaffMaxBlinkDistance;
+        double currDistance = 0;
+        Vec3 pos = eye3;
+        boolean loop = true;
+        while (loop) {
+            double distance = 200;
+            if (maxDistance - currDistance < 200) {
+                distance = maxDistance - currDistance;
+                loop = false;
+            }
+
+            Vector3d sample = new Vector3d(look);
+            sample.scale(distance);
+            sample.add(eye);
+            Vec3 end = Vec3.createVectorHelper(sample.x, sample.y, sample.z);
+
+            MovingObjectPosition p = player.worldObj
+                    .rayTraceBlocks(pos, end, !Config.travelStaffBlinkThroughClearBlocksEnabled);
+            if (p != null) {
+                teleDistance = VecmathUtil.distance(eye, new Vector3d(p.blockX + 0.5, p.blockY + 0.5, p.blockZ + 0.5));
+                break;
+            }
+
+            pos = end;
+            currDistance += distance;
+        }
+
+        Vector3d sample = new Vector3d(look);
+        sample.scale(Config.teleportStaffMaxBlinkDistance);
+        sample.add(eye);
+        Vec3 end = Vec3.createVectorHelper(sample.x, sample.y, sample.z);
+        MovingObjectPosition p = player.worldObj
+                .rayTraceBlocks(eye3, end, !Config.travelStaffBlinkThroughClearBlocksEnabled);
+        if (p != null) {
+            teleDistance = VecmathUtil.distance(eye, new Vector3d(p.blockX + 0.5, p.blockY + 0.5, p.blockZ + 0.5));
+        }
+
+        double distanceIncrement = -2;
+        int maxIter = Math.min(8, (int) teleDistance / 2);
+        // Special case: if the targeted block is too close, we'll try to teleport through it.
+        if (teleDistance < 4) {
+            distanceIncrement = 0.5;
+            maxIter = 32;
+        }
+
+        for (int i = 0; i < maxIter; i++) {
+            teleDistance += distanceIncrement;
+
+            sample.set(look);
+            sample.scale(teleDistance);
+            sample.add(eye);
+            // we test against our feets location
+            sample.y -= playerHeight;
+
+            Optional<BlockCoord> destinationOptional = findNearbyDestination(player, source, sample);
+            if (destinationOptional.isPresent()) {
+                return destinationOptional;
+            }
+        }
+        return Optional.empty();
+    }
+
+    /** Finds a long-distance travel anchor, or returns empty optional if unsuccessful. */
+    public Optional<BlockCoord> findTravelDestination(EntityPlayer player, TravelSource source) {
+        double maxDistance = source.getMaxDistanceTravelled();
+        double maxMessageDistance = 1.25 * maxDistance;
+        // Find possible destinations within about 5 degrees.
+        RowSortedTable<Double, Double, BlockCoord> possibleDestinations = findBlocksWithinAngle(
+                player,
+                travelDestinations.get(player.worldObj.provider.dimensionId),
+                0.087,
+                maxMessageDistance);
+
+        for (Table.Cell<Double, Double, BlockCoord> cell : possibleDestinations.cellSet()) {
+            if (cell.getColumnKey() <= maxDistance) {
+                return Optional.of(cell.getValue());
+            }
+        }
+
+        if (!possibleDestinations.isEmpty()) {
+            // We found at least one block within maxMessageDistance, but no blocks within maxDistance.
+            showMessage(player, new ChatComponentTranslation("enderio.blockTravelPlatform.outOfRange"));
+        }
+
+        return Optional.empty();
     }
 
     /** Finds a valid destination near the provided vector, or returns empty optional if unsuccessful. */
