@@ -199,12 +199,11 @@ public class TravelController {
     public boolean activateTravelAccessable(ItemStack equipped, World world, EntityPlayer player, TravelSource source,
             boolean alsoDoTeleport) {
         if (!hasTarget()) {
-            PacketLongDistanceTravelEvent p = new PacketLongDistanceTravelEvent(player, false, source);
             if (alsoDoTeleport) {
                 Optional<BlockCoord> destinationOptional = findTeleportDestination(player);
                 if (destinationOptional.isPresent()) {
                     BlockCoord destination = destinationOptional.get();
-                    p = new PacketLongDistanceTravelEvent(
+                    PacketLongDistanceTravelEvent p = new PacketLongDistanceTravelEvent(
                             player,
                             false,
                             source,
@@ -212,12 +211,18 @@ public class TravelController {
                             destination.x,
                             destination.y,
                             destination.z);
+                    PacketHandler.INSTANCE.sendToServer(p);
+                    // We have no way of knowing if it will succeed, so just return false.
+                    return false;
                 }
             }
+
+            PacketLongDistanceTravelEvent p = new PacketLongDistanceTravelEvent(player, false, source);
             PacketHandler.INSTANCE.sendToServer(p);
             // We have no way of knowing if it will succeed, so just return false.
             return false;
         }
+
         BlockCoord target = selectedCoord;
         TileEntity te = world.getTileEntity(target.x, target.y, target.z);
         if (te instanceof ITravelAccessable) {
