@@ -175,6 +175,34 @@ public final class Config {
      */
     public static int teleportStaffFailedBlinkDistance = 64;
 
+    /**
+     * Sets the teleport staff right-click action.
+     *
+     * <p>
+     * Values:
+     * <ul>
+     * <li><b>0:</b> Do nothing
+     * <li><b>1:</b> Teleport to look
+     * <li><b>2:</b> Teleport to anchor
+     * <li><b>3:</b> Teleport to anchor, or to look if no anchor <em>(default)</em>
+     * </ul>
+     */
+    public static int teleportStaffAction = 3;
+
+    /**
+     * Sets the teleport staff sneak right-click action.
+     *
+     * <p>
+     * Values:
+     * <ul>
+     * <li><b>0:</b> Do nothing
+     * <li><b>1:</b> Teleport to look <em>(default)</em>
+     * <li><b>2:</b> Teleport to anchor
+     * <li><b>3:</b> Teleport to anchor, or to look if no anchor
+     * </ul>
+     */
+    public static int teleportStaffSneakAction = 1;
+
     public static int enderIoRange = 8;
     public static boolean enderIoMeAccessEnabled = true;
 
@@ -1270,6 +1298,27 @@ public final class Config {
                         teleportStaffFailedBlinkDistance,
                         "Number of blocks teleported when no block is being looked at.")
                 .getInt(teleportStaffFailedBlinkDistance);
+
+        teleportStaffAction = config.get(
+                sectionStaff.name,
+                "teleportStaffAction",
+                teleportStaffAction,
+                "Sets the action for right-click with the staff of teleportation. Values:\n" + "    0: Do nothing\n"
+                        + "    1: Teleport to look\n"
+                        + "    2: Teleport to anchor\n"
+                        + "    3: Teleport to anchor, or look if no anchor (default)")
+                .getInt(teleportStaffAction);
+
+        teleportStaffSneakAction = config.get(
+                sectionStaff.name,
+                "teleportStaffSneakAction",
+                teleportStaffSneakAction,
+                "Sets the action for sneak right-click with the staff of teleportation. Values:\n"
+                        + "    0: Do nothing\n"
+                        + "    1: Teleport to look (default)\n"
+                        + "    2: Teleport to anchor\n"
+                        + "    3: Teleport to anchor, or look if no anchor")
+                .getInt(teleportStaffSneakAction);
 
         enderIoRange = config.get(
                 sectionEfficiency.name,

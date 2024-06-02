@@ -337,6 +337,9 @@ public class TileTravelAnchor extends TileEntityEio implements ITravelAccessable
     public void validate() {
         super.validate();
         if (isTravelSource()) {
+            // Note: travelDestinations is a SetMultimap, which does not allow duplicate entries.
+            // So it's okay if this gets called multiple times with the same BlockCoord.
+            // Though, I think that it's not currently getting called multiple times, anyway.
             TravelController.instance.travelDestinations.put(worldObj.provider.dimensionId, getLocation());
         }
     }
@@ -344,12 +347,6 @@ public class TileTravelAnchor extends TileEntityEio implements ITravelAccessable
     @Override
     public void invalidate() {
         super.invalidate();
-        TravelController.instance.travelDestinations.remove(worldObj.provider.dimensionId, getLocation());
-    }
-
-    @Override
-    public void onChunkUnload() {
-        super.onChunkUnload();
         TravelController.instance.travelDestinations.remove(worldObj.provider.dimensionId, getLocation());
     }
 }
