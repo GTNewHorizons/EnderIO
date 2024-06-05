@@ -2,10 +2,11 @@ package crazypants.enderio.conduit.liquid;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
@@ -113,27 +114,29 @@ public class LiquidConduitRenderer extends DefaultConduitRenderer implements IRe
         }
     }
 
-    private static Map<CollidableComponent, Map<Fluid, List<CachableRenderStatement>>> cache = new WeakHashMap<CollidableComponent, Map<Fluid, List<CachableRenderStatement>>>();
+    private static final Map<CollidableComponent, Map<Fluid, List<CachableRenderStatement>>> cache = Collections
+            .synchronizedMap(new WeakHashMap<>());
 
     public static List<CachableRenderStatement> computeFluidOutlineToCache(CollidableComponent component, Fluid fluid,
             double scaleFactor, float outlineWidth) {
 
-        Map<Fluid, List<CachableRenderStatement>> cache0 = cache.get(component);
-        if (cache0 == null) {
-            cache0 = new HashMap<Fluid, List<CachableRenderStatement>>();
-            cache.put(component, cache0);
-        }
+        // Only init once per component across all threads so the cache stays accurate.
+        Map<Fluid, List<CachableRenderStatement>> cache0 = cache
+                .computeIfAbsent(component, _k -> new ConcurrentHashMap<>());
+        // The rest of this function 'should' be in a `computeIfAbsent` as well for:
+        // `cache0.computeIfAbsent(fluid, _k -> ...)` but that won't cause a bug in this case,
+        // just a bit more garbage.
         List<CachableRenderStatement> data = cache0.get(fluid);
         if (data != null) {
             return data;
         }
-        data = new ArrayList<CachableRenderStatement>();
-        cache0.put(fluid, data);
+        data = new ArrayList<>();
 
         IIcon texture = fluid.getStillIcon();
         if (texture == null) {
             texture = fluid.getIcon();
             if (texture == null) {
+                cache0.put(fluid, data);
                 return data;
             }
         }
@@ -192,6 +195,7 @@ public class LiquidConduitRenderer extends DefaultConduitRenderer implements IRe
                 }
             }
         }
+        cache0.put(fluid, data);
         return data;
     }
 
