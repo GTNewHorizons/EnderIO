@@ -120,11 +120,12 @@ public class LiquidConduitRenderer extends DefaultConduitRenderer implements IRe
     public static List<CachableRenderStatement> computeFluidOutlineToCache(CollidableComponent component, Fluid fluid,
             double scaleFactor, float outlineWidth) {
 
-        Map<Fluid, List<CachableRenderStatement>> cache0 = cache.get(component);
-        if (cache0 == null) {
-            cache0 = new ConcurrentHashMap<>();
-            cache.put(component, cache0);
-        }
+        // Only init once per component across all threads so the cache stays accurate.
+        Map<Fluid, List<CachableRenderStatement>> cache0 = cache
+                .computeIfAbsent(component, _k -> new ConcurrentHashMap<>());
+        // The rest of this function 'should' be in a `computeIfAbsent` as well for:
+        // `cache0.computeIfAbsent(fluid, _k -> ...)` but that won't cause a bug in this case,
+        // just a bit more garbage.
         List<CachableRenderStatement> data = cache0.get(fluid);
         if (data != null) {
             return data;
