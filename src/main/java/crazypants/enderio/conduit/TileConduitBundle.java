@@ -2,6 +2,7 @@ package crazypants.enderio.conduit;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
@@ -66,7 +67,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
 
     public static final short NBT_VERSION = 1;
 
-    private final List<IConduit> conduits = new ArrayList<IConduit>();
+    private final List<IConduit> conduits = Collections.synchronizedList(new ArrayList<>());
 
     private Block facadeId = null;
     private int facadeMeta = 0;
@@ -74,9 +75,9 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
 
     private boolean facadeChanged;
 
-    private final List<CollidableComponent> cachedCollidables = new ArrayList<CollidableComponent>();
+    private final List<CollidableComponent> cachedCollidables = new ArrayList<>();
 
-    private final List<CollidableComponent> cachedConnectors = new ArrayList<CollidableComponent>();
+    private final List<CollidableComponent> cachedConnectors = new ArrayList<>();
 
     private boolean conduitsDirty = true;
     private boolean collidablesDirty = true;
@@ -536,7 +537,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
 
     @Override
     public List<CollidableComponent> getConnectors() {
-        List<CollidableComponent> result = new ArrayList<CollidableComponent>();
+        List<CollidableComponent> result = new ArrayList<>();
         addConnectors(result);
         return result;
     }
