@@ -107,6 +107,12 @@ public class ItemTeleportStaff extends ItemTravelStaff {
     }
 
     @Override
+    public int getEnergyStored(ItemStack item) {
+        // Has infinite energy, always report as being full of energy for any validation-code purposes.
+        return this.capacity;
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List par3List) {
         ItemStack is = new ItemStack(this);
