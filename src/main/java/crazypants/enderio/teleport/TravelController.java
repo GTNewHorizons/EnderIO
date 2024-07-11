@@ -46,7 +46,6 @@ import com.google.common.collect.Table;
 import com.google.common.collect.TreeBasedTable;
 import com.gtnewhorizon.gtnhlib.GTNHLib;
 
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
