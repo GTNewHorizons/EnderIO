@@ -46,7 +46,6 @@ import com.google.common.collect.Table;
 import com.google.common.collect.TreeBasedTable;
 import com.gtnewhorizon.gtnhlib.GTNHLib;
 
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
@@ -1194,19 +1193,15 @@ public class TravelController {
     }
 
     public static void showMessage(EntityPlayer player, IChatComponent chatComponent) {
-        if (Loader.isModLoaded("gtnhlib")) {
-            if (player instanceof EntityPlayerMP) {
-                chatComponent.setChatStyle(new ChatStyle().setColor(EnumChatFormatting.WHITE));
-                GTNHLib.proxy.sendMessageAboveHotbar((EntityPlayerMP) player, chatComponent, 60, true, true);
-            } else {
-                GTNHLib.proxy.printMessageAboveHotbar(
-                        EnumChatFormatting.WHITE + chatComponent.getFormattedText(),
-                        60,
-                        true,
-                        true);
-            }
+        if (player instanceof EntityPlayerMP) {
+            chatComponent.setChatStyle(new ChatStyle().setColor(EnumChatFormatting.WHITE));
+            GTNHLib.proxy.sendMessageAboveHotbar((EntityPlayerMP) player, chatComponent, 60, true, true);
         } else {
-            player.addChatComponentMessage(chatComponent);
+            GTNHLib.proxy.printMessageAboveHotbar(
+                    EnumChatFormatting.WHITE + chatComponent.getFormattedText(),
+                    60,
+                    true,
+                    true);
         }
     }
 }

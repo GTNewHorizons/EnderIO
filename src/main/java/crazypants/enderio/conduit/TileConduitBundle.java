@@ -2,7 +2,6 @@ package crazypants.enderio.conduit;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
@@ -26,6 +25,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 
 import com.enderio.core.client.render.BoundingBox;
+import com.gtnewhorizon.gtnhlib.concurrent.cas.CasList;
 
 import appeng.api.networking.IGridNode;
 import appeng.api.util.AECableType;
@@ -67,7 +67,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
 
     public static final short NBT_VERSION = 1;
 
-    private final List<IConduit> conduits = Collections.synchronizedList(new ArrayList<>());
+    private final List<IConduit> conduits = new CasList<>();
 
     private Block facadeId = null;
     private int facadeMeta = 0;
