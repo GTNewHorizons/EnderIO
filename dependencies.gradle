@@ -10,13 +10,13 @@ dependencies {
     shadowImplementation('cglib:cglib-nodep:3.3.0')
 
     compileOnly('com.github.GTNewHorizons:waila:1.8.1:api') {transitive = false}
-    compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-405-GTNH:api') {transitive = false}
+    compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-408-GTNH:api') {transitive = false}
     compileOnly('com.github.GTNewHorizons:Baubles:1.0.4:dev') {transitive = false}
-    compileOnly('com.github.GTNewHorizons:GT5-Unofficial:5.09.48.75:dev') {transitive = false}
+    compileOnly('com.github.GTNewHorizons:GT5-Unofficial:5.09.48.78:dev') {transitive = false}
     compileOnly('com.github.GTNewHorizons:Railcraft:9.15.11:api') {transitive = false}
     compileOnly('com.github.GTNewHorizons:StorageDrawers:1.13.5-GTNH:api') {transitive = false}
     compileOnly('com.github.GTNewHorizons:Chisel:2.15.1-GTNH:dev') {transitive = false}
-    compileOnly('com.github.GTNewHorizons:OpenComputers:1.10.15-GTNH:api') {transitive = false}
+    compileOnly('com.github.GTNewHorizons:OpenComputers:1.10.16-GTNH:api') {transitive = false}
     compileOnly('curse.maven:minefactory-reloaded-66672:2366150') // https://www.curseforge.com/minecraft/mc-mods/minefactory-reloaded/files/2366150
     compileOnly('thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev')
     compileOnly('curse.maven:ee3-65509:2305023') // https://www.curseforge.com/minecraft/mc-mods/ee3/files/2305023
