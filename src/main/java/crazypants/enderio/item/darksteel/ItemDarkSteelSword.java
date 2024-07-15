@@ -386,7 +386,15 @@ public class ItemDarkSteelSword extends ItemSword
 
     @Override
     public boolean isActive(EntityPlayer ep, ItemStack equipped) {
-        return isTravelUpgradeActive(ep, equipped);
+        if (ep != null && equipped != null && isTravelUpgradeActive(ep, equipped)) {
+            // Only "active" if held while sneaking. But still "active" for the purposes of travel keybind if not held
+            if (isEquipped(ep)) {
+                return ep.isSneaking();
+            } else {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -400,12 +408,12 @@ public class ItemDarkSteelSword extends ItemSword
     }
 
     private boolean isTravelUpgradeActive(EntityPlayer ep, ItemStack equipped) {
-        return isEquipped(ep) && ep.isSneaking() && TravelUpgrade.loadFromItem(equipped) != null;
+        return ep != null && equipped != null && TravelUpgrade.loadFromItem(equipped) != null;
     }
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-        if (isTravelUpgradeActive(player, stack)) {
+        if (isActive(player, stack)) {
             if (world.isRemote) {
                 if (TravelController.instance.activateTravelAccessable(stack, world, player, TravelSource.STAFF)) {
                     player.swingItem();
