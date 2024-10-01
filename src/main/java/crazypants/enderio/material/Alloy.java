@@ -33,9 +33,10 @@ public enum Alloy {
         if (oreDictName != null) {
             this.oreIngots.add("ingot" + StringUtils.capitalize(oreDictName));
             this.oreBlocks.add("block" + StringUtils.capitalize(oreDictName));
+        } else {
+            this.oreIngots.add("ingot" + StringUtils.capitalize(baseName));
+            this.oreBlocks.add("block" + StringUtils.capitalize(baseName));
         }
-        this.oreIngots.add("ingot" + StringUtils.capitalize(baseName));
-        this.oreBlocks.add("block" + StringUtils.capitalize(baseName));
         this.hardness = hardness;
     }
 
