@@ -68,6 +68,7 @@ public class LiquidConduitRenderer extends DefaultConduitRenderer implements IRe
         Tessellator tessellator = Tessellator.instance;
         if (isNSEWUD(component.dir)) {
             LiquidConduit lc = (LiquidConduit) conduit;
+            IIcon fluidTex = conduit.getTransmitionTextureForState(component);
             FluidStack fluid = lc.getFluidType();
             if (fluid != null) {
                 renderFluidOutline(component, fluid);
@@ -75,9 +76,7 @@ public class LiquidConduitRenderer extends DefaultConduitRenderer implements IRe
             BoundingBox[] cubes = toCubes(component.bound);
             for (BoundingBox cube : cubes) {
                 drawSection(cube, tex.getMinU(), tex.getMaxU(), tex.getMinV(), tex.getMaxV(), component.dir, false);
-
-                tessellator.setColorOpaque_F(0.75f, 0.75f, 0.75f);
-                IIcon fluidTex = conduit.getTransmitionTextureForState(component);
+                tessellator.setColorOpaque_F(0.8f, 0.8f, 0.8f);
                 drawSection(
                     cube,
                     fluidTex.getMinU(),
