@@ -57,6 +57,12 @@ public class LiquidConduitRenderer extends DefaultConduitRenderer implements IRe
         super.renderEntity(conduitBundleRenderer, te, conduit, x, y, z, partialTick, worldLight, rb);
     }
 
+    public void renderDynamicEntity(ConduitBundleRenderer conduitBundleRenderer, IConduitBundle te, IConduit conduit,
+                                    double x, double y, double z, float partialTick, float worldLight) {
+
+
+    }
+
     @Override
     protected void renderConduit(IIcon tex, IConduit conduit, CollidableComponent component, float brightness) {
         if (isNSEWUD(component.dir)) {
@@ -69,7 +75,6 @@ public class LiquidConduitRenderer extends DefaultConduitRenderer implements IRe
             for (BoundingBox cube : cubes) {
                 drawSection(cube, tex.getMinU(), tex.getMaxU(), tex.getMinV(), tex.getMaxV(), component.dir, false);
             }
-
         } else {
             drawSection(
                     component.bound,
@@ -95,6 +100,38 @@ public class LiquidConduitRenderer extends DefaultConduitRenderer implements IRe
             for (i = corners.size() - 1; i >= 0; i--) {
                 Vertex c = corners.get(i);
                 cr.addVecWithUV(c.xyz, c.uv.x, c.uv.y);
+            }
+        }
+
+        if (((LiquidConduit) conduit).getTank().getFilledRatio() <= 0) {
+            return;
+        }
+
+        Collection<CollidableComponent> components = conduit.getCollidableComponents();
+        Tessellator tessellator = Tessellator.instance;
+
+        calculateRatios((LiquidConduit) conduit);
+        transmissionScaleFactor = conduit.getTransmitionGeometryScale();
+
+        for (CollidableComponent othercomponent : components) {
+            if (renderComponent(othercomponent)) {
+                if (isNSEWUD(othercomponent.dir) && conduit.getTransmitionTextureForState(othercomponent) != null) {
+
+                    tessellator.setColorOpaque_F(1, 1, 1);
+                    tex = conduit.getTransmitionTextureForState(othercomponent);
+
+                    BoundingBox[] cubes = toCubes(othercomponent.bound);
+                    for (BoundingBox cube : cubes) {
+                        drawSection(
+                            cube,
+                            tex.getMinU(),
+                            tex.getMaxU(),
+                            tex.getMinV(),
+                            tex.getMaxV(),
+                            othercomponent.dir,
+                            true);
+                    }
+                }
             }
         }
     }
@@ -241,49 +278,6 @@ public class LiquidConduitRenderer extends DefaultConduitRenderer implements IRe
     @Override
     protected void renderTransmission(IConduit con, IIcon tex, CollidableComponent component, float brightness) {
         // done in the dynamic section
-    }
-
-    @Override
-    public boolean isDynamic() {
-        return true;
-    }
-
-    @Override
-    public void renderDynamicEntity(ConduitBundleRenderer conduitBundleRenderer, IConduitBundle te, IConduit conduit,
-            double x, double y, double z, float partialTick, float worldLight) {
-
-        if (((LiquidConduit) conduit).getTank().getFilledRatio() <= 0) {
-            return;
-        }
-
-        Collection<CollidableComponent> components = conduit.getCollidableComponents();
-        Tessellator tessellator = Tessellator.instance;
-
-        calculateRatios((LiquidConduit) conduit);
-        transmissionScaleFactor = conduit.getTransmitionGeometryScale();
-
-        IIcon tex;
-        for (CollidableComponent component : components) {
-            if (renderComponent(component)) {
-                if (isNSEWUD(component.dir) && conduit.getTransmitionTextureForState(component) != null) {
-
-                    tessellator.setColorOpaque_F(1, 1, 1);
-                    tex = conduit.getTransmitionTextureForState(component);
-
-                    BoundingBox[] cubes = toCubes(component.bound);
-                    for (BoundingBox cube : cubes) {
-                        drawSection(
-                                cube,
-                                tex.getMinU(),
-                                tex.getMaxU(),
-                                tex.getMinV(),
-                                tex.getMaxV(),
-                                component.dir,
-                                true);
-                    }
-                }
-            }
-        }
     }
 
     @Override
