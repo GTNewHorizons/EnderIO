@@ -63,10 +63,6 @@ public class DefaultConduitRenderer implements ConduitRenderer {
         }
     }
 
-    @Override
-    public void renderDynamicEntity(ConduitBundleRenderer conduitBundleRenderer, IConduitBundle te, IConduit con,
-            double x, double y, double z, float partialTick, float worldLight) {}
-
     protected void renderConduit(IIcon tex, IConduit conduit, CollidableComponent component, float brightness) {
         final CubeRenderer cr = CubeRenderer.get();
 
@@ -349,8 +345,4 @@ public class DefaultConduitRenderer implements ConduitRenderer {
         return new BoundingBox[] { bb };
     }
 
-    @Override
-    public boolean isDynamic() {
-        return false;
-    }
 }

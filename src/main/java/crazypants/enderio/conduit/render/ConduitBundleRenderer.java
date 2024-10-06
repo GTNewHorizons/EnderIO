@@ -11,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
@@ -19,13 +18,9 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
 import com.enderio.core.client.render.BoundingBox;
 import com.enderio.core.client.render.CubeRenderer;
 import com.enderio.core.client.render.IconUtil;
-import com.enderio.core.client.render.RenderUtil;
 import com.enderio.core.common.util.BlockCoord;
 import com.enderio.core.common.util.IBlockAccessWrapper;
 import com.google.common.collect.Lists;
@@ -53,58 +48,11 @@ import crazypants.util.RenderPassHelper;
 
 @SideOnly(Side.CLIENT)
 @ThreadSafeISBRH(perThread = false)
-public class ConduitBundleRenderer extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler {
+public class ConduitBundleRenderer implements ISimpleBlockRenderingHandler {
 
     public ConduitBundleRenderer(float conduitScale) {}
 
     public ConduitBundleRenderer() {}
-
-    @Override
-    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTick) {
-        IConduitBundle bundle = (IConduitBundle) te;
-        EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
-        if (bundle == null || (bundle.hasFacade() && bundle.getFacadeId().isOpaqueCube()
-                && !ConduitUtil.isFacadeHidden(bundle, player))) {
-            return;
-        }
-        final Tessellator tessellator = Tessellator.instance;
-
-        float brightness = -1;
-        for (IConduit con : bundle.getConduits()) {
-            if (ConduitUtil.renderConduit(player, con)) {
-                final ConduitRenderer renderer = con.getRenderer();
-                if (renderer.isDynamic()) {
-                    if (brightness == -1) {
-                        BlockCoord loc = bundle.getLocation();
-                        brightness = bundle.getEntity().getWorldObj()
-                                .getLightBrightnessForSkyBlocks(loc.x, loc.y, loc.z, 0);
-
-                        RenderUtil.bindBlockTexture();
-
-                        GL11.glPushAttrib(GL11.GL_ENABLE_BIT | GL11.GL_LIGHTING_BIT);
-                        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-                        GL11.glEnable(GL11.GL_BLEND);
-                        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                        GL11.glShadeModel(GL11.GL_SMOOTH);
-
-                        GL11.glPushMatrix();
-                        GL11.glTranslated(x, y, z);
-
-                        tessellator.startDrawingQuads();
-                    }
-                    renderer.renderDynamicEntity(this, bundle, con, x, y, z, partialTick, brightness);
-                }
-            }
-        }
-
-        if (brightness != -1) {
-            tessellator.draw();
-
-            GL11.glShadeModel(GL11.GL_FLAT);
-            GL11.glPopMatrix();
-            GL11.glPopAttrib();
-        }
-    }
 
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
