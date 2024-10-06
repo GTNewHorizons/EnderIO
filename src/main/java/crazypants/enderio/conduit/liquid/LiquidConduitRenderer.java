@@ -65,6 +65,7 @@ public class LiquidConduitRenderer extends DefaultConduitRenderer implements IRe
 
     @Override
     protected void renderConduit(IIcon tex, IConduit conduit, CollidableComponent component, float brightness) {
+        Tessellator tessellator = Tessellator.instance;
         if (isNSEWUD(component.dir)) {
             LiquidConduit lc = (LiquidConduit) conduit;
             FluidStack fluid = lc.getFluidType();
@@ -74,63 +75,33 @@ public class LiquidConduitRenderer extends DefaultConduitRenderer implements IRe
             BoundingBox[] cubes = toCubes(component.bound);
             for (BoundingBox cube : cubes) {
                 drawSection(cube, tex.getMinU(), tex.getMaxU(), tex.getMinV(), tex.getMaxV(), component.dir, false);
-            }
-        } else {
-            drawSection(
-                    component.bound,
-                    tex.getMinU(),
-                    tex.getMaxU(),
-                    tex.getMinV(),
-                    tex.getMaxV(),
+
+                tessellator.setColorOpaque_F(0.75f, 0.75f, 0.75f);
+                IIcon fluidTex = conduit.getTransmitionTextureForState(component);
+                drawSection(
+                    cube,
+                    fluidTex.getMinU(),
+                    fluidTex.getMaxU(),
+                    fluidTex.getMinV(),
+                    fluidTex.getMaxV(),
                     component.dir,
                     true);
-        }
+            }
 
-        if (conduit.getConnectionMode(component.dir) == ConnectionMode.DISABLED) {
-            final CubeRenderer cr = CubeRenderer.get();
-            int i;
-            tex = EnderIO.blockConduitBundle.getConnectorIcon(component.data);
-            List<Vertex> corners = component.bound
+            if (conduit.getConnectionMode(component.dir) == ConnectionMode.DISABLED) {
+                final CubeRenderer cr = CubeRenderer.get();
+                int i;
+                tex = EnderIO.blockConduitBundle.getConnectorIcon(component.data);
+                List<Vertex> corners = component.bound
                     .getCornersWithUvForFace(component.dir, tex.getMinU(), tex.getMaxU(), tex.getMinV(), tex.getMaxV());
-            for (i = corners.size() - 1; i >= 0; i--) {
-                Vertex c = corners.get(i);
-                cr.addVecWithUV(c.xyz, c.uv.x, c.uv.y);
-            }
-            // back face
-            for (i = corners.size() - 1; i >= 0; i--) {
-                Vertex c = corners.get(i);
-                cr.addVecWithUV(c.xyz, c.uv.x, c.uv.y);
-            }
-        }
-
-        if (((LiquidConduit) conduit).getTank().getFilledRatio() <= 0) {
-            return;
-        }
-
-        Collection<CollidableComponent> components = conduit.getCollidableComponents();
-        Tessellator tessellator = Tessellator.instance;
-
-        calculateRatios((LiquidConduit) conduit);
-        transmissionScaleFactor = conduit.getTransmitionGeometryScale();
-
-        for (CollidableComponent othercomponent : components) {
-            if (renderComponent(othercomponent)) {
-                if (isNSEWUD(othercomponent.dir) && conduit.getTransmitionTextureForState(othercomponent) != null) {
-
-                    tessellator.setColorOpaque_F(1, 1, 1);
-                    tex = conduit.getTransmitionTextureForState(othercomponent);
-
-                    BoundingBox[] cubes = toCubes(othercomponent.bound);
-                    for (BoundingBox cube : cubes) {
-                        drawSection(
-                            cube,
-                            tex.getMinU(),
-                            tex.getMaxU(),
-                            tex.getMinV(),
-                            tex.getMaxV(),
-                            othercomponent.dir,
-                            true);
-                    }
+                for (i = corners.size() - 1; i >= 0; i--) {
+                    Vertex c = corners.get(i);
+                    cr.addVecWithUV(c.xyz, c.uv.x, c.uv.y);
+                }
+                // back face
+                for (i = corners.size() - 1; i >= 0; i--) {
+                    Vertex c = corners.get(i);
+                    cr.addVecWithUV(c.xyz, c.uv.x, c.uv.y);
                 }
             }
         }
