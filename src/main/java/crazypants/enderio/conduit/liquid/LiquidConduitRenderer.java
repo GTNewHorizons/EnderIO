@@ -74,6 +74,10 @@ public class LiquidConduitRenderer extends DefaultConduitRenderer implements IRe
             BoundingBox[] cubes = toCubes(component.bound);
             for (BoundingBox cube : cubes) {
                 drawSection(cube, tex.getMinU(), tex.getMaxU(), tex.getMinV(), tex.getMaxV(), component.dir, false);
+                // This check is kinda broken, but whatever, it was like that when this was done in a TESR too
+                if (lc.getTank().getFilledRatio() <= 0) {
+                    continue;
+                }
                 tessellator.setColorOpaque_F(0.7f, 0.7f, 0.7f);
                 drawSection(
                         cube,
