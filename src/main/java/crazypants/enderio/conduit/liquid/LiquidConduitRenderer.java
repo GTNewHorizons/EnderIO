@@ -1,7 +1,6 @@
 package crazypants.enderio.conduit.liquid;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -58,8 +57,7 @@ public class LiquidConduitRenderer extends DefaultConduitRenderer implements IRe
     }
 
     public void renderDynamicEntity(ConduitBundleRenderer conduitBundleRenderer, IConduitBundle te, IConduit conduit,
-                                    double x, double y, double z, float partialTick, float worldLight) {
-
+            double x, double y, double z, float partialTick, float worldLight) {
 
     }
 
@@ -76,23 +74,27 @@ public class LiquidConduitRenderer extends DefaultConduitRenderer implements IRe
             BoundingBox[] cubes = toCubes(component.bound);
             for (BoundingBox cube : cubes) {
                 drawSection(cube, tex.getMinU(), tex.getMaxU(), tex.getMinV(), tex.getMaxV(), component.dir, false);
-                tessellator.setColorOpaque_F(0.8f, 0.8f, 0.8f);
+                tessellator.setColorOpaque_F(0.7f, 0.7f, 0.7f);
                 drawSection(
-                    cube,
-                    fluidTex.getMinU(),
-                    fluidTex.getMaxU(),
-                    fluidTex.getMinV(),
-                    fluidTex.getMaxV(),
-                    component.dir,
-                    true);
+                        cube,
+                        fluidTex.getMinU(),
+                        fluidTex.getMaxU(),
+                        fluidTex.getMinV(),
+                        fluidTex.getMaxV(),
+                        component.dir,
+                        true);
             }
 
             if (conduit.getConnectionMode(component.dir) == ConnectionMode.DISABLED) {
                 final CubeRenderer cr = CubeRenderer.get();
                 int i;
                 tex = EnderIO.blockConduitBundle.getConnectorIcon(component.data);
-                List<Vertex> corners = component.bound
-                    .getCornersWithUvForFace(component.dir, tex.getMinU(), tex.getMaxU(), tex.getMinV(), tex.getMaxV());
+                List<Vertex> corners = component.bound.getCornersWithUvForFace(
+                        component.dir,
+                        tex.getMinU(),
+                        tex.getMaxU(),
+                        tex.getMinV(),
+                        tex.getMaxV());
                 for (i = corners.size() - 1; i >= 0; i--) {
                     Vertex c = corners.get(i);
                     cr.addVecWithUV(c.xyz, c.uv.x, c.uv.y);
