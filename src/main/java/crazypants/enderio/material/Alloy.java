@@ -1,5 +1,7 @@
 package crazypants.enderio.material;
 
+import static crazypants.enderio.config.Config.useOldOredictCompat;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +32,19 @@ public enum Alloy {
     private Alloy(String baseName, float hardness, String oreDictName) {
         this.unlocalisedName = "enderio." + baseName;
         this.iconKey = "enderio:" + baseName;
-        if (oreDictName != null) {
-            this.oreIngots.add("ingot" + StringUtils.capitalize(oreDictName));
-            this.oreBlocks.add("block" + StringUtils.capitalize(oreDictName));
+        if (!useOldOredictCompat) {
+            if (oreDictName != null) {
+                this.oreIngots.add("ingot" + StringUtils.capitalize(oreDictName));
+                this.oreBlocks.add("block" + StringUtils.capitalize(oreDictName));
+            } else {
+                this.oreIngots.add("ingot" + StringUtils.capitalize(baseName));
+                this.oreBlocks.add("block" + StringUtils.capitalize(baseName));
+            }
         } else {
+            if (oreDictName != null) {
+                this.oreIngots.add("ingot" + StringUtils.capitalize(oreDictName));
+                this.oreBlocks.add("block" + StringUtils.capitalize(oreDictName));
+            }
             this.oreIngots.add("ingot" + StringUtils.capitalize(baseName));
             this.oreBlocks.add("block" + StringUtils.capitalize(baseName));
         }

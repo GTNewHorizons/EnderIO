@@ -114,6 +114,7 @@ public final class Config {
     public static boolean useSteelInChassi = false;
 
     public static boolean detailedPowerTrackingEnabled = false;
+    public static boolean useOldOredictCompat = false;
 
     public static boolean useSneakMouseWheelYetaWrench = true;
     public static boolean useSneakRightClickYetaWrench = false;
@@ -1068,6 +1069,13 @@ public final class Config {
                 detailedPowerTrackingEnabled,
                 "Enable per tick sampling on individual power inputs and outputs. This allows slightly more detailed messages from the RF Reader but has a negative impact on server performance.")
                 .getBoolean(detailedPowerTrackingEnabled);
+
+        useOldOredictCompat = config.get(
+                sectionAdvanced.name,
+                "useOldOredictCompat",
+                useOldOredictCompat,
+                "Re-enable old buggy oredicts for pulsating iron and vibrant alloy to ensure compatibility with some dead mods like magicalcrops and adv generators.")
+                .getBoolean(useOldOredictCompat);
 
         useSneakMouseWheelYetaWrench = config.get(
                 sectionPersonal.name,
