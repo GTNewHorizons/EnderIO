@@ -27,7 +27,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.conduit.BlockConduitBundle;
 import crazypants.enderio.conduit.IConduit;
-import crazypants.enderio.conduit.TileConduitBundle;
 import crazypants.enderio.conduit.facade.FacadeRenderer;
 import crazypants.enderio.conduit.gas.GasConduit;
 import crazypants.enderio.conduit.gas.GasUtil;
@@ -378,7 +377,6 @@ public class ClientProxy extends CommonProxy {
         cbr = new ConduitBundleRenderer((float) Config.conduitScale);
         BlockConduitBundle.rendererId = RenderingRegistry.getNextAvailableRenderId();
         RenderingRegistry.registerBlockHandler(cbr);
-        ClientRegistry.bindTileEntitySpecialRenderer(TileConduitBundle.class, cbr);
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileTravelAnchor.class, new TravelEntitySpecialRenderer());
 
