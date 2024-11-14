@@ -40,6 +40,11 @@ public class TileZombieGenerator extends AbstractGeneratorEntity
         public String getMachineName() {
             return ModObject.blockFrankenzombieGenerator.unlocalisedName;
         }
+
+        @Override
+        public GeneratorType getGeneratorType() {
+            return GeneratorType.FRANKENZOMBIE;
+        }
     }
 
     public static class TileEnderGenerator extends TileZombieGenerator {
@@ -57,6 +62,11 @@ public class TileZombieGenerator extends AbstractGeneratorEntity
         @Override
         protected Fluid getFluidType() {
             return EnderIO.fluidEnderDistillation;
+        }
+
+        @Override
+        public GeneratorType getGeneratorType() {
+            return GeneratorType.ENDER;
         }
     }
 
@@ -326,7 +336,7 @@ public class TileZombieGenerator extends AbstractGeneratorEntity
     }
 
     public GeneratorType getGeneratorType() {
-        return ((BlockZombieGenerator) worldObj.getBlock(xCoord, yCoord, zCoord)).getGeneratorType();
+        return GeneratorType.ZOMBIE;
     }
 
     public int getOutputPerTick() {
