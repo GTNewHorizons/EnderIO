@@ -168,7 +168,8 @@ public abstract class AbstractMachineEntity extends TileEntityEio
     public final boolean isItemValidForSlot(int i, ItemStack itemstack) {
         if (slotDefinition.isUpgradeSlot(i)) {
             return itemstack != null && itemstack.getItem() == EnderIO.itemBasicCapacitor
-                    && itemstack.getItemDamage() > 0;
+                    && itemstack.getItemDamage() > 0
+                    && itemstack.getItemDamage() != 7;
         }
         return isMachineItemValidForSlot(i, itemstack);
     }
