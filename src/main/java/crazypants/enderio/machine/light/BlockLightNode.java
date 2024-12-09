@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -56,9 +57,10 @@ public class BlockLightNode extends BlockEio {
 
     @Override
     public void breakBlock(World world, int x, int y, int z, Block par5, int par6) {
-        TileLightNode te = (TileLightNode) world.getTileEntity(x, y, z);
-        if (te != null) {
-            te.onBlockRemoved();
+        TileEntity te = world.getTileEntity(x, y, z);
+        if (te instanceof TileLightNode) {
+            TileLightNode light = (TileLightNode) te;
+            light.onBlockRemoved();
         }
     }
 
