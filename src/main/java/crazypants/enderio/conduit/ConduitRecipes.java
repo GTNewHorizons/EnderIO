@@ -697,10 +697,6 @@ public class ConduitRecipes {
 
         res.stackSize = 1;
         ItemStack resDense = new ItemStack(EnderIO.itemMEConduit, 1, 1);
-        ItemStack resUltra = new ItemStack(EnderIO.itemMEConduit, 1, 2);
         addShaped(resDense, "bCb", "CbC", "bCb", 'b', conduitBinder, 'C', res);
-        if (Config.enableMEUltraDenseConduits) {
-            addShaped(resUltra, "bCb", "CbC", "bCb", 'b', conduitBinder, 'C', resDense);
-        }
     }
 }
