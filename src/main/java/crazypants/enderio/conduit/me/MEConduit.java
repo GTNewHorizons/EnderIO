@@ -16,7 +16,6 @@ import com.enderio.core.client.render.IconUtil;
 import com.enderio.core.common.util.BlockCoord;
 
 import appeng.api.AEApi;
-import appeng.api.networking.GridFlags;
 import appeng.api.networking.IGridConnection;
 import appeng.api.networking.IGridHost;
 import appeng.api.networking.IGridNode;
@@ -51,7 +50,6 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
     public static IIcon[] longTextures;
 
     private boolean isDense;
-    private boolean isDenseUltra;
     private int playerID = -1;
 
     public MEConduit() {
@@ -59,7 +57,6 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
     }
 
     public MEConduit(int itemDamage) {
-        isDenseUltra = itemDamage == 2;
         isDense = itemDamage == 1;
     }
 
@@ -68,16 +65,14 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
 
             @Override
             public void registerIcons(IIconRegister register) {
-                coreTextures = new IIcon[3];
-                longTextures = new IIcon[3];
+                coreTextures = new IIcon[2];
+                longTextures = new IIcon[2];
 
                 coreTextures[0] = register.registerIcon(EnderIO.DOMAIN + ":meConduitCore");
                 coreTextures[1] = register.registerIcon(EnderIO.DOMAIN + ":meConduitCoreDense");
-                coreTextures[2] = register.registerIcon(EnderIO.DOMAIN + ":meConduitCoreDenseUltra");
 
                 longTextures[0] = register.registerIcon(EnderIO.DOMAIN + ":meConduit");
                 longTextures[1] = register.registerIcon(EnderIO.DOMAIN + ":meConduitDense");
-                longTextures[2] = register.registerIcon(EnderIO.DOMAIN + ":meConduitDenseUltra");
             }
 
             @Override
@@ -87,10 +82,7 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
         });
     }
 
-    public static int getDamageForState(boolean isDense, boolean isDenseUltra) {
-        if (isDenseUltra) {
-            return 2;
-        }
+    public static int getDamageForState(boolean isDense) {
         if (isDense) {
             return 1;
         }
@@ -104,7 +96,7 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
 
     @Override
     public ItemStack createItem() {
-        return new ItemStack(EnderIO.itemMEConduit, 1, getDamageForState(isDense, isDenseUltra));
+        return new ItemStack(EnderIO.itemMEConduit, 1, getDamageForState(isDense));
     }
 
     @Override
@@ -122,7 +114,6 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
     public void writeToNBT(NBTTagCompound nbtRoot) {
         super.writeToNBT(nbtRoot);
         nbtRoot.setBoolean("isDense", isDense);
-        nbtRoot.setBoolean("isDenseUltra", isDenseUltra);
         nbtRoot.setInteger("playerID", playerID);
     }
 
@@ -134,9 +125,6 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
             playerID = nbtRoot.getInteger("playerID");
         } else {
             playerID = -1;
-        }
-        if (nbtRoot.hasKey("isDenseUltra")) {
-            isDenseUltra = nbtRoot.getBoolean("isDenseUltra");
         }
     }
 
@@ -208,22 +196,12 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
 
     @Method(modid = "appliedenergistics2")
     private Boolean canConnectToGridNode(IGridNode node, ForgeDirection dir) {
-        if (node.getGridBlock().getConnectableSides().contains(dir.getOpposite())) {
-            if (isDenseUltra()) {
-                return node.hasFlag(GridFlags.ULTRA_DENSE_CAPACITY)
-                        || ((node.hasFlag(GridFlags.DENSE_CAPACITY)) && !node.hasFlag(GridFlags.CANNOT_CARRY));
-            } else if (isDense()) {
-                return true;
-            } else {
-                return !node.hasFlag(GridFlags.ULTRA_DENSE_CAPACITY);
-            }
-        }
-        return false;
+        return node.getGridBlock().getConnectableSides().contains(dir.getOpposite());
     }
 
     @Override
     public IIcon getTextureForState(CollidableComponent component) {
-        int state = getDamageForState(isDense, isDenseUltra);
+        int state = getDamageForState(isDense);
         if (component.dir == ForgeDirection.UNKNOWN) {
             return coreTextures[state];
         } else {
@@ -399,10 +377,5 @@ public class MEConduit extends AbstractConduit implements IMEConduit {
     @Override
     public boolean isDense() {
         return isDense;
-    }
-
-    @Override
-    public boolean isDenseUltra() {
-        return isDenseUltra;
     }
 }
