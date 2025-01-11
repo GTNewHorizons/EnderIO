@@ -1,5 +1,7 @@
 package crazypants.enderio.machine.obelisk.aversion;
 
+import com.enderio.core.common.vecmath.Vector2f;
+import com.enderio.core.common.vecmath.Vector3d;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -40,6 +42,11 @@ public class TileAversionObelisk extends AbstractPowerConsumerEntity implements 
         return showingRange;
     }
 
+    @Override
+    public int getColor() {
+        return 0x66FFFFFF;
+    }
+
     @SideOnly(Side.CLIENT)
     public void setShowRange(boolean showRange) {
         if (showingRange == showRange) {
@@ -64,9 +71,15 @@ public class TileAversionObelisk extends AbstractPowerConsumerEntity implements 
     }
 
     @Override
-    public float getRange() {
-        return range;
+    public AxisAlignedBB getBounds() {
+        return null;
     }
+
+    @Override
+    public Vector3d getRange() {
+        return new Vector3d(range, range, range);
+    }
+
 
     @Override
     public void onCapacitorTypeChange() {

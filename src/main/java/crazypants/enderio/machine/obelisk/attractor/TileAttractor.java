@@ -6,6 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import com.enderio.core.common.vecmath.Vector2d;
+import com.enderio.core.common.vecmath.Vector2f;
+import crazypants.enderio.conduit.geom.Offsets;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -43,6 +47,8 @@ import crazypants.enderio.machine.ranged.IRanged;
 import crazypants.enderio.machine.ranged.RangeEntity;
 import crazypants.enderio.power.BasicCapacitor;
 
+import javax.annotation.Nonnull;
+
 public class TileAttractor extends AbstractPowerConsumerEntity implements IRanged {
 
     private AxisAlignedBB attractorBounds;
@@ -61,14 +67,24 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
     }
 
     @Override
-    public float getRange() {
-        return range;
+    public AxisAlignedBB getBounds() {
+        return null;
+    }
+
+    @Override
+    public Vector3d getRange() {
+        return new Vector3d(range, range, range);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public boolean isShowingRange() {
         return showingRange;
+    }
+
+    @Override
+    public int getColor() {
+        return 0x66FFFFFF;
     }
 
     @SideOnly(Side.CLIENT)
@@ -318,7 +334,7 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
             return true;
         } else if (ent instanceof EntitySilverfish) {
             PathEntity pathentity = worldObj
-                    .getPathEntityToEntity(ent, getTarget(), getRange(), true, false, false, true);
+                    .getPathEntityToEntity(ent, getTarget(), range, true, false, false, true);
             ((EntityCreature) ent).setPathToEntity(pathentity);
             return true;
         } else if (ent instanceof EntityBlaze) {
@@ -340,7 +356,7 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
             }
             EntitySilverfish sf = (EntitySilverfish) ent;
             PathEntity pathentity = worldObj
-                    .getPathEntityToEntity(ent, getTarget(), getRange(), true, false, false, true);
+                    .getPathEntityToEntity(ent, getTarget(), range, true, false, false, true);
             sf.setPathToEntity(pathentity);
         } else if (ent instanceof EntityBlaze) {
             EntityBlaze mob = (EntityBlaze) ent;
