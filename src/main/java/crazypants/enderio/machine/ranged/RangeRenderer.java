@@ -1,20 +1,17 @@
 package crazypants.enderio.machine.ranged;
 
-import akka.io.Tcp;
-import com.enderio.core.common.vecmath.Vector2d;
-import com.enderio.core.common.vecmath.Vector2f;
-import com.enderio.core.common.vecmath.Vector3d;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderEntity;
 import net.minecraft.entity.Entity;
-
 import net.minecraft.util.AxisAlignedBB;
+
 import org.lwjgl.opengl.GL11;
 
 import com.enderio.core.client.render.BoundingBox;
 import com.enderio.core.client.render.CubeRenderer;
 import com.enderio.core.client.render.IconUtil;
 import com.enderio.core.client.render.RenderUtil;
+import com.enderio.core.common.vecmath.Vector3d;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -29,7 +26,6 @@ public class RangeRenderer extends RenderEntity {
         AxisAlignedBB rangeBB = se.getBoundingBox();
         final Tessellator tessellator = Tessellator.instance;
 
-
         GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_CULL_FACE);
@@ -38,16 +34,14 @@ public class RangeRenderer extends RenderEntity {
         GL11.glDepthMask(false);
 
         Vector3d translate = new Vector3d(
-            -(se.posX - rangeBB.minX + 0.01),
-            -(se.posY - rangeBB.minY + 0.01),
-            -(se.posZ - rangeBB.minZ + 0.01)
-        );
+                -(se.posX - rangeBB.minX + 0.01),
+                -(se.posY - rangeBB.minY + 0.01),
+                -(se.posZ - rangeBB.minZ + 0.01));
 
         Vector3d scale = new Vector3d(
-            1 - (se.lifeSpan / (float) se.totalLife),
-            1 - (se.lifeSpan / (float) se.totalLife),
-            rangeBB.maxZ - rangeBB.minZ
-        );
+                1 - (se.lifeSpan / (float) se.totalLife),
+                1 - (se.lifeSpan / (float) se.totalLife),
+                rangeBB.maxZ - rangeBB.minZ);
 
         scale.x = Math.min(scale.x, 1);
         scale.y = Math.min(scale.y, 1);

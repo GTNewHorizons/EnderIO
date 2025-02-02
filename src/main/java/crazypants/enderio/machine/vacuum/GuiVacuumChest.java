@@ -2,6 +2,7 @@ package crazypants.enderio.machine.vacuum;
 
 import java.awt.Color;
 import java.awt.Rectangle;
+import java.util.List;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -18,6 +19,7 @@ import com.enderio.core.client.gui.widget.GuiToolTip;
 import com.enderio.core.client.render.ColorUtil;
 import com.enderio.core.client.render.EnderWidget;
 import com.enderio.core.common.util.BlockCoord;
+import com.google.common.collect.Lists;
 
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.conduit.item.filter.ItemFilter;
@@ -28,6 +30,7 @@ import crazypants.enderio.network.PacketHandler;
 
 public class GuiVacuumChest extends GuiContainerBaseEIO {
 
+    private static final int RANGE_ID = 8738924;
     private static final int RANGE_LEFT = 145;
     private static final int RANGE_TOP = 86;
     private static final int RANGE_WIDTH = 16;
@@ -43,6 +46,7 @@ public class GuiVacuumChest extends GuiContainerBaseEIO {
 
     private final TileVacuumChest te;
 
+    private final ToggleButton showRangeB;
     private final GuiToolTip rangeTooltip;
     private final MultiIconButton rangeUpB;
     private final MultiIconButton rangeDownB;
@@ -74,6 +78,18 @@ public class GuiVacuumChest extends GuiContainerBaseEIO {
         x = xSize - 16 - 7;
         y = 104;
         rsB = new RedstoneModeButton(this, ID_REDSTONE, x, y, te, new BlockCoord(te));
+
+        showRangeB = new ToggleButton(this, RANGE_ID, x - 18, y, IconEIO.PLUS, IconEIO.MINUS);
+        showRangeB.setSize(16, 16);
+        addToolTip(new GuiToolTip(showRangeB.getBounds(), "null") {
+
+            @Override
+            public List<String> getToolTipText() {
+                return Lists.newArrayList(
+                        EnderIO.lang.localize(
+                                showRangeB.isSelected() ? "gui.spawnGurad.hideRange" : "gui.spawnGurad.showRange"));
+            }
+        });
 
         x = FILTER_LEFT + TileVacuumChest.FILTER_SLOTS * 18 + 2;
         y = 86;
@@ -110,6 +126,8 @@ public class GuiVacuumChest extends GuiContainerBaseEIO {
     public void initGui() {
         super.initGui();
 
+        showRangeB.onGuiInit();
+        showRangeB.setSelected(te.isShowingRange());
         rangeUpB.onGuiInit();
         rangeDownB.onGuiInit();
         rsB.onGuiInit();
@@ -124,11 +142,13 @@ public class GuiVacuumChest extends GuiContainerBaseEIO {
         ItemFilter itemFilter;
         switch (guiButton.id) {
             case ID_RANGE_UP:
-                setRange(te.getRange() + 1);
+                setRange((int) te.getRange().x + 1);
                 break;
             case ID_RANGE_DOWN:
-                setRange(te.getRange() - 1);
+                setRange((int) te.getRange().x - 1);
                 break;
+            case RANGE_ID:
+                te.setShowRange(showRangeB.isSelected());
             case ID_WHITELIST:
                 itemFilter = te.getItemFilter();
                 if (itemFilter != null) {
@@ -193,7 +213,7 @@ public class GuiVacuumChest extends GuiContainerBaseEIO {
         fr.drawString(headerInventory, sx + 7, sy + 111, headerColor);
 
         IconEIO.map.render(EnderWidget.BUTTON_DOWN, sx + RANGE_LEFT, sy + RANGE_TOP, RANGE_WIDTH, 16, 0, true);
-        String str = Integer.toString(te.getRange());
+        String str = Integer.toString((int) te.getRange().x);
         int sw = fr.getStringWidth(str);
         fr.drawString(str, sx + RANGE_LEFT + RANGE_WIDTH - sw - 5, sy + RANGE_TOP + 5, ColorUtil.getRGB(Color.black));
 

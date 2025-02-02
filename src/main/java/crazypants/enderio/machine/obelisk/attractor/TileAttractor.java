@@ -6,10 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import com.enderio.core.common.vecmath.Vector2d;
-import com.enderio.core.common.vecmath.Vector2f;
-import crazypants.enderio.conduit.geom.Offsets;
-import net.minecraft.block.Block;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -46,8 +42,6 @@ import crazypants.enderio.machine.SlotDefinition;
 import crazypants.enderio.machine.ranged.IRanged;
 import crazypants.enderio.machine.ranged.RangeEntity;
 import crazypants.enderio.power.BasicCapacitor;
-
-import javax.annotation.Nonnull;
 
 public class TileAttractor extends AbstractPowerConsumerEntity implements IRanged {
 
@@ -333,8 +327,7 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
             ent.faceEntity(getTarget(), 10.0F, 20.0F);
             return true;
         } else if (ent instanceof EntitySilverfish) {
-            PathEntity pathentity = worldObj
-                    .getPathEntityToEntity(ent, getTarget(), range, true, false, false, true);
+            PathEntity pathentity = worldObj.getPathEntityToEntity(ent, getTarget(), range, true, false, false, true);
             ((EntityCreature) ent).setPathToEntity(pathentity);
             return true;
         } else if (ent instanceof EntityBlaze) {
@@ -355,8 +348,7 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
                 return;
             }
             EntitySilverfish sf = (EntitySilverfish) ent;
-            PathEntity pathentity = worldObj
-                    .getPathEntityToEntity(ent, getTarget(), range, true, false, false, true);
+            PathEntity pathentity = worldObj.getPathEntityToEntity(ent, getTarget(), range, true, false, false, true);
             sf.setPathToEntity(pathentity);
         } else if (ent instanceof EntityBlaze) {
             EntityBlaze mob = (EntityBlaze) ent;

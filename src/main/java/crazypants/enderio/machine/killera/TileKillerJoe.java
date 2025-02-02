@@ -16,6 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
@@ -39,6 +40,8 @@ import com.mojang.authlib.GameProfile;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.config.Config;
@@ -47,6 +50,8 @@ import crazypants.enderio.machine.FakePlayerEIO;
 import crazypants.enderio.machine.SlotDefinition;
 import crazypants.enderio.machine.generator.zombie.IHasNutrientTank;
 import crazypants.enderio.machine.generator.zombie.PacketNutrientTank;
+import crazypants.enderio.machine.ranged.IRanged;
+import crazypants.enderio.machine.ranged.RangeEntity;
 import crazypants.enderio.machine.wireless.WirelessChargedLocation;
 import crazypants.enderio.network.PacketHandler;
 import crazypants.enderio.tool.SmartTank;
@@ -56,7 +61,46 @@ import crazypants.enderio.xp.PacketExperianceContainer;
 import crazypants.enderio.xp.XpUtil;
 
 public class TileKillerJoe extends AbstractMachineEntity
-        implements IFluidHandler, IEntitySelector, IHaveExperience, ITankAccess, IHasNutrientTank {
+        implements IFluidHandler, IEntitySelector, IHaveExperience, ITankAccess, IHasNutrientTank, IRanged {
+
+    private boolean showingRange;
+
+    @Override
+    public World getWorld() {
+        return worldObj;
+    }
+
+    @Override
+    public AxisAlignedBB getBounds() {
+        return getKillBounds();
+    }
+
+    @Override
+    public Vector3d getRange() {
+        return null;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean isShowingRange() {
+        return showingRange;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void setShowRange(boolean showRange) {
+        if (showingRange == showRange) {
+            return;
+        }
+        showingRange = showRange;
+        if (showingRange) {
+            worldObj.spawnEntityInWorld(new RangeEntity(this));
+        }
+    }
+
+    @Override
+    public int getColor() {
+        return 0x66FF0000;
+    }
 
     public static class ZombieCache {
 

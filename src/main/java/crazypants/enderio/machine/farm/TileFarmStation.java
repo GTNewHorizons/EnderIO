@@ -15,12 +15,17 @@ import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.EnumSkyBlock;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.enderio.core.common.util.BlockCoord;
+import com.enderio.core.common.vecmath.Vector3d;
 
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.config.Config;
@@ -32,13 +37,52 @@ import crazypants.enderio.machine.SlotDefinition;
 import crazypants.enderio.machine.farm.farmers.FarmersCommune;
 import crazypants.enderio.machine.farm.farmers.IHarvestResult;
 import crazypants.enderio.machine.farm.farmers.RubberTreeFarmerIC2;
+import crazypants.enderio.machine.ranged.IRanged;
+import crazypants.enderio.machine.ranged.RangeEntity;
 import crazypants.enderio.network.PacketHandler;
 import crazypants.enderio.power.BasicCapacitor;
 import crazypants.enderio.tool.ArrayMappingTool;
 
-public class TileFarmStation extends AbstractPoweredTaskEntity {
+public class TileFarmStation extends AbstractPoweredTaskEntity implements IRanged {
 
     private static final int TICKS_PER_WORK = 20;
+    private boolean showingRange;
+
+    @Override
+    public World getWorld() {
+        return worldObj;
+    }
+
+    @Override
+    public AxisAlignedBB getBounds() {
+        return null;
+    }
+
+    @Override
+    public Vector3d getRange() {
+        return new Vector3d(getFarmSize(), 0, getFarmSize());
+    }
+
+    @Override
+    public boolean isShowingRange() {
+        return showingRange;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void setShowRange(boolean showRange) {
+        if (showingRange == showRange) {
+            return;
+        }
+        showingRange = showRange;
+        if (showingRange) {
+            worldObj.spawnEntityInWorld(new RangeEntity(this));
+        }
+    }
+
+    @Override
+    public int getColor() {
+        return 0x66FFAA00;
+    }
 
     public enum ToolType {
 

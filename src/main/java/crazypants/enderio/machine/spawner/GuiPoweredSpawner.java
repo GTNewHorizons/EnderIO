@@ -2,6 +2,7 @@ package crazypants.enderio.machine.spawner;
 
 import java.awt.Color;
 import java.awt.Rectangle;
+import java.util.List;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -10,21 +11,39 @@ import net.minecraft.entity.player.InventoryPlayer;
 import org.lwjgl.opengl.GL11;
 
 import com.enderio.core.client.gui.button.MultiIconButton;
+import com.enderio.core.client.gui.button.ToggleButton;
+import com.enderio.core.client.gui.widget.GuiToolTip;
 import com.enderio.core.client.render.ColorUtil;
+import com.google.common.collect.Lists;
 
 import crazypants.enderio.EnderIO;
+import crazypants.enderio.gui.IconEIO;
 import crazypants.enderio.machine.gui.GuiPoweredMachineBase;
 import crazypants.enderio.network.PacketHandler;
 
 public class GuiPoweredSpawner extends GuiPoweredMachineBase<TilePoweredSpawner> {
 
+    private static final int RANGE_ID = 8738924;
     private final MultiIconButton modeB;
     private final Rectangle progressTooltipRect;
+    private final ToggleButton showRangeB;
     private boolean wasSpawnMode;
     private String header;
 
     public GuiPoweredSpawner(InventoryPlayer par1InventoryPlayer, TilePoweredSpawner te) {
         super(te, new ContainerPoweredSpawner(par1InventoryPlayer, te), "poweredSpawner");
+
+        showRangeB = new ToggleButton(this, RANGE_ID, 155, 24 + 18, IconEIO.PLUS, IconEIO.MINUS);
+        showRangeB.setSize(BUTTON_SIZE, BUTTON_SIZE);
+        addToolTip(new GuiToolTip(showRangeB.getBounds(), "null") {
+
+            @Override
+            public List<String> getToolTipText() {
+                return Lists.newArrayList(
+                        EnderIO.lang.localize(
+                                showRangeB.isSelected() ? "gui.spawnGurad.hideRange" : "gui.spawnGurad.showRange"));
+            }
+        });
 
         modeB = MultiIconButton.createRightArrowButton(this, 8888, 115, 10);
         modeB.setSize(10, 16);
@@ -38,6 +57,8 @@ public class GuiPoweredSpawner extends GuiPoweredMachineBase<TilePoweredSpawner>
     @Override
     public void initGui() {
         super.initGui();
+        showRangeB.onGuiInit();
+        showRangeB.setSelected(getTileEntity().isShowingRange());
         modeB.onGuiInit();
         ((ContainerPoweredSpawner) inventorySlots).createGhostSlots(getGhostSlots());
     }
@@ -47,9 +68,9 @@ public class GuiPoweredSpawner extends GuiPoweredMachineBase<TilePoweredSpawner>
         if (par1GuiButton == modeB) {
             getTileEntity().setSpawnMode(!getTileEntity().isSpawnMode());
             PacketHandler.INSTANCE.sendToServer(new PacketMode(getTileEntity()));
-        } else {
-            super.actionPerformed(par1GuiButton);
-        }
+        } else if (par1GuiButton.id == RANGE_ID) {
+            getTileEntity().setShowRange(showRangeB.isSelected());
+        } else super.actionPerformed(par1GuiButton);
     }
 
     private void updateSpawnMode(boolean spawnMode) {
