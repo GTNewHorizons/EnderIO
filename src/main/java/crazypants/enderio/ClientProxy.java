@@ -107,7 +107,7 @@ import crazypants.enderio.machine.power.BlockCapacitorBank;
 import crazypants.enderio.machine.power.CapBankRenderer2;
 import crazypants.enderio.machine.power.CapacitorBankRenderer;
 import crazypants.enderio.machine.ranged.RangeEntity;
-import crazypants.enderio.machine.ranged.RangeRenerer;
+import crazypants.enderio.machine.ranged.RangeRenderer;
 import crazypants.enderio.machine.reservoir.ReservoirRenderer;
 import crazypants.enderio.machine.reservoir.TileReservoir;
 import crazypants.enderio.machine.solar.BlockSolarPanel;
@@ -419,7 +419,7 @@ public class ClientProxy extends CommonProxy {
         FMLCommonHandler.instance().bus().register(KeyTracker.instance);
 
         RenderingRegistry.registerEntityRenderingHandler(SoundEntity.class, new SoundRenderer());
-        RenderingRegistry.registerEntityRenderingHandler(RangeEntity.class, new RangeRenerer());
+        RenderingRegistry.registerEntityRenderingHandler(RangeEntity.class, new RangeRenderer());
 
         MinecraftForge.EVENT_BUS.register(SoundDetector.instance);
         FMLCommonHandler.instance().bus().register(SoundDetector.instance);

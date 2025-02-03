@@ -9,6 +9,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 import com.enderio.core.client.render.BoundingBox;
+import com.enderio.core.common.vecmath.Vector3d;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -40,6 +41,11 @@ public class TileAversionObelisk extends AbstractPowerConsumerEntity implements 
         return showingRange;
     }
 
+    @Override
+    public int getColor() {
+        return 0x66FFFFFF;
+    }
+
     @SideOnly(Side.CLIENT)
     public void setShowRange(boolean showRange) {
         if (showingRange == showRange) {
@@ -64,8 +70,13 @@ public class TileAversionObelisk extends AbstractPowerConsumerEntity implements 
     }
 
     @Override
-    public float getRange() {
-        return range;
+    public AxisAlignedBB getBounds() {
+        return null;
+    }
+
+    @Override
+    public Vector3d getRange() {
+        return new Vector3d(range, range, range);
     }
 
     @Override

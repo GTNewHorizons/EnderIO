@@ -61,14 +61,24 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
     }
 
     @Override
-    public float getRange() {
-        return range;
+    public AxisAlignedBB getBounds() {
+        return null;
+    }
+
+    @Override
+    public Vector3d getRange() {
+        return new Vector3d(range, range, range);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public boolean isShowingRange() {
         return showingRange;
+    }
+
+    @Override
+    public int getColor() {
+        return 0x66FFFFFF;
     }
 
     @SideOnly(Side.CLIENT)
@@ -317,8 +327,7 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
             ent.faceEntity(getTarget(), 10.0F, 20.0F);
             return true;
         } else if (ent instanceof EntitySilverfish) {
-            PathEntity pathentity = worldObj
-                    .getPathEntityToEntity(ent, getTarget(), getRange(), true, false, false, true);
+            PathEntity pathentity = worldObj.getPathEntityToEntity(ent, getTarget(), range, true, false, false, true);
             ((EntityCreature) ent).setPathToEntity(pathentity);
             return true;
         } else if (ent instanceof EntityBlaze) {
@@ -339,8 +348,7 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
                 return;
             }
             EntitySilverfish sf = (EntitySilverfish) ent;
-            PathEntity pathentity = worldObj
-                    .getPathEntityToEntity(ent, getTarget(), getRange(), true, false, false, true);
+            PathEntity pathentity = worldObj.getPathEntityToEntity(ent, getTarget(), range, true, false, false, true);
             sf.setPathToEntity(pathentity);
         } else if (ent instanceof EntityBlaze) {
             EntityBlaze mob = (EntityBlaze) ent;

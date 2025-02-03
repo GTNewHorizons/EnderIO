@@ -13,10 +13,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
 
 import com.enderio.core.client.render.BoundingBox;
 import com.enderio.core.common.util.ItemUtil;
+import com.enderio.core.common.vecmath.Vector3d;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.TileEntityEio;
@@ -26,8 +30,11 @@ import crazypants.enderio.conduit.item.filter.ItemFilter;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.IRedstoneModeControlable;
 import crazypants.enderio.machine.RedstoneControlMode;
+import crazypants.enderio.machine.ranged.IRanged;
+import crazypants.enderio.machine.ranged.RangeEntity;
 
-public class TileVacuumChest extends TileEntityEio implements IEntitySelector, IInventory, IRedstoneModeControlable {
+public class TileVacuumChest extends TileEntityEio
+        implements IEntitySelector, IInventory, IRedstoneModeControlable, IRanged {
 
     public static final int ITEM_ROWS = 3;
     public static final int ITEM_SLOTS = 9 * ITEM_ROWS;
@@ -41,6 +48,8 @@ public class TileVacuumChest extends TileEntityEio implements IEntitySelector, I
     protected RedstoneControlMode redstoneControlMode = RedstoneControlMode.IGNORE;
     protected boolean redstoneCheckPassed;
     private boolean redstoneStateDirty = true;
+
+    private boolean showingRange;
 
     @Override
     public void doUpdate() {
@@ -226,8 +235,41 @@ public class TileVacuumChest extends TileEntityEio implements IEntitySelector, I
                 && itemstack.getItemDamage() == 0;
     }
 
-    public int getRange() {
-        return range;
+    @Override
+    public World getWorld() {
+        return worldObj;
+    }
+
+    @Override
+    public AxisAlignedBB getBounds() {
+        return null;
+    }
+
+    @Override
+    public Vector3d getRange() {
+        return new Vector3d(range, range, range);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean isShowingRange() {
+        return showingRange;
+    }
+
+    @Override
+    public int getColor() {
+        return 0x660000FF;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void setShowRange(boolean showRange) {
+        if (showingRange == showRange) {
+            return;
+        }
+        showingRange = showRange;
+        if (showingRange) {
+            worldObj.spawnEntityInWorld(new RangeEntity(this));
+        }
     }
 
     private int limitRange(int range) {

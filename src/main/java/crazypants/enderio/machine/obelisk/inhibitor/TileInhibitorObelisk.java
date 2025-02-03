@@ -1,7 +1,10 @@
 package crazypants.enderio.machine.obelisk.inhibitor;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+
+import com.enderio.core.common.vecmath.Vector3d;
 
 import crazypants.enderio.ModObject;
 import crazypants.enderio.machine.AbstractPowerConsumerEntity;
@@ -42,8 +45,13 @@ public class TileInhibitorObelisk extends AbstractPowerConsumerEntity implements
     }
 
     @Override
-    public float getRange() {
-        return range;
+    public AxisAlignedBB getBounds() {
+        return null;
+    }
+
+    @Override
+    public Vector3d getRange() {
+        return new Vector3d(range, range, range);
     }
 
     public void setRange(float range) {
@@ -54,6 +62,11 @@ public class TileInhibitorObelisk extends AbstractPowerConsumerEntity implements
     @Override
     public boolean isShowingRange() {
         return false;
+    }
+
+    @Override
+    public int getColor() {
+        return 0x66FFFFFF;
     }
 
     @Override

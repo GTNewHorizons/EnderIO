@@ -13,6 +13,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.enderio.core.api.common.util.IProgressTile;
 import com.enderio.core.client.gui.button.IconButton;
+import com.enderio.core.client.gui.button.ToggleButton;
 import com.enderio.core.client.gui.widget.GuiToolTip;
 import com.enderio.core.client.render.RenderUtil;
 import com.enderio.core.common.util.BlockCoord;
@@ -210,5 +211,13 @@ public abstract class GuiMachineBase<T extends AbstractMachineEntity> extends Gu
             return Util.getProgressScaled(scale, (IProgressTile) getTileEntity());
         }
         return 0;
+    }
+
+    protected RedstoneModeButton getRedstoneBtn() {
+        return redstoneButton;
+    }
+
+    protected ToggleButton getConfigBtn() {
+        return configB;
     }
 }

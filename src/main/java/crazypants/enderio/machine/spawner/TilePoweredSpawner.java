@@ -7,7 +7,12 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
 
+import com.enderio.core.common.vecmath.Vector3d;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.config.Config;
@@ -16,11 +21,13 @@ import crazypants.enderio.machine.IMachineRecipe;
 import crazypants.enderio.machine.IPoweredTask;
 import crazypants.enderio.machine.PoweredTask;
 import crazypants.enderio.machine.SlotDefinition;
+import crazypants.enderio.machine.ranged.IRanged;
+import crazypants.enderio.machine.ranged.RangeEntity;
 import crazypants.enderio.power.BasicCapacitor;
 import crazypants.enderio.power.Capacitors;
 import crazypants.enderio.power.ICapacitor;
 
-public class TilePoweredSpawner extends AbstractPoweredTaskEntity {
+public class TilePoweredSpawner extends AbstractPoweredTaskEntity implements IRanged {
 
     public static final int MIN_SPAWN_DELAY_BASE = Config.poweredSpawnerMinDelayTicks;
     public static final int MAX_SPAWN_DELAY_BASE = Config.poweredSpawnerMaxDelayTicks;
@@ -94,6 +101,7 @@ public class TilePoweredSpawner extends AbstractPoweredTaskEntity {
     private boolean isSpawnMode = true;
     private int powerUsePerTick;
     private int remainingSpawnTries;
+    private boolean showingRange;
 
     public TilePoweredSpawner() {
         super(new SlotDefinition(1, 1, 1));
@@ -178,6 +186,7 @@ public class TilePoweredSpawner extends AbstractPoweredTaskEntity {
                 basePowerUse = POWER_PER_TICK_TEN;
                 break;
         }
+
         double multiplier = PoweredSpawnerConfig.getInstance().getCostMultiplierFor(getEntityName());
         setCapacitor(
                 new BasicCapacitor(
@@ -374,5 +383,42 @@ public class TilePoweredSpawner extends AbstractPoweredTaskEntity {
 
     public boolean hasEntityName() {
         return !NULL_ENTITY_NAME.equals(entityTypeName);
+    }
+
+    @Override
+    public World getWorld() {
+        return worldObj;
+    }
+
+    @Override
+    public AxisAlignedBB getBounds() {
+        return null;
+    }
+
+    @Override
+    public Vector3d getRange() {
+        int range = Config.poweredSpawnerSpawnRange - 1;
+        return new Vector3d(range, 1, range);
+    }
+
+    @Override
+    public boolean isShowingRange() {
+        return showingRange;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void setShowRange(boolean showRange) {
+        if (showingRange == showRange) {
+            return;
+        }
+        showingRange = showRange;
+        if (showingRange) {
+            worldObj.spawnEntityInWorld(new RangeEntity(this));
+        }
+    }
+
+    @Override
+    public int getColor() {
+        return 0x66FF0000;
     }
 }

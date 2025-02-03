@@ -1,6 +1,7 @@
 package crazypants.enderio.machine.killera;
 
 import java.awt.Rectangle;
+import java.util.List;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -8,9 +9,11 @@ import net.minecraft.entity.player.InventoryPlayer;
 import org.lwjgl.opengl.GL11;
 
 import com.enderio.core.client.gui.button.IconButton;
+import com.enderio.core.client.gui.button.ToggleButton;
 import com.enderio.core.client.gui.widget.GuiToolTip;
 import com.enderio.core.client.render.RenderUtil;
 import com.enderio.core.common.util.SoundUtil;
+import com.google.common.collect.Lists;
 
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.fluid.Fluids;
@@ -23,6 +26,9 @@ import crazypants.enderio.xp.PacketGivePlayerXP;
 
 public class GuiKillerJoe extends GuiMachineBase<TileKillerJoe> {
 
+    private static final int RANGE_ID = 8738924;
+    private final ToggleButton showRangeB;
+
     private static final int XP_ID = 3489;
     private static final int XP10_ID = 34892;
 
@@ -31,6 +37,18 @@ public class GuiKillerJoe extends GuiMachineBase<TileKillerJoe> {
 
     public GuiKillerJoe(InventoryPlayer inventory, final TileKillerJoe tileEntity) {
         super(tileEntity, new ContainerKillerJoe(inventory, tileEntity), "killerJoe");
+
+        showRangeB = new ToggleButton(this, RANGE_ID, 155, 24 + 18, IconEIO.PLUS, IconEIO.MINUS);
+        showRangeB.setSize(BUTTON_SIZE, BUTTON_SIZE);
+        addToolTip(new GuiToolTip(showRangeB.getBounds(), "null") {
+
+            @Override
+            public List<String> getToolTipText() {
+                return Lists.newArrayList(
+                        EnderIO.lang.localize(
+                                showRangeB.isSelected() ? "gui.spawnGurad.hideRange" : "gui.spawnGurad.showRange"));
+            }
+        });
 
         addToolTip(new GuiToolTip(new Rectangle(18, 11, 15, 47), "") {
 
@@ -46,11 +64,17 @@ public class GuiKillerJoe extends GuiMachineBase<TileKillerJoe> {
             }
         });
 
-        xpB = new IconButton(this, XP_ID, 128, 56, IconEIO.XP);
-        xpB.setToolTip(EnderIO.lang.localize("killerJoe.giveXp.tooltip"));
+        int size = 14;
+        int x = guiLeft + 56 + (65 / 2);
+        int y = guiTop + 62 + 6;
 
-        xp10B = new IconButton(this, XP10_ID, 148, 56, IconEIO.XP_PLUS);
+        xpB = new IconButton(this, XP_ID, x - 16, y, IconEIO.XP);
+        xpB.setToolTip(EnderIO.lang.localize("killerJoe.giveXp.tooltip"));
+        xpB.setSize(size, size);
+
+        xp10B = new IconButton(this, XP10_ID, x + 2, y, IconEIO.XP_PLUS);
         xp10B.setToolTip(EnderIO.lang.localize("killerJoe.giveXp10.tooltip"));
+        xp10B.setSize(size, size);
     }
 
     @Override
@@ -58,6 +82,9 @@ public class GuiKillerJoe extends GuiMachineBase<TileKillerJoe> {
         super.initGui();
         xpB.onGuiInit();
         xp10B.onGuiInit();
+
+        showRangeB.onGuiInit();
+        showRangeB.setSelected(getTileEntity().isShowingRange());
         ((ContainerKillerJoe) inventorySlots).createGhostSlots(getGhostSlots());
     }
 
@@ -70,6 +97,8 @@ public class GuiKillerJoe extends GuiMachineBase<TileKillerJoe> {
         } else if (b.id == XP10_ID) {
             PacketHandler.INSTANCE.sendToServer(new PacketGivePlayerXP(getTileEntity(), 10));
             SoundUtil.playClientSoundFX("random.orb", getTileEntity());
+        } else if (b.id == RANGE_ID) {
+            getTileEntity().setShowRange(showRangeB.isSelected());
         }
     }
 

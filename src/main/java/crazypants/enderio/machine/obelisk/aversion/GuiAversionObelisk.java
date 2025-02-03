@@ -58,7 +58,7 @@ public class GuiAversionObelisk extends GuiPoweredMachineBase<TileAversionObelis
 
         super.drawGuiContainerBackgroundLayer(par1, par2, par3);
 
-        int range = (int) getTileEntity().getRange();
+        int range = (int) getTileEntity().getRange().x;
         drawCenteredString(
                 fontRendererObj,
                 EnderIO.lang.localize("gui.spawnGurad.range") + " " + range,

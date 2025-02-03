@@ -1,5 +1,7 @@
 package crazypants.enderio.machine.farm;
 
+import java.util.List;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -10,9 +12,11 @@ import org.lwjgl.opengl.GL11;
 
 import com.enderio.core.client.gui.button.IconButton;
 import com.enderio.core.client.gui.button.ToggleButton;
+import com.enderio.core.client.gui.widget.GuiToolTip;
 import com.enderio.core.client.render.ColorUtil;
 import com.enderio.core.client.render.RenderUtil;
 import com.enderio.core.common.vecmath.Vector4f;
+import com.google.common.collect.Lists;
 
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.gui.IconEIO;
@@ -20,17 +24,51 @@ import crazypants.enderio.machine.gui.GuiPoweredMachineBase;
 
 public class GuiFarmStation extends GuiPoweredMachineBase<TileFarmStation> {
 
+    private static final int RANGE_ID = 8738924;
     private static final int LOCK_ID = 1234;
+
+    private final ToggleButton showRangeB;
 
     public GuiFarmStation(InventoryPlayer par1InventoryPlayer, TileFarmStation machine) {
         super(machine, new FarmStationContainer(par1InventoryPlayer, machine), "farmStation");
+
+        int x = getXSize() - 5 - BUTTON_SIZE / 2;
+        int y = getGuiTop() + 5;
+        getRedstoneBtn().setPosition(x, y);
+
+        y += BUTTON_SIZE + 2;
+        getConfigBtn().setPosition(x, y);
+
+        y += BUTTON_SIZE + 2;
+        showRangeB = new ToggleButton(this, RANGE_ID, x, y, IconEIO.PLUS, IconEIO.MINUS);
+        showRangeB.setSize(BUTTON_SIZE, BUTTON_SIZE);
+        addToolTip(new GuiToolTip(showRangeB.getBounds(), "null") {
+
+            @Override
+            public List<String> getToolTipText() {
+                return Lists.newArrayList(
+                        EnderIO.lang.localize(
+                                showRangeB.isSelected() ? "gui.spawnGurad.hideRange" : "gui.spawnGurad.showRange"));
+            }
+        });
+
         setYSize(ySize + 3);
+        setXSize(xSize + 8);
+
+    }
+
+    @Override
+    protected int getPowerU() {
+        return 184;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void initGui() {
         super.initGui();
+
+        showRangeB.onGuiInit();
+        showRangeB.setSelected(getTileEntity().isShowingRange());
 
         int x = getGuiLeft() + 36;
         int y = getGuiTop() + 43;
@@ -94,7 +132,10 @@ public class GuiFarmStation extends GuiPoweredMachineBase<TileFarmStation> {
     protected void actionPerformed(GuiButton b) {
         if (b.id >= LOCK_ID + TileFarmStation.minSupSlot && b.id <= LOCK_ID + TileFarmStation.maxSupSlot) {
             getTileEntity().toggleLockedState(b.id - LOCK_ID);
+        } else if (b.id == RANGE_ID) {
+            getTileEntity().setShowRange(showRangeB.isSelected());
         }
+
         super.actionPerformed(b);
     }
 
