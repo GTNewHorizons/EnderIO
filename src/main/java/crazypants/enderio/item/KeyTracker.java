@@ -90,9 +90,9 @@ public class KeyTracker {
         ClientRegistry.registerKeyBinding(gogglesKey);
 
         trackmansGogglesKey = new KeyBinding(
-            EnderIO.lang.localize("keybind.trackmansgoggles"),
-            Keyboard.KEY_NONE,
-            EnderIO.lang.localize("category.darksteelarmor"));
+                EnderIO.lang.localize("keybind.trackmansgoggles"),
+                Keyboard.KEY_NONE,
+                EnderIO.lang.localize("category.darksteelarmor"));
         ClientRegistry.registerKeyBinding(trackmansGogglesKey);
 
         stepAssistKey = new KeyBinding(
@@ -252,10 +252,14 @@ public class KeyTracker {
             }
             ItemStack helmet = player.getEquipmentInSlot(4);
             ((ItemDarkSteelArmor) helmet.getItem()).incrementAura(helmet);
-            IToolGoggles.displaySwitchMessage(Minecraft.getMinecraft().theWorld, Minecraft.getMinecraft().thePlayer, ((ItemDarkSteelArmor) helmet.getItem()).getCurrentAura(helmet));
+            IToolGoggles.displaySwitchMessage(
+                    Minecraft.getMinecraft().theWorld,
+                    Minecraft.getMinecraft().thePlayer,
+                    ((ItemDarkSteelArmor) helmet.getItem()).getCurrentAura(helmet));
             return;
         }
     }
+
     private void handleGoggles() {
         if (gogglesKey.isPressed()) {
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;

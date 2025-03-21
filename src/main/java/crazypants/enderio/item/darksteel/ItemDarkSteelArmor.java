@@ -337,7 +337,8 @@ public class ItemDarkSteelArmor extends ItemArmor
     // Railcraft
 
     public void incrementAura(ItemStack goggles) {
-        if (goggles != null && goggles.getItem() instanceof ItemDarkSteelArmor && DarkSteelItems.isArmorPart(goggles.getItem(), 0)) {
+        if (goggles != null && goggles.getItem() instanceof ItemDarkSteelArmor
+                && DarkSteelItems.isArmorPart(goggles.getItem(), 0)) {
             NBTTagCompound data = goggles.getTagCompound();
             if (data == null) {
                 data = new NBTTagCompound();
