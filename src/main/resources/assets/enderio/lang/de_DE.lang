@@ -906,6 +906,8 @@ enderio.darksteel.upgrade.apiaristArmor.leggings.tooltip.detailed.line1=Schutz g
 enderio.darksteel.upgrade.apiaristArmor.boots.name=Imkerschuhe
 enderio.darksteel.upgrade.apiaristArmor.boots.tooltip.detailed.line1=Schutz gegen Beinen
 
+enderio.darksteel.upgrade.trackmansGoggles.name=Schienenwartbrille
+
 item.itemGliderWing.name=Gleiterflügel
 item.itemGliderWings.name=Gleiterflügelpaar
 item.itemGliderWings.tooltip.detailed.line1=Upgrade für den
@@ -1241,6 +1243,7 @@ enderio.category.darksteelarmor=Dunkelstahlrüstung
 enderio.category.tools=EnderIO - Werkzeuge
 enderio.keybind.glidertoggle=Gleiterschaltung
 enderio.keybind.gogglesofrevealing=Brille der Enthüllung
+enderio.keybind.trackmansgoggles=Schienenwartbrille
 enderio.keybind.nightvision=Nachtsicht
 enderio.keybind.soundlocator=Schalldetektor
 enderio.keybind.speed=Schnelligkeit

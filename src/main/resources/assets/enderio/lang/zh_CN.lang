@@ -949,6 +949,8 @@ enderio.darksteel.upgrade.apiaristArmor.leggings.tooltip.detailed.line1=提供�
 enderio.darksteel.upgrade.apiaristArmor.boots.name=养蜂员之鞋
 enderio.darksteel.upgrade.apiaristArmor.boots.tooltip.detailed.line1=提供保护以减少蜜蜂的伤害
 
+enderio.darksteel.upgrade.trackmansGoggles.name=铁路工护目镜
+
 item.itemGliderWing.name=滑翔翼
 item.itemGliderWings.name=滑翔翼
 item.itemGliderWings.tooltip.detailed.line1=用于升级
@@ -1372,6 +1374,7 @@ enderio.category.darksteelarmor=玄铁护甲
 enderio.category.tools=EnderIO - 工具
 enderio.keybind.glidertoggle=滑翔开关
 enderio.keybind.gogglesofrevealing=揭示护目镜
+enderio.keybind.trackmansgoggles=铁路工护目镜
 enderio.keybind.nightvision=夜视
 enderio.keybind.soundlocator=声波定位
 enderio.keybind.speed=速度

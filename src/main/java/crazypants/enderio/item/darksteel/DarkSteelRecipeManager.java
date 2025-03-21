@@ -33,6 +33,7 @@ import crazypants.enderio.item.darksteel.upgrade.SoundDetectorUpgrade;
 import crazypants.enderio.item.darksteel.upgrade.SpeedUpgrade;
 import crazypants.enderio.item.darksteel.upgrade.SpoonUpgrade;
 import crazypants.enderio.item.darksteel.upgrade.SwimUpgrade;
+import crazypants.enderio.item.darksteel.upgrade.TrackmanGogglesUpgrade;
 import crazypants.enderio.item.darksteel.upgrade.TravelUpgrade;
 import crazypants.enderio.material.Alloy;
 import crazypants.enderio.material.endergy.AlloyEndergy;
@@ -74,6 +75,9 @@ public class DarkSteelRecipeManager {
             upgrades.add(ApiaristArmorUpgrade.CHEST);
             upgrades.add(ApiaristArmorUpgrade.LEGS);
             upgrades.add(ApiaristArmorUpgrade.BOOTS);
+        }
+        if (Loader.isModLoaded("Railcraft")) {
+            upgrades.add(TrackmanGogglesUpgrade.INSTANCE);
         }
     }
 

@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.ISpecialArmor;
@@ -34,9 +35,13 @@ import crazypants.enderio.item.darksteel.upgrade.ApiaristArmorUpgrade;
 import crazypants.enderio.item.darksteel.upgrade.EnergyUpgrade;
 import crazypants.enderio.item.darksteel.upgrade.IDarkSteelUpgrade;
 import crazypants.enderio.item.darksteel.upgrade.NaturalistEyeUpgrade;
+import crazypants.enderio.item.darksteel.upgrade.TrackmanGogglesUpgrade;
 import crazypants.enderio.thaumcraft.GogglesOfRevealingUpgrade;
 import forestry.api.apiculture.IArmorApiarist;
 import forestry.api.core.IArmorNaturalist;
+import mods.railcraft.api.core.items.IToolGoggles;
+import mods.railcraft.common.core.RailcraftConfig;
+import mods.railcraft.common.items.ItemGoggles.GoggleAura;
 import thaumcraft.api.IGoggles;
 import thaumcraft.api.IVisDiscountGear;
 import thaumcraft.api.aspects.Aspect;
@@ -45,11 +50,12 @@ import thaumcraft.api.nodes.IRevealer;
 @InterfaceList({ @Interface(iface = "thaumcraft.api.IGoggles", modid = "Thaumcraft"),
         @Interface(iface = "thaumcraft.api.IVisDiscountGear", modid = "Thaumcraft"),
         @Interface(iface = "thaumcraft.api.nodes.IRevealer", modid = "Thaumcraft"),
+        @Interface(iface = "mods.railcraft.api.core.items.IToolGoggles", modid = "Railcraft"),
         @Interface(iface = "forestry.api.apiculture.IArmorApiarist", modid = "Forestry"),
         @Interface(iface = "forestry.api.core.IArmorNaturalist", modid = "Forestry") })
 public class ItemDarkSteelArmor extends ItemArmor
         implements IEnergyContainerItem, ISpecialArmor, IAdvancedTooltipProvider, IDarkSteelItem, IGoggles, IRevealer,
-        IVisDiscountGear, IArmorApiarist, IArmorNaturalist {
+        IVisDiscountGear, IArmorApiarist, IArmorNaturalist, IToolGoggles {
 
     public static final ArmorMaterial MATERIAL = EnumHelper
             .addArmorMaterial("darkSteel", 35, new int[] { 2, 6, 5, 2 }, 15);
@@ -326,5 +332,40 @@ public class ItemDarkSteelArmor extends ItemArmor
             return false;
         }
         return NaturalistEyeUpgrade.isUpgradeEquipped(player);
+    }
+
+    // Railcraft
+
+    public void incrementAura(ItemStack goggles) {
+        if (goggles != null && goggles.getItem() instanceof ItemDarkSteelArmor && DarkSteelItems.isArmorPart(goggles.getItem(), 0)) {
+            NBTTagCompound data = goggles.getTagCompound();
+            if (data == null) {
+                data = new NBTTagCompound();
+                goggles.setTagCompound(data);
+            }
+            byte aura = data.getByte("aura");
+            aura++;
+            if (aura >= GoggleAura.VALUES.length) aura = 0;
+            data.setByte("aura", aura);
+
+            if (this.getCurrentAura(goggles) == GoggleAura.TRACKING && !RailcraftConfig.isTrackingAuraEnabled()) {
+                incrementAura(goggles);
+            }
+        }
+    }
+
+    @Override
+    @Method(modid = "Railcraft")
+    public GoggleAura getCurrentAura(ItemStack goggles) {
+        if (TrackmanGogglesUpgrade.loadFromItem(goggles) != null) {
+            NBTTagCompound data = goggles.getTagCompound();
+            if (data != null) {
+                return GoggleAura.VALUES[data.getByte("aura")];
+            } else {
+                return GoggleAura.NONE;
+            }
+        } else {
+            return GoggleAura.NONE;
+        }
     }
 }
