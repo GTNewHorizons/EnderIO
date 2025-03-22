@@ -949,6 +949,8 @@ enderio.darksteel.upgrade.apiaristArmor.leggings.tooltip.detailed.line1=Защи
 enderio.darksteel.upgrade.apiaristArmor.boots.name=Обувь пчеловода
 enderio.darksteel.upgrade.apiaristArmor.boots.tooltip.detailed.line1=Защита от пчёл
 
+enderio.darksteel.upgrade.trackmansGoggles.name=Очки обходчика путей
+
 item.itemGliderWing.name=Крыло планёра
 item.itemGliderWings.name=Крылья планёра
 item.itemGliderWings.tooltip.detailed.line1=Улучшается кирасой
@@ -1292,6 +1294,7 @@ enderio.category.darksteelarmor=Броня из тёмной стали
 enderio.category.tools=EnderIO - Инструменты
 enderio.keybind.glidertoggle=Переключить планер
 enderio.keybind.gogglesofrevealing=Очки откровения
+enderio.keybind.trackmansgoggles=Очки обходчика путей
 enderio.keybind.nightvision=Ночное зрение
 enderio.keybind.soundlocator=Звуколокатор
 enderio.keybind.speed=Скорость

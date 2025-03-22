@@ -683,6 +683,8 @@ enderio.darksteel.upgrade.apiaristArmor.leggings.tooltip.detailed.line1=Protecti
 enderio.darksteel.upgrade.apiaristArmor.boots.name=Chaussures d'Apiculteur
 enderio.darksteel.upgrade.apiaristArmor.boots.tooltip.detailed.line1=Protection contre les abeilles
 
+enderio.darksteel.upgrade.trackmansGoggles.name=Lunettes de l'agent de voie
+
 item.itemGliderWing.name=Aile de Planeur
 item.itemGliderWings.name=Ailes de Planeur
 item.itemGliderWings.tooltip.detailed.line1=Amélioration pour
@@ -996,6 +998,7 @@ enderio.category.darksteelarmor=Armure d'Acier Sombre
 enderio.category.tools=EnderIO - Outils
 enderio.keybind.glidertoggle=Mode Planeur
 enderio.keybind.gogglesofrevealing=Lunettes de Révélation
+enderio.keybind.trackmansgoggles=Lunettes de l'agent de voie
 enderio.keybind.nightvision=Vision Nocturne
 enderio.keybind.soundlocator=Détecteur de Sons
 enderio.keybind.speed=Vitesse

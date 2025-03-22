@@ -285,6 +285,8 @@ public final class Config {
 
     public static int darkSteelApiaristArmorCost = 10;
 
+    public static int darkSteelTrackmanGogglesCost = 10;
+
     public static int darkSteelSwimCost = 10;
 
     public static int darkSteelNightVisionCost = 10;
@@ -1608,6 +1610,14 @@ public final class Config {
                 "darkSteelApiaristArmorCost",
                 darkSteelApiaristArmorCost,
                 "Number of levels required for the Apiarist Armor upgrade.").getInt(darkSteelApiaristArmorCost);
+
+        darkSteelTrackmanGogglesCost = config
+                .get(
+                        sectionDarkSteel.name,
+                        "darkSteelTrackmanGogglesCost",
+                        darkSteelTrackmanGogglesCost,
+                        "Number of levels required for the Trackman's Goggles upgrade.")
+                .getInt(darkSteelTrackmanGogglesCost);
 
         darkSteelTravelCost = config.get(
                 sectionDarkSteel.name,

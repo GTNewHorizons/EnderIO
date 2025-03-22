@@ -662,6 +662,8 @@ enderio.darksteel.upgrade.apiaristArmor.leggings.tooltip.detailed.line1=Protecci
 enderio.darksteel.upgrade.apiaristArmor.boots.name=Zapatos del Apicultor
 enderio.darksteel.upgrade.apiaristArmor.boots.tooltip.detailed.line1=Protección contra abejas.
 
+enderio.darksteel.upgrade.trackmansGoggles.name=Gafas de Ferroviario
+
 item.itemGliderWing.name=Ala de Planeador
 item.itemGliderWings.name=Alas de Planeador
 item.itemGliderWings.tooltip.detailed.line1=Mejora para la pechera de Acero Oscuro.
@@ -981,6 +983,7 @@ enderio.category.darksteelarmor=Armadura de Acero Oscuro
 enderio.category.tools=EnderIO - Herramientas
 enderio.keybind.glidertoggle=Activar/Desactivar Planeador
 enderio.keybind.gogglesofrevealing=Gafas de Revelación
+enderio.keybind.trackmansgoggles=Gafas de Ferroviario
 enderio.keybind.nightvision=Visión Nocturna
 enderio.keybind.soundlocator=Localizador de Sonidos
 enderio.keybind.speed=Velocidad

@@ -25,16 +25,19 @@ import crazypants.enderio.config.Config;
 import crazypants.enderio.item.PacketMagnetState.SlotType;
 import crazypants.enderio.item.darksteel.DarkSteelController;
 import crazypants.enderio.item.darksteel.DarkSteelItems;
+import crazypants.enderio.item.darksteel.ItemDarkSteelArmor;
 import crazypants.enderio.item.darksteel.PacketUpgradeState;
 import crazypants.enderio.item.darksteel.PacketUpgradeState.Type;
 import crazypants.enderio.item.darksteel.SoundDetector;
 import crazypants.enderio.item.darksteel.upgrade.JumpUpgrade;
 import crazypants.enderio.item.darksteel.upgrade.SoundDetectorUpgrade;
 import crazypants.enderio.item.darksteel.upgrade.SpeedUpgrade;
+import crazypants.enderio.item.darksteel.upgrade.TrackmanGogglesUpgrade;
 import crazypants.enderio.network.PacketHandler;
 import crazypants.enderio.teleport.TravelController;
 import crazypants.enderio.thaumcraft.GogglesOfRevealingUpgrade;
 import crazypants.util.BaublesUtil;
+import mods.railcraft.api.core.items.IToolGoggles;
 
 public class KeyTracker {
 
@@ -53,6 +56,8 @@ public class KeyTracker {
     private final KeyBinding jumpKey;
 
     private final KeyBinding gogglesKey;
+
+    private final KeyBinding trackmansGogglesKey;
 
     private final KeyBinding yetaWrenchMode;
 
@@ -83,6 +88,12 @@ public class KeyTracker {
                 Keyboard.KEY_NONE,
                 EnderIO.lang.localize("category.darksteelarmor"));
         ClientRegistry.registerKeyBinding(gogglesKey);
+
+        trackmansGogglesKey = new KeyBinding(
+                EnderIO.lang.localize("keybind.trackmansgoggles"),
+                Keyboard.KEY_NONE,
+                EnderIO.lang.localize("category.darksteelarmor"));
+        ClientRegistry.registerKeyBinding(trackmansGogglesKey);
 
         stepAssistKey = new KeyBinding(
                 EnderIO.lang.localize("keybind.stepassist"),
@@ -128,6 +139,7 @@ public class KeyTracker {
         handleNightVision();
         handleYetaWrench();
         handleGoggles();
+        handleTrackmanGoggles();
         handleStepAssist();
         handleSpeed();
         handleJump();
@@ -229,6 +241,22 @@ public class KeyTracker {
                 return;
             }
             toggleDarkSteelController(Type.STEP_ASSIST, "darksteel.upgrade.stepAssist");
+        }
+    }
+
+    private void handleTrackmanGoggles() {
+        if (trackmansGogglesKey.isPressed()) {
+            EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+            if (!TrackmanGogglesUpgrade.isUpgradeEquipped(player)) {
+                return;
+            }
+            ItemStack helmet = player.getEquipmentInSlot(4);
+            ((ItemDarkSteelArmor) helmet.getItem()).incrementAura(helmet);
+            IToolGoggles.displaySwitchMessage(
+                    Minecraft.getMinecraft().theWorld,
+                    Minecraft.getMinecraft().thePlayer,
+                    ((ItemDarkSteelArmor) helmet.getItem()).getCurrentAura(helmet));
+            return;
         }
     }
 
