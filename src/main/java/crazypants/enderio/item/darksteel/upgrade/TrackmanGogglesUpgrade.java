@@ -51,7 +51,7 @@ public class TrackmanGogglesUpgrade extends AbstractUpgrade {
                 UPGRADE_NAME,
                 "enderio.darksteel.upgrade.trackmansGoggles",
                 getGoggles(),
-                Config.darkSteelApiaristArmorCost);
+                Config.darkSteelTrackmanGogglesCost);
     }
 
     @Override
