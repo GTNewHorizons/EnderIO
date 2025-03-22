@@ -328,7 +328,7 @@ public class ItemDarkSteelArmor extends ItemArmor
     @Override
     @Method(modid = "Forestry")
     public boolean canSeePollination(EntityPlayer player, ItemStack armor, boolean doSee) {
-        if (armor == null || DarkSteelItems.isArmorPart(armor.getItem(), 0)) {
+        if (armor == null || !DarkSteelItems.isArmorPart(armor.getItem(), 0)) {
             return false;
         }
         return NaturalistEyeUpgrade.isUpgradeEquipped(player);
