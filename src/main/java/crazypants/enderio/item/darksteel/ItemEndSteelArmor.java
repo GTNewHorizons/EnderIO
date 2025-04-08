@@ -8,13 +8,17 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 
+import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.item.darksteel.IDarkSteelItem.IEndSteelItem;
 import crazypants.enderio.item.darksteel.upgrade.EnergyUpgrade;
 import crazypants.enderio.item.darksteel.upgrade.IDarkSteelUpgrade;
+import gregtech.api.hazards.Hazard;
+import gregtech.api.hazards.IHazardProtector;
 
-public class ItemEndSteelArmor extends ItemDarkSteelArmor implements IEndSteelItem {
+@Optional.InterfaceList({ @Optional.Interface(iface = "gregtech.api.hazards.IHazardProtector", modid = "gregtech") })
+public class ItemEndSteelArmor extends ItemDarkSteelArmor implements IEndSteelItem, IHazardProtector {
 
     public static final ArmorMaterial MATERIAL = EnumHelper
             .addArmorMaterial("endSteel", 50, new int[] { 4, 7, 10, 5 }, 25);
@@ -76,5 +80,12 @@ public class ItemEndSteelArmor extends ItemDarkSteelArmor implements IEndSteelIt
         }
 
         par3List.add(is);
+    }
+
+    /// GT5 Hazmat protection
+    @Optional.Method(modid = "gregtech")
+    @Override
+    public boolean protectsAgainst(ItemStack itemStack, Hazard hazard) {
+        return true;
     }
 }
