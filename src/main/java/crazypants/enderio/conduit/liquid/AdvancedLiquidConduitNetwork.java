@@ -259,7 +259,7 @@ public class AdvancedLiquidConduitNetwork extends AbstractTankConduitNetwork<Adv
 
     public IFluidHandler getTankContainer(BlockCoord bc) {
         World w = getWorld();
-        if (w == null) {
+        if (w == null || !w.blockExists(bc.x, bc.y, bc.z)) {
             return null;
         }
         return FluidUtil.getFluidHandler(w.getTileEntity(bc.x, bc.y, bc.z));
