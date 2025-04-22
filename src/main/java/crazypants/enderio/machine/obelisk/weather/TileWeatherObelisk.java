@@ -301,7 +301,7 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
             if (canStartTask(task)) {
                 if (!worldObj.isRemote) {
                     PacketHandler.INSTANCE
-                        .sendToDimension(new PacketActivateWeather(this, true), worldObj.provider.dimensionId);
+                            .sendToDimension(new PacketActivateWeather(this, true), worldObj.provider.dimensionId);
                 }
                 decrStackSize(0, 1);
                 activeTask = task;
