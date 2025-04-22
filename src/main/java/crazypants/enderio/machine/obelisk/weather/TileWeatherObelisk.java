@@ -303,7 +303,7 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
             activeTask = null;
             fluidUsed = 0;
             if (!worldObj.isRemote) {
-                PacketHandler.INSTANCE.sendToDimension(new PacketActivateWeather(this), worldObj.provider.dimensionId);
+                PacketHandler.INSTANCE.sendToDimension(new PacketActivateWeather(this, false), worldObj.provider.dimensionId);
             } else {
                 playedFuse = false;
             }

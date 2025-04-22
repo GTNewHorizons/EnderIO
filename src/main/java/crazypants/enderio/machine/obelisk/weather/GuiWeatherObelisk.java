@@ -164,7 +164,7 @@ public class GuiWeatherObelisk extends GuiPoweredMachineBase<TileWeatherObelisk>
          if (b.id == 0) {
              // Start Button
             getTileEntity().startTask();
-            PacketHandler.INSTANCE.sendToServer(new PacketActivateWeather(getTileEntity()));
+            PacketHandler.INSTANCE.sendToServer(new PacketActivateWeather(getTileEntity(), true));
         } else if (b.id == 1) {
              // Control Mode Button
             boolean pulseControl = buttonMode.isSelected();
