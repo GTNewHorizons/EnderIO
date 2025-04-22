@@ -282,10 +282,7 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
                 && inputTank.getFluidAmount() >= 1000;
     }
 
-    /**
-     * @return If the operation was successful.
-     */
-    public boolean startTask() {
+    public void startTask() {
         if (!worldObj.isRemote) {
             PacketHandler.INSTANCE.sendToDimension(new PacketActivateWeather(this, true), worldObj.provider.dimensionId);
         }
@@ -295,10 +292,8 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
             if (canStartTask(task)) {
                 decrStackSize(0, 1);
                 activeTask = task;
-                return true;
             }
         }
-        return false;
     }
 
     public void stopTask() {
