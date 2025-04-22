@@ -17,7 +17,7 @@ import crazypants.enderio.item.darksteel.upgrade.IDarkSteelUpgrade;
 import gregtech.api.hazards.Hazard;
 import gregtech.api.hazards.IHazardProtector;
 
-@Optional.InterfaceList({ @Optional.Interface(iface = "gregtech.api.hazards.IHazardProtector", modid = "dreamcraft") })
+@Optional.InterfaceList({ @Optional.Interface(iface = "gregtech.api.hazards.IHazardProtector", modid = "gregtechNH") })
 public class ItemEndSteelArmor extends ItemDarkSteelArmor implements IEndSteelItem, IHazardProtector {
 
     public static final ArmorMaterial MATERIAL = EnumHelper
@@ -83,7 +83,7 @@ public class ItemEndSteelArmor extends ItemDarkSteelArmor implements IEndSteelIt
     }
 
     /// GT5 Hazmat protection
-    @Optional.Method(modid = "dreamcraft")
+    @Optional.Method(modid = "gregtechNH")
     @Override
     public boolean protectsAgainst(ItemStack itemStack, Hazard hazard) {
         return true;
