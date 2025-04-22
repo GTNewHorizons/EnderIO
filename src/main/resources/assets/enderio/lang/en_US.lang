@@ -1102,7 +1102,7 @@ enderio.gui.machine.side.east=East
 enderio.gui.machine.side.up=Up
 enderio.gui.machine.side.down=Down
 enderio.gui.machine.weather.control=Control Mode
-enderio.gui.machine.weather.loop=Launch on Redstone Pulse
+enderio.gui.machine.weather.redstone=Launch on Redstone
 enderio.gui.machine.weather.manual=Default Control Mode
 enderio.gui.machine.weather.run=Launch
 

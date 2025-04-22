@@ -16,7 +16,7 @@ public class PacketControlModeWeather extends MessageTileEntity<TileWeatherObeli
 
     public PacketControlModeWeather(TileWeatherObelisk te) {
         super(te);
-        this.pulse = te.getPulseControl();
+        this.pulse = te.getLaunchOnRedstone();
     }
 
     @Override
@@ -36,7 +36,7 @@ public class PacketControlModeWeather extends MessageTileEntity<TileWeatherObeli
         TileWeatherObelisk te = message.getTileEntity(message.getWorld(ctx));
         if (te != null) {
             if (PacketUtil.isInvalidPacketForGui(ctx, te, getClass())) return null;
-            te.setPulseControl(message.pulse);
+            te.setLaunchOnRedstone(message.pulse);
         }
         return null;
     }

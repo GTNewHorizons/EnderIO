@@ -59,9 +59,9 @@ public class GuiWeatherObelisk extends GuiPoweredMachineBase<TileWeatherObelisk>
         buttonMode = new ToggleButton(this, 1, x_mode, y, IconEIO.ROUND_ROBIN_OFF, IconEIO.REDSTONE_MODE_WITH_SIGNAL);
 
         buttonMode.setToolTip(EnderIO.lang.localize("gui.machine.weather.control"));
-        buttonMode.setSelectedToolTip(EnderIO.lang.localize("gui.machine.weather.loop"));
+        buttonMode.setSelectedToolTip(EnderIO.lang.localize("gui.machine.weather.redstone"));
         buttonMode.setUnselectedToolTip(EnderIO.lang.localize("gui.machine.weather.manual"));
-        buttonMode.setSelected(getTileEntity().getPulseControl());
+        buttonMode.setSelected(getTileEntity().getLaunchOnRedstone());
         addButton(buttonMode);
         buttonMode.onGuiInit();
 
@@ -83,7 +83,7 @@ public class GuiWeatherObelisk extends GuiPoweredMachineBase<TileWeatherObelisk>
     }
 
     private void refreshButtons() {
-        boolean pulseControl = getTileEntity().getPulseControl();
+        boolean pulseControl = getTileEntity().getLaunchOnRedstone();
         pulseControlAction(pulseControl);
 
         FluidStack fs = getTileEntity().getInputTank().getFluid();
@@ -168,7 +168,7 @@ public class GuiWeatherObelisk extends GuiPoweredMachineBase<TileWeatherObelisk>
         } else if (b.id == 1) {
              // Control Mode Button
             boolean pulseControl = buttonMode.isSelected();
-            getTileEntity().setPulseControl(pulseControl);
+            getTileEntity().setLaunchOnRedstone(pulseControl);
             pulseControlAction(pulseControl);
             PacketControlModeWeather packet = new PacketControlModeWeather(getTileEntity());
             PacketHandler.INSTANCE.sendToServer(packet);

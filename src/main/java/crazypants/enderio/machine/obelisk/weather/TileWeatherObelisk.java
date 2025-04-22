@@ -101,7 +101,7 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
     private boolean canBeActive = true;
     private boolean tanksDirty;
 
-    private boolean pulseControl = false;
+    private boolean launchOnRedstone = false;
     private int cooldown = 0;
 
     private static final ICapacitor cap = Capacitors.BASIC_CAPACITOR.capacitor;
@@ -240,7 +240,7 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
             return res;
         }
 
-        if (!redstoneCheckPassed && !pulseControl) {
+        if (!redstoneCheckPassed && !launchOnRedstone) {
             if (canBeActive) {
                 canBeActive = false;
                 res = true;
@@ -268,7 +268,7 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
                     stopTask();
                     res = true;
                 }
-            } else if (pulseControl && RedstoneControlMode.isConditionMet(RedstoneControlMode.ON, this)) {
+            } else if (launchOnRedstone && RedstoneControlMode.isConditionMet(RedstoneControlMode.ON, this)) {
                 startTask();
                 res = true;
             }
@@ -324,14 +324,14 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
     public void writeCommon(NBTTagCompound nbtRoot) {
         super.writeCommon(nbtRoot);
         nbtRoot.setTag("tank", inputTank.writeToNBT(new NBTTagCompound()));
-        nbtRoot.setBoolean("weatherobeliskcontrolmode", pulseControl);
+        nbtRoot.setBoolean("weatherobeliskcontrolmode", launchOnRedstone);
     }
 
     @Override
     public void readCommon(NBTTagCompound nbtRoot) {
         super.readCommon(nbtRoot);
         inputTank.readFromNBT(nbtRoot.getCompoundTag("tank"));
-        pulseControl = nbtRoot.getBoolean("weatherobeliskcontrolmode");
+        launchOnRedstone = nbtRoot.getBoolean("weatherobeliskcontrolmode");
     }
 
     private boolean isValidFluid(Fluid f) {
@@ -397,11 +397,11 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
         return new FluidTankInfo[] { inputTank.getInfo() };
     }
 
-    public void setPulseControl(boolean pulseControl) {
-        this.pulseControl = pulseControl;
+    public void setLaunchOnRedstone(boolean launchOnRedstone) {
+        this.launchOnRedstone = launchOnRedstone;
     }
 
-    public boolean getPulseControl() {
-        return this.pulseControl;
+    public boolean getLaunchOnRedstone() {
+        return this.launchOnRedstone;
     }
 }
