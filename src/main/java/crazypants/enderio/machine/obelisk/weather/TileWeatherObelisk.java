@@ -102,6 +102,7 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
     private boolean tanksDirty;
 
     private boolean pulseControl = false;
+    private int cooldown = 0;
 
     private static final ICapacitor cap = Capacitors.BASIC_CAPACITOR.capacitor;
 
@@ -233,6 +234,12 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
     protected boolean processTasks(boolean redstoneCheckPassed) {
         boolean res = false;
 
+        if (cooldown > 0) {
+            cooldown --;
+            res = true;
+            return res;
+        }
+
         if (!redstoneCheckPassed && !pulseControl) {
             if (canBeActive) {
                 canBeActive = false;
@@ -257,6 +264,7 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
                     EntityWeatherRocket e = new EntityWeatherRocket(worldObj, activeTask);
                     e.setPosition(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5);
                     worldObj.spawnEntityInWorld(e);
+                    cooldown = 100;
                     stopTask();
                     res = true;
                 }
