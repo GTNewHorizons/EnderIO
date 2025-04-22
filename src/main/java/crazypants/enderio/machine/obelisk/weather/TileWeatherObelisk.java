@@ -316,12 +316,14 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
     public void writeCommon(NBTTagCompound nbtRoot) {
         super.writeCommon(nbtRoot);
         nbtRoot.setTag("tank", inputTank.writeToNBT(new NBTTagCompound()));
+        nbtRoot.setBoolean("weatherobeliskcontrolmode", pulseControl);
     }
 
     @Override
     public void readCommon(NBTTagCompound nbtRoot) {
         super.readCommon(nbtRoot);
         inputTank.readFromNBT(nbtRoot.getCompoundTag("tank"));
+        pulseControl = nbtRoot.getBoolean("weatherobeliskcontrolmode");
     }
 
     private boolean isValidFluid(Fluid f) {
