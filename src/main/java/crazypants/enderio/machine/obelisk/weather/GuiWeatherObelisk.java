@@ -3,6 +3,7 @@ package crazypants.enderio.machine.obelisk.weather;
 import java.awt.Color;
 import java.awt.Rectangle;
 
+import com.enderio.core.client.gui.button.ToggleButton;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fluids.FluidStack;
@@ -24,6 +25,7 @@ import crazypants.enderio.network.PacketHandler;
 public class GuiWeatherObelisk extends GuiPoweredMachineBase<TileWeatherObelisk> {
 
     private IconButton buttonStart;
+    private ToggleButton buttonMode;
 
     public GuiWeatherObelisk(InventoryPlayer inventory, TileWeatherObelisk tileEntity) {
         super(tileEntity, new ContainerWeatherObelisk(inventory, tileEntity), "weatherObelisk");
@@ -50,10 +52,23 @@ public class GuiWeatherObelisk extends GuiPoweredMachineBase<TileWeatherObelisk>
     public void initGui() {
         super.initGui();
 
-        int x = (xSize / 2) - (BUTTON_SIZE / 2);
+        int x_mode = xSize - 5 - BUTTON_SIZE;
+        int x_start = (xSize / 2) - (BUTTON_SIZE / 2);
         int y = 58;
 
-        addButton(buttonStart = new IconButton(this, 0, x, y, IconEIO.TICK));
+        buttonMode = new ToggleButton(this, 1, x_mode, y, IconEIO.ROUND_ROBIN_OFF, IconEIO.REDSTONE_MODE_WITH_SIGNAL);
+
+        buttonMode.setToolTip(EnderIO.lang.localize("gui.machine.weather.control"));
+        buttonMode.setSelectedToolTip(EnderIO.lang.localize("gui.machine.weather.loop"));
+        buttonMode.setUnselectedToolTip(EnderIO.lang.localize("gui.machine.weather.manual"));
+        buttonMode.setSelected(getTileEntity().getPulseControl());
+        addButton(buttonMode);
+        buttonMode.onGuiInit();
+
+        buttonStart = new IconButton(this, 0, x_start, y, IconEIO.TICK);
+        buttonStart.setToolTip(EnderIO.lang.localize("gui.machine.weather.run"));
+
+        addButton(buttonStart);
         buttonStart.onGuiInit();
 
         refreshButtons();
@@ -68,6 +83,9 @@ public class GuiWeatherObelisk extends GuiPoweredMachineBase<TileWeatherObelisk>
     }
 
     private void refreshButtons() {
+        boolean pulseControl = getTileEntity().getPulseControl();
+        pulseControlAction(pulseControl);
+
         FluidStack fs = getTileEntity().getInputTank().getFluid();
         if (fs == null) {
             buttonStart.enabled = false;
@@ -143,9 +161,22 @@ public class GuiWeatherObelisk extends GuiPoweredMachineBase<TileWeatherObelisk>
     @Override
     protected void actionPerformed(GuiButton b) {
         super.actionPerformed(b);
-        if (b.id >= 0 && b.id <= 2) {
+         if (b.id == 0) {
+             // Start Button
             getTileEntity().startTask();
             PacketHandler.INSTANCE.sendToServer(new PacketActivateWeather(getTileEntity()));
+        } else if (b.id == 1) {
+             // Control Mode Button
+            boolean pulseControl = buttonMode.isSelected();
+            getTileEntity().setPulseControl(pulseControl);
+            pulseControlAction(pulseControl);
+            PacketControlModeWeather packet = new PacketControlModeWeather(getTileEntity());
+            PacketHandler.INSTANCE.sendToServer(packet);
         }
+    }
+
+    protected void pulseControlAction(boolean pulseControl) {
+        redstoneButton.setVisible(!pulseControl);
+        buttonStart.setVisible(!pulseControl);
     }
 }
