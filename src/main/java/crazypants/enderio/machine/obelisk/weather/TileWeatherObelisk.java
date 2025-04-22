@@ -286,6 +286,9 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
      * @return If the operation was successful.
      */
     public boolean startTask() {
+        if (!worldObj.isRemote) {
+            PacketHandler.INSTANCE.sendToDimension(new PacketActivateWeather(this, true), worldObj.provider.dimensionId);
+        }
         if (getActiveTask() == null && inputTank.getFluidAmount() > 0) {
             fluidUsed = 0;
             WeatherTask task = WeatherTask.fromFluid(inputTank.getFluid().getFluid());
