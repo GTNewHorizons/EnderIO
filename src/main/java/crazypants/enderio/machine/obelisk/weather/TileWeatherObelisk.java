@@ -264,7 +264,7 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
                     EntityWeatherRocket e = new EntityWeatherRocket(worldObj, activeTask);
                     e.setPosition(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5);
                     worldObj.spawnEntityInWorld(e);
-                    cooldown = 100;
+                    cooldown = 200;
                     stopTask();
                     res = true;
                 }
@@ -295,14 +295,14 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
     }
 
     public void startTask() {
-        if (!worldObj.isRemote) {
-            PacketHandler.INSTANCE
-                    .sendToDimension(new PacketActivateWeather(this, true), worldObj.provider.dimensionId);
-        }
         if (getActiveTask() == null && inputTank.getFluidAmount() > 0) {
             fluidUsed = 0;
             WeatherTask task = WeatherTask.fromFluid(inputTank.getFluid().getFluid());
             if (canStartTask(task)) {
+                if (!worldObj.isRemote) {
+                    PacketHandler.INSTANCE
+                        .sendToDimension(new PacketActivateWeather(this, true), worldObj.provider.dimensionId);
+                }
                 decrStackSize(0, 1);
                 activeTask = task;
             }
