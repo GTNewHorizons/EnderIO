@@ -100,6 +100,8 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
     private boolean canBeActive = true;
     private boolean tanksDirty;
 
+    private boolean pulseControl = false;
+
     private static final ICapacitor cap = Capacitors.BASIC_CAPACITOR.capacitor;
 
     private FluidTank inputTank = new FluidTank(8000);
@@ -381,5 +383,13 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
         return new FluidTankInfo[] { inputTank.getInfo() };
+    }
+
+    public void setPulseControl(boolean pulseControl) {
+        this.pulseControl = pulseControl;
+    }
+
+    public boolean getPulseControl() {
+        return this.pulseControl;
     }
 }

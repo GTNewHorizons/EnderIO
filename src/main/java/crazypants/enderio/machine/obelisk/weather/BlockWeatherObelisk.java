@@ -31,6 +31,8 @@ public class BlockWeatherObelisk extends BlockObeliskAbstract<TileWeatherObelisk
                 Side.CLIENT);
         PacketHandler.INSTANCE
                 .registerMessage(PacketWeatherTank.class, PacketWeatherTank.class, PacketHandler.nextID(), Side.CLIENT);
+        PacketHandler.INSTANCE
+            .registerMessage(PacketControlModeWeather.class, PacketControlModeWeather.class, PacketHandler.nextID(), Side.SERVER);
 
         EntityRegistry
                 .registerModEntity(EntityWeatherRocket.class, "weather_rocket", 33, EnderIO.instance, 64, 3, false);
