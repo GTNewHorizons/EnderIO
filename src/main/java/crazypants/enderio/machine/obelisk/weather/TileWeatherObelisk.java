@@ -2,7 +2,6 @@ package crazypants.enderio.machine.obelisk.weather;
 
 import java.awt.Color;
 
-import crazypants.enderio.machine.RedstoneControlMode;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Items;
@@ -25,6 +24,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.machine.AbstractPowerConsumerEntity;
+import crazypants.enderio.machine.RedstoneControlMode;
 import crazypants.enderio.machine.SlotDefinition;
 import crazypants.enderio.network.PacketHandler;
 import crazypants.enderio.power.Capacitors;
@@ -235,7 +235,7 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
         boolean res = false;
 
         if (cooldown > 0) {
-            cooldown --;
+            cooldown--;
             res = true;
             return res;
         }
@@ -296,7 +296,8 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
 
     public void startTask() {
         if (!worldObj.isRemote) {
-            PacketHandler.INSTANCE.sendToDimension(new PacketActivateWeather(this, true), worldObj.provider.dimensionId);
+            PacketHandler.INSTANCE
+                    .sendToDimension(new PacketActivateWeather(this, true), worldObj.provider.dimensionId);
         }
         if (getActiveTask() == null && inputTank.getFluidAmount() > 0) {
             fluidUsed = 0;
@@ -313,7 +314,8 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
             activeTask = null;
             fluidUsed = 0;
             if (!worldObj.isRemote) {
-                PacketHandler.INSTANCE.sendToDimension(new PacketActivateWeather(this, false), worldObj.provider.dimensionId);
+                PacketHandler.INSTANCE
+                        .sendToDimension(new PacketActivateWeather(this, false), worldObj.provider.dimensionId);
             } else {
                 playedFuse = false;
             }

@@ -3,7 +3,6 @@ package crazypants.enderio.machine.obelisk.weather;
 import java.awt.Color;
 import java.awt.Rectangle;
 
-import com.enderio.core.client.gui.button.ToggleButton;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fluids.FluidStack;
@@ -12,6 +11,7 @@ import net.minecraftforge.fluids.FluidTank;
 import org.lwjgl.opengl.GL11;
 
 import com.enderio.core.client.gui.button.IconButton;
+import com.enderio.core.client.gui.button.ToggleButton;
 import com.enderio.core.client.gui.widget.GuiToolTip;
 import com.enderio.core.client.render.RenderUtil;
 
@@ -161,12 +161,12 @@ public class GuiWeatherObelisk extends GuiPoweredMachineBase<TileWeatherObelisk>
     @Override
     protected void actionPerformed(GuiButton b) {
         super.actionPerformed(b);
-         if (b.id == 0) {
-             // Start Button
+        if (b.id == 0) {
+            // Start Button
             getTileEntity().startTask();
             PacketHandler.INSTANCE.sendToServer(new PacketActivateWeather(getTileEntity(), true));
         } else if (b.id == 1) {
-             // Control Mode Button
+            // Control Mode Button
             boolean pulseControl = buttonMode.isSelected();
             getTileEntity().setLaunchOnRedstone(pulseControl);
             pulseControlAction(pulseControl);
