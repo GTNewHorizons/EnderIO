@@ -2,6 +2,7 @@ package crazypants.enderio.machine.obelisk.weather;
 
 import java.awt.Color;
 
+import crazypants.enderio.machine.RedstoneControlMode;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Items;
@@ -232,7 +233,7 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
     protected boolean processTasks(boolean redstoneCheckPassed) {
         boolean res = false;
 
-        if (!redstoneCheckPassed) {
+        if (!redstoneCheckPassed && !pulseControl) {
             if (canBeActive) {
                 canBeActive = false;
                 res = true;
@@ -259,6 +260,9 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
                     stopTask();
                     res = true;
                 }
+            } else if (pulseControl && RedstoneControlMode.isConditionMet(RedstoneControlMode.ON, this)) {
+                startTask();
+                res = true;
             }
         }
 
