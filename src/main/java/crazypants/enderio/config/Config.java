@@ -595,6 +595,8 @@ public final class Config {
 
     public static boolean strictTPItemChecking = true;
 
+    public static float fusedQuartzExplosionResistance = 2000.0f;
+
     public static void load(FMLPreInitializationEvent event) {
         PacketHandler.INSTANCE
                 .registerMessage(PacketConfigSync.class, PacketConfigSync.class, PacketHandler.nextID(), Side.CLIENT);
@@ -2969,6 +2971,13 @@ public final class Config {
                 strictTPItemChecking,
                 "If true, turn on strict checking of item energy checking. This might cause traveling tools from third party mods to fire fake security warnings on server side and not function correctly.")
                 .getBoolean(strictTPItemChecking);
+        fusedQuartzExplosionResistance = config.getFloat(
+                "fusedQuartzExplosionResistance",
+                sectionMisc.name,
+                2000.0f,
+                0.0f,
+                Float.MAX_VALUE,
+                "How blast resistant the three Fused Quartz blocks should be.");
     }
 
     public static void checkYetaAccess() {
