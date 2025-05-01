@@ -168,6 +168,9 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
     @Override
     public void doUpdate() {
         super.doUpdate();
+        if (cooldown > 0) {
+            cooldown--;
+        }
         if (worldObj.isRemote && isActive() && worldObj.getTotalWorldTime() % 2 == 0) {
             doLoadingParticles();
         }
@@ -232,12 +235,11 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
 
     @Override
     protected boolean processTasks(boolean redstoneCheckPassed) {
-        boolean res = false;
-
         if (cooldown > 0) {
-            cooldown--;
             return true;
         }
+
+        boolean res = false;
 
         if (!redstoneCheckPassed && !launchOnRedstone) {
             if (canBeActive) {

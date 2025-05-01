@@ -196,6 +196,6 @@ public class GuiWeatherObelisk extends GuiPoweredMachineBase<TileWeatherObelisk>
 
     protected void pulseControlAction(boolean pulseControl) {
         redstoneButton.setVisible(!pulseControl);
-        buttonStart.setEnabled(!pulseControl && getTileEntity().canStartTask(getCurrentTask()) && !getTileEntity().isActive());
+        buttonStart.setEnabled(!pulseControl && getTileEntity().canStartTask(getCurrentTask()));
     }
 }
