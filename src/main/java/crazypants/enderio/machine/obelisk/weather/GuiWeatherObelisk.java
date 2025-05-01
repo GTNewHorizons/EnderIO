@@ -56,7 +56,7 @@ public class GuiWeatherObelisk extends GuiPoweredMachineBase<TileWeatherObelisk>
         int x_start = (xSize / 2) - (BUTTON_SIZE / 2);
         int y = 58;
 
-        buttonMode = new ToggleButton(this, 1, x_mode, y, IconEIO.ROUND_ROBIN_OFF, IconEIO.REDSTONE_MODE_WITH_SIGNAL);
+        buttonMode = new ToggleButton(this, 1, x_mode, y, IconEIO.TICK, IconEIO.REDSTONE_MODE_WITH_SIGNAL);
 
         buttonMode.setToolTip(EnderIO.lang.localize("gui.machine.weather.control"));
         buttonMode.setSelectedToolTip(EnderIO.lang.localize("gui.machine.weather.redstone"));
@@ -65,7 +65,7 @@ public class GuiWeatherObelisk extends GuiPoweredMachineBase<TileWeatherObelisk>
         addButton(buttonMode);
         buttonMode.onGuiInit();
 
-        buttonStart = new IconButton(this, 0, x_start, y, IconEIO.TICK);
+        buttonStart = new IconButton(this, 0, x_start, y, IconEIO.MINUS);
         buttonStart.setToolTip(EnderIO.lang.localize("gui.machine.weather.run"));
 
         addButton(buttonStart);
@@ -86,13 +86,31 @@ public class GuiWeatherObelisk extends GuiPoweredMachineBase<TileWeatherObelisk>
         boolean pulseControl = getTileEntity().getLaunchOnRedstone();
         pulseControlAction(pulseControl);
 
-        FluidStack fs = getTileEntity().getInputTank().getFluid();
-        if (fs == null) {
+        WeatherTask task = getCurrentTask();
+        if (task == null) {
+            buttonStart.setIcon(IconEIO.MINUS);
             buttonStart.enabled = false;
             return;
         }
-        WeatherTask task = WeatherTask.fromFluid(fs.getFluid());
-        buttonStart.enabled = getTileEntity().canStartTask(task);
+        switch (task) {
+            case CLEAR:
+                buttonStart.setIcon(IconEIO.SUN);
+                break;
+            case RAIN:
+                buttonStart.setIcon(IconEIO.RAIN);
+                break;
+            case STORM:
+                buttonStart.setIcon(IconEIO.THUNDER);
+                break;
+        }
+    }
+
+    protected WeatherTask getCurrentTask() {
+        FluidStack fs = getTileEntity().getInputTank().getFluid();
+        if (fs == null) {
+            return null;
+        }
+        return WeatherTask.fromFluid(fs.getFluid());
     }
 
     @Override
@@ -165,6 +183,7 @@ public class GuiWeatherObelisk extends GuiPoweredMachineBase<TileWeatherObelisk>
             // Start Button
             getTileEntity().startTask();
             PacketHandler.INSTANCE.sendToServer(new PacketActivateWeather(getTileEntity(), true));
+            buttonStart.setEnabled(false);
         } else if (b.id == 1) {
             // Control Mode Button
             boolean pulseControl = buttonMode.isSelected();
@@ -177,6 +196,6 @@ public class GuiWeatherObelisk extends GuiPoweredMachineBase<TileWeatherObelisk>
 
     protected void pulseControlAction(boolean pulseControl) {
         redstoneButton.setVisible(!pulseControl);
-        buttonStart.setVisible(!pulseControl);
+        buttonStart.setEnabled(!pulseControl && getTileEntity().canStartTask(getCurrentTask()) && !getTileEntity().isActive());
     }
 }
