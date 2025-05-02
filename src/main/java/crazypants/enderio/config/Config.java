@@ -2995,7 +2995,7 @@ public final class Config {
         fusedQuartzExplosionResistance = config.getFloat(
                 "fusedQuartzExplosionResistance",
                 sectionMisc.name,
-                2000.0f,
+                fusedQuartzExplosionResistance,
                 0.0f,
                 Float.MAX_VALUE,
                 "How blast resistant the three Fused Quartz blocks should be.");
