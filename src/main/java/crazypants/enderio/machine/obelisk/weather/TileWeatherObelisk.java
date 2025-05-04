@@ -168,6 +168,9 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
     @Override
     public void doUpdate() {
         super.doUpdate();
+        if (cooldown > 0) {
+            cooldown--;
+        }
         if (worldObj.isRemote && isActive() && worldObj.getTotalWorldTime() % 2 == 0) {
             doLoadingParticles();
         }
@@ -232,20 +235,18 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
 
     @Override
     protected boolean processTasks(boolean redstoneCheckPassed) {
-        boolean res = false;
-
         if (cooldown > 0) {
-            cooldown--;
-            res = true;
-            return res;
+            return true;
         }
+
+        boolean res = false;
 
         if (!redstoneCheckPassed && !launchOnRedstone) {
             if (canBeActive) {
                 canBeActive = false;
-                res = true;
+                return true;
             }
-            return res;
+            return false;
         } else {
             canBeActive = true;
 
@@ -291,7 +292,8 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
     public boolean canStartTask(WeatherTask task) {
         return getActiveTask() == null && !WeatherTask.worldIsState(task, worldObj)
                 && getStackInSlot(0) != null
-                && inputTank.getFluidAmount() >= 1000;
+                && inputTank.getFluidAmount() >= 1000
+                && cooldown <= 0;
     }
 
     public void startTask() {
@@ -313,6 +315,7 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
         if (getActiveTask() != null) {
             activeTask = null;
             fluidUsed = 0;
+            cooldown = 200;
             if (!worldObj.isRemote) {
                 PacketHandler.INSTANCE
                         .sendToDimension(new PacketActivateWeather(this, false), worldObj.provider.dimensionId);

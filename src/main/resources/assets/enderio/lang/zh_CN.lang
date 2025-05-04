@@ -613,8 +613,6 @@ tile.blockExperienceObelisk.tooltip.detailed.line3=至相邻的储罐中
 
 tile.blockWeatherObelisk.name=气象方尖碑
 tile.blockWeatherObelisk.tooltip.detailed.line1=改变当前天气
-tile.blockWeatherObelisk.tooltip.detailed.line2=需要大量能量
-tile.blockWeatherObelisk.tooltip.detailed.line3=和催化物品
 
 tile.blockBuffer.item.name=物品缓存器
 tile.blockBuffer.power.name=能量缓存器
