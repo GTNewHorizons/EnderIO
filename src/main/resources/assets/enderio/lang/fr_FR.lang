@@ -464,8 +464,6 @@ tile.blockExperienceObelisk.tooltip.detailed.line3=aux réservoirs adjacents
 
 tile.blockWeatherObelisk.name=Obélisque Météo
 tile.blockWeatherObelisk.tooltip.detailed.line1=Change la météo
-tile.blockWeatherObelisk.tooltip.detailed.line2=Requiert beaucoup d'énergie et 
-tile.blockWeatherObelisk.tooltip.detailed.line3=un objet catalyste
 
 tile.blockBuffer.item.name=Stock Tampon d'objet
 tile.blockBuffer.power.name=Stock Tampon d'énergie
