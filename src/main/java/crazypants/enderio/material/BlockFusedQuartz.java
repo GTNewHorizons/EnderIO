@@ -129,7 +129,7 @@ public class BlockFusedQuartz extends BlockEio {
         int meta = world.getBlockMetadata(x, y, z);
         Type type = Type.byMeta(meta);
         if (type.blastResistance) {
-            return 20;
+            return Config.fusedQuartzExplosionResistance;
         } else {
             return super.getExplosionResistance(par1Entity);
         }
