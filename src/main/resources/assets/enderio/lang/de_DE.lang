@@ -564,8 +564,6 @@ tile.blockExperienceObelisk.tooltip.detailed.line3=anliegende Tanks abgeben.
 
 tile.blockWeatherObelisk.name=Wetterobelisk
 tile.blockWeatherObelisk.tooltip.detailed.line1=Ändere das derzeitige Wetter
-tile.blockWeatherObelisk.tooltip.detailed.line2=Benötigt eine Menge an Energie
-tile.blockWeatherObelisk.tooltip.detailed.line3=und ein Katalysator-Item
 
 tile.blockBuffer.item.name=Item-Puffer
 tile.blockBuffer.power.name=Energiepuffer

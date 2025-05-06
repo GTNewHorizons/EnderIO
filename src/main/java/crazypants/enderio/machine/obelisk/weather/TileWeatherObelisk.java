@@ -24,6 +24,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.machine.AbstractPowerConsumerEntity;
+import crazypants.enderio.machine.RedstoneControlMode;
 import crazypants.enderio.machine.SlotDefinition;
 import crazypants.enderio.network.PacketHandler;
 import crazypants.enderio.power.Capacitors;
@@ -100,6 +101,9 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
     private boolean canBeActive = true;
     private boolean tanksDirty;
 
+    private boolean launchOnRedstone = false;
+    private int cooldown = 0;
+
     private static final ICapacitor cap = Capacitors.BASIC_CAPACITOR.capacitor;
 
     private FluidTank inputTank = new FluidTank(8000);
@@ -164,6 +168,9 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
     @Override
     public void doUpdate() {
         super.doUpdate();
+        if (cooldown > 0) {
+            cooldown--;
+        }
         if (worldObj.isRemote && isActive() && worldObj.getTotalWorldTime() % 2 == 0) {
             doLoadingParticles();
         }
@@ -228,14 +235,18 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
 
     @Override
     protected boolean processTasks(boolean redstoneCheckPassed) {
+        if (cooldown > 0) {
+            return true;
+        }
+
         boolean res = false;
 
-        if (!redstoneCheckPassed) {
+        if (!redstoneCheckPassed && !launchOnRedstone) {
             if (canBeActive) {
                 canBeActive = false;
-                res = true;
+                return true;
             }
-            return res;
+            return false;
         } else {
             canBeActive = true;
 
@@ -254,9 +265,13 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
                     EntityWeatherRocket e = new EntityWeatherRocket(worldObj, activeTask);
                     e.setPosition(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5);
                     worldObj.spawnEntityInWorld(e);
+                    cooldown = 200;
                     stopTask();
                     res = true;
                 }
+            } else if (launchOnRedstone && RedstoneControlMode.isConditionMet(RedstoneControlMode.ON, this)) {
+                startTask();
+                res = true;
             }
         }
 
@@ -277,31 +292,33 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
     public boolean canStartTask(WeatherTask task) {
         return getActiveTask() == null && !WeatherTask.worldIsState(task, worldObj)
                 && getStackInSlot(0) != null
-                && inputTank.getFluidAmount() >= 1000;
+                && inputTank.getFluidAmount() >= 1000
+                && cooldown <= 0;
     }
 
-    /**
-     * @return If the operation was successful.
-     */
-    public boolean startTask() {
+    public void startTask() {
         if (getActiveTask() == null && inputTank.getFluidAmount() > 0) {
             fluidUsed = 0;
             WeatherTask task = WeatherTask.fromFluid(inputTank.getFluid().getFluid());
             if (canStartTask(task)) {
+                if (!worldObj.isRemote) {
+                    PacketHandler.INSTANCE
+                            .sendToDimension(new PacketActivateWeather(this, true), worldObj.provider.dimensionId);
+                }
                 decrStackSize(0, 1);
                 activeTask = task;
-                return true;
             }
         }
-        return false;
     }
 
     public void stopTask() {
         if (getActiveTask() != null) {
             activeTask = null;
             fluidUsed = 0;
+            cooldown = 200;
             if (!worldObj.isRemote) {
-                PacketHandler.INSTANCE.sendToDimension(new PacketActivateWeather(this), worldObj.provider.dimensionId);
+                PacketHandler.INSTANCE
+                        .sendToDimension(new PacketActivateWeather(this, false), worldObj.provider.dimensionId);
             } else {
                 playedFuse = false;
             }
@@ -312,12 +329,14 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
     public void writeCommon(NBTTagCompound nbtRoot) {
         super.writeCommon(nbtRoot);
         nbtRoot.setTag("tank", inputTank.writeToNBT(new NBTTagCompound()));
+        nbtRoot.setBoolean("weatherobeliskcontrolmode", launchOnRedstone);
     }
 
     @Override
     public void readCommon(NBTTagCompound nbtRoot) {
         super.readCommon(nbtRoot);
         inputTank.readFromNBT(nbtRoot.getCompoundTag("tank"));
+        launchOnRedstone = nbtRoot.getBoolean("weatherobeliskcontrolmode");
     }
 
     private boolean isValidFluid(Fluid f) {
@@ -381,5 +400,13 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
         return new FluidTankInfo[] { inputTank.getInfo() };
+    }
+
+    public void setLaunchOnRedstone(boolean launchOnRedstone) {
+        this.launchOnRedstone = launchOnRedstone;
+    }
+
+    public boolean getLaunchOnRedstone() {
+        return this.launchOnRedstone;
     }
 }

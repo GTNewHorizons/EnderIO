@@ -74,7 +74,6 @@ public final class Config {
     public static final Section sectionMobConfig = new Section("Mob Config", "mobconfig");
     public static final Section sectionRailConfig = new Section("Rail", "railconfig");
     public static final Section sectionEnchantments = new Section("Enchantments", "enchantments");
-    public static final Section sectionWeather = new Section("Weather", "weather");
     public static final Section sectionTelepad = new Section("Telepad", "telepad");
     public static final Section sectionInventoryPanel = new Section("InventoryPanel", "inventorypanel");
     public static final Section sectionMisc = new Section("Misc", "misc");
@@ -543,10 +542,6 @@ public final class Config {
     public static int spawnGuardPowerPerTickLevelThree = 800;
     public static boolean spawnGuardStopAllSlimesDebug = false;
     public static boolean spawnGuardStopAllSquidSpawning = false;
-
-    public static int weatherObeliskClearFluid = 2000;
-    public static int weatherObeliskRainFluid = 500;
-    public static int weatherObeliskThunderFluid = 1000;
 
     // Loot Defaults
     public static boolean lootDarkSteel = true;
@@ -2747,22 +2742,6 @@ public final class Config {
                 sectionAttractor.name,
                 spawnGuardStopAllSquidSpawning,
                 "When true no squid will be spawned.");
-
-        weatherObeliskClearFluid = config.get(
-                sectionWeather.name,
-                "weatherObeliskClearFluid",
-                weatherObeliskClearFluid,
-                "The fluid required (in mB) to set the world to clear weather").getInt();
-        weatherObeliskRainFluid = config.get(
-                sectionWeather.name,
-                "weatherObeliskRainFluid",
-                weatherObeliskRainFluid,
-                "The fluid required (in mB) to set the world to rainy weather").getInt();
-        weatherObeliskThunderFluid = config.get(
-                sectionWeather.name,
-                "weatherObeliskThunderFluid",
-                weatherObeliskThunderFluid,
-                "The fluid required (in mB) to set the world to thundering weather").getInt();
 
         // Loot Config
         lootDarkSteel = config.getBoolean(

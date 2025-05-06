@@ -425,7 +425,6 @@ tile.blockExperienceObelisk.tooltip.detailed.line2=Puede extraer XP Líquida hac
 
 tile.blockWeatherObelisk.name=Obelisco del Clima
 tile.blockWeatherObelisk.tooltip.detailed.line1=Cambia el clima actual.
-tile.blockWeatherObelisk.tooltip.detailed.line2=Requiere mucha energía y un objeto catalizador.
 
 tile.blockBuffer.item.name=Búfer de Objetos
 tile.blockBuffer.power.name=Búfer de Energía

@@ -613,8 +613,6 @@ tile.blockExperienceObelisk.tooltip.detailed.line3=присоединённым 
 
 tile.blockWeatherObelisk.name=Погодный обелиск
 tile.blockWeatherObelisk.tooltip.detailed.line1=Изменяет текущую погоду
-tile.blockWeatherObelisk.tooltip.detailed.line2=Требует много энергии и
-tile.blockWeatherObelisk.tooltip.detailed.line3=предмет в качестве катализатора
 
 tile.blockBuffer.item.name=Предметный буфер
 tile.blockBuffer.power.name=Энергобуфер
