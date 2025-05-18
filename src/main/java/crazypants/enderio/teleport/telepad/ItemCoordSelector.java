@@ -45,9 +45,8 @@ public class ItemCoordSelector extends Item implements IResourceTooltipProvider 
         setMaxStackSize(1);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public void getSubItems(Item item, CreativeTabs p_150895_2_, @SuppressWarnings("rawtypes") List list) {
+    public void getSubItems(Item item, CreativeTabs p_150895_2_, List<ItemStack> list) {
         ItemStack stack = new ItemStack(item);
         init(stack);
         list.add(stack);

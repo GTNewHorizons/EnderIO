@@ -65,10 +65,9 @@ public class BlockTank extends AbstractMachineBlock<TileTank> implements IAdvanc
         return par1;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs p_149666_2_, List list) {
+    public void getSubBlocks(Item item, CreativeTabs p_149666_2_, List<ItemStack> list) {
         list.add(new ItemStack(this, 1, 0));
         list.add(new ItemStack(this, 1, 1));
     }

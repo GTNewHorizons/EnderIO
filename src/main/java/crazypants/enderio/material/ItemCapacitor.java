@@ -73,9 +73,8 @@ public class ItemCapacitor extends Item implements ICapacitorItem {
     }
 
     @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
+    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
         for (int j = 0; j < Capacitors.values().length; ++j) {
             par3List.add(new ItemStack(par1, 1, j));
             if (Capacitors.values()[j] == Capacitors.TOTEMIC_CAPACITOR) {

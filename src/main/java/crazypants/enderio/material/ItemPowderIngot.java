@@ -61,9 +61,8 @@ public class ItemPowderIngot extends Item {
     }
 
     @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
+    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
         for (int j = 0; j < PowderIngot.values().length; ++j) {
             if (PowderIngot.values()[j].isDependancyMet()) {
                 par3List.add(new ItemStack(par1, 1, j));

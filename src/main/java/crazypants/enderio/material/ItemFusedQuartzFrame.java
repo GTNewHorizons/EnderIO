@@ -40,10 +40,9 @@ public class ItemFusedQuartzFrame extends Item {
                 .registerRecipe(ModObject.blockPainter.unlocalisedName, new FramePainterRecipe(this));
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs p_150895_2_, List list) {
+    public void getSubItems(Item item, CreativeTabs p_150895_2_, List<ItemStack> list) {
         list.add(PainterUtil.applyDefaultPaintedState(new ItemStack(item)));
     }
 

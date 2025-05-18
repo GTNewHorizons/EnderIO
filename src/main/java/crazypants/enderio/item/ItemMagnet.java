@@ -96,7 +96,7 @@ public class ItemMagnet extends ItemEnergyContainer implements IResourceTooltipP
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List par3List) {
+    public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
         ItemStack is = new ItemStack(this);
         setFull(is);
         par3List.add(is);

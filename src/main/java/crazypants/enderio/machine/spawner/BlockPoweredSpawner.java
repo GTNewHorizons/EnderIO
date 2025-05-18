@@ -329,7 +329,7 @@ public class BlockPoweredSpawner extends AbstractMachineBlock<TilePoweredSpawner
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs tab, List list) {
+    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
         super.getSubBlocks(item, tab, list);
         list.add(createItemStackForMob("Enderman"));
         list.add(createItemStackForMob("Chicken"));

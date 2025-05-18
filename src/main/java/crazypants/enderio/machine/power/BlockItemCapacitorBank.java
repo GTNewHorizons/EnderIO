@@ -50,9 +50,8 @@ public class BlockItemCapacitorBank extends ItemBlock implements IEnergyContaine
     }
 
     @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {}
+    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {}
 
     @Override
     public boolean showDurabilityBar(ItemStack itemStack) {

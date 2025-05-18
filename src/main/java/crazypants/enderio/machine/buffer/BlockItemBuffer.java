@@ -53,10 +53,9 @@ public class BlockItemBuffer extends ItemBlockWithMetadata {
         super(block, block);
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List list) {
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> list) {
         for (Type type : Type.values()) {
             list.add(new ItemStack(item, 1, type.ordinal()));
         }

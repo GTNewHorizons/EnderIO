@@ -71,9 +71,8 @@ public class ItemBrokenSpawner extends Item {
     }
 
     @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
+    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
         for (String mobType : CREATIVE_TYPES) {
             par3List.add(createStackForMobType(mobType));
         }

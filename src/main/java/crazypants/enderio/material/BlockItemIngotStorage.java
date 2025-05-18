@@ -29,10 +29,9 @@ public class BlockItemIngotStorage extends ItemBlock {
         return damage;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List list) {
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> list) {
         for (Alloy alloy : Alloy.values()) {
             list.add(new ItemStack(this, 1, alloy.ordinal()));
         }

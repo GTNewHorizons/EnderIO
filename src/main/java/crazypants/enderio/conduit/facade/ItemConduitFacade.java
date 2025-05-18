@@ -65,10 +65,9 @@ public class ItemConduitFacade extends Item implements IAdvancedTooltipProvider,
         GameRegistry.registerItem(this, ModObject.itemConduitFacade.unlocalisedName);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs p_150895_2_, List list) {
+    public void getSubItems(Item item, CreativeTabs p_150895_2_, List<ItemStack> list) {
         for (FacadeType t : FacadeType.values()) {
             list.add(new ItemStack(item, 1, t.ordinal()));
         }

@@ -70,9 +70,8 @@ public class ItemGliderWing extends Item implements IResourceTooltipProvider {
     }
 
     @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
+    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
         for (int j = 0; j < 2; ++j) {
             par3List.add(new ItemStack(par1, 1, j));
         }

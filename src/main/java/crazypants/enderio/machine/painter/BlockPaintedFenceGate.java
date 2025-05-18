@@ -61,10 +61,9 @@ public class BlockPaintedFenceGate extends BlockFenceGate implements ITileEntity
         MachineRecipeRegistry.instance.registerRecipe(ModObject.blockPainter.unlocalisedName, new PainterTemplate());
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs tab, List list) {
+    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
         list.add(PainterUtil.applyDefaultPaintedState(new ItemStack(item)));
     }
 

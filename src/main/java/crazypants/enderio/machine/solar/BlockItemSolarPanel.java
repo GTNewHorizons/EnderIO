@@ -46,9 +46,8 @@ public class BlockItemSolarPanel extends ItemBlockWithMetadata
     }
 
     @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
+    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
         ItemStack stack = new ItemStack(this, 1, 0);
         par3List.add(stack);
         stack = new ItemStack(this, 1, 1);

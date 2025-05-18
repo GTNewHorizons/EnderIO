@@ -142,7 +142,7 @@ public class BlockCapBank extends BlockEio
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List list) {
+    public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List<ItemStack> list) {
         int meta = 0;
         for (CapBankType type : CapBankType.types()) {
             if (type.isCreative()) {

@@ -86,7 +86,7 @@ public class BlockCapacitorBank extends BlockEio implements IGuiHandler, IAdvanc
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List list) {}
+    public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List<ItemStack> list) {}
 
     @Override
     public int damageDropped(int par1) {
