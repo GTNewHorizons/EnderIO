@@ -390,8 +390,8 @@ public class TravelController {
         if (selectedCoord == null) {
             return false;
         }
-        return EnderIO.instance.proxy.getClientPlayer().worldObj
-                .getBlock(selectedCoord.x, selectedCoord.y, selectedCoord.z) == EnderIO.blockEnderIo;
+        return EnderIO.proxy.getClientPlayer().worldObj.getBlock(selectedCoord.x, selectedCoord.y, selectedCoord.z)
+                == EnderIO.blockEnderIo;
     }
 
     @SubscribeEvent

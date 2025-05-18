@@ -76,7 +76,7 @@ public class ItemXpTransfer extends Item implements IResourceTooltipProvider {
         double xP = player.posX + look.x;
         double yP = player.posY + 1.5;
         double zP = player.posZ + look.z;
-        EnderIO.packetPipeline.INSTANCE.sendTo(new PacketXpTransferEffects(swing, xP, yP, zP), (EntityPlayerMP) player);
+        PacketHandler.INSTANCE.sendTo(new PacketXpTransferEffects(swing, xP, yP, zP), (EntityPlayerMP) player);
         world.playSoundEffect(
                 x + 0.5,
                 y + 0.5,
