@@ -186,7 +186,8 @@ public class DarkSteelRecipeManager {
         return upgrades;
     }
 
-    public void addCommonTooltipEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addCommonTooltipEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list,
+            boolean flag) {
         for (IDarkSteelUpgrade upgrade : upgrades) {
             if (upgrade.hasUpgrade(itemstack)) {
                 upgrade.addCommonEntries(itemstack, entityplayer, list, flag);
@@ -194,7 +195,8 @@ public class DarkSteelRecipeManager {
         }
     }
 
-    public void addBasicTooltipEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addBasicTooltipEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list,
+            boolean flag) {
         for (IDarkSteelUpgrade upgrade : upgrades) {
             if (upgrade.hasUpgrade(itemstack)) {
                 upgrade.addBasicEntries(itemstack, entityplayer, list, flag);
@@ -202,7 +204,8 @@ public class DarkSteelRecipeManager {
         }
     }
 
-    public void addAdvancedTooltipEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addAdvancedTooltipEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list,
+            boolean flag) {
 
         List<IDarkSteelUpgrade> applyableUpgrades = new ArrayList<IDarkSteelUpgrade>();
         for (IDarkSteelUpgrade upgrade : upgrades) {

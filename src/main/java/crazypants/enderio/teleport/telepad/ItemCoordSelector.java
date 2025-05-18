@@ -58,9 +58,8 @@ public class ItemCoordSelector extends Item implements IResourceTooltipProvider 
         stack.stackTagCompound.setBoolean("default", true);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean p_77624_4_) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean p_77624_4_) {
         if (!stack.stackTagCompound.getBoolean("default")) {
             list.add(getCoords(stack).chatString(EnumChatFormatting.GRAY));
         }

@@ -30,7 +30,7 @@ public class BlockItemPaintedCarpet extends ItemBlock {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack item, EntityPlayer par2EntityPlayer, List list, boolean par4) {
+    public void addInformation(ItemStack item, EntityPlayer par2EntityPlayer, List<String> list, boolean par4) {
         super.addInformation(item, par2EntityPlayer, list, par4);
         list.add(PainterUtil.getTooltTipText(item));
     }

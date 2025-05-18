@@ -170,7 +170,7 @@ public class BlockTank extends AbstractMachineBlock<TileTank> implements IAdvanc
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {}
+    public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {}
 
     @Override
     public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX,
@@ -200,7 +200,7 @@ public class BlockTank extends AbstractMachineBlock<TileTank> implements IAdvanc
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         if (itemstack.stackTagCompound != null && itemstack.stackTagCompound.hasKey("tankContents")) {
             FluidStack fl = FluidStack
                     .loadFluidStackFromNBT((NBTTagCompound) itemstack.stackTagCompound.getTag("tankContents"));
@@ -218,7 +218,7 @@ public class BlockTank extends AbstractMachineBlock<TileTank> implements IAdvanc
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         SpecialTooltipHandler.addDetailedTooltipFromResources(list, itemstack);
         if (itemstack.getItemDamage() == 1) {
             list.add(EnumChatFormatting.ITALIC + EnderIO.lang.localize("blastResistant"));

@@ -170,10 +170,9 @@ public class ItemConduitFacade extends Item implements IAdvancedTooltipProvider,
         return result;
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack item, EntityPlayer par2EntityPlayer, List list, boolean par4) {
+    public void addInformation(ItemStack item, EntityPlayer par2EntityPlayer, List<String> list, boolean par4) {
         super.addInformation(item, par2EntityPlayer, list, par4);
     }
 
@@ -182,15 +181,13 @@ public class ItemConduitFacade extends Item implements IAdvancedTooltipProvider,
         return getUnlocalizedName();
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     @SideOnly(Side.CLIENT)
-    public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {}
+    public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {}
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     @SideOnly(Side.CLIENT)
-    public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         if (PainterUtil.getSourceBlock(itemstack) == null) {
             list.add(EnderIO.lang.localize("item.itemConduitFacade.tooltip.notpainted"));
         } else {
@@ -198,10 +195,9 @@ public class ItemConduitFacade extends Item implements IAdvancedTooltipProvider,
         }
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     @SideOnly(Side.CLIENT)
-    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         SpecialTooltipHandler.addDetailedTooltipFromResources(list, itemstack);
         if (itemstack.getItemDamage() == FacadeType.HARDENED.ordinal()) {
             list.add("");

@@ -78,10 +78,10 @@ public class ItemBrokenSpawner extends Item {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List<String> par3List,
+            boolean par4) {
         if (par1ItemStack != null && par1ItemStack.stackTagCompound != null) {
             String mobName = getMobTypeFromStack(par1ItemStack);
             if (mobName != null) {

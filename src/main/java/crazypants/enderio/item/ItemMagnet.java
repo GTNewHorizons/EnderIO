@@ -108,7 +108,7 @@ public class ItemMagnet extends ItemEnergyContainer implements IResourceTooltipP
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack itemStack, EntityPlayer par2EntityPlayer, List list, boolean par4) {
+    public void addInformation(ItemStack itemStack, EntityPlayer par2EntityPlayer, List<String> list, boolean par4) {
         super.addInformation(itemStack, par2EntityPlayer, list, par4);
         String str = PowerDisplayUtil.formatPower(getEnergyStored(itemStack)) + "/"
                 + PowerDisplayUtil.formatPower(getMaxEnergyStored(itemStack))

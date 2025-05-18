@@ -162,11 +162,11 @@ public class BlockCapBank extends BlockEio
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {}
+    public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {}
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         list.add(
                 PowerDisplayUtil.formatStoredPower(
                         PowerHandlerUtil.getStoredEnergyForItem(itemstack),
@@ -180,7 +180,7 @@ public class BlockCapBank extends BlockEio
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         SpecialTooltipHandler.addDetailedTooltipFromResources(list, itemstack);
     }
 

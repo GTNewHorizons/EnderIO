@@ -101,7 +101,8 @@ public class ItemCapacitor extends Item implements ICapacitorItem {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List<String> par3List,
+            boolean par4) {
         if (par1ItemStack != null && par1ItemStack.getItemDamage() > 0 && par1ItemStack.getItemDamage() != 7) {
             par3List.add(EnderIO.lang.localize("machine.tooltip.upgrade"));
             if (SpecialTooltipHandler.showAdvancedTooltips()) {

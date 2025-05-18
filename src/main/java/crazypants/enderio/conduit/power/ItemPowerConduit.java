@@ -51,7 +51,7 @@ public class ItemPowerConduit extends AbstractItemConduit {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack itemStack, EntityPlayer par2EntityPlayer, List list, boolean par4) {
+    public void addInformation(ItemStack itemStack, EntityPlayer par2EntityPlayer, List<String> list, boolean par4) {
         if (PREFIX == null) {
             POSTFIX = " " + PowerDisplayUtil.abrevation() + PowerDisplayUtil.perTickStr();
             PREFIX = EnderIO.lang.localize("power.maxOutput") + " ";
