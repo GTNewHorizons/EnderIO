@@ -35,8 +35,6 @@ public class UserIdent {
         return uuid != null ? uuid : uuid_offline;
     }
 
-    @SuppressWarnings("null")
-    // it's final(!), eclipse...
     public String getUUIDString() {
         return uuid != null ? uuid.toString() : NONE_MARKER;
     }
@@ -45,6 +43,7 @@ public class UserIdent {
      * Create a UserIdent from a UUID object and a name. Use this when reading stored data, it will check for username
      * changes, implement them and write a log message.
      */
+    @SuppressWarnings("unlikely-arg-type")
     public static @Nonnull UserIdent create(@Nullable UUID uuid, @Nullable String playerName) {
         if (uuid != null) {
             if (nobody.equals(uuid)) {
@@ -75,6 +74,7 @@ public class UserIdent {
      * Create a UserIdent from a UUID string and a name. Use this when reading stored data, it will check for username
      * changes, implement them and write a log message.
      */
+    @SuppressWarnings("unlikely-arg-type")
     public static @Nonnull UserIdent create(@Nonnull String suuid, @Nullable String playerName) {
         if (NONE_MARKER.equals(suuid)) {
             return new UserIdent(null, playerName);
@@ -132,8 +132,6 @@ public class UserIdent {
         this.playerName = playerName != null ? playerName : "[" + uuid + "]";
     }
 
-    @SuppressWarnings("null")
-    // it's final(!), eclipse...
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -146,8 +144,6 @@ public class UserIdent {
     /**
      * Please note that a UserIdent will successfully equal against GameProfiles and UUIDs.
      */
-    @SuppressWarnings("null")
-    // it's final(!), eclipse...
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -173,8 +169,6 @@ public class UserIdent {
         return false;
     }
 
-    @SuppressWarnings("null")
-    // it's final(!), eclipse...
     public void saveToNbt(NBTTagCompound nbt, String prefix) {
         if (uuid != null) {
             nbt.setString(prefix + ".uuid", uuid.toString());
