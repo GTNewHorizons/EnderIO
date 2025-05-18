@@ -283,7 +283,6 @@ public class PowerConduit extends AbstractConduit implements IPowerConduit {
     }
 
     private boolean isRedstoneEnabled(ForgeDirection dir) {
-        boolean result;
         RedstoneControlMode mode = getExtractionRedstoneMode(dir);
         if (mode == RedstoneControlMode.NEVER) {
             return false;

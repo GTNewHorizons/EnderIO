@@ -1,6 +1,5 @@
 package crazypants.enderio.machine.enchanter;
 
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -235,7 +234,6 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         if (currentEnchantment == null) {
             return 0;
         }
-        Enchantment enchantment = currentEnchantment.getEnchantment();
         int level = currentEnchantment.getLevelForStackSize(item.stackSize);
         return getEnchantmentCost(currentEnchantment, level);
     }

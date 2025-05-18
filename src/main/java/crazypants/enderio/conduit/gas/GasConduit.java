@@ -10,7 +10,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.enderio.core.client.render.IconUtil;
-import com.enderio.core.common.util.BlockCoord;
 
 import cpw.mods.fml.common.Optional.Method;
 import cpw.mods.fml.relauncher.Side;
@@ -88,7 +87,6 @@ public class GasConduit extends AbstractGasTankConduit {
     }
 
     private void doExtract() {
-        BlockCoord loc = getLocation();
         if (!hasConnectionMode(ConnectionMode.INPUT)) {
             return;
         }
@@ -103,7 +101,6 @@ public class GasConduit extends AbstractGasTankConduit {
             return;
         }
 
-        Gas f = tank.getGas() == null ? null : tank.getGas().getGas();
         for (ForgeDirection dir : externalConnections) {
             if (autoExtractForDir(dir)) {
                 if (network.extractFrom(this, dir, MAX_EXTRACT_PER_TICK)) {

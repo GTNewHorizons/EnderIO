@@ -4,8 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 
 import com.enderio.core.common.util.BlockCoord;
 
@@ -23,9 +21,6 @@ public class NetherWartFarmer extends CustomSeedFarmer {
         if (!farm.isOpen(bc)) {
             return false;
         }
-        World worldObj = farm.getWorldObj();
-        BlockCoord grn = bc.getLocation(ForgeDirection.DOWN);
-        Block blk = worldObj.getBlock(grn.x, grn.y, grn.z);
 
         return plantFromInventory(farm, bc);
     }

@@ -15,7 +15,6 @@ import com.enderio.core.api.client.gui.IResourceTooltipProvider;
 import com.enderio.core.common.util.Util;
 import com.enderio.core.common.vecmath.Vector3d;
 
-import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -77,7 +76,6 @@ public class ItemXpTransfer extends Item implements IResourceTooltipProvider {
         double xP = player.posX + look.x;
         double yP = player.posY + 1.5;
         double zP = player.posZ + look.z;
-        TargetPoint tp = new TargetPoint(player.dimension, x, y, z, 32);
         EnderIO.packetPipeline.INSTANCE.sendTo(new PacketXpTransferEffects(swing, xP, yP, zP), (EntityPlayerMP) player);
         world.playSoundEffect(
                 x + 0.5,

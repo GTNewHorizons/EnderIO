@@ -201,10 +201,8 @@ public class FillGauge implements IInfoRenderer, IResourceManagerReloadListener 
     protected List<Vertex> createGaugeBoundForFace(GaugeKey key, IIcon icon) {
 
         ForgeDirection dir = key.dir;
-        Type type = key.type;
 
         double widthScale = 0.25;
-        double heightScale = 0.8;
 
         double xScale = dir.offsetX == 0 ? widthScale : 1;
         double yScale = 1;

@@ -266,7 +266,6 @@ public class NetworkPowerManager {
 
         float filledRatio = (float) energyStored / maxEnergyStored;
         int energyLeft = energyStored;
-        int given = 0;
         for (IPowerConduit con : network.getConduits()) {
             if (energyLeft > 0) {
                 // NB: use ceil to ensure we dont through away any energy due to
@@ -276,7 +275,6 @@ public class NetworkPowerManager {
                 give = Math.min(give, con.getMaxEnergyStored());
                 give = Math.min(give, energyLeft);
                 con.setEnergyStored(give);
-                given += give;
                 energyLeft -= give;
             } else {
                 con.setEnergyStored(0);

@@ -153,7 +153,6 @@ public class TravelController {
                 BlockCoord belowTarget = target.getLocation(ForgeDirection.DOWN);
                 TileEntity maybeAnchor = belowTarget.getTileEntity(toTp.worldObj);
                 if (!(maybeAnchor instanceof ITravelAccessable)) return "not anchor";
-                ITravelAccessable anchor = (ITravelAccessable) maybeAnchor;
                 if (!isValidTarget(toTp, target, TravelSource.BLOCK)) {
                     return "not valid target";
                 }

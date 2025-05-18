@@ -308,7 +308,6 @@ public abstract class AbstractEnderLiquidConduit extends AbstractLiquidConduit {
     }
 
     private void doExtract() {
-        BlockCoord loc = getLocation();
         if (!hasExtractableMode()) {
             return;
         }
