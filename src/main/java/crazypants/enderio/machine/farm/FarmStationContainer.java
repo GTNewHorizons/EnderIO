@@ -121,11 +121,11 @@ public class FarmStationContainer extends AbstractMachineContainer<TileFarmStati
         }
     }
 
-    private static void clean(List list) {
-        Iterator iterator = list.iterator();
+    private static void clean(List<ItemStack> list) {
+        Iterator<ItemStack> iterator = list.iterator();
         while (iterator.hasNext()) {
-            final Object o = iterator.next();
-            if (o == null || (o instanceof ItemStack && ((ItemStack) o).getItem() == null)) {
+            final ItemStack o = iterator.next();
+            if (o == null || o.getItem() == null) {
                 iterator.remove();
             }
         }

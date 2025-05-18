@@ -155,7 +155,7 @@ public class EnderRailController {
         offset.scale(buf);
         offset.x = Math.abs(offset.x);
         offset.z = Math.abs(offset.z);
-        List res = worldObj.getEntitiesWithinAABB(
+        List<Entity> res = worldObj.getEntitiesWithinAABB(
                 Entity.class,
                 AxisAlignedBB.getBoundingBox(
                         railCoord.x - offset.x,
@@ -176,7 +176,7 @@ public class EnderRailController {
     }
 
     public static List<EntityMinecart> getMinecartsAt(World world, int x, int y, int z) {
-        List entities = world.getEntitiesWithinAABB(
+        List<EntityMinecart> entities = world.getEntitiesWithinAABB(
                 EntityMinecart.class,
                 AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1));
         List<EntityMinecart> carts = new ArrayList<EntityMinecart>();

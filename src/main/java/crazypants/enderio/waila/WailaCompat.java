@@ -177,7 +177,6 @@ public class WailaCompat implements IWailaDataProvider {
         return currenttip;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {

@@ -224,7 +224,7 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
     }
 
     @Override
-    public boolean mouseClicked(GuiRecipe gui, int button, int recipeIndex) {
+    public boolean mouseClicked(GuiRecipe<?> gui, int button, int recipeIndex) {
         if (button == 0) {
             if (this.transferFluidTanks(gui, recipeIndex, false)) {
                 return true;
@@ -237,7 +237,7 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
         return super.mouseClicked(gui, button, recipeIndex);
     }
 
-    private boolean transferFluidTanks(GuiRecipe gui, int recipeIndex, boolean usage) {
+    private boolean transferFluidTanks(GuiRecipe<?> gui, int recipeIndex, boolean usage) {
         InnerVatRecipe rec = (InnerVatRecipe) arecipes.get(recipeIndex);
         Point pos = GuiDraw.getMousePosition();
         Point offset = gui.getRecipePosition(recipeIndex);

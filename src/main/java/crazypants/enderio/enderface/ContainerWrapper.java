@@ -1,6 +1,9 @@
 package crazypants.enderio.enderface;
 
+import java.util.List;
+
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 
 public class ContainerWrapper extends net.minecraft.inventory.Container {
 
@@ -28,9 +31,8 @@ public class ContainerWrapper extends net.minecraft.inventory.Container {
         return wrapped.getSlot(arg0);
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
-    public java.util.List getInventory() {
+    public List<ItemStack> getInventory() {
         return wrapped.getInventory();
     }
 

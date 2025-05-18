@@ -45,7 +45,6 @@ public class GuiAlloySmelter extends GuiPoweredMachineBase<TileAlloySmelter> {
         addProgressTooltip(103, 35, 14, 14);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initGui() {
         super.initGui();

@@ -62,7 +62,6 @@ public class GuiFarmStation extends GuiPoweredMachineBase<TileFarmStation> {
         return 184;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initGui() {
         super.initGui();

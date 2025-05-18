@@ -11,7 +11,7 @@ import crazypants.enderio.EnderIO;
 import crazypants.enderio.machine.capbank.TileCapBank;
 import io.netty.buffer.ByteBuf;
 
-public abstract class PacketCapBank<T extends PacketCapBank, Q extends IMessage>
+public abstract class PacketCapBank<T extends PacketCapBank<T, Q>, Q extends IMessage>
         implements IMessage, IMessageHandler<T, Q> {
 
     private int x;

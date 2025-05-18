@@ -88,7 +88,6 @@ public class TileVacuumChest extends TileEntityEio
         return false;
     }
 
-    @SuppressWarnings("unchecked")
     private void doHoover() {
 
         int rangeSqr = range * range;

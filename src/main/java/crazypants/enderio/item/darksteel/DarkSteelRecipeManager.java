@@ -144,8 +144,8 @@ public class DarkSteelRecipeManager {
     public static int getEnchantmentRepairCost(ItemStack itemStack) {
         // derived from ContainerRepair
         int res = 0;
-        Map map1 = EnchantmentHelper.getEnchantments(itemStack);
-        Iterator iter = map1.keySet().iterator();
+        Map<Integer, Integer> map1 = EnchantmentHelper.getEnchantments(itemStack);
+        Iterator<Integer> iter = map1.keySet().iterator();
         while (iter.hasNext()) {
             int i1 = ((Integer) iter.next()).intValue();
             Enchantment enchantment = Enchantment.enchantmentsList[i1];

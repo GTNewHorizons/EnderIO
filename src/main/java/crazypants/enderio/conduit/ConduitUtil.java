@@ -43,7 +43,7 @@ public class ConduitUtil {
 
     public static final Random RANDOM = new Random();
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings("unchecked")
     public static void ensureValidNetwork(IConduit conduit) {
         TileEntity te = conduit.getBundle().getEntity();
         World world = te.getWorldObj();
@@ -54,13 +54,15 @@ public class ConduitUtil {
             return;
         }
 
+        @SuppressWarnings("rawtypes")
         AbstractConduitNetwork res = conduit.createNetworkForType();
         res.init(conduit.getBundle(), connections, world);
         return;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings("unchecked")
     private static boolean reuseNetwork(IConduit con, Collection<? extends IConduit> connections, World world) {
+        @SuppressWarnings("rawtypes")
         AbstractConduitNetwork network = null;
         for (IConduit conduit : connections) {
             if (network == null) {

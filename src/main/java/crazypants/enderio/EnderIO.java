@@ -810,7 +810,6 @@ public class EnderIO {
         return Config.xpJuiceName;
     }
 
-    @SuppressWarnings("unchecked")
     private void addModIntegration() {
 
         if (Loader.isModLoaded("TConstruct")) {
@@ -821,6 +820,7 @@ public class EnderIO {
 
                 Class<?> modFluxClass = Class.forName("tconstruct.modifiers.tools.ModFlux");
                 Field batteriesField = modFluxClass.getField("batteries");
+                @SuppressWarnings("unchecked")
                 List<ItemStack> batteries = (List<ItemStack>) batteriesField.get(modFluxInst);
                 batteries.add(new ItemStack(blockCapBank));
                 Log.info("Registered Capacitor Banks as Tinkers Construct Flux Upgrades");

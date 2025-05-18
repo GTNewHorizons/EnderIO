@@ -47,10 +47,10 @@ public class TechneMachineRenderer<T extends AbstractMachineEntity> extends Tech
         super.renderInventoryBlock(block, metadata, modelId, renderer);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
             RenderBlocks renderer) {
+        @SuppressWarnings("unchecked")
         T te = (T) world.getTileEntity(x, y, z);
         if (te != null) {
             setFacingDir(te.getFacingDir());

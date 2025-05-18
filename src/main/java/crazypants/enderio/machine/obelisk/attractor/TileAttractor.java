@@ -306,7 +306,7 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
     }
 
     private void cancelCurrentTasks(EntityLiving ent) {
-        Iterator iterator = ent.tasks.taskEntries.iterator();
+        Iterator<EntityAITasks.EntityAITaskEntry> iterator = ent.tasks.taskEntries.iterator();
 
         List<EntityAITasks.EntityAITaskEntry> currentTasks = new ArrayList<EntityAITasks.EntityAITaskEntry>();
         while (iterator.hasNext()) {

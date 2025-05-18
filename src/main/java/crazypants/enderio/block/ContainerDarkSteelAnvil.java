@@ -23,7 +23,6 @@ public class ContainerDarkSteelAnvil extends ContainerRepair {
     private final Field _materialCost = ReflectionHelper
             .findField(ContainerRepair.class, "materialCost", "stackSizeToBeUsedInRepair", "field_82856_l");
 
-    @SuppressWarnings("unchecked")
     public ContainerDarkSteelAnvil(InventoryPlayer playerInv, final World world, final int x, final int y, final int z,
             EntityPlayer player) {
         super(playerInv, world, x, y, z, player);
