@@ -328,7 +328,7 @@ public class ItemDarkSteelAxe extends ItemAxe
         public int compare(BlockCoord arg0, BlockCoord arg1) {
             int d1 = refPoint.getDistSq(arg0);
             int d2 = refPoint.getDistSq(arg1);
-            return compare(d1, d1);
+            return compare(d1, d2);
         }
 
         // NB: Copy of Integer.compare, which i sonly in Java 1.7+
