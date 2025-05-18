@@ -13,6 +13,7 @@ import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.IMachineRecipe;
 import crazypants.enderio.machine.MachineRecipeInput;
 import crazypants.enderio.machine.recipe.RecipeBonusType;
+import crazypants.enderio.machine.spawner.ItemBrokenSpawner;
 import crazypants.enderio.machine.spawner.PoweredSpawnerConfig;
 import crazypants.enderio.xp.XpUtil;
 
@@ -77,7 +78,7 @@ public class SoulBinderSpawnerRecipe implements IMachineRecipe, ISoulBinderRecip
         if (mobType == null) {
             return new ResultStack[0];
         }
-        ItemStack spawner = EnderIO.itemBrokenSpawner.createStackForMobType(mobType);
+        ItemStack spawner = ItemBrokenSpawner.createStackForMobType(mobType);
         if (spawner == null) {
             return new ResultStack[0];
         }

@@ -542,6 +542,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
         return result;
     }
 
+    @SuppressWarnings("unchecked")
     private void addConnectors(List<CollidableComponent> result) {
 
         if (conduits.isEmpty()) {
@@ -965,7 +966,6 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
         return (IGridNode) node;
     }
 
-    @SuppressWarnings("cast")
     @Override
     @Method(modid = "appliedenergistics2")
     public void setGridNode(Object node) {

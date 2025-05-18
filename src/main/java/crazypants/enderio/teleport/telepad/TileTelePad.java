@@ -595,7 +595,6 @@ public class TileTelePad extends TileTravelAnchor implements IInternalPowerRecei
         }
     }
 
-    @SuppressWarnings("unchecked")
     private List<Entity> getEntitiesInRange() {
         return worldObj.getEntitiesWithinAABB(Entity.class, getRange());
     }

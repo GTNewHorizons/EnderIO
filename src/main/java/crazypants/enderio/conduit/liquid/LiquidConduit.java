@@ -360,7 +360,7 @@ public class LiquidConduit extends AbstractTankConduit {
             return false;
         }
 
-        AbstractTankConduitNetwork n = (AbstractTankConduitNetwork) network;
+        AbstractTankConduitNetwork<?> n = (AbstractTankConduitNetwork<?>) network;
         if (tank.getFluid() == null) {
             tank.setLiquid(n.getFluidType() == null ? null : n.getFluidType().copy());
         } else if (n.getFluidType() == null) {

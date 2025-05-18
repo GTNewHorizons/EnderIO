@@ -182,12 +182,18 @@ import crazypants.enderio.thaumcraft.ThaumcraftCompat;
 import crazypants.enderio.tool.EnderIOCrashCallable;
 import crazypants.util.EE3Util;
 
-@Mod(
-        modid = MODID,
-        name = MOD_NAME,
-        version = VERSION,
-        dependencies = "required-after:CoFHLib@(1.0.3B3,);required-after:endercore;after:MineFactoryReloaded;after:Forestry;after:Waila@[1.5.8,);after:Thaumcraft;after:appliedenergistics2@[rv2-beta-8,);after:chisel;required-after:gtnhlib@[0.2.10,)",
-        guiFactory = "crazypants.enderio.config.ConfigFactoryEIO")
+@Mod(modid = MODID, name = MOD_NAME, version = VERSION, dependencies = """
+        required-after:CoFHLib@[1.7.10R1.0.3B3,);\
+        required-after:endercore;\
+        required-after:gtnhlib@[0.2.10,);\
+        after:MineFactoryReloaded;\
+        after:Forestry;\
+        after:Waila@[1.5.8,);\
+        after:Thaumcraft;\
+        after:appliedenergistics2@[rv2-beta-8,);\
+        after:chisel;\
+        after:Railcraft@[9.16.7,)\
+        """, guiFactory = "crazypants.enderio.config.ConfigFactoryEIO")
 public class EnderIO {
 
     public static final String MODID = "EnderIO";
@@ -810,7 +816,6 @@ public class EnderIO {
         return Config.xpJuiceName;
     }
 
-    @SuppressWarnings("unchecked")
     private void addModIntegration() {
 
         if (Loader.isModLoaded("TConstruct")) {
@@ -821,6 +826,7 @@ public class EnderIO {
 
                 Class<?> modFluxClass = Class.forName("tconstruct.modifiers.tools.ModFlux");
                 Field batteriesField = modFluxClass.getField("batteries");
+                @SuppressWarnings("unchecked")
                 List<ItemStack> batteries = (List<ItemStack>) batteriesField.get(modFluxInst);
                 batteries.add(new ItemStack(blockCapBank));
                 Log.info("Registered Capacitor Banks as Tinkers Construct Flux Upgrades");

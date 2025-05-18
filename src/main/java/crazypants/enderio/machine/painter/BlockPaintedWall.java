@@ -61,10 +61,9 @@ public class BlockPaintedWall extends BlockWall implements ITileEntityProvider, 
         return result;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs tab, List list) {
+    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
         list.add(PainterUtil.applyDefaultPaintedState(new ItemStack(item)));
     }
 
@@ -202,7 +201,6 @@ public class BlockPaintedWall extends BlockWall implements ITileEntityProvider, 
 
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack) {
-        int id = -1;
         Block b = PainterUtil.getSourceBlock(stack);
 
         TileEntity te = world.getTileEntity(x, y, z);

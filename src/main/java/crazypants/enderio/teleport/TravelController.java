@@ -153,7 +153,6 @@ public class TravelController {
                 BlockCoord belowTarget = target.getLocation(ForgeDirection.DOWN);
                 TileEntity maybeAnchor = belowTarget.getTileEntity(toTp.worldObj);
                 if (!(maybeAnchor instanceof ITravelAccessable)) return "not anchor";
-                ITravelAccessable anchor = (ITravelAccessable) maybeAnchor;
                 if (!isValidTarget(toTp, target, TravelSource.BLOCK)) {
                     return "not valid target";
                 }
@@ -391,8 +390,8 @@ public class TravelController {
         if (selectedCoord == null) {
             return false;
         }
-        return EnderIO.instance.proxy.getClientPlayer().worldObj
-                .getBlock(selectedCoord.x, selectedCoord.y, selectedCoord.z) == EnderIO.blockEnderIo;
+        return EnderIO.proxy.getClientPlayer().worldObj.getBlock(selectedCoord.x, selectedCoord.y, selectedCoord.z)
+                == EnderIO.blockEnderIo;
     }
 
     @SubscribeEvent

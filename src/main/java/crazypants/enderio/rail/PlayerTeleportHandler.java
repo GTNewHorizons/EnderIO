@@ -13,7 +13,6 @@ import com.enderio.core.common.util.EntityUtil;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
-import crazypants.enderio.EnderIO;
 import crazypants.enderio.machine.transceiver.TileTransceiver;
 
 public class PlayerTeleportHandler {
@@ -56,7 +55,7 @@ public class PlayerTeleportHandler {
             int meta = reciever.getBlockMetadata();
 
             // Make sure player not on the track and is in a safe position
-            ForgeDirection railDir = EnderIO.blockEnderRail.getDirection(meta);
+            ForgeDirection railDir = BlockEnderRail.getDirection(meta);
             int xOffset = Math.abs(railDir.offsetX);
             int zOffset = Math.abs(railDir.offsetZ);
             BlockCoord startPos = new BlockCoord(reciever).getLocation(ForgeDirection.UP);

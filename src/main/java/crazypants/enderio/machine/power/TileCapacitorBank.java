@@ -1050,7 +1050,6 @@ public class TileCapacitorBank extends TileEntityEio
         inputControlMode = RedstoneControlMode.values()[nbtRoot.getShort("inputControlMode")];
         outputControlMode = RedstoneControlMode.values()[nbtRoot.getShort("outputControlMode")];
 
-        boolean wasMulti = isMultiblock();
         if (nbtRoot.getBoolean("isMultiblock")) {
             int[] coords = nbtRoot.getIntArray("multiblock");
             multiblock = new BlockCoord[coords.length / 3];

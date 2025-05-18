@@ -63,10 +63,9 @@ public class BlockPaintedStair extends BlockStairs implements ITileEntityProvide
         return result;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs tab, List list) {
+    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
         list.add(PainterUtil.applyDefaultPaintedState(new ItemStack(item)));
     }
 

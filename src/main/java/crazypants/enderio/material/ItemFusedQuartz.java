@@ -30,9 +30,8 @@ public class ItemFusedQuartz extends ItemBlockWithMetadata {
     }
 
     @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
+    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
         for (int j = 0; j < BlockFusedQuartz.Type.values().length; ++j) {
             par3List.add(new ItemStack(par1, 1, j));
         }
@@ -40,7 +39,8 @@ public class ItemFusedQuartz extends ItemBlockWithMetadata {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List<String> par3List,
+            boolean par4) {
         int meta = par1ItemStack.getItemDamage();
         Type type = Type.byMeta(meta);
         if (type.blastResistance) {

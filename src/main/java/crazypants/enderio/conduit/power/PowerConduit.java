@@ -137,7 +137,7 @@ public class PowerConduit extends AbstractConduit implements IPowerConduit {
         DyeColor col = DyeColor.getColorFromDye(player.getCurrentEquippedItem());
         if (ConduitUtil.isProbeEquipped(player)) {
             if (!player.worldObj.isRemote) {
-                new PacketConduitProbe().sendInfoMessage(player, this);
+                PacketConduitProbe.sendInfoMessage(player, this);
             }
             return true;
         } else if (col != null && res.component != null && isColorBandRendered(res.component.dir)) {
@@ -283,7 +283,6 @@ public class PowerConduit extends AbstractConduit implements IPowerConduit {
     }
 
     private boolean isRedstoneEnabled(ForgeDirection dir) {
-        boolean result;
         RedstoneControlMode mode = getExtractionRedstoneMode(dir);
         if (mode == RedstoneControlMode.NEVER) {
             return false;
@@ -298,10 +297,12 @@ public class PowerConduit extends AbstractConduit implements IPowerConduit {
         boolean res;
         if (mode == RedstoneControlMode.OFF) {
             // if checking for no signal, must be no signal from both
-            res = mode.isConditionMet(mode, signal) && (col != DyeColor.RED || mode.isConditionMet(mode, exSig));
+            res = RedstoneControlMode.isConditionMet(mode, signal)
+                    && (col != DyeColor.RED || RedstoneControlMode.isConditionMet(mode, exSig));
         } else {
             // if checking for a signal, either is fine
-            res = mode.isConditionMet(mode, signal) || (col == DyeColor.RED && mode.isConditionMet(mode, exSig));
+            res = RedstoneControlMode.isConditionMet(mode, signal)
+                    || (col == DyeColor.RED && RedstoneControlMode.isConditionMet(mode, exSig));
         }
         return res;
     }

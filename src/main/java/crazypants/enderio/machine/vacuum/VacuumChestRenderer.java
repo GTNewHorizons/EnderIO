@@ -74,7 +74,7 @@ public class VacuumChestRenderer implements ISimpleBlockRenderingHandler, IItemR
 
     @Override
     public int getRenderId() {
-        return EnderIO.blockVacuumChest.renderId;
+        return BlockVacuumChest.renderId;
     }
 
     @Override

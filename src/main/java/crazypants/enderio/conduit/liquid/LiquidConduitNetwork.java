@@ -279,13 +279,11 @@ public class LiquidConduitNetwork extends AbstractTankConduitNetwork<LiquidCondu
                 loc.y,
                 loc.z,
                 ILiquidConduit.class);
-        int numTargets = 0;
         for (ILiquidConduit n : connections) {
             LiquidConduit neighbour = (LiquidConduit) n;
             if (canFlowTo(con, neighbour)) { // can only flow within same network
                 totalAmount += neighbour.getTank().getFluidAmount();
                 totalCapacity += neighbour.getTank().getCapacity();
-                numTargets++;
             }
         }
 

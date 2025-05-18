@@ -175,22 +175,18 @@ public class InventoryPanelContainer extends AbstractMachineContainer<TileInvent
         return slotFilter;
     }
 
-    @SuppressWarnings("unchecked")
     public List<Slot> getCraftingGridSlots() {
         return inventorySlots.subList(firstSlotCraftingGrid, endSlotCraftingGrid);
     }
 
-    @SuppressWarnings("unchecked")
     public List<Slot> getReturnAreaSlots() {
         return inventorySlots.subList(firstSlotReturn, endSlotReturn);
     }
 
-    @SuppressWarnings("unchecked")
     public List<Slot> getPlayerInventorySlots() {
         return inventorySlots.subList(startPlayerSlot, endPlayerSlot);
     }
 
-    @SuppressWarnings("unchecked")
     public List<Slot> getPlayerHotbarSlots() {
         return inventorySlots.subList(startHotBarSlot, endHotBarSlot);
     }
@@ -332,7 +328,6 @@ public class InventoryPanelContainer extends AbstractMachineContainer<TileInvent
         super.detectAndSendChanges();
     }
 
-    @SuppressWarnings("unchecked")
     private void sendReturnAreaSlots() {
         for (int slotIdx = firstSlotReturn; slotIdx < endSlotReturn; slotIdx++) {
             ItemStack stack = ((Slot) inventorySlots.get(slotIdx)).getStack();

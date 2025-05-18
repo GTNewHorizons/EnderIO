@@ -15,7 +15,6 @@ public class PacketVisibility implements IMessage, IMessageHandler<PacketVisibil
     int x, y, z;
     boolean visible;
 
-    @SuppressWarnings("unused")
     public PacketVisibility() {}
 
     public PacketVisibility(int x, int y, int z, boolean visible) {

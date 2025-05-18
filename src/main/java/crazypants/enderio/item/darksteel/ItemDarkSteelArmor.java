@@ -131,10 +131,9 @@ public class ItemDarkSteelArmor extends ItemArmor
         GameRegistry.registerItem(this, getUnlocalizedName());
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List par3List) {
+    public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
         ItemStack is = new ItemStack(this);
         par3List.add(is);
 
@@ -169,17 +168,17 @@ public class ItemDarkSteelArmor extends ItemArmor
     }
 
     @Override
-    public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         DarkSteelRecipeManager.instance.addCommonTooltipEntries(itemstack, entityplayer, list, flag);
     }
 
     @Override
-    public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         DarkSteelRecipeManager.instance.addBasicTooltipEntries(itemstack, entityplayer, list, flag);
     }
 
     @Override
-    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         if (!Config.addDurabilityTootip) {
             list.add(ItemUtil.getDurabilityString(itemstack));
         }

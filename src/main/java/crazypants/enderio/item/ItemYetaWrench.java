@@ -190,18 +190,14 @@ public class ItemYetaWrench extends Item
     }
 
     /* IAdvancedTooltipProvider */
-
-    @SuppressWarnings("rawtypes")
     @Override
-    public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {}
+    public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {}
 
-    @SuppressWarnings("rawtypes")
     @Override
-    public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {}
+    public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {}
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         ArrayList<String> tmp = new ArrayList<String>();
         SpecialTooltipHandler.addDetailedTooltipFromResources(tmp, getUnlocalizedName());
         String keyName = Keyboard.getKeyName(KeyTracker.instance.getYetaWrenchMode().getKeyCode());

@@ -56,9 +56,8 @@ public class BlockItemElectricLight extends ItemBlockWithMetadata implements IRe
     }
 
     @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
+    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
         for (Type type : Type.values()) {
             par3List.add(new ItemStack(this, 1, type.ordinal()));
         }

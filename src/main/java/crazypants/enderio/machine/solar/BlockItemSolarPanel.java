@@ -46,9 +46,8 @@ public class BlockItemSolarPanel extends ItemBlockWithMetadata
     }
 
     @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
+    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
         ItemStack stack = new ItemStack(this, 1, 0);
         par3List.add(stack);
         stack = new ItemStack(this, 1, 1);
@@ -57,19 +56,16 @@ public class BlockItemSolarPanel extends ItemBlockWithMetadata
         par3List.add(stack);
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
-    public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         SpecialTooltipHandler.addCommonTooltipFromResources(list, itemstack);
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
-    public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {}
+    public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {}
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         SpecialTooltipHandler.addDetailedTooltipFromResources(list, itemstack);
         int prod = Config.maxPhotovoltaicOutputRF;
         if (itemstack.getItemDamage() == 1) prod = Config.maxPhotovoltaicAdvancedOutputRF;

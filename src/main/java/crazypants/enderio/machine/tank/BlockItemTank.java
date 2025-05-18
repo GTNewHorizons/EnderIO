@@ -47,9 +47,8 @@ public class BlockItemTank extends ItemBlockWithMetadata implements IAdvancedToo
     }
 
     @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
+    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
         ItemStack stack = new ItemStack(this, 1, 0);
         par3List.add(stack);
         stack = new ItemStack(this, 1, 1);
@@ -57,17 +56,17 @@ public class BlockItemTank extends ItemBlockWithMetadata implements IAdvancedToo
     }
 
     @Override
-    public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         EnderIO.blockTank.addCommonEntries(itemstack, entityplayer, list, flag);
     }
 
     @Override
-    public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         EnderIO.blockTank.addBasicEntries(itemstack, entityplayer, list, flag);
     }
 
     @Override
-    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         EnderIO.blockTank.addDetailedEntries(itemstack, entityplayer, list, flag);
     }
 

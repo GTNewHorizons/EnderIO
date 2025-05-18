@@ -77,9 +77,8 @@ public class ItemAlloyEndergy extends Item {
     }
 
     @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
+    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
         for (int j = 0; j < numItems; ++j) {
             par3List.add(new ItemStack(par1, 1, j));
         }

@@ -134,7 +134,7 @@ public class ConduitTank implements IFluidTank {
             addAmount(-used);
         }
 
-        FluidStack drained = new FluidStack(fluid.getFluidID(), used);
+        FluidStack drained = new FluidStack(fluid.getFluid(), used);
 
         if (fluid.amount < 0) {
             fluid.amount = 0;

@@ -923,7 +923,7 @@ public class BlockConduitBundle extends BlockEio
 
     @Override
     public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB axisalignedbb,
-            @SuppressWarnings("rawtypes") List arraylist, Entity par7Entity) {
+            List<AxisAlignedBB> arraylist, Entity par7Entity) {
 
         if (MicroblocksUtil.supportMicroblocks()) {
             IM__addCollisionBoxesToList(world, x, y, z, axisalignedbb, arraylist, par7Entity);
@@ -1261,9 +1261,8 @@ public class BlockConduitBundle extends BlockEio
         return IMultipartSystem.instance.hook_collisionRayTrace(cur, world, x, y, z, src, dst);
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    private void IM__addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB mask, List list,
-            Entity entity) {
+    private void IM__addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB mask,
+            List<AxisAlignedBB> list, Entity entity) {
         IMultipartSystem.instance.hook_addCollisionBoxesToList(world, x, y, z, mask, list, entity);
     }
 

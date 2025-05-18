@@ -14,7 +14,7 @@ import crazypants.enderio.ModObject;
 import crazypants.enderio.machine.AbstractMachineBlock;
 import crazypants.enderio.network.PacketHandler;
 
-public class BlockCrusher extends AbstractMachineBlock {
+public class BlockCrusher extends AbstractMachineBlock<TileCrusher> {
 
     public static BlockCrusher create() {
         PacketHandler.INSTANCE.registerMessage(

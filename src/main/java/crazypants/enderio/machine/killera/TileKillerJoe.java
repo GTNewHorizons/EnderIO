@@ -212,7 +212,6 @@ public class TileKillerJoe extends AbstractMachineEntity
         return itemstack.getItem() == inventory[slot].getItem();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     protected boolean processTasks(boolean redstoneCheckPassed) {
 

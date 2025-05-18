@@ -114,7 +114,7 @@ public class ItemTeleportStaff extends ItemTravelStaff {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List par3List) {
+    public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
         ItemStack is = new ItemStack(this);
         setFull(is);
         par3List.add(is);
@@ -122,7 +122,7 @@ public class ItemTeleportStaff extends ItemTravelStaff {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack itemStack, EntityPlayer par2EntityPlayer, List list, boolean par4) {
+    public void addInformation(ItemStack itemStack, EntityPlayer par2EntityPlayer, List<String> list, boolean par4) {
         super.addInformation(itemStack, par2EntityPlayer, list, par4);
         String str = "Infinite " + PowerDisplayUtil.abrevation();
         list.set(list.size() - 1, str); // Changing charge indicator to infinite RF

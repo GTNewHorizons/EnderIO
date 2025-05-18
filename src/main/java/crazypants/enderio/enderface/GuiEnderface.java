@@ -538,34 +538,13 @@ public class GuiEnderface extends GuiScreen {
         int h = gh;
         int left = guiLeft;
         int top = guiTop;
-        int cx = left + w / 2;
-        int cy = top + h / 2;
 
         // black outline
         drawRect(left, top, left + w, top + h, 0xFF000000);
-        left += 1;
-        top += 1;
-        w -= 2;
-        h -= 2;
-
-        // border
-        int topH = 0xFFFFFFFF;
-        int botH = 0xFF555555;
-        int rightH = 0xFF555555;
-        int leftH = 0xFFFFFFFF;
-        if (animateInX) {
-            leftH = 0xFF555555;
-            rightH = 0xFFFFFFFF;
-        }
-        if (animateInY) {
-            topH = 0xFF555555;
-            botH = 0xFFFFFFFF;
-        }
-
-        left += 1;
-        top += 1;
-        w -= 2;
-        h -= 2;
+        left += 2;
+        top += 2;
+        w -= 4;
+        h -= 4;
         drawRect(left, top, left + w, top + h, 0xFF00331C);
     }
 

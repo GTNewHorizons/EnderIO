@@ -96,7 +96,7 @@ public class ItemDarkSteelAxe extends ItemAxe
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List par3List) {
+    public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
         ItemStack is = new ItemStack(this);
         par3List.add(is);
 
@@ -287,17 +287,17 @@ public class ItemDarkSteelAxe extends ItemAxe
     }
 
     @Override
-    public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         DarkSteelRecipeManager.instance.addCommonTooltipEntries(itemstack, entityplayer, list, flag);
     }
 
     @Override
-    public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         DarkSteelRecipeManager.instance.addBasicTooltipEntries(itemstack, entityplayer, list, flag);
     }
 
     @Override
-    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         if (!Config.addDurabilityTootip) {
             list.add(ItemUtil.getDurabilityString(itemstack));
         }
@@ -328,7 +328,7 @@ public class ItemDarkSteelAxe extends ItemAxe
         public int compare(BlockCoord arg0, BlockCoord arg1) {
             int d1 = refPoint.getDistSq(arg0);
             int d2 = refPoint.getDistSq(arg1);
-            return compare(d1, d1);
+            return compare(d1, d2);
         }
 
         // NB: Copy of Integer.compare, which i sonly in Java 1.7+

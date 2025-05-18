@@ -67,7 +67,7 @@ public class BlockPaintedCarpet extends BlockCarpet implements ITileEntityProvid
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs tab, List list) {
+    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
         ItemStack stack = new ItemStack(item);
         PainterUtil.setSourceBlock(stack, Blocks.stone, 0);
         list.add(stack);

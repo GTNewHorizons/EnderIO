@@ -216,7 +216,7 @@ public class EnergyUpgrade extends AbstractUpgrade {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
 
         List<String> upgradeStr = new ArrayList<String>();
         upgradeStr.add(EnumChatFormatting.DARK_AQUA + EnderIO.lang.localizeExact(getUnlocalizedName() + ".name"));

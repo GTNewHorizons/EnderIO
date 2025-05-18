@@ -93,7 +93,6 @@ public class DefaultConduitRenderer implements ConduitRenderer {
                         tex.getMaxU(),
                         tex.getMinV(),
                         tex.getMaxV());
-                Tessellator tessellator = Tessellator.instance;
                 for (Vertex c : corners) {
                     cr.addVecWithUV(c.xyz, c.uv.x, c.uv.y);
                 }

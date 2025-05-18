@@ -31,6 +31,7 @@ import crazypants.enderio.TileEntityEio;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.IRedstoneModeControlable;
 import crazypants.enderio.machine.RedstoneControlMode;
+import crazypants.enderio.network.PacketHandler;
 import crazypants.enderio.power.BasicCapacitor;
 import crazypants.enderio.power.IInternalPowerHandler;
 import crazypants.enderio.power.IPowerInterface;
@@ -304,7 +305,7 @@ public class TileHyperCube extends TileEntityEio
         boolean powerChanged = lastSyncPowerStored != storedEnergyRF && shouldDoWorkThisTick(21);
         if (powerChanged) {
             lastSyncPowerStored = storedEnergyRF;
-            EnderIO.packetPipeline.sendToAllAround(new PacketStoredPower(this), this);
+            PacketHandler.sendToAllAround(new PacketStoredPower(this), this);
         }
 
         if (requiresClientSync) {

@@ -68,6 +68,7 @@ public class BlockZombieGenerator extends AbstractMachineBlock<TileZombieGenerat
         this(ModObject.blockZombieGenerator, TileZombieGenerator.class);
     }
 
+    @SuppressWarnings("unchecked")
     protected BlockZombieGenerator(ModObject obj, Class<? extends TileZombieGenerator> clazz) {
         super(obj, (Class<TileZombieGenerator>) clazz, Material.anvil);
     }

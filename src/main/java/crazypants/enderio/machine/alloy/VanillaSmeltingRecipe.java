@@ -102,7 +102,6 @@ public class VanillaSmeltingRecipe implements IMachineRecipe {
     @Override
     public ResultStack[] getCompletedResult(float chance, MachineRecipeInput... inputs) {
         ItemStack output = null;
-        int inputCount = 0;
         for (MachineRecipeInput ri : inputs) {
             if (ri != null && ri.item != null && output == null) {
                 output = FurnaceRecipes.smelting().getSmeltingResult(ri.item);

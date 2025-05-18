@@ -14,7 +14,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 
 import com.enderio.core.client.render.IconUtil;
-import com.enderio.core.common.util.BlockCoord;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -92,7 +91,6 @@ public class AdvancedLiquidConduit extends AbstractTankConduit {
     }
 
     private void doExtract() {
-        BlockCoord loc = getLocation();
         // Extraction can happen on extract mode or in/out mode
         if (!hasExtractableMode()) {
             return;
@@ -108,7 +106,6 @@ public class AdvancedLiquidConduit extends AbstractTankConduit {
             return;
         }
 
-        Fluid f = tank.getFluid() == null ? null : tank.getFluid().getFluid();
         for (ForgeDirection dir : externalConnections) {
             if (autoExtractForDir(dir)) {
                 if (network.extractFrom(this, dir, MAX_EXTRACT_PER_TICK)) {

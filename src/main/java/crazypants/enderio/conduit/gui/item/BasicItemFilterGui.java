@@ -107,7 +107,7 @@ public class BasicItemFilterGui implements IItemFilterGui {
         useNbtB.setPaintSelectedBorder(false);
 
         x += 16;
-        fuzzyB = new CycleButton(gui, ID_FUZZY + buttonIdOffset, x, y, FuzzyMode.class);
+        fuzzyB = new CycleButton<>(gui, ID_FUZZY + buttonIdOffset, x, y, FuzzyMode.class);
     }
 
     public void createFilterSlots() {

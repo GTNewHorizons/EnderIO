@@ -120,6 +120,7 @@ public class MagnetController {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private List<Entity> selectEntitiesWithinAABB(World world, AxisAlignedBB bb) {
         List<Entity> arraylist = null;
 

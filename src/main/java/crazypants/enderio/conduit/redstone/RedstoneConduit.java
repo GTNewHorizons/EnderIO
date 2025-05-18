@@ -72,10 +72,9 @@ public class RedstoneConduit extends AbstractConduit implements IRedstoneConduit
 
     protected boolean neighbourDirty = true;
 
-    @SuppressWarnings("unused")
     public RedstoneConduit() {
-        for (ForgeDirection ignored : ForgeDirection.VALID_DIRECTIONS) {
-            externalSignals.add(new HashSet<Signal>());
+        for (int i = 0; i < ForgeDirection.VALID_DIRECTIONS.length; i++) {
+            externalSignals.add(new HashSet<>());
         }
     }
 

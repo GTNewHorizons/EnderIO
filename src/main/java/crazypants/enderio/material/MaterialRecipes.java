@@ -178,10 +178,7 @@ public class MaterialRecipes {
         String stellarAlloy = STELLAR_ALLOY.getOreIngot();
 
         String capacitor = Capacitors.BASIC_CAPACITOR.getOreTag();
-        String capacitorAdv = Capacitors.ACTIVATED_CAPACITOR.getOreTag();
         String capacitorEnder = Capacitors.ENDER_CAPACITOR.getOreTag();
-        String capacitorCrystal = Capacitors.CRYSTALLINE_CAPACITOR.getOreTag();
-        String capacitorMelodic = Capacitors.MELODIC_CAPACITOR.getOreTag();
 
         String ingotCopper = OreDictionary.doesOreNameExist("ingotCopper") && Config.useModMetals ? "ingotCopper"
                 : "ingotIron";

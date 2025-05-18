@@ -40,7 +40,6 @@ public class HyperCubeRegister {
     }
 
     private void innerLoad() {
-        File f = DimensionManager.getCurrentSaveRootDirectory();
         conf = new HyperCubeConfig(
                 new File(DimensionManager.getCurrentSaveRootDirectory(), "enderio/dimensionalTransceiver.cfg"));
         publicChannels.addAll(conf.getPublicChannels());

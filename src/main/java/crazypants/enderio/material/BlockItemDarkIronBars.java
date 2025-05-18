@@ -17,10 +17,10 @@ public class BlockItemDarkIronBars extends ItemBlock {
         super(block);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List<String> par3List,
+            boolean par4) {
         par3List.add(EnderIO.lang.localize("blastResistant"));
     }
 }

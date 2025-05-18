@@ -133,9 +133,8 @@ public class ItemEnderFood extends ItemFood implements IResourceTooltipProvider 
         setHasSubtypes(true);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public void getSubItems(Item item, CreativeTabs tab, List list) {
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> list) {
         for (EnderFood f : EnderFood.VALUES) {
             list.add(f.getStack());
         }

@@ -157,10 +157,9 @@ public class BlockSolarPanel extends BlockEio implements IResourceTooltipProvide
         setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, BLOCK_HEIGHT, 1.0F);
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB,
-            List par6List, Entity par7Entity) {
+            List<AxisAlignedBB> par6List, Entity par7Entity) {
         setBlockBoundsBasedOnState(par1World, par2, par3, par4);
         super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, par7Entity);
     }

@@ -92,7 +92,7 @@ public class ItemDarkSteelShears extends ItemShears
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List par3List) {
+    public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
         ItemStack is = new ItemStack(this);
         par3List.add(is);
 
@@ -163,6 +163,7 @@ public class ItemDarkSteelShears extends ItemShears
         }
     };
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean itemInteractionForEntity(ItemStack itemstack, EntityPlayer player, EntityLivingBase entity) {
         if (entity.worldObj.isRemote) {
@@ -182,15 +183,15 @@ public class ItemDarkSteelShears extends ItemShears
                     entity.posX + Config.darkSteelShearsEntityAreaBoostWhenPowered,
                     entity.posY + Config.darkSteelShearsEntityAreaBoostWhenPowered,
                     entity.posZ + Config.darkSteelShearsEntityAreaBoostWhenPowered);
-            List<Entity> sortedTargets = new ArrayList<Entity>(
+            List<IShearable> sortedTargets = new ArrayList<>(
                     entity.worldObj.selectEntitiesWithinAABB(IShearable.class, bb, selectShearable));
             entityComparator.refPoint = entity;
-            Collections.sort(sortedTargets, entityComparator);
+            Collections.sort((List<Entity>) (Object) sortedTargets, entityComparator);
 
             boolean result = false;
             int maxSheep = Math.min(sortedTargets.size(), powerStored / Config.darkSteelShearsPowerUsePerDamagePoint);
             for (int i = 0; i < maxSheep; i++) {
-                Entity entity2 = sortedTargets.get(i);
+                Entity entity2 = (Entity) sortedTargets.get(i);
                 if (entity2 instanceof EntityLivingBase
                         && super.itemInteractionForEntity(itemstack, player, (EntityLivingBase) entity2)) {
                     result = true;
@@ -264,17 +265,17 @@ public class ItemDarkSteelShears extends ItemShears
     }
 
     @Override
-    public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         DarkSteelRecipeManager.instance.addCommonTooltipEntries(itemstack, entityplayer, list, flag);
     }
 
     @Override
-    public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         DarkSteelRecipeManager.instance.addBasicTooltipEntries(itemstack, entityplayer, list, flag);
     }
 
     @Override
-    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         if (!Config.addDurabilityTootip) {
             list.add(ItemUtil.getDurabilityString(itemstack));
         }

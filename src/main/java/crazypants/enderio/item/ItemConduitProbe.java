@@ -97,7 +97,6 @@ public class ItemConduitProbe extends Item implements IResourceTooltipProvider, 
         if (!(te instanceof IConduitBundle)) {
             return false;
         }
-        IConduitBundle cb = (IConduitBundle) te;
         if (itemStack.getItemDamage() == 0) {
             if (PacketConduitProbe.canCreatePacket(world, x, y, z)) {
                 if (world.isRemote) {

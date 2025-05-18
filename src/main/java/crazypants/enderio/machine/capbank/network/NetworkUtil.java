@@ -17,7 +17,6 @@ public class NetworkUtil {
 
     private static AtomicInteger nextID = new AtomicInteger(0);
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public static void ensureValidNetwork(TileCapBank cap) {
         World world = cap.getWorldObj();
         Collection<TileCapBank> neighbours = getNeigbours(cap);

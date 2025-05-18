@@ -148,10 +148,9 @@ public class BlockDarkSteelPressurePlate extends BlockPressurePlate
         return super.colorMultiplier(world, x, y, z);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item arg0, CreativeTabs arg1, List items) {
+    public void getSubBlocks(Item arg0, CreativeTabs arg1, List<ItemStack> items) {
         items.add(new ItemStack(this, 1, 0));
         items.add(new ItemStack(this, 1, 1));
     }

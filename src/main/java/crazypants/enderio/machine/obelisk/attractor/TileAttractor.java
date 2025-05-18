@@ -171,10 +171,8 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
         Set<EntityLiving> trackingThisTick = new HashSet<EntityLiving>();
         List<EntityLiving> entsInBounds = worldObj.getEntitiesWithinAABB(EntityLiving.class, attractorBounds);
 
-        int candidates = 0;
         for (EntityLiving ent : entsInBounds) {
             if (!ent.isDead && isMobInFilter(ent)) {
-                candidates++;
                 if (tracking.contains(ent)) {
                     trackingThisTick.add(ent);
                     onEntityTick(ent);
@@ -283,9 +281,7 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
     private boolean attractyUsingAITask(EntityLiving ent) {
         tracking.add(ent);
         List<EntityAITaskEntry> entries = ent.tasks.taskEntries;
-        boolean hasTask = false;
         EntityAIBase remove = null;
-        boolean isTracked;
         for (EntityAITaskEntry entry : entries) {
             if (entry.action instanceof AttractTask) {
                 AttractTask at = (AttractTask) entry.action;
@@ -306,7 +302,7 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
     }
 
     private void cancelCurrentTasks(EntityLiving ent) {
-        Iterator iterator = ent.tasks.taskEntries.iterator();
+        Iterator<EntityAITasks.EntityAITaskEntry> iterator = ent.tasks.taskEntries.iterator();
 
         List<EntityAITasks.EntityAITaskEntry> currentTasks = new ArrayList<EntityAITasks.EntityAITaskEntry>();
         while (iterator.hasNext()) {
@@ -351,8 +347,6 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
             PathEntity pathentity = worldObj.getPathEntityToEntity(ent, getTarget(), range, true, false, false, true);
             sf.setPathToEntity(pathentity);
         } else if (ent instanceof EntityBlaze) {
-            EntityBlaze mob = (EntityBlaze) ent;
-
             double x = (xCoord + 0.5D - ent.posX);
             double y = (yCoord + 1D - ent.posY);
             double z = (zCoord + 0.5D - ent.posZ);
