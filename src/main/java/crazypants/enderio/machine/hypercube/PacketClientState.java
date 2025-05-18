@@ -79,7 +79,7 @@ public class PacketClientState implements IMessage, IMessageHandler<PacketClient
         }
 
         modes = new ArrayList<TileHyperCube.IoMode>(SubChannel.values().length);
-        for (SubChannel sc : SubChannel.values()) {
+        for (int i = 0; i < SubChannel.values().length; i++) {
             short ordinal = buf.readShort();
             modes.add(IoMode.values()[ordinal]);
         }
