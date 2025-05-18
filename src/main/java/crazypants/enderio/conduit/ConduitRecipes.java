@@ -688,7 +688,7 @@ public class ConduitRecipes {
         String fluix = "crystalFluix";
         String pureFluix = "crystalPureFluix";
 
-        ItemStack quartzFiber = AEApi.instance().parts().partQuartzFiber.stack(1).copy();
+        ItemStack quartzFiber = AEApi.instance().definitions().parts().quartzFiber().maybeStack(1).get().copy();
         ItemStack conduitBinder = new ItemStack(EnderIO.itemMaterial, 1, Material.CONDUIT_BINDER.ordinal());
         ItemStack res = new ItemStack(EnderIO.itemMEConduit, Config.numConduitsPerRecipe / 2);
 

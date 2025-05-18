@@ -137,7 +137,7 @@ public class SmartTank extends FluidTank {
             NBTTagCompound tankRoot = new NBTTagCompound();
             writeToNBT(tankRoot);
             if (restriction != null) {
-                tankRoot.setString("FluidRestriction", FluidRegistry.getFluidName(restriction.getID()));
+                tankRoot.setString("FluidRestriction", FluidRegistry.getFluidName(restriction));
             }
             nbtRoot.setTag(name, tankRoot);
         } else {
