@@ -2,12 +2,14 @@ package crazypants.enderio.machine.vacuum;
 
 import java.util.List;
 
+import com.enderio.core.common.interfaces.IComparatorOutput;
 import net.minecraft.block.Block;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -34,7 +36,7 @@ import crazypants.enderio.machine.ranged.IRanged;
 import crazypants.enderio.machine.ranged.RangeEntity;
 
 public class TileVacuumChest extends TileEntityEio
-        implements IEntitySelector, IInventory, IRedstoneModeControlable, IRanged {
+        implements IEntitySelector, IInventory, IRedstoneModeControlable, IRanged, IComparatorOutput {
 
     public static final int ITEM_ROWS = 3;
     public static final int ITEM_SLOTS = 9 * ITEM_ROWS;
@@ -406,5 +408,10 @@ public class TileVacuumChest extends TileEntityEio
             nbtRoot.setTag("filter", filterNBT);
         }
         nbtRoot.setInteger("redstoneControlMode", redstoneControlMode.ordinal());
+    }
+
+    @Override
+    public int getComparatorOutput() {
+        return Container.calcRedstoneFromInventory(this);
     }
 }
