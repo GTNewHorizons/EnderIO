@@ -1,5 +1,6 @@
 package crazypants.enderio.machine.tank;
 
+import com.enderio.core.common.interfaces.IComparatorOutput;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -28,7 +29,7 @@ import crazypants.enderio.network.PacketHandler;
 import crazypants.enderio.tool.ArrayMappingTool;
 import crazypants.enderio.tool.SmartTank;
 
-public class TileTank extends AbstractMachineEntity implements IFluidHandler, ITankAccess {
+public class TileTank extends AbstractMachineEntity implements IFluidHandler, ITankAccess, IComparatorOutput {
 
     private static int IO_MB_TICK = 100;
 
@@ -297,6 +298,7 @@ public class TileTank extends AbstractMachineEntity implements IFluidHandler, IT
         return res;
     }
 
+    @Override
     public int getComparatorOutput() {
         FluidTankInfo info = getTankInfo(null)[0];
         if (info == null || info.fluid == null) {

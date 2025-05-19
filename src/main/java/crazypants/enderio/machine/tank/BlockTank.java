@@ -185,20 +185,6 @@ public class BlockTank extends AbstractMachineBlock<TileTank> implements IAdvanc
     }
 
     @Override
-    public boolean hasComparatorInputOverride() {
-        return true;
-    }
-
-    @Override
-    public int getComparatorInputOverride(World w, int x, int y, int z, int side) {
-        TileEntity te = w.getTileEntity(x, y, z);
-        if (te instanceof TileTank) {
-            return ((TileTank) te).getComparatorOutput();
-        }
-        return 0;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         if (itemstack.stackTagCompound != null && itemstack.stackTagCompound.hasKey("tankContents")) {
