@@ -1,6 +1,5 @@
 package crazypants.enderio.machine.tank;
 
-import com.enderio.core.common.interfaces.IComparatorOutput;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,6 +15,7 @@ import net.minecraftforge.fluids.IFluidContainerItem;
 import net.minecraftforge.fluids.IFluidHandler;
 
 import com.enderio.core.api.common.util.ITankAccess;
+import com.enderio.core.common.interfaces.IComparatorOutput;
 import com.enderio.core.common.util.BlockCoord;
 import com.enderio.core.common.util.FluidUtil;
 import com.enderio.core.common.util.FluidUtil.FluidAndStackResult;

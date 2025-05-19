@@ -523,7 +523,6 @@ public class BlockCapBank extends BlockEio
         return AxisAlignedBB.getBoundingBox(min.x, min.y, min.z, max.x, max.y, max.z);
     }
 
-
     @Override
     public void getWailaInfo(List<String> tooltip, EntityPlayer player, World world, int x, int y, int z) {
         TileEntity te = world.getTileEntity(x, y, z);

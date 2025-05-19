@@ -7,7 +7,6 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.enderio.core.common.interfaces.IComparatorOutput;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -18,6 +17,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import com.enderio.core.common.interfaces.IComparatorOutput;
 import com.enderio.core.common.util.BlockCoord;
 import com.enderio.core.common.util.Util;
 import com.enderio.core.common.vecmath.VecmathUtil;

@@ -2,7 +2,6 @@ package crazypants.enderio.machine.vacuum;
 
 import java.util.List;
 
-import com.enderio.core.common.interfaces.IComparatorOutput;
 import net.minecraft.block.Block;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
@@ -18,6 +17,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
 import com.enderio.core.client.render.BoundingBox;
+import com.enderio.core.common.interfaces.IComparatorOutput;
 import com.enderio.core.common.util.ItemUtil;
 import com.enderio.core.common.vecmath.Vector3d;
 
