@@ -342,7 +342,6 @@ public class MachineRecipes {
                 .createItemStackWithPower(CapBankType.getMetaFromType(CapBankType.VIBRANT), 0);
         RecipeUtil.addShaped(capBank3, "bcb", "cmc", "bcb", 'b', electricalSteel, 'c', capacitor3, 'm', vibCry);
 
-
         GameRegistry.addRecipe(
                 new UpgradeCapBankRecipe(
                         capBank2,

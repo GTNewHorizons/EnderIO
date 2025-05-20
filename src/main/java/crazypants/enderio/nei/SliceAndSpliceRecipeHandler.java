@@ -19,12 +19,12 @@ import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import crazypants.enderio.gui.GuiContainerBaseEIO;
 import crazypants.enderio.gui.IconEIO;
-import crazypants.enderio.power.PowerDisplayUtil;
 import crazypants.enderio.machine.recipe.IRecipe;
 import crazypants.enderio.machine.recipe.RecipeInput;
 import crazypants.enderio.machine.slicensplice.ContainerSliceAndSplice;
 import crazypants.enderio.machine.slicensplice.GuiSliceAndSplice;
 import crazypants.enderio.machine.slicensplice.SliceAndSpliceRecipeManager;
+import crazypants.enderio.power.PowerDisplayUtil;
 
 public class SliceAndSpliceRecipeHandler extends TemplateRecipeHandler {
 

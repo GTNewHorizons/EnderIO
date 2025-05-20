@@ -24,9 +24,9 @@ import crazypants.enderio.gui.GuiContainerBaseEIO;
 import crazypants.enderio.gui.IconEIO;
 import crazypants.enderio.machine.IMachineRecipe;
 import crazypants.enderio.machine.MachineRecipeRegistry;
-import crazypants.enderio.power.PowerDisplayUtil;
 import crazypants.enderio.machine.soul.GuiSoulBinder;
 import crazypants.enderio.machine.soul.ISoulBinderRecipe;
+import crazypants.enderio.power.PowerDisplayUtil;
 
 public class SoulBinderRecipeHandler extends TemplateRecipeHandler {
 

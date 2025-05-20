@@ -1,7 +1,6 @@
 package crazypants.enderio.nei;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
