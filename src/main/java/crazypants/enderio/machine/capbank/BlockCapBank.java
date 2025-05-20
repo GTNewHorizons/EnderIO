@@ -271,9 +271,9 @@ public class BlockCapBank extends BlockEio
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister IIconRegister) {
-        blockIcon = IIconRegister.registerIcon("enderio:capacitorBank");
-        gaugeIcon = IIconRegister.registerIcon("enderio:capacitorBankOverlays");
-        fillBarIcon = IIconRegister.registerIcon("enderio:capacitorBankFillBar");
+        blockIcon = IIconRegister.registerIcon("enderio:capBank");
+        gaugeIcon = IIconRegister.registerIcon("enderio:capBankOverlays");
+        fillBarIcon = IIconRegister.registerIcon("enderio:capBankFillBar");
         infoPanelIcon = IIconRegister.registerIcon("enderio:capBankInfoPanel");
 
         blockIcons = new IIcon[CapBankType.types().size()];
