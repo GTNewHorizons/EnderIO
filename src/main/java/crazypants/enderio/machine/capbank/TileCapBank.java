@@ -695,8 +695,8 @@ public class TileCapBank extends TileEntityEio
 
     @Override
     public int getComparatorOutput() {
-        double stored = getEnergyStored();
-        return stored == 0 ? 0 : (int) (1 + stored / getMaxEnergyStored() * 14);
+        int stored = getEnergyStored();
+        return stored == 0 ? 0 : 1 + (stored * 14) / getMaxEnergyStored();
     }
 
     @Override

@@ -305,7 +305,7 @@ public class TileTank extends AbstractMachineEntity implements IFluidHandler, IT
             return 0;
         }
 
-        return info.fluid.amount == 0 ? 0 : (int) (1 + ((double) info.fluid.amount / (double) info.capacity) * 14);
+        return info.fluid.amount == 0 ? 0 : 1 + (info.fluid.amount * 14) / info.capacity;
     }
 
     private boolean processItems(boolean redstoneCheckPassed) {
