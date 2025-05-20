@@ -331,20 +331,6 @@ public class BlockCapacitorBank extends BlockEio implements IGuiHandler, IAdvanc
     }
 
     @Override
-    public boolean hasComparatorInputOverride() {
-        return true;
-    }
-
-    @Override
-    public int getComparatorInputOverride(World w, int x, int y, int z, int side) {
-        TileEntity te = w.getTileEntity(x, y, z);
-        if (te instanceof TileCapacitorBank) {
-            return ((TileCapacitorBank) te).getComparatorOutput();
-        }
-        return 0;
-    }
-
-    @Override
     public void getWailaInfo(List<String> tooltip, EntityPlayer player, World world, int x, int y, int z) {
         TileEntity te = world.getTileEntity(x, y, z);
         if (te instanceof TileCapacitorBank) {

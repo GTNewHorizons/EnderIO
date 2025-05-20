@@ -18,6 +18,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import com.enderio.core.common.interfaces.IComparatorOutput;
 import com.enderio.core.common.util.BlockCoord;
 import com.enderio.core.common.util.EntityUtil;
 import com.enderio.core.common.util.Util;
@@ -46,7 +47,7 @@ import crazypants.enderio.power.IPowerStorage;
 import crazypants.enderio.power.PowerHandlerUtil;
 
 public class TileCapBank extends TileEntityEio
-        implements IInternalPowerReceiver, IInventory, IIoConfigurable, IPowerStorage {
+        implements IInternalPowerReceiver, IInventory, IIoConfigurable, IPowerStorage, IComparatorOutput {
 
     private Map<ForgeDirection, IoMode> faceModes;
     private Map<ForgeDirection, InfoDisplayType> faceDisplayTypes;
@@ -692,9 +693,10 @@ public class TileCapBank extends TileEntityEio
         return getIoMode(from) != IoMode.DISABLED;
     }
 
+    @Override
     public int getComparatorOutput() {
-        double stored = getEnergyStored();
-        return stored == 0 ? 0 : (int) (1 + stored / getMaxEnergyStored() * 14);
+        int stored = getEnergyStored();
+        return stored == 0 ? 0 : 1 + (stored * 14) / getMaxEnergyStored();
     }
 
     @Override

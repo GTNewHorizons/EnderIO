@@ -15,6 +15,7 @@ import net.minecraftforge.fluids.IFluidContainerItem;
 import net.minecraftforge.fluids.IFluidHandler;
 
 import com.enderio.core.api.common.util.ITankAccess;
+import com.enderio.core.common.interfaces.IComparatorOutput;
 import com.enderio.core.common.util.BlockCoord;
 import com.enderio.core.common.util.FluidUtil;
 import com.enderio.core.common.util.FluidUtil.FluidAndStackResult;
@@ -28,7 +29,7 @@ import crazypants.enderio.network.PacketHandler;
 import crazypants.enderio.tool.ArrayMappingTool;
 import crazypants.enderio.tool.SmartTank;
 
-public class TileTank extends AbstractMachineEntity implements IFluidHandler, ITankAccess {
+public class TileTank extends AbstractMachineEntity implements IFluidHandler, ITankAccess, IComparatorOutput {
 
     private static int IO_MB_TICK = 100;
 
@@ -297,13 +298,14 @@ public class TileTank extends AbstractMachineEntity implements IFluidHandler, IT
         return res;
     }
 
+    @Override
     public int getComparatorOutput() {
         FluidTankInfo info = getTankInfo(null)[0];
         if (info == null || info.fluid == null) {
             return 0;
         }
 
-        return info.fluid.amount == 0 ? 0 : (int) (1 + ((double) info.fluid.amount / (double) info.capacity) * 14);
+        return info.fluid.amount == 0 ? 0 : 1 + (info.fluid.amount * 14) / info.capacity;
     }
 
     private boolean processItems(boolean redstoneCheckPassed) {

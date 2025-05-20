@@ -17,6 +17,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import com.enderio.core.common.interfaces.IComparatorOutput;
 import com.enderio.core.common.util.BlockCoord;
 import com.enderio.core.common.util.Util;
 import com.enderio.core.common.vecmath.VecmathUtil;
@@ -40,7 +41,7 @@ import crazypants.enderio.power.IPowerStorage;
 import crazypants.enderio.power.PowerHandlerUtil;
 
 public class TileCapacitorBank extends TileEntityEio
-        implements IInternalPowerHandler, IInventory, IIoConfigurable, IPowerStorage {
+        implements IInternalPowerHandler, IInventory, IIoConfigurable, IPowerStorage, IComparatorOutput {
 
     static final BasicCapacitor BASE_CAP = new BasicCapacitor(
             Config.capacitorBankMaxIoRF,
@@ -273,9 +274,10 @@ public class TileCapacitorBank extends TileEntityEio
         }
     }
 
+    @Override
     public int getComparatorOutput() {
-        double stored = getEnergyStored();
-        return stored == 0 ? 0 : (int) (1 + stored / getMaxEnergyStored() * 14);
+        int stored = getEnergyStored();
+        return stored == 0 ? 0 : 1 + (stored * 14) / getMaxEnergyStored();
     }
 
     public List<GaugeBounds> getGaugeBounds() {
