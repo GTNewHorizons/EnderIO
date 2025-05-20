@@ -27,7 +27,7 @@ import crazypants.enderio.gui.IconEIO;
 import crazypants.enderio.gui.RedstoneModeButton;
 import crazypants.enderio.machine.hypercube.TileHyperCube.IoMode;
 import crazypants.enderio.machine.hypercube.TileHyperCube.SubChannel;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
+import crazypants.enderio.power.PowerDisplayUtil;
 import crazypants.enderio.network.PacketHandler;
 
 public class GuiHyperCube extends GuiContainerBaseEIO {

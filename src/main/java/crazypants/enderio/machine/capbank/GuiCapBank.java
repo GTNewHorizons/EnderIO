@@ -30,7 +30,7 @@ import crazypants.enderio.machine.capbank.packet.PacketNetworkStateRequest;
 import crazypants.enderio.machine.gui.GuiButtonIoConfig;
 import crazypants.enderio.machine.gui.GuiOverlayIoConfig;
 import crazypants.enderio.machine.gui.GuiPoweredMachineBase;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
+import crazypants.enderio.power.PowerDisplayUtil;
 import crazypants.enderio.network.PacketHandler;
 
 public class GuiCapBank extends GuiContainerBaseEIO {

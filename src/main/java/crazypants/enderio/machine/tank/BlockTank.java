@@ -29,7 +29,7 @@ import crazypants.enderio.GuiHandler;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.machine.AbstractMachineBlock;
 import crazypants.enderio.machine.AbstractMachineEntity;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
+import crazypants.enderio.power.PowerDisplayUtil;
 import crazypants.enderio.network.PacketHandler;
 
 public class BlockTank extends AbstractMachineBlock<TileTank> implements IAdvancedTooltipProvider {

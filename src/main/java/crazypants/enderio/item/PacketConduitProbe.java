@@ -24,7 +24,7 @@ import crazypants.enderio.conduit.power.IPowerConduit;
 import crazypants.enderio.conduit.power.NetworkPowerManager;
 import crazypants.enderio.conduit.power.PowerConduitNetwork;
 import crazypants.enderio.conduit.power.PowerTracker;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
+import crazypants.enderio.power.PowerDisplayUtil;
 import crazypants.enderio.power.EnergyHandlerPI;
 import crazypants.enderio.power.IInternalPowerReceiver;
 import crazypants.enderio.power.IInternalPoweredTile;

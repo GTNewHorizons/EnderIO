@@ -42,7 +42,7 @@ import crazypants.enderio.machine.IIoConfigurable;
 import crazypants.enderio.machine.IoMode;
 import crazypants.enderio.machine.capbank.TileCapBank;
 import crazypants.enderio.machine.invpanel.TileInventoryPanel;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
+import crazypants.enderio.power.PowerDisplayUtil;
 import crazypants.enderio.power.IInternalPoweredTile;
 import crazypants.util.IFacade;
 import mcp.mobius.waila.api.ITaggedList;

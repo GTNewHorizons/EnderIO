@@ -13,7 +13,7 @@ import crazypants.enderio.conduit.IConduit;
 import crazypants.enderio.conduit.ItemConduitSubtype;
 import crazypants.enderio.conduit.power.IPowerConduit;
 import crazypants.enderio.conduit.power.ItemPowerConduit;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
+import crazypants.enderio.power.PowerDisplayUtil;
 import crazypants.enderio.power.ICapacitor;
 
 public class ItemPowerConduitEndergy extends ItemPowerConduit {

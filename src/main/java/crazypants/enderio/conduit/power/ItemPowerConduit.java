@@ -12,7 +12,7 @@ import crazypants.enderio.ModObject;
 import crazypants.enderio.conduit.AbstractItemConduit;
 import crazypants.enderio.conduit.IConduit;
 import crazypants.enderio.conduit.ItemConduitSubtype;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
+import crazypants.enderio.power.PowerDisplayUtil;
 import crazypants.enderio.power.ICapacitor;
 
 public class ItemPowerConduit extends AbstractItemConduit {

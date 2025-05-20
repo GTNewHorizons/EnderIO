@@ -24,7 +24,7 @@ import crazypants.enderio.GuiHandler;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.gui.GuiContainerBaseEIO;
 import crazypants.enderio.gui.IconEIO;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
+import crazypants.enderio.power.PowerDisplayUtil;
 import crazypants.enderio.network.PacketHandler;
 
 public class GuiTelePad extends GuiContainerBaseEIO implements IToggleableGui {

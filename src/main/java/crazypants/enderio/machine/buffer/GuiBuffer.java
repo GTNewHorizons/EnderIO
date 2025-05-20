@@ -11,7 +11,7 @@ import com.enderio.core.client.render.RenderUtil;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.machine.IoMode;
 import crazypants.enderio.machine.gui.GuiPoweredMachineBase;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
+import crazypants.enderio.power.PowerDisplayUtil;
 import crazypants.enderio.network.PacketHandler;
 
 public class GuiBuffer extends GuiPoweredMachineBase<TileBuffer> {

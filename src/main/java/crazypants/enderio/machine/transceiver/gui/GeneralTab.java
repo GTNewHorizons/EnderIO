@@ -19,7 +19,7 @@ import crazypants.enderio.EnderIO;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.gui.IconEIO;
 import crazypants.enderio.machine.PacketItemBuffer;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
+import crazypants.enderio.power.PowerDisplayUtil;
 import crazypants.enderio.network.PacketHandler;
 
 public class GeneralTab implements ITabPanel {
