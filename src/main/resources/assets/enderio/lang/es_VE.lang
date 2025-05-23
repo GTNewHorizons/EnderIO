@@ -270,11 +270,6 @@ item.itemWirelessLightInverted.tooltip.detailed.line1=Ilumina una gran área cua
 item.itemWirelessLightInverted.tooltip.detailed.line2=Desactívala con una señal de redstone.
 item.itemWirelessLightInverted.tooltip.detailed.line3=Puede recibir energía de los cargadores inalámbricos.
 
-tile.blockCapacitorBank.name=Condensador de Almacenaje (Obsoleto)
-tile.blockCapacitorBank.creative.name=Condensador de Almacenaje Creativo (Obsoleto)
-tile.blockCapacitorBank.tooltip.detailed.line1=Conviértelo en nuevo poniéndolo en una cuadrícula de fabricación.
-tile.blockCapacitorBank.tooltipPrefix=Contiene
-
 tile.blockCapBank.creative.name=Condensador de Almacenaje Creativo
 tile.blockCapBank.simple.name=Condensador de Almacenaje Básico
 tile.blockCapBank.activated.name=Condensador de Almacenaje

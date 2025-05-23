@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 import com.enderio.core.client.gui.widget.GuiToolTip;
 
 import crazypants.enderio.machine.AbstractPoweredMachineEntity;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
+import crazypants.enderio.power.PowerDisplayUtil;
 
 public abstract class GuiPoweredMachineBase<T extends AbstractPoweredMachineEntity> extends GuiMachineBase<T> {
 

@@ -16,7 +16,7 @@ import crazypants.enderio.EnderIO;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.api.teleport.TravelSource;
 import crazypants.enderio.config.Config;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
+import crazypants.enderio.power.PowerDisplayUtil;
 
 public class ItemTeleportStaff extends ItemTravelStaff {
 

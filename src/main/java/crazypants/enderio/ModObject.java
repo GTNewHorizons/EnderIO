@@ -55,7 +55,6 @@ public enum ModObject {
     blockReservoir,
     blockAlloySmelter,
     blockSolarPanel,
-    blockCapacitorBank,
     blockCapBank,
     blockSagMill,
     blockHyperCube,

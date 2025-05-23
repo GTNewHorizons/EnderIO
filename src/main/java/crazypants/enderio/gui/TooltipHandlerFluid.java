@@ -15,7 +15,7 @@ import crazypants.enderio.EnderIO;
 import crazypants.enderio.fluid.FluidFuelRegister;
 import crazypants.enderio.fluid.IFluidCoolant;
 import crazypants.enderio.fluid.IFluidFuel;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
+import crazypants.enderio.power.PowerDisplayUtil;
 
 public class TooltipHandlerFluid implements ITooltipCallback {
 

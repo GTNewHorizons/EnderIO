@@ -25,11 +25,11 @@ import codechicken.nei.recipe.GuiUsageRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import crazypants.enderio.gui.GuiContainerBaseEIO;
 import crazypants.enderio.gui.IconEIO;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
 import crazypants.enderio.machine.recipe.IRecipe;
 import crazypants.enderio.machine.recipe.RecipeInput;
 import crazypants.enderio.machine.vat.GuiVat;
 import crazypants.enderio.machine.vat.VatRecipeManager;
+import crazypants.enderio.power.PowerDisplayUtil;
 
 public class VatRecipeHandler extends TemplateRecipeHandler {
 

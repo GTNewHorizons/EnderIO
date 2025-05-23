@@ -18,7 +18,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.EnderIOTab;
 import crazypants.enderio.config.Config;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
+import crazypants.enderio.power.PowerDisplayUtil;
 
 public class BlockItemSolarPanel extends ItemBlockWithMetadata
         implements IAdvancedTooltipProvider, IResourceTooltipProvider {

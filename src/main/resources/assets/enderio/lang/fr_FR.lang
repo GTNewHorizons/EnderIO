@@ -288,12 +288,6 @@ item.itemWirelessLightInverted.tooltip.detailed.line2=en énergie.
 item.itemWirelessLightInverted.tooltip.detailed.line3=S'éteint avec un signal de redstone.
 item.itemWirelessLightInverted.tooltip.detailed.line4=Peut recevoir de l'énergie d'un Chargeur sans-fil.
 
-enderio.blockCapacitorBank=Batterie de condensateurs (Obsolète)
-tile.blockCapacitorBank.creative.name=Batterie de condensateurs Créative (Obsolète)
-tile.blockCapacitorBank.tooltip.detailed.line1=Convertir en nouveau block en la plaçant
-tile.blockCapacitorBank.tooltip.detailed.line2=sur une grille de craft
-tile.blockCapacitorBank.tooltipPrefix=Contient
-
 tile.blockCapBank.creative.name=Batterie de condensateurs Créative
 tile.blockCapBank.simple.name=Batterie de condensateurs basique
 tile.blockCapBank.activated.name=Batterie de condensateurs

@@ -1,7 +1,7 @@
 package crazypants.enderio.machine.monitor;
 
-import static crazypants.enderio.machine.power.PowerDisplayUtil.formatPower;
-import static crazypants.enderio.machine.power.PowerDisplayUtil.formatPowerFloat;
+import static crazypants.enderio.power.PowerDisplayUtil.formatPower;
+import static crazypants.enderio.power.PowerDisplayUtil.formatPowerFloat;
 
 import java.awt.Color;
 import java.awt.Rectangle;
@@ -25,8 +25,8 @@ import crazypants.enderio.EnderIO;
 import crazypants.enderio.gui.GuiContainerBaseEIO;
 import crazypants.enderio.gui.IconEIO;
 import crazypants.enderio.machine.ContainerNoInv;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
 import crazypants.enderio.network.PacketHandler;
+import crazypants.enderio.power.PowerDisplayUtil;
 
 public class GuiPowerMonitor extends GuiContainerBaseEIO {
 

@@ -21,9 +21,9 @@ import codechicken.nei.recipe.TemplateRecipeHandler;
 import crazypants.enderio.gui.IconEIO;
 import crazypants.enderio.machine.alloy.AlloyRecipeManager;
 import crazypants.enderio.machine.alloy.GuiAlloySmelter;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
 import crazypants.enderio.machine.recipe.IRecipe;
 import crazypants.enderio.machine.recipe.RecipeInput;
+import crazypants.enderio.power.PowerDisplayUtil;
 
 public class AlloySmelterRecipeHandler extends TemplateRecipeHandler {
 

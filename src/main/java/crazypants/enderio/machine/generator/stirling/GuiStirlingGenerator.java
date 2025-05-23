@@ -19,8 +19,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.gui.GuiPoweredMachineBase;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
 import crazypants.enderio.power.Capacitors;
+import crazypants.enderio.power.PowerDisplayUtil;
 
 @SideOnly(Side.CLIENT)
 public class GuiStirlingGenerator extends GuiPoweredMachineBase<TileEntityStirlingGenerator> {

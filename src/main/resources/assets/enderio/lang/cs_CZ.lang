@@ -238,12 +238,6 @@ item.itemLightInverted.name=Světlo (Obrácené)
 item.itemLightInverted.tooltip.detailed.line1=Vysílá světlo, vypne se s
 item.itemLightInverted.tooltip.detailed.line2=ruditovým signálem
 
-tile.blockCapacitorBank.name=Banka kondenzátorů Bank
-tile.blockCapacitorBank.creative.name=Kreativní banka kondenzátorů
-tile.blockCapacitorBank.tooltip.detailed.line1=Multi-blokové energetické úložiště.
-tile.blockCapacitorBank.tooltip.detailed.line2=Umí nabít předměty, které využívají RF.
-tile.blockCapacitorBank.tooltipPrefix=Obsahuje
-
 enderio.capbank.maxIO=Maximální I/O
 enderio.capbank.maxIn=Maximální vstup
 enderio.capbank.maxOut=Maximální výstup

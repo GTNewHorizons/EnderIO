@@ -214,7 +214,7 @@ public class GuiEnderface extends GuiScreen {
 
         if (hit != null) {
             Block block = world.getBlock(hit.blockX, hit.blockY, hit.blockZ);
-            if (block == EnderIO.blockHyperCube || block == EnderIO.blockCapacitorBank) {
+            if (block == EnderIO.blockHyperCube) {
                 block.onBlockActivated(world, hit.blockX, hit.blockY, hit.blockZ, player, 0, 0, 0, 0);
             } else {
                 openInterface(hit.blockX, hit.blockY, hit.blockZ, hit.sideHit, hit.hitVec);

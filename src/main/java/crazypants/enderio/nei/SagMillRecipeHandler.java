@@ -24,10 +24,10 @@ import crazypants.enderio.gui.IconEIO;
 import crazypants.enderio.machine.crusher.CrusherRecipeManager;
 import crazypants.enderio.machine.crusher.GrindingBall;
 import crazypants.enderio.machine.crusher.GuiCrusher;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
 import crazypants.enderio.machine.recipe.Recipe;
 import crazypants.enderio.machine.recipe.RecipeInput;
 import crazypants.enderio.machine.recipe.RecipeOutput;
+import crazypants.enderio.power.PowerDisplayUtil;
 
 public class SagMillRecipeHandler extends TemplateRecipeHandler {
 

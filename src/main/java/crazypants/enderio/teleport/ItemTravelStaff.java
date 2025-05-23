@@ -27,7 +27,7 @@ import crazypants.enderio.ModObject;
 import crazypants.enderio.api.teleport.IItemOfTravel;
 import crazypants.enderio.api.teleport.TravelSource;
 import crazypants.enderio.config.Config;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
+import crazypants.enderio.power.PowerDisplayUtil;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "Baubles|API")
 public class ItemTravelStaff extends ItemEnergyContainer implements IItemOfTravel, IResourceTooltipProvider, IBauble {

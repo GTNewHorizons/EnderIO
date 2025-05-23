@@ -747,7 +747,7 @@ public class TileCapBank extends TileEntityEio
 
     @Override
     public String getInventoryName() {
-        return EnderIO.blockCapacitorBank.getUnlocalizedName() + ".name";
+        return EnderIO.blockCapBank.getUnlocalizedName() + ".name";
     }
 
     @Override

@@ -132,7 +132,6 @@ import crazypants.enderio.machine.painter.BlockPaintedStair;
 import crazypants.enderio.machine.painter.BlockPaintedWall;
 import crazypants.enderio.machine.painter.BlockPainter;
 import crazypants.enderio.machine.painter.PaintSourceValidator;
-import crazypants.enderio.machine.power.BlockCapacitorBank;
 import crazypants.enderio.machine.ranged.RangeEntity;
 import crazypants.enderio.machine.reservoir.BlockReservoir;
 import crazypants.enderio.machine.slicensplice.BlockSliceAndSplice;
@@ -286,7 +285,6 @@ public class EnderIO {
     public static BlockSolarPanel blockSolarPanel;
     public static BlockReservoir blockReservoir;
     public static BlockAlloySmelter blockAlloySmelter;
-    public static BlockCapacitorBank blockCapacitorBank;
     public static BlockCapBank blockCapBank;
     public static BlockWirelessCharger blockWirelessCharger;
     public static BlockCrusher blockCrusher;
@@ -396,7 +394,6 @@ public class EnderIO {
 
         blockCrusher = BlockCrusher.create();
         blockAlloySmelter = BlockAlloySmelter.create();
-        blockCapacitorBank = BlockCapacitorBank.create();
         blockCapBank = BlockCapBank.create();
 
         blockPainter = BlockPainter.create();

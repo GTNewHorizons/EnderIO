@@ -17,7 +17,7 @@ import crazypants.enderio.fluid.Fluids;
 import crazypants.enderio.machine.IoMode;
 import crazypants.enderio.machine.generator.zombie.TileZombieGenerator.TileEnderGenerator;
 import crazypants.enderio.machine.gui.GuiPoweredMachineBase;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
+import crazypants.enderio.power.PowerDisplayUtil;
 
 public class GuiZombieGenerator extends GuiPoweredMachineBase<TileZombieGenerator> {
 
