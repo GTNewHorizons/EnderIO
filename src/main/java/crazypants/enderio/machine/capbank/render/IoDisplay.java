@@ -17,7 +17,7 @@ import com.enderio.core.client.render.RenderUtil;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.machine.capbank.TileCapBank;
 import crazypants.enderio.machine.capbank.network.CapBankClientNetwork;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
+import crazypants.enderio.power.PowerDisplayUtil;
 
 public class IoDisplay implements IInfoRenderer {
 

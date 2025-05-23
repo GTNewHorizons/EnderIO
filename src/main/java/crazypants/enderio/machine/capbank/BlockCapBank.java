@@ -49,8 +49,8 @@ import crazypants.enderio.machine.capbank.packet.PacketNetworkIdRequest;
 import crazypants.enderio.machine.capbank.packet.PacketNetworkIdResponse;
 import crazypants.enderio.machine.capbank.packet.PacketNetworkStateRequest;
 import crazypants.enderio.machine.capbank.packet.PacketNetworkStateResponse;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
 import crazypants.enderio.network.PacketHandler;
+import crazypants.enderio.power.PowerDisplayUtil;
 import crazypants.enderio.power.PowerHandlerUtil;
 import crazypants.enderio.tool.ToolUtil;
 import crazypants.enderio.waila.IWailaInfoProvider;
@@ -271,9 +271,9 @@ public class BlockCapBank extends BlockEio
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister IIconRegister) {
-        blockIcon = IIconRegister.registerIcon("enderio:capacitorBank");
-        gaugeIcon = IIconRegister.registerIcon("enderio:capacitorBankOverlays");
-        fillBarIcon = IIconRegister.registerIcon("enderio:capacitorBankFillBar");
+        blockIcon = IIconRegister.registerIcon("enderio:capBank");
+        gaugeIcon = IIconRegister.registerIcon("enderio:capBankOverlays");
+        fillBarIcon = IIconRegister.registerIcon("enderio:capBankFillBar");
         infoPanelIcon = IIconRegister.registerIcon("enderio:capBankInfoPanel");
 
         blockIcons = new IIcon[CapBankType.types().size()];

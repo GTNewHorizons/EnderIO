@@ -103,9 +103,6 @@ import crazypants.enderio.machine.painter.BlockPaintedFenceGateRenderer;
 import crazypants.enderio.machine.painter.BlockPaintedGlowstone;
 import crazypants.enderio.machine.painter.PaintedBlockRenderer;
 import crazypants.enderio.machine.painter.PaintedItemRenderer;
-import crazypants.enderio.machine.power.BlockCapacitorBank;
-import crazypants.enderio.machine.power.CapBankRenderer2;
-import crazypants.enderio.machine.power.CapacitorBankRenderer;
 import crazypants.enderio.machine.ranged.RangeEntity;
 import crazypants.enderio.machine.ranged.RangeRenderer;
 import crazypants.enderio.machine.reservoir.ReservoirRenderer;
@@ -320,13 +317,6 @@ public class ClientProxy extends CommonProxy {
             MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockCapBank), newCbr);
             ClientRegistry.bindTileEntitySpecialRenderer(TileCapBank.class, newCbr);
         }
-
-        CapacitorBankRenderer capr = new CapacitorBankRenderer();
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockCapacitorBank), capr);
-
-        BlockCapacitorBank.renderId = RenderingRegistry.getNextAvailableRenderId();
-        CapBankRenderer2 cbr2 = new CapBankRenderer2();
-        RenderingRegistry.registerBlockHandler(cbr2);
 
         BlockVacuumChest.renderId = RenderingRegistry.getNextAvailableRenderId();
         VacuumChestRenderer vcr = new VacuumChestRenderer();

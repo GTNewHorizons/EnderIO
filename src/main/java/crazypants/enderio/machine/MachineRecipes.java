@@ -28,7 +28,6 @@ import crazypants.enderio.item.skull.BlockEndermanSkull;
 import crazypants.enderio.machine.buffer.BlockItemBuffer.Type;
 import crazypants.enderio.machine.capbank.BlockItemCapBank;
 import crazypants.enderio.machine.capbank.CapBankType;
-import crazypants.enderio.machine.capbank.ConvertOldRecipe;
 import crazypants.enderio.machine.light.BlockItemElectricLight;
 import crazypants.enderio.material.FrankenSkull;
 import crazypants.enderio.material.MachinePart;
@@ -342,9 +341,6 @@ public class MachineRecipes {
         ItemStack capBank3 = BlockItemCapBank
                 .createItemStackWithPower(CapBankType.getMetaFromType(CapBankType.VIBRANT), 0);
         RecipeUtil.addShaped(capBank3, "bcb", "cmc", "bcb", 'b', electricalSteel, 'c', capacitor3, 'm', vibCry);
-
-        ConvertOldRecipe convertRecipe = new ConvertOldRecipe();
-        GameRegistry.addRecipe(convertRecipe);
 
         GameRegistry.addRecipe(
                 new UpgradeCapBankRecipe(
