@@ -17,11 +17,11 @@ public class CapBankType {
             Config.capacitorBankTierTwoMaxStorageRF,
             false,
             true,
-            "enderio:capBank",
-            "enderio:capBankCreativeBorder",
-            "enderio:capBankInput",
-            "enderio:capBankOutput",
-            "enderio:capBankLocked");
+            "enderio:capacitorBank",
+            "enderio:capacitorBankCreativeBorder",
+            "enderio:capacitorBankInput",
+            "enderio:capacitorBankOutput",
+            "enderio:capacitorBankLocked");
 
     public static final CapBankType SIMPLE = new CapBankType(
             "SIMPLE",
@@ -30,11 +30,11 @@ public class CapBankType {
             Config.capacitorBankTierOneMaxStorageRF,
             true,
             false,
-            "enderio:capBank",
-            "enderio:capBankSimpleBorder",
-            "enderio:capBankInput",
-            "enderio:capBankOutput",
-            "enderio:capBankLocked");
+            "enderio:capacitorBank",
+            "enderio:capacitorBankSimpleBorder",
+            "enderio:capacitorBankInput",
+            "enderio:capacitorBankOutput",
+            "enderio:capacitorBankLocked");
 
     public static final CapBankType ACTIVATED = new CapBankType(
             "ACTIVATED",
@@ -43,11 +43,11 @@ public class CapBankType {
             Config.capacitorBankTierTwoMaxStorageRF,
             true,
             false,
-            "enderio:capBank",
-            "enderio:capBankActivatedBorder",
-            "enderio:capBankInput",
-            "enderio:capBankOutput",
-            "enderio:capBankLocked");
+            "enderio:capacitorBank",
+            "enderio:capacitorBankActivatedBorder",
+            "enderio:capacitorBankInput",
+            "enderio:capacitorBankOutput",
+            "enderio:capacitorBankLocked");
 
     public static final CapBankType VIBRANT = new CapBankType(
             "VIBRANT",
@@ -56,11 +56,11 @@ public class CapBankType {
             Config.capacitorBankTierThreeMaxStorageRF,
             true,
             false,
-            "enderio:capBank",
-            "enderio:capBankVibrantBorder",
-            "enderio:capBankInput",
-            "enderio:capBankOutput",
-            "enderio:capBankLocked");
+            "enderio:capacitorBank",
+            "enderio:capacitorBankVibrantBorder",
+            "enderio:capacitorBankInput",
+            "enderio:capacitorBankOutput",
+            "enderio:capacitorBankLocked");
 
     private static final List<CapBankType> TYPES = new ArrayList<CapBankType>();
 
