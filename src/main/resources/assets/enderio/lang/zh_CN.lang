@@ -413,12 +413,6 @@ item.itemWirelessLightInverted.tooltip.detailed.line2=照亮大片区域.
 item.itemWirelessLightInverted.tooltip.detailed.line3=有红石信号时熄灭
 item.itemWirelessLightInverted.tooltip.detailed.line4=可从无线充能器接收能量.
 
-tile.blockCapacitorBank.name=电容储能库
-tile.blockCapacitorBank.creative.name=创造模式电容储能库
-tile.blockCapacitorBank.tooltip.detailed.line1=多方块能量存储.
-tile.blockCapacitorBank.tooltip.detailed.line2=可以给使用RF能量的物品充能.
-tile.blockCapacitorBank.tooltipPrefix=包含
-
 tile.blockCapBank.creative.name=创造模式电容库
 tile.blockCapBank.simple.name=基础电容库
 tile.blockCapBank.activated.name=电容库

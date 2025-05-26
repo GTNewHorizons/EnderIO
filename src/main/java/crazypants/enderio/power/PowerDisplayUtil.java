@@ -1,4 +1,4 @@
-package crazypants.enderio.machine.power;
+package crazypants.enderio.power;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;

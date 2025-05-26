@@ -28,7 +28,7 @@ import crazypants.enderio.EnderIOTab;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.item.darksteel.DarkSteelItems;
-import crazypants.enderio.machine.power.PowerDisplayUtil;
+import crazypants.enderio.power.PowerDisplayUtil;
 import crazypants.util.BaublesUtil;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "Baubles|API")
