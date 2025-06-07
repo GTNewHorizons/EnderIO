@@ -537,11 +537,6 @@ public class GuiInventoryPanel extends GuiMachineBase<TileInventoryPanel> {
     }
 
     @Override
-    protected boolean showRecipeButton() {
-        return false;
-    }
-
-    @Override
     public int getXSize() {
         return 280;
     }

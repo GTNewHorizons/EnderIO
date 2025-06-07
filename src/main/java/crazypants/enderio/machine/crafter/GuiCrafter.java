@@ -68,11 +68,6 @@ public class GuiCrafter extends GuiPoweredMachineBase<TileCrafter> {
     }
 
     @Override
-    protected boolean showRecipeButton() {
-        return false;
-    }
-
-    @Override
     public final int getXSize() {
         return 219;
     }

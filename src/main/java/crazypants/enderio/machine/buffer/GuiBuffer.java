@@ -94,11 +94,6 @@ public class GuiBuffer extends GuiPoweredMachineBase<TileBuffer> {
     }
 
     @Override
-    protected boolean showRecipeButton() {
-        return false;
-    }
-
-    @Override
     protected boolean renderPowerBar() {
         return getTileEntity().hasPower();
     }

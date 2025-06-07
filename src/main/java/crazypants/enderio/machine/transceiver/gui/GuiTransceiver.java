@@ -52,11 +52,6 @@ public class GuiTransceiver extends GuiPoweredMachineBase<TileTransceiver> {
     }
 
     @Override
-    protected boolean showRecipeButton() {
-        return false;
-    }
-
-    @Override
     public int getXSize() {
         return ContainerTransceiver.GUI_WIDTH;
     }
