@@ -40,11 +40,6 @@ public class GuiPainter extends GuiPoweredMachineBase<TileEntityPainter> {
     }
 
     @Override
-    protected boolean showRecipeButton() {
-        return false;
-    }
-
-    @Override
     protected void renderSlotHighlight(int slot, Vector4f col) {
         if (getTileEntity().getSlotDefinition().isOutputSlot(slot)) {
             renderSlotHighlight(col, 117, 31, 24, 24);

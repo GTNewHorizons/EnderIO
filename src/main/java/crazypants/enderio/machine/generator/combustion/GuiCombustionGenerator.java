@@ -53,11 +53,6 @@ public class GuiCombustionGenerator extends GuiPoweredMachineBase<TileCombustion
     }
 
     @Override
-    protected boolean showRecipeButton() {
-        return false;
-    }
-
-    @Override
     public void renderSlotHighlights(IoMode mode) {
         super.renderSlotHighlights(mode);
 

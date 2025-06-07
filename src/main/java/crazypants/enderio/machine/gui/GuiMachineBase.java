@@ -12,7 +12,6 @@ import net.minecraft.inventory.Slot;
 import org.lwjgl.opengl.GL11;
 
 import com.enderio.core.api.common.util.IProgressTile;
-import com.enderio.core.client.gui.button.IconButton;
 import com.enderio.core.client.gui.button.ToggleButton;
 import com.enderio.core.client.gui.widget.GuiToolTip;
 import com.enderio.core.client.render.RenderUtil;
@@ -22,7 +21,6 @@ import com.enderio.core.common.vecmath.Vector4f;
 
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.gui.GuiContainerBaseEIO;
-import crazypants.enderio.gui.IconEIO;
 import crazypants.enderio.gui.IoConfigRenderer.SelectedFace;
 import crazypants.enderio.gui.RedstoneModeButton;
 import crazypants.enderio.machine.AbstractMachineEntity;
@@ -46,8 +44,6 @@ public abstract class GuiMachineBase<T extends AbstractMachineEntity> extends Gu
 
     protected final GuiButtonIoConfig configB;
 
-    protected IconButton recipeButton;
-
     protected List<GuiToolTip> progressTooltips;
     protected int lastProgressTooltipValue = -1;
 
@@ -66,11 +62,6 @@ public abstract class GuiMachineBase<T extends AbstractMachineEntity> extends Gu
 
         y += 19;
         configB = new GuiButtonIoConfig(this, CONFIG_ID, x, y, machine, configOverlay);
-
-        y += 19;
-        recipeButton = new IconButton(this, RECIPE_ID, x, y, IconEIO.RECIPE);
-        recipeButton.visible = false;
-        recipeButton.setIconMargin(1, 1);
     }
 
     @Override
@@ -78,11 +69,6 @@ public abstract class GuiMachineBase<T extends AbstractMachineEntity> extends Gu
         super.initGui();
         redstoneButton.onGuiInit();
         configB.onGuiInit();
-        recipeButton.onGuiInit();
-    }
-
-    protected boolean showRecipeButton() {
-        return EnderIO.proxy.isNeiInstalled();
     }
 
     @Override
@@ -94,10 +80,6 @@ public abstract class GuiMachineBase<T extends AbstractMachineEntity> extends Gu
         for (int i = 0; i < buttonList.size(); ++i) {
             GuiButton guibutton = (GuiButton) buttonList.get(i);
             guibutton.drawButton(mc, 0, 0);
-        }
-
-        if (showRecipeButton()) {
-            recipeButton.visible = true;
         }
 
         super.drawGuiContainerBackgroundLayer(par1, par2, par3);

@@ -132,8 +132,4 @@ public class GuiPoweredSpawner extends GuiPoweredMachineBase<TilePoweredSpawner>
         }
     }
 
-    @Override
-    protected boolean showRecipeButton() {
-        return false;
-    }
 }

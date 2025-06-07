@@ -59,11 +59,6 @@ public class GuiStirlingGenerator extends GuiPoweredMachineBase<TileEntityStirli
     }
 
     @Override
-    protected boolean showRecipeButton() {
-        return false;
-    }
-
-    @Override
     protected String formatProgressTooltip(int scaledProgress, float remaining) {
         int totalBurnTime = getTileEntity().totalBurnTime;
         int remainingTicks = (int) (remaining * totalBurnTime);

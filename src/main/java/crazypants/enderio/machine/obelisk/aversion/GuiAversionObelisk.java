@@ -75,8 +75,4 @@ public class GuiAversionObelisk extends GuiPoweredMachineBase<TileAversionObelis
         }
     }
 
-    @Override
-    protected boolean showRecipeButton() {
-        return false;
-    }
 }

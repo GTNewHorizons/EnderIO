@@ -103,11 +103,6 @@ public class GuiKillerJoe extends GuiMachineBase<TileKillerJoe> {
     }
 
     @Override
-    protected boolean showRecipeButton() {
-        return false;
-    }
-
-    @Override
     public void renderSlotHighlights(IoMode mode) {
         super.renderSlotHighlights(mode);
 

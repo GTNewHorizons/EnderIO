@@ -11,14 +11,12 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import org.lwjgl.opengl.GL11;
 
-import com.enderio.core.client.render.EnderWidget;
 import com.enderio.core.common.util.ItemUtil;
 
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.ItemList;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import crazypants.enderio.gui.IconEIO;
 import crazypants.enderio.machine.alloy.AlloyRecipeManager;
 import crazypants.enderio.machine.alloy.GuiAlloySmelter;
 import crazypants.enderio.machine.recipe.IRecipe;
@@ -51,7 +49,7 @@ public class AlloySmelterRecipeHandler extends TemplateRecipeHandler {
     public void loadTransferRects() {
         transferRects.add(
                 new TemplateRecipeHandler.RecipeTransferRect(
-                        new Rectangle(149, 32, 16, 16),
+                        new Rectangle(75, 23, 16, 16),
                         "EnderIOAlloySmelter",
                         new Object[0]));
     }
@@ -117,10 +115,6 @@ public class AlloySmelterRecipeHandler extends TemplateRecipeHandler {
         AlloySmelterRecipe recipe = (AlloySmelterRecipe) arecipes.get(recipeIndex);
         String energyString = PowerDisplayUtil.formatPower(recipe.getEnergy()) + " " + PowerDisplayUtil.abrevation();
         GuiDraw.drawString(energyString, 100, 52, 0x808080, false);
-
-        int x = 149, y = 32;
-        EnderWidget.map.render(EnderWidget.BUTTON, x, y, 16, 16, 0, true);
-        IconEIO.map.render(IconEIO.RECIPE, x + 1, y + 1, 14, 14, 0, true);
     }
 
     public List<ItemStack> getInputs(RecipeInput input) {

@@ -139,11 +139,6 @@ public class GuiFarmStation extends GuiPoweredMachineBase<TileFarmStation> {
     }
 
     @Override
-    protected boolean showRecipeButton() {
-        return false;
-    }
-
-    @Override
     protected String getPowerOutputLabel() {
         return EnderIO.lang.localize("farm.gui.baseUse");
     }

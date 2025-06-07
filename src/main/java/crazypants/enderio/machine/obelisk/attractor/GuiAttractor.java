@@ -76,8 +76,4 @@ public class GuiAttractor extends GuiPoweredMachineBase<TileAttractor> {
                 ColorUtil.getRGB(Color.white));
     }
 
-    @Override
-    protected boolean showRecipeButton() {
-        return false;
-    }
 }
