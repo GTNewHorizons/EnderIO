@@ -70,7 +70,7 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
     public void loadTransferRects() {
         transferRects.add(
                 new TemplateRecipeHandler.RecipeTransferRect(
-                        new Rectangle(76, 8, 16, 16),
+                        new Rectangle(70, 8, 28, 43),
                         "EnderIOVat",
                         new Object[0]));
     }

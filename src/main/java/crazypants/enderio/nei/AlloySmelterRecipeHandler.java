@@ -49,7 +49,7 @@ public class AlloySmelterRecipeHandler extends TemplateRecipeHandler {
     public void loadTransferRects() {
         transferRects.add(
                 new TemplateRecipeHandler.RecipeTransferRect(
-                        new Rectangle(75, 23, 16, 16),
+                        new Rectangle(72, 19, 22, 19),
                         "EnderIOAlloySmelter",
                         new Object[0]));
     }

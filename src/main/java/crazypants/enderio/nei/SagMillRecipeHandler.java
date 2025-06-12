@@ -58,7 +58,7 @@ public class SagMillRecipeHandler extends TemplateRecipeHandler {
     public void loadTransferRects() {
         transferRects.add(
                 new TemplateRecipeHandler.RecipeTransferRect(
-                        new Rectangle(74, 21, 16, 22),
+                        new Rectangle(74, 21, 17, 22),
                         "EnderIOSagMill",
                         new Object[0]));
     }

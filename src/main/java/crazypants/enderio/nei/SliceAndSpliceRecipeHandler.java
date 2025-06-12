@@ -49,7 +49,7 @@ public class SliceAndSpliceRecipeHandler extends TemplateRecipeHandler {
     public void loadTransferRects() {
         transferRects.add(
                 new TemplateRecipeHandler.RecipeTransferRect(
-                        new Rectangle(91, 38, 22, 16),
+                        new Rectangle(91, 37, 22, 17),
                         "EnderIOSliceAndSplice",
                         new Object[0]));
     }

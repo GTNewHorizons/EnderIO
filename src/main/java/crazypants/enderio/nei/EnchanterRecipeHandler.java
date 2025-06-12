@@ -51,7 +51,7 @@ public class EnchanterRecipeHandler extends TemplateRecipeHandler {
     public void loadTransferRects() {
         transferRects.add(
                 new TemplateRecipeHandler.RecipeTransferRect(
-                        new Rectangle(96, 24, 22, 16),
+                        new Rectangle(97, 24, 22, 17),
                         "EIOEnchanter",
                         new Object[0]));
     }

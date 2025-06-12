@@ -51,7 +51,7 @@ public class SoulBinderRecipeHandler extends TemplateRecipeHandler {
     public void loadTransferRects() {
         transferRects.add(
                 new TemplateRecipeHandler.RecipeTransferRect(
-                        new Rectangle(70, 23, 22, 16),
+                        new Rectangle(70, 23, 22, 17),
                         "EnderIOSoulBinder",
                         new Object[0]));
     }

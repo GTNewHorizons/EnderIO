@@ -23,7 +23,7 @@ public class GuiAlloySmelter extends GuiPoweredMachineBase<TileAlloySmelter> {
     private final IIconButton vanillaFurnaceButton;
     private final GuiToolTip vanillaFurnaceTooltip;
 
-    protected static final int SMELT_MODE_BUTTON_ID = 43;
+    protected static final int SMELT_MODE_BUTTON_ID = 76;
 
     public GuiAlloySmelter(InventoryPlayer par1InventoryPlayer, TileAlloySmelter furnaceInventory) {
         super(furnaceInventory, new ContainerAlloySmelter(par1InventoryPlayer, furnaceInventory), "alloySmelter");
