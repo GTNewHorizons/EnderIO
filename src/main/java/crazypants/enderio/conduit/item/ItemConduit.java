@@ -490,6 +490,9 @@ public class ItemConduit extends AbstractConduit implements IItemConduit {
             return null;
         }
         BlockCoord loc = getLocation().getLocation(direction);
+        if (!world.blockExists(loc.x, loc.y, loc.z)) {
+            return null;
+        }
         TileEntity te = world.getTileEntity(loc.x, loc.y, loc.z);
         if (te instanceof IInventory && !(te instanceof IConduitBundle)) {
             return (IInventory) te;
