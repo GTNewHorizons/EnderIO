@@ -15,13 +15,10 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
-import com.enderio.core.client.render.EnderWidget;
-
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import crazypants.enderio.gui.GuiContainerBaseEIO;
-import crazypants.enderio.gui.IconEIO;
 import crazypants.enderio.machine.enchanter.EnchanterRecipe;
 import crazypants.enderio.machine.enchanter.EnchanterRecipeManager;
 import crazypants.enderio.machine.enchanter.GuiEnchanter;
@@ -54,7 +51,7 @@ public class EnchanterRecipeHandler extends TemplateRecipeHandler {
     public void loadTransferRects() {
         transferRects.add(
                 new TemplateRecipeHandler.RecipeTransferRect(
-                        new Rectangle(149, -3, 16, 16),
+                        new Rectangle(97, 24, 22, 17),
                         "EIOEnchanter",
                         new Object[0]));
     }
@@ -131,9 +128,6 @@ public class EnchanterRecipeHandler extends TemplateRecipeHandler {
             GuiDraw.drawStringC(s, 83, 46, 0x80FF20);
         }
 
-        int x = 149, y = -3;
-        EnderWidget.map.render(EnderWidget.BUTTON, x, y, 16, 16, 0, true);
-        IconEIO.map.render(IconEIO.RECIPE, x + 1, y + 1, 14, 14, 0, true);
     }
 
     public List<ItemStack> getInputs(RecipeInput input) {

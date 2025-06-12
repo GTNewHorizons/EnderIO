@@ -13,15 +13,12 @@ import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 
-import com.enderio.core.client.render.EnderWidget;
-
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.gui.GuiContainerBaseEIO;
-import crazypants.enderio.gui.IconEIO;
 import crazypants.enderio.machine.IMachineRecipe;
 import crazypants.enderio.machine.MachineRecipeRegistry;
 import crazypants.enderio.machine.soul.GuiSoulBinder;
@@ -54,7 +51,7 @@ public class SoulBinderRecipeHandler extends TemplateRecipeHandler {
     public void loadTransferRects() {
         transferRects.add(
                 new TemplateRecipeHandler.RecipeTransferRect(
-                        new Rectangle(149, 32, 16, 16),
+                        new Rectangle(70, 23, 22, 17),
                         "EnderIOSoulBinder",
                         new Object[0]));
     }
@@ -142,10 +139,6 @@ public class SoulBinderRecipeHandler extends TemplateRecipeHandler {
             String s = I18n.format("container.repair.cost", new Object[] { Integer.valueOf(cost) });
             GuiDraw.drawStringC(s, 83, 55, 0x80FF20);
         }
-
-        int x = 149, y = 32;
-        EnderWidget.map.render(EnderWidget.BUTTON, x, y, 16, 16, 0, true);
-        IconEIO.map.render(IconEIO.RECIPE, x + 1, y + 1, 14, 14, 0, true);
     }
 
     private static final ArrayList<PositionedStack> EMPTY_VIAL_OUTPUT = new ArrayList<PositionedStack>();

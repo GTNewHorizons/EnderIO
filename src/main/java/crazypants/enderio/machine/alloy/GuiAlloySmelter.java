@@ -38,7 +38,7 @@ public class GuiAlloySmelter extends GuiPoweredMachineBase<TileAlloySmelter> {
         vanillaFurnaceButton.setSize(BUTTON_SIZE, BUTTON_SIZE);
 
         vanillaFurnaceTooltip = new GuiToolTip(
-                new Rectangle(xSize - 5 - BUTTON_SIZE, 62, BUTTON_SIZE, BUTTON_SIZE),
+                new Rectangle(xSize - 5 - BUTTON_SIZE, 43, BUTTON_SIZE, BUTTON_SIZE),
                 (String[]) null);
 
         addProgressTooltip(55, 35, 14, 14);

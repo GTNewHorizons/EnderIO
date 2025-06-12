@@ -14,13 +14,10 @@ import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 
-import com.enderio.core.client.render.EnderWidget;
-
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import crazypants.enderio.gui.IconEIO;
 import crazypants.enderio.machine.crusher.CrusherRecipeManager;
 import crazypants.enderio.machine.crusher.GrindingBall;
 import crazypants.enderio.machine.crusher.GuiCrusher;
@@ -61,7 +58,7 @@ public class SagMillRecipeHandler extends TemplateRecipeHandler {
     public void loadTransferRects() {
         transferRects.add(
                 new TemplateRecipeHandler.RecipeTransferRect(
-                        new Rectangle(149, 32, 16, 16),
+                        new Rectangle(74, 21, 17, 22),
                         "EnderIOSagMill",
                         new Object[0]));
     }
@@ -127,10 +124,6 @@ public class SagMillRecipeHandler extends TemplateRecipeHandler {
         MillRecipe recipe = (MillRecipe) arecipes.get(recipeIndex);
         String energyString = PowerDisplayUtil.formatPower(recipe.getEnergy()) + " " + PowerDisplayUtil.abrevation();
         GuiDraw.drawString(energyString, 96, 33, 0x808080, false);
-
-        int x = 149, y = 32;
-        EnderWidget.map.render(EnderWidget.BUTTON, x, y, 16, 16, 0, true);
-        IconEIO.map.render(IconEIO.RECIPE, x + 1, y + 1, 14, 14, 0, true);
     }
 
     @Override

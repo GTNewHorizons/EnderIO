@@ -7,9 +7,13 @@ import codechicken.nei.api.IConfigureNEI;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.conduit.gas.GasUtil;
 import crazypants.enderio.config.Config;
+import crazypants.enderio.machine.alloy.GuiAlloySmelter;
+import crazypants.enderio.machine.crusher.GuiCrusher;
 import crazypants.enderio.machine.invpanel.GuiInventoryPanel;
 import crazypants.enderio.machine.invpanel.client.InventoryPanelNEIOverlayHandler;
 import crazypants.enderio.machine.painter.PainterUtil;
+import crazypants.enderio.machine.slicensplice.GuiSliceAndSplice;
+import crazypants.enderio.machine.soul.GuiSoulBinder;
 
 public class NEIEnderIOConfig implements IConfigureNEI {
 
@@ -17,9 +21,11 @@ public class NEIEnderIOConfig implements IConfigureNEI {
     public void loadConfig() {
         API.registerRecipeHandler(new AlloySmelterRecipeHandler());
         API.registerUsageHandler(new AlloySmelterRecipeHandler());
+        API.setGuiOffset(GuiAlloySmelter.class, 4, 6);
 
         API.registerRecipeHandler(new SagMillRecipeHandler());
         API.registerUsageHandler(new SagMillRecipeHandler());
+        API.setGuiOffset(GuiCrusher.class, 6, 11);
 
         API.registerRecipeHandler(new VatRecipeHandler());
         API.registerUsageHandler(new VatRecipeHandler());
@@ -29,9 +35,11 @@ public class NEIEnderIOConfig implements IConfigureNEI {
 
         API.registerRecipeHandler(new SliceAndSpliceRecipeHandler());
         API.registerUsageHandler(new SliceAndSpliceRecipeHandler());
+        API.setGuiOffset(GuiSliceAndSplice.class, 13, 11);
 
         API.registerRecipeHandler(new SoulBinderRecipeHandler());
         API.registerUsageHandler(new SoulBinderRecipeHandler());
+        API.setGuiOffset(GuiSoulBinder.class, 11, 11);
 
         API.registerGuiOverlayHandler(GuiInventoryPanel.class, new InventoryPanelNEIOverlayHandler(), "crafting");
 

@@ -12,13 +12,10 @@ import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 
-import com.enderio.core.client.render.EnderWidget;
-
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import crazypants.enderio.gui.GuiContainerBaseEIO;
-import crazypants.enderio.gui.IconEIO;
 import crazypants.enderio.machine.recipe.IRecipe;
 import crazypants.enderio.machine.recipe.RecipeInput;
 import crazypants.enderio.machine.slicensplice.ContainerSliceAndSplice;
@@ -52,7 +49,7 @@ public class SliceAndSpliceRecipeHandler extends TemplateRecipeHandler {
     public void loadTransferRects() {
         transferRects.add(
                 new TemplateRecipeHandler.RecipeTransferRect(
-                        new Rectangle(149, 32, 16, 16),
+                        new Rectangle(91, 37, 22, 17),
                         "EnderIOSliceAndSplice",
                         new Object[0]));
     }
@@ -113,10 +110,6 @@ public class SliceAndSpliceRecipeHandler extends TemplateRecipeHandler {
         SliceAndSpliceRecipe recipe = (SliceAndSpliceRecipe) arecipes.get(recipeIndex);
         String energyString = PowerDisplayUtil.formatPower(recipe.getEnergy()) + " " + PowerDisplayUtil.abrevation();
         GuiDraw.drawString(energyString, 100, 57, 0x808080, false);
-
-        int x = 149, y = 32;
-        EnderWidget.map.render(EnderWidget.BUTTON, x, y, 16, 16, 0, true);
-        IconEIO.map.render(IconEIO.RECIPE, x + 1, y + 1, 14, 14, 0, true);
     }
 
     public List<ItemStack> getInputs(RecipeInput input) {
