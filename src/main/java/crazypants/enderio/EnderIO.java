@@ -190,7 +190,6 @@ import crazypants.util.EE3Util;
         after:Waila@[1.5.8,);\
         after:Thaumcraft;\
         after:appliedenergistics2@[rv2-beta-8,);\
-        after:chisel;\
         after:Railcraft@[9.16.7,)\
         """, guiFactory = "crazypants.enderio.config.ConfigFactoryEIO")
 public class EnderIO {
