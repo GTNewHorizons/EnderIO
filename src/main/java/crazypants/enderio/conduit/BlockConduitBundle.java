@@ -160,7 +160,7 @@ public class BlockConduitBundle extends BlockEio
 
         BlockConduitBundle result = new BlockConduitBundle();
         result.init();
-        MinecraftForge.EVENT_BUS.register(result);
+        MinecraftForge.EVENT_BUS.register(result.handler);
         return result;
     }
 
@@ -171,7 +171,7 @@ public class BlockConduitBundle extends BlockEio
     private IIcon lastRemovedComponetIcon = null;
 
     private final Random rand = new Random();
-
+    public EventHandler handler;
     protected BlockConduitBundle() {
         super(ModObject.blockConduitBundle.unlocalisedName, TileConduitBundle.class);
         setBlockBounds(0.334f, 0.334f, 0.334f, 0.667f, 0.667f, 0.667f);
@@ -190,6 +190,8 @@ public class BlockConduitBundle extends BlockEio
                 return "EnderIO:" + soundName + ".step";
             }
         };
+
+        handler = new EventHandler();
     }
 
     @SideOnly(Side.CLIENT)
@@ -290,41 +292,6 @@ public class BlockConduitBundle extends BlockEio
         digFX.applyColourMultiplier(x, y, z).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F);
         digFX.setParticleIcon(tex);
         effectRenderer.addEffect(digFX);
-    }
-
-    @SideOnly(Side.CLIENT)
-    @SubscribeEvent
-    public void onPlaySound(PlaySoundSourceEvent event) {
-        String path = event.sound.getPositionedSoundLocation().getResourcePath();
-        if ("silence.step".equals(path)) {
-            ISound snd = event.sound;
-            World world = EnderIO.proxy.getClientWorld();
-            BlockCoord bc = new BlockCoord(snd.getXPosF(), snd.getYPosF(), snd.getZPosF());
-            TileEntity te = bc.getTileEntity(world);
-            if (te instanceof TileConduitBundle && ((TileConduitBundle) te).hasFacade()) {
-                Block facade = getFacade(world, bc.x, bc.y, bc.z, -1);
-                ConduitUtil.playHitSound(facade.stepSound, world, bc.x, bc.y, bc.z);
-            } else {
-                ConduitUtil.playHitSound(Block.soundTypeMetal, world, bc.x, bc.y, bc.z);
-            }
-        }
-    }
-
-    @SideOnly(Side.CLIENT)
-    @SubscribeEvent
-    public void onPlaySoundAtEntity(PlaySoundAtEntityEvent event) {
-        String path = event.name;
-        World world = event.entity.worldObj;
-        if ("EnderIO:silence.step".equals(path) && world.isRemote) {
-            BlockCoord bc = new BlockCoord(event.entity.posX, event.entity.posY - 2, event.entity.posZ);
-            TileEntity te = bc.getTileEntity(world);
-            if (te instanceof TileConduitBundle && ((TileConduitBundle) te).hasFacade()) {
-                Block facade = getFacade(world, bc.x, bc.y, bc.z, -1);
-                ConduitUtil.playStepSound(facade.stepSound, world, bc.x, bc.y, bc.z);
-            } else {
-                ConduitUtil.playStepSound(Block.soundTypeMetal, world, bc.x, bc.y, bc.z);
-            }
-        }
     }
 
     @Override
@@ -471,24 +438,6 @@ public class BlockConduitBundle extends BlockEio
         return te instanceof IConduitBundle && ((IConduitBundle) te).getFacadeType() == FacadeType.HARDENED
                 ? resist * 10
                 : resist;
-    }
-
-    @SubscribeEvent
-    public void onBreakSpeed(BreakSpeed event) {
-        if (event.block == this) {
-            ItemStack held = event.entityPlayer.getCurrentEquippedItem();
-            if (held == null || held.getItem().getHarvestLevel(held, "pickaxe") == -1) {
-                event.newSpeed += 2;
-            }
-            IConduitBundle te = (IConduitBundle) event.entity.worldObj.getTileEntity(event.x, event.y, event.z);
-            if (te != null && te.getFacadeType() == FacadeType.HARDENED) {
-                if (!ConduitUtil.isSolidFacadeRendered(te, event.entityPlayer)) {
-                    event.newSpeed *= 6;
-                } else {
-                    event.newSpeed *= 2;
-                }
-            }
-        }
     }
 
     @Override
@@ -1273,5 +1222,60 @@ public class BlockConduitBundle extends BlockEio
 
     private boolean hasMicroblocks(IConduitBundle bundle) {
         return !bundle.getCoverSystem().getAllParts().isEmpty();
+    }
+
+    public class EventHandler{
+        @SideOnly(Side.CLIENT)
+        @SubscribeEvent
+        public void onPlaySound(PlaySoundSourceEvent event) {
+            String path = event.sound.getPositionedSoundLocation().getResourcePath();
+            if ("silence.step".equals(path)) {
+                ISound snd = event.sound;
+                World world = EnderIO.proxy.getClientWorld();
+                BlockCoord bc = new BlockCoord(snd.getXPosF(), snd.getYPosF(), snd.getZPosF());
+                TileEntity te = bc.getTileEntity(world);
+                if (te instanceof TileConduitBundle && ((TileConduitBundle) te).hasFacade()) {
+                    Block facade = getFacade(world, bc.x, bc.y, bc.z, -1);
+                    ConduitUtil.playHitSound(facade.stepSound, world, bc.x, bc.y, bc.z);
+                } else {
+                    ConduitUtil.playHitSound(Block.soundTypeMetal, world, bc.x, bc.y, bc.z);
+                }
+            }
+        }
+
+        @SideOnly(Side.CLIENT)
+        @SubscribeEvent
+        public void onPlaySoundAtEntity(PlaySoundAtEntityEvent event) {
+            String path = event.name;
+            World world = event.entity.worldObj;
+            if ("EnderIO:silence.step".equals(path) && world.isRemote) {
+                BlockCoord bc = new BlockCoord(event.entity.posX, event.entity.posY - 2, event.entity.posZ);
+                TileEntity te = bc.getTileEntity(world);
+                if (te instanceof TileConduitBundle && ((TileConduitBundle) te).hasFacade()) {
+                    Block facade = getFacade(world, bc.x, bc.y, bc.z, -1);
+                    ConduitUtil.playStepSound(facade.stepSound, world, bc.x, bc.y, bc.z);
+                } else {
+                    ConduitUtil.playStepSound(Block.soundTypeMetal, world, bc.x, bc.y, bc.z);
+                }
+            }
+        }
+
+        @SubscribeEvent
+        public void onBreakSpeed(BreakSpeed event) {
+            if (event.block == BlockConduitBundle.this) {
+                ItemStack held = event.entityPlayer.getCurrentEquippedItem();
+                if (held == null || held.getItem().getHarvestLevel(held, "pickaxe") == -1) {
+                    event.newSpeed += 2;
+                }
+                IConduitBundle te = (IConduitBundle) event.entity.worldObj.getTileEntity(event.x, event.y, event.z);
+                if (te != null && te.getFacadeType() == FacadeType.HARDENED) {
+                    if (!ConduitUtil.isSolidFacadeRendered(te, event.entityPlayer)) {
+                        event.newSpeed *= 6;
+                    } else {
+                        event.newSpeed *= 2;
+                    }
+                }
+            }
+        }
     }
 }
