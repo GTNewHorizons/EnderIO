@@ -230,7 +230,7 @@ public class BlockPoweredSpawner extends AbstractMachineBlock<TilePoweredSpawner
         }
     }
 
-    class EventHandler {
+    public class EventHandler {
 
         @SubscribeEvent
         public void onBreakEvent(BlockEvent.BreakEvent evt) {
