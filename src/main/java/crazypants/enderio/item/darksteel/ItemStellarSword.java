@@ -6,7 +6,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
 
 import cpw.mods.fml.relauncher.Side;
@@ -35,7 +34,6 @@ public class ItemStellarSword extends ItemDarkSteelSword implements IStellarItem
     public static ItemStellarSword create() {
         ItemStellarSword res = new ItemStellarSword();
         res.init();
-        MinecraftForge.EVENT_BUS.register(res);
         return res;
     }
 

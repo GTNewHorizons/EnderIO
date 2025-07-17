@@ -22,6 +22,7 @@ import crazypants.enderio.xp.PacketGivePlayerXP;
 public class BlockKillerJoe extends AbstractMachineBlock<TileKillerJoe> {
 
     static final String USERNAME = "KillerJoe";
+    public EventHandler handler;
 
     public static BlockKillerJoe create() {
         PacketHandler.INSTANCE
@@ -30,7 +31,7 @@ public class BlockKillerJoe extends AbstractMachineBlock<TileKillerJoe> {
         PacketExperianceContainer.register();
 
         BlockKillerJoe res = new BlockKillerJoe();
-        MinecraftForge.EVENT_BUS.register(res);
+        MinecraftForge.EVENT_BUS.register(res.handler);
         res.init();
         return res;
     }
@@ -38,19 +39,13 @@ public class BlockKillerJoe extends AbstractMachineBlock<TileKillerJoe> {
     protected BlockKillerJoe() {
         super(ModObject.blockKillerJoe, TileKillerJoe.class);
         setStepSound(Block.soundTypeGlass);
+        handler = new EventHandler();
     }
 
     @Override
     public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX,
             double explosionY, double explosionZ) {
         return 2000;
-    }
-
-    @SubscribeEvent
-    public void getKillDisplayName(PlayerEvent.NameFormat nameEvt) {
-        if (nameEvt.username != null && nameEvt.username.startsWith(USERNAME)) {
-            nameEvt.displayname = getLocalizedName();
-        }
     }
 
     @Override
@@ -99,6 +94,16 @@ public class BlockKillerJoe extends AbstractMachineBlock<TileKillerJoe> {
             case 3:
             default:
                 return 5;
+        }
+    }
+
+    public class EventHandler {
+
+        @SubscribeEvent
+        public void getKillDisplayName(PlayerEvent.NameFormat nameEvt) {
+            if (nameEvt.username != null && nameEvt.username.startsWith(USERNAME)) {
+                nameEvt.displayname = getLocalizedName();
+            }
         }
     }
 }

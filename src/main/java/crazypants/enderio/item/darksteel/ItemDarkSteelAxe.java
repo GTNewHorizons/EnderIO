@@ -43,6 +43,8 @@ import crazypants.enderio.machine.farm.farmers.TreeHarvestUtil;
 public class ItemDarkSteelAxe extends ItemAxe
         implements IEnergyContainerItem, IAdvancedTooltipProvider, IDarkSteelItem {
 
+    public EventHandler handler;
+
     public static boolean isEquipped(EntityPlayer player) {
         if (player == null) {
             return false;
@@ -67,7 +69,7 @@ public class ItemDarkSteelAxe extends ItemAxe
 
     public static ItemDarkSteelAxe create() {
         ItemDarkSteelAxe res = new ItemDarkSteelAxe();
-        MinecraftForge.EVENT_BUS.register(res);
+        MinecraftForge.EVENT_BUS.register(res.handler);
         res.init();
         return res;
     }
@@ -78,6 +80,7 @@ public class ItemDarkSteelAxe extends ItemAxe
 
     protected ItemDarkSteelAxe() {
         this("darkSteel", ItemDarkSteelSword.MATERIAL);
+        handler = new EventHandler();
     }
 
     protected ItemDarkSteelAxe(String name, ToolMaterial mat) {
@@ -87,6 +90,7 @@ public class ItemDarkSteelAxe extends ItemAxe
         String str = name + "_axe";
         setUnlocalizedName(str);
         setTextureName(EnderIO.DOMAIN + ":" + str);
+        handler = new EventHandler();
     }
 
     @Override
@@ -186,18 +190,6 @@ public class ItemDarkSteelAxe extends ItemAxe
             }
         }
         return usedPower;
-    }
-
-    @SubscribeEvent
-    public void onBreakSpeedEvent(PlayerEvent.BreakSpeed evt) {
-        if (evt.entityPlayer.isSneaking()
-                && isEquippedAndPowered(evt.entityPlayer, Config.darkSteelAxePowerUsePerDamagePointMultiHarvest)
-                && isLog(evt.block, evt.metadata)) {
-            evt.newSpeed = evt.originalSpeed / Config.darkSteelAxeSpeedPenaltyMultiHarvest;
-        }
-        if (isEquipped(evt.entityPlayer) && evt.block.getMaterial() == Material.leaves) {
-            evt.newSpeed = 6;
-        }
     }
 
     @Override
@@ -334,6 +326,21 @@ public class ItemDarkSteelAxe extends ItemAxe
         // NB: Copy of Integer.compare, which i sonly in Java 1.7+
         public static int compare(int x, int y) {
             return (x < y) ? -1 : ((x == y) ? 0 : 1);
+        }
+    }
+
+    public class EventHandler {
+
+        @SubscribeEvent
+        public void onBreakSpeedEvent(PlayerEvent.BreakSpeed evt) {
+            if (evt.entityPlayer.isSneaking()
+                    && isEquippedAndPowered(evt.entityPlayer, Config.darkSteelAxePowerUsePerDamagePointMultiHarvest)
+                    && isLog(evt.block, evt.metadata)) {
+                evt.newSpeed = evt.originalSpeed / Config.darkSteelAxeSpeedPenaltyMultiHarvest;
+            }
+            if (isEquipped(evt.entityPlayer) && evt.block.getMaterial() == Material.leaves) {
+                evt.newSpeed = 6;
+            }
         }
     }
 }

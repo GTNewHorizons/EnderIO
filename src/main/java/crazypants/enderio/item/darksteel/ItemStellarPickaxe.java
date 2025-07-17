@@ -6,7 +6,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -30,7 +29,6 @@ public class ItemStellarPickaxe extends ItemDarkSteelPickaxe implements IStellar
     public static ItemStellarPickaxe create() {
         ItemStellarPickaxe res = new ItemStellarPickaxe();
         res.init();
-        MinecraftForge.EVENT_BUS.register(res);
         return res;
     }
 
