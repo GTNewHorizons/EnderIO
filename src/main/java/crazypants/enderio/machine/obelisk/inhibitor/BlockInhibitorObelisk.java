@@ -25,12 +25,17 @@ public class BlockInhibitorObelisk extends BlockObeliskAbstract<TileInhibitorObe
     public static BlockInhibitorObelisk create() {
         BlockInhibitorObelisk res = new BlockInhibitorObelisk();
         res.init();
-        MinecraftForge.EVENT_BUS.register(res);
         return instance = res;
     }
 
     protected BlockInhibitorObelisk() {
         super(ModObject.blockInhibitorObelisk, TileInhibitorObelisk.class);
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
     }
 
     @Override
@@ -58,15 +63,18 @@ public class BlockInhibitorObelisk extends BlockObeliskAbstract<TileInhibitorObe
 
     public Map<BlockCoord, Float> activeInhibitors = Maps.newHashMap();
 
-    @SubscribeEvent
-    public void onTeleport(TeleportEntityEvent event) {
-        for (Entry<BlockCoord, Float> e : activeInhibitors.entrySet()) {
-            BlockCoord bc = e.getKey();
-            int dist = bc.getDist(new BlockCoord(event.targetX, event.targetY, event.targetZ));
-            if (dist < e.getValue()) {
-                TileEntity te = bc.getTileEntity(event.entity.worldObj);
-                if (te instanceof TileInhibitorObelisk && ((TileInhibitorObelisk) te).isActive()) {
-                    event.setCanceled(true);
+    public class EventHandler {
+
+        @SubscribeEvent
+        public void onTeleport(TeleportEntityEvent event) {
+            for (Entry<BlockCoord, Float> e : activeInhibitors.entrySet()) {
+                BlockCoord bc = e.getKey();
+                int dist = bc.getDist(new BlockCoord(event.targetX, event.targetY, event.targetZ));
+                if (dist < e.getValue()) {
+                    TileEntity te = bc.getTileEntity(event.entity.worldObj);
+                    if (te instanceof TileInhibitorObelisk && ((TileInhibitorObelisk) te).isActive()) {
+                        event.setCanceled(true);
+                    }
                 }
             }
         }

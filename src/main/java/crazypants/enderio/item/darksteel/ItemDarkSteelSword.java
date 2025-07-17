@@ -72,7 +72,6 @@ public class ItemDarkSteelSword extends ItemSword
     public static ItemDarkSteelSword create() {
         ItemDarkSteelSword res = new ItemDarkSteelSword();
         res.init();
-        MinecraftForge.EVENT_BUS.register(res);
         return res;
     }
 
@@ -115,71 +114,6 @@ public class ItemDarkSteelSword extends ItemSword
     @Override
     public boolean isDamaged(ItemStack stack) {
         return false;
-    }
-
-    @SubscribeEvent
-    public void onEnderTeleport(EnderTeleportEvent evt) {
-        if (evt.entityLiving.getEntityData().getBoolean("hitByDarkSteelSword")) {
-            evt.setCanceled(true);
-        }
-    }
-
-    // Set priorty to lowest in the hope any other mod adding head drops will have already added them
-    // by the time this is called to prevent multiple head drops
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onEntityDrop(LivingDropsEvent evt) {
-
-        if (!(evt.source.getEntity() instanceof EntityPlayer)) {
-            return;
-        }
-
-        EntityPlayer player = (EntityPlayer) evt.source.getEntity();
-        // Handle TiC weapons with beheading differently
-        if (handleBeheadingWeapons(player, evt)) {
-            return;
-        }
-
-        double skullDropChance = getSkullDropChance(player, evt);
-        if (player instanceof FakePlayer) {
-            skullDropChance *= Config.fakePlayerSkullChance;
-        }
-        if (Math.random() <= skullDropChance) {
-            dropSkull(evt, player);
-        }
-
-        // Special handling for ender pear drops
-        if (isEquipped(player)) {
-            String name = EntityList.getEntityString(evt.entityLiving);
-            if (evt.entityLiving instanceof EntityEnderman || ENDERZOO_ENDERMINY.equals(name)) {
-                int numPearls = 0;
-                if (Math.random() <= Config.darkSteelSwordEnderPearlDropChance) {
-                    numPearls++;
-                }
-                for (int i = 0; i < evt.lootingLevel; i++) {
-                    if (Math.random() <= Config.darkSteelSwordEnderPearlDropChancePerLooting) {
-                        numPearls++;
-                    }
-                }
-
-                int existing = 0;
-                for (EntityItem stack : evt.drops) {
-                    if (stack.getEntityItem() != null && stack.getEntityItem().getItem() == Items.ender_pearl) {
-                        existing += stack.getEntityItem().stackSize;
-                    }
-                }
-                int toDrop = numPearls - existing;
-                if (toDrop > 0) {
-                    evt.drops.add(
-                            Util.createDrop(
-                                    player.worldObj,
-                                    new ItemStack(Items.ender_pearl, toDrop, 0),
-                                    evt.entityLiving.posX,
-                                    evt.entityLiving.posY,
-                                    evt.entityLiving.posZ,
-                                    false));
-                }
-            }
-        }
     }
 
     protected void dropSkull(LivingDropsEvent evt, EntityPlayer player) {
@@ -292,6 +226,7 @@ public class ItemDarkSteelSword extends ItemSword
 
     protected void init() {
         GameRegistry.registerItem(this, getUnlocalizedName());
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
     }
 
     @Override
@@ -436,5 +371,74 @@ public class ItemDarkSteelSword extends ItemSword
         }
 
         return super.onItemRightClick(stack, world, player);
+    }
+
+    public class EventHandler {
+
+        @SubscribeEvent
+        public void onEnderTeleport(EnderTeleportEvent evt) {
+            if (evt.entityLiving.getEntityData().getBoolean("hitByDarkSteelSword")) {
+                evt.setCanceled(true);
+            }
+        }
+
+        // Set priorty to lowest in the hope any other mod adding head drops will have already added them
+        // by the time this is called to prevent multiple head drops
+        @SubscribeEvent(priority = EventPriority.LOWEST)
+        public void onEntityDrop(LivingDropsEvent evt) {
+
+            if (!(evt.source.getEntity() instanceof EntityPlayer)) {
+                return;
+            }
+
+            EntityPlayer player = (EntityPlayer) evt.source.getEntity();
+            // Handle TiC weapons with beheading differently
+            if (handleBeheadingWeapons(player, evt)) {
+                return;
+            }
+
+            double skullDropChance = getSkullDropChance(player, evt);
+            if (player instanceof FakePlayer) {
+                skullDropChance *= Config.fakePlayerSkullChance;
+            }
+            if (Math.random() <= skullDropChance) {
+                dropSkull(evt, player);
+            }
+
+            // Special handling for ender pear drops
+            if (isEquipped(player)) {
+                String name = EntityList.getEntityString(evt.entityLiving);
+                if (evt.entityLiving instanceof EntityEnderman || ENDERZOO_ENDERMINY.equals(name)) {
+                    int numPearls = 0;
+                    if (Math.random() <= Config.darkSteelSwordEnderPearlDropChance) {
+                        numPearls++;
+                    }
+                    for (int i = 0; i < evt.lootingLevel; i++) {
+                        if (Math.random() <= Config.darkSteelSwordEnderPearlDropChancePerLooting) {
+                            numPearls++;
+                        }
+                    }
+
+                    int existing = 0;
+                    for (EntityItem stack : evt.drops) {
+                        if (stack.getEntityItem() != null && stack.getEntityItem().getItem() == Items.ender_pearl) {
+                            existing += stack.getEntityItem().stackSize;
+                        }
+                    }
+                    int toDrop = numPearls - existing;
+                    if (toDrop > 0) {
+                        evt.drops.add(
+                                Util.createDrop(
+                                        player.worldObj,
+                                        new ItemStack(Items.ender_pearl, toDrop, 0),
+                                        evt.entityLiving.posX,
+                                        evt.entityLiving.posY,
+                                        evt.entityLiving.posZ,
+                                        false));
+                    }
+                }
+            }
+        }
+
     }
 }

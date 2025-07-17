@@ -28,9 +28,7 @@ public class BlockKillerJoe extends AbstractMachineBlock<TileKillerJoe> {
                 .registerMessage(PacketSwing.class, PacketSwing.class, PacketHandler.nextID(), Side.CLIENT);
         PacketGivePlayerXP.register();
         PacketExperianceContainer.register();
-
         BlockKillerJoe res = new BlockKillerJoe();
-        MinecraftForge.EVENT_BUS.register(res);
         res.init();
         return res;
     }
@@ -41,16 +39,15 @@ public class BlockKillerJoe extends AbstractMachineBlock<TileKillerJoe> {
     }
 
     @Override
+    protected void init() {
+        super.init();
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
+    }
+
+    @Override
     public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX,
             double explosionY, double explosionZ) {
         return 2000;
-    }
-
-    @SubscribeEvent
-    public void getKillDisplayName(PlayerEvent.NameFormat nameEvt) {
-        if (nameEvt.username != null && nameEvt.username.startsWith(USERNAME)) {
-            nameEvt.displayname = getLocalizedName();
-        }
     }
 
     @Override
@@ -99,6 +96,16 @@ public class BlockKillerJoe extends AbstractMachineBlock<TileKillerJoe> {
             case 3:
             default:
                 return 5;
+        }
+    }
+
+    public class EventHandler {
+
+        @SubscribeEvent
+        public void getKillDisplayName(PlayerEvent.NameFormat nameEvt) {
+            if (nameEvt.username != null && nameEvt.username.startsWith(USERNAME)) {
+                nameEvt.displayname = getLocalizedName();
+            }
         }
     }
 }

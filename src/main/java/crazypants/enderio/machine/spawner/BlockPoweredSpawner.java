@@ -89,8 +89,6 @@ public class BlockPoweredSpawner extends AbstractMachineBlock<TilePoweredSpawner
         PoweredSpawnerConfig.getInstance();
 
         BlockPoweredSpawner res = new BlockPoweredSpawner();
-        MinecraftForge.EVENT_BUS.register(res);
-        FMLCommonHandler.instance().bus().register(res);
         res.init();
         return res;
     }
@@ -115,143 +113,15 @@ public class BlockPoweredSpawner extends AbstractMachineBlock<TilePoweredSpawner
         }
     }
 
+    @Override
+    protected void init() {
+        super.init();
+        EventHandler handler = new EventHandler();
+        MinecraftForge.EVENT_BUS.register(handler);
+        FMLCommonHandler.instance().bus().register(handler);
+    }
+
     private final Map<BlockCoord, ItemStack> dropCache = new HashMap<BlockCoord, ItemStack>();
-
-    @SubscribeEvent
-    public void onBreakEvent(BlockEvent.BreakEvent evt) {
-        if (evt.block instanceof BlockMobSpawner) {
-            if (evt.getPlayer() != null && !evt.getPlayer().capabilities.isCreativeMode
-                    && !evt.getPlayer().worldObj.isRemote
-                    && !evt.isCanceled()) {
-                TileEntity tile = evt.getPlayer().worldObj.getTileEntity(evt.x, evt.y, evt.z);
-                if (tile instanceof TileEntityMobSpawner) {
-
-                    if (Math.random() > Config.brokenSpawnerDropChance) {
-                        return;
-                    }
-
-                    ItemStack equipped = evt.getPlayer().getCurrentEquippedItem();
-                    if (equipped != null) {
-                        for (UniqueIdentifier uid : toolBlackList) {
-                            Item blackListItem = GameRegistry.findItem(uid.modId, uid.name);
-                            if (blackListItem == equipped.getItem()) {
-                                return;
-                            }
-                        }
-                    }
-
-                    TileEntityMobSpawner spawner = (TileEntityMobSpawner) tile;
-                    MobSpawnerBaseLogic logic = spawner.func_145881_a();
-                    if (logic != null) {
-                        String name = logic.getEntityNameToSpawn();
-                        if (name != null && !isBlackListed(name)) {
-                            ItemStack drop = ItemBrokenSpawner.createStackForMobType(name);
-                            dropCache.put(new BlockCoord(evt.x, evt.y, evt.z), drop);
-
-                            for (int i = (int) (Math.random() * 7); i > 0; i--) {
-                                logic.spawnDelay = 0;
-                                logic.updateSpawner();
-                            }
-                        }
-                    }
-                }
-            } else {
-                dropCache.put(new BlockCoord(evt.x, evt.y, evt.z), null);
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public void onHarvestDropsEvent(BlockEvent.HarvestDropsEvent evt) {
-        if (!evt.isCanceled() && evt.block instanceof BlockMobSpawner) {
-            BlockCoord bc = new BlockCoord(evt.x, evt.y, evt.z);
-            if (dropCache.containsKey(bc)) {
-                ItemStack stack = dropCache.get(bc);
-                if (stack != null) {
-                    evt.drops.add(stack);
-                }
-            } else {
-                // A spawner was broken---but not by a player. The TE has been
-                // invalidated already, but we might be able to recover it.
-                try {
-                    for (Object object : evt.world.loadedTileEntityList) {
-                        if (object instanceof TileEntityMobSpawner) {
-                            TileEntityMobSpawner spawner = (TileEntityMobSpawner) object;
-                            if (spawner.getWorldObj() == evt.world && spawner.xCoord == evt.x
-                                    && spawner.yCoord == evt.y
-                                    && spawner.zCoord == evt.z) {
-                                // Bingo!
-                                MobSpawnerBaseLogic logic = spawner.func_145881_a();
-                                if (logic != null) {
-                                    String name = logic.getEntityNameToSpawn();
-                                    if (name != null && !isBlackListed(name)) {
-                                        evt.drops.add(ItemBrokenSpawner.createStackForMobType(name));
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } catch (Exception e) {
-                    // Risky recovery failed. Happens.
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public void onServerTick(TickEvent.ServerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
-            dropCache.clear();
-        }
-    }
-
-    @SubscribeEvent
-    public void handleAnvilEvent(AnvilUpdateEvent evt) {
-        if (evt.left == null || evt.left.stackSize != 1
-                || evt.left.getItem() != Item.getItemFromBlock(EnderIO.blockPoweredSpawner)
-                || evt.right == null
-                || ItemBrokenSpawner.getMobTypeFromStack(evt.right) == null) {
-            return;
-        }
-
-        String spawnerType = ItemBrokenSpawner.getMobTypeFromStack(evt.right);
-        if (isBlackListed(spawnerType)) {
-            return;
-        }
-
-        evt.cost = Config.powerSpawnerAddSpawnerCost;
-        evt.output = evt.left.copy();
-        if (evt.output.stackTagCompound == null) {
-            evt.output.stackTagCompound = new NBTTagCompound();
-        }
-        evt.output.stackTagCompound.setBoolean("eio.abstractMachine", true);
-        writeMobTypeToNBT(evt.output.stackTagCompound, spawnerType);
-    }
-
-    @SubscribeEvent
-    public void onLivingUpdate(LivingUpdateEvent livingUpdate) {
-
-        Entity ent = livingUpdate.entityLiving;
-        if (!ent.getEntityData().hasKey(KEY_SPAWNED_BY_POWERED_SPAWNER)) {
-            return;
-        }
-        if (fieldpersistenceRequired == null) {
-            ent.getEntityData().removeTag(KEY_SPAWNED_BY_POWERED_SPAWNER);
-            return;
-        }
-
-        long spawnTime = ent.getEntityData().getLong(KEY_SPAWNED_BY_POWERED_SPAWNER);
-        long livedFor = livingUpdate.entity.worldObj.getTotalWorldTime() - spawnTime;
-        if (livedFor > Config.poweredSpawnerDespawnTimeSeconds * 20) {
-            try {
-                fieldpersistenceRequired.setBoolean(livingUpdate.entityLiving, false);
-                ent.getEntityData().removeTag(KEY_SPAWNED_BY_POWERED_SPAWNER);
-            } catch (Exception e) {
-                Log.warn("BlockPoweredSpawner.onLivingUpdate: Error occured allowing entity to despawn: " + e);
-                ent.getEntityData().removeTag(KEY_SPAWNED_BY_POWERED_SPAWNER);
-            }
-        }
-    }
 
     public boolean isBlackListed(String entityId) {
         return PoweredSpawnerConfig.getInstance().isBlackListed(entityId);
@@ -361,5 +231,145 @@ public class BlockPoweredSpawner extends AbstractMachineBlock<TilePoweredSpawner
 
             Util.dropItems(evt.getPlayer().worldObj, drop, evt.x, evt.y, evt.z, true);
         }
+    }
+
+    public class EventHandler {
+
+        @SubscribeEvent
+        public void onBreakEvent(BlockEvent.BreakEvent evt) {
+            if (evt.block instanceof BlockMobSpawner) {
+                if (evt.getPlayer() != null && !evt.getPlayer().capabilities.isCreativeMode
+                        && !evt.getPlayer().worldObj.isRemote
+                        && !evt.isCanceled()) {
+                    TileEntity tile = evt.getPlayer().worldObj.getTileEntity(evt.x, evt.y, evt.z);
+                    if (tile instanceof TileEntityMobSpawner) {
+
+                        if (Math.random() > Config.brokenSpawnerDropChance) {
+                            return;
+                        }
+
+                        ItemStack equipped = evt.getPlayer().getCurrentEquippedItem();
+                        if (equipped != null) {
+                            for (UniqueIdentifier uid : toolBlackList) {
+                                Item blackListItem = GameRegistry.findItem(uid.modId, uid.name);
+                                if (blackListItem == equipped.getItem()) {
+                                    return;
+                                }
+                            }
+                        }
+
+                        TileEntityMobSpawner spawner = (TileEntityMobSpawner) tile;
+                        MobSpawnerBaseLogic logic = spawner.func_145881_a();
+                        if (logic != null) {
+                            String name = logic.getEntityNameToSpawn();
+                            if (name != null && !isBlackListed(name)) {
+                                ItemStack drop = ItemBrokenSpawner.createStackForMobType(name);
+                                dropCache.put(new BlockCoord(evt.x, evt.y, evt.z), drop);
+
+                                for (int i = (int) (Math.random() * 7); i > 0; i--) {
+                                    logic.spawnDelay = 0;
+                                    logic.updateSpawner();
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    dropCache.put(new BlockCoord(evt.x, evt.y, evt.z), null);
+                }
+            }
+        }
+
+        @SubscribeEvent
+        public void onHarvestDropsEvent(BlockEvent.HarvestDropsEvent evt) {
+            if (!evt.isCanceled() && evt.block instanceof BlockMobSpawner) {
+                BlockCoord bc = new BlockCoord(evt.x, evt.y, evt.z);
+                if (dropCache.containsKey(bc)) {
+                    ItemStack stack = dropCache.get(bc);
+                    if (stack != null) {
+                        evt.drops.add(stack);
+                    }
+                } else {
+                    // A spawner was broken---but not by a player. The TE has been
+                    // invalidated already, but we might be able to recover it.
+                    try {
+                        for (Object object : evt.world.loadedTileEntityList) {
+                            if (object instanceof TileEntityMobSpawner) {
+                                TileEntityMobSpawner spawner = (TileEntityMobSpawner) object;
+                                if (spawner.getWorldObj() == evt.world && spawner.xCoord == evt.x
+                                        && spawner.yCoord == evt.y
+                                        && spawner.zCoord == evt.z) {
+                                    // Bingo!
+                                    MobSpawnerBaseLogic logic = spawner.func_145881_a();
+                                    if (logic != null) {
+                                        String name = logic.getEntityNameToSpawn();
+                                        if (name != null && !isBlackListed(name)) {
+                                            evt.drops.add(ItemBrokenSpawner.createStackForMobType(name));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } catch (Exception e) {
+                        // Risky recovery failed. Happens.
+                    }
+                }
+            }
+        }
+
+        @SubscribeEvent
+        public void onServerTick(TickEvent.ServerTickEvent event) {
+            if (event.phase == TickEvent.Phase.END) {
+                dropCache.clear();
+            }
+        }
+
+        @SubscribeEvent
+        public void handleAnvilEvent(AnvilUpdateEvent evt) {
+            if (evt.left == null || evt.left.stackSize != 1
+                    || evt.left.getItem() != Item.getItemFromBlock(EnderIO.blockPoweredSpawner)
+                    || evt.right == null
+                    || ItemBrokenSpawner.getMobTypeFromStack(evt.right) == null) {
+                return;
+            }
+
+            String spawnerType = ItemBrokenSpawner.getMobTypeFromStack(evt.right);
+            if (isBlackListed(spawnerType)) {
+                return;
+            }
+
+            evt.cost = Config.powerSpawnerAddSpawnerCost;
+            evt.output = evt.left.copy();
+            if (evt.output.stackTagCompound == null) {
+                evt.output.stackTagCompound = new NBTTagCompound();
+            }
+            evt.output.stackTagCompound.setBoolean("eio.abstractMachine", true);
+            writeMobTypeToNBT(evt.output.stackTagCompound, spawnerType);
+        }
+
+        @SubscribeEvent
+        public void onLivingUpdate(LivingUpdateEvent livingUpdate) {
+
+            Entity ent = livingUpdate.entityLiving;
+            if (!ent.getEntityData().hasKey(KEY_SPAWNED_BY_POWERED_SPAWNER)) {
+                return;
+            }
+            if (fieldpersistenceRequired == null) {
+                ent.getEntityData().removeTag(KEY_SPAWNED_BY_POWERED_SPAWNER);
+                return;
+            }
+
+            long spawnTime = ent.getEntityData().getLong(KEY_SPAWNED_BY_POWERED_SPAWNER);
+            long livedFor = livingUpdate.entity.worldObj.getTotalWorldTime() - spawnTime;
+            if (livedFor > Config.poweredSpawnerDespawnTimeSeconds * 20) {
+                try {
+                    fieldpersistenceRequired.setBoolean(livingUpdate.entityLiving, false);
+                    ent.getEntityData().removeTag(KEY_SPAWNED_BY_POWERED_SPAWNER);
+                } catch (Exception e) {
+                    Log.warn("BlockPoweredSpawner.onLivingUpdate: Error occured allowing entity to despawn: " + e);
+                    ent.getEntityData().removeTag(KEY_SPAWNED_BY_POWERED_SPAWNER);
+                }
+            }
+        }
+
     }
 }

@@ -62,13 +62,12 @@ public class ItemDarkSteelShears extends ItemShears
 
     public static ItemDarkSteelShears create() {
         ItemDarkSteelShears res = new ItemDarkSteelShears();
-        MinecraftForge.EVENT_BUS.register(res);
         res.init();
         return res;
     }
 
-    protected final MultiHarvestComparator harvestComparator = new MultiHarvestComparator();
-    protected final EntityComparator entityComparator = new EntityComparator();
+    private final MultiHarvestComparator harvestComparator = new MultiHarvestComparator();
+    private final EntityComparator entityComparator = new EntityComparator();
     protected String name;
 
     protected ItemDarkSteelShears(String name) {
@@ -202,14 +201,6 @@ public class ItemDarkSteelShears extends ItemShears
         return false;
     }
 
-    @SubscribeEvent
-    public void onBreakSpeedEvent(PlayerEvent.BreakSpeed evt) {
-        if (evt.originalSpeed > 2.0
-                && isEquippedAndPowered(evt.entityPlayer, Config.darkSteelShearsPowerUsePerDamagePoint)) {
-            evt.newSpeed = evt.originalSpeed * Config.darkSteelShearsEffeciencyBoostWhenPowered;
-        }
-    }
-
     @Override
     public void setDamage(ItemStack stack, int newDamage) {
         int oldDamage = getDamage(stack);
@@ -231,6 +222,7 @@ public class ItemDarkSteelShears extends ItemShears
 
     protected void init() {
         GameRegistry.registerItem(this, getUnlocalizedName());
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
     }
 
     @Override
@@ -328,6 +320,17 @@ public class ItemDarkSteelShears extends ItemShears
             // Double.compare() does something with bits now, but for distances it's clear:
             // if it's neither farther nor nearer is same.
             return 0;
+        }
+    }
+
+    public static class EventHandler {
+
+        @SubscribeEvent
+        public void onBreakSpeedEvent(PlayerEvent.BreakSpeed evt) {
+            if (evt.originalSpeed > 2.0
+                    && isEquippedAndPowered(evt.entityPlayer, Config.darkSteelShearsPowerUsePerDamagePoint)) {
+                evt.newSpeed = evt.originalSpeed * Config.darkSteelShearsEffeciencyBoostWhenPowered;
+            }
         }
     }
 }
