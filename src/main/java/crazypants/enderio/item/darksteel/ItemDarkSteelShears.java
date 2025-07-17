@@ -38,6 +38,7 @@ import crazypants.enderio.machine.farm.farmers.HarvestResult;
 public class ItemDarkSteelShears extends ItemShears
         implements IEnergyContainerItem, IAdvancedTooltipProvider, IDarkSteelItem {
 
+    public EventHandler handler;
     public static boolean isEquipped(EntityPlayer player) {
         if (player == null) {
             return false;
@@ -62,7 +63,7 @@ public class ItemDarkSteelShears extends ItemShears
 
     public static ItemDarkSteelShears create() {
         ItemDarkSteelShears res = new ItemDarkSteelShears();
-        MinecraftForge.EVENT_BUS.register(res);
+        MinecraftForge.EVENT_BUS.register(res.handler);
         res.init();
         return res;
     }
@@ -83,6 +84,7 @@ public class ItemDarkSteelShears extends ItemShears
 
     protected ItemDarkSteelShears() {
         this("darkSteel");
+        handler = new EventHandler();
     }
 
     @Override
@@ -200,14 +202,6 @@ public class ItemDarkSteelShears extends ItemShears
             return result;
         }
         return false;
-    }
-
-    @SubscribeEvent
-    public void onBreakSpeedEvent(PlayerEvent.BreakSpeed evt) {
-        if (evt.originalSpeed > 2.0
-                && isEquippedAndPowered(evt.entityPlayer, Config.darkSteelShearsPowerUsePerDamagePoint)) {
-            evt.newSpeed = evt.originalSpeed * Config.darkSteelShearsEffeciencyBoostWhenPowered;
-        }
     }
 
     @Override
@@ -328,6 +322,16 @@ public class ItemDarkSteelShears extends ItemShears
             // Double.compare() does something with bits now, but for distances it's clear:
             // if it's neither farther nor nearer is same.
             return 0;
+        }
+    }
+
+    public class EventHandler {
+        @SubscribeEvent
+        public void onBreakSpeedEvent(PlayerEvent.BreakSpeed evt) {
+            if (evt.originalSpeed > 2.0
+                && isEquippedAndPowered(evt.entityPlayer, Config.darkSteelShearsPowerUsePerDamagePoint)) {
+                evt.newSpeed = evt.originalSpeed * Config.darkSteelShearsEffeciencyBoostWhenPowered;
+            }
         }
     }
 }
