@@ -61,7 +61,6 @@ public class ItemDarkSteelPickaxe extends ItemPickaxe
     public static ItemDarkSteelPickaxe create() {
         ItemDarkSteelPickaxe res = new ItemDarkSteelPickaxe();
         res.init();
-        MinecraftForge.EVENT_BUS.register(res);
         return res;
     }
 
