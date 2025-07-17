@@ -44,6 +44,7 @@ public class ItemDarkSteelAxe extends ItemAxe
         implements IEnergyContainerItem, IAdvancedTooltipProvider, IDarkSteelItem {
 
     public EventHandler handler;
+
     public static boolean isEquipped(EntityPlayer player) {
         if (player == null) {
             return false;
@@ -327,13 +328,13 @@ public class ItemDarkSteelAxe extends ItemAxe
         }
     }
 
-    public class EventHandler{
+    public class EventHandler {
 
         @SubscribeEvent
         public void onBreakSpeedEvent(PlayerEvent.BreakSpeed evt) {
             if (evt.entityPlayer.isSneaking()
-                && isEquippedAndPowered(evt.entityPlayer, Config.darkSteelAxePowerUsePerDamagePointMultiHarvest)
-                && isLog(evt.block, evt.metadata)) {
+                    && isEquippedAndPowered(evt.entityPlayer, Config.darkSteelAxePowerUsePerDamagePointMultiHarvest)
+                    && isLog(evt.block, evt.metadata)) {
                 evt.newSpeed = evt.originalSpeed / Config.darkSteelAxeSpeedPenaltyMultiHarvest;
             }
             if (isEquipped(evt.entityPlayer) && evt.block.getMaterial() == Material.leaves) {

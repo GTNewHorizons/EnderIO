@@ -23,6 +23,7 @@ public class BlockKillerJoe extends AbstractMachineBlock<TileKillerJoe> {
 
     static final String USERNAME = "KillerJoe";
     public EventHandler handler;
+
     public static BlockKillerJoe create() {
         PacketHandler.INSTANCE
                 .registerMessage(PacketSwing.class, PacketSwing.class, PacketHandler.nextID(), Side.CLIENT);
@@ -96,7 +97,8 @@ public class BlockKillerJoe extends AbstractMachineBlock<TileKillerJoe> {
         }
     }
 
-    public class EventHandler{
+    public class EventHandler {
+
         @SubscribeEvent
         public void getKillDisplayName(PlayerEvent.NameFormat nameEvt) {
             if (nameEvt.username != null && nameEvt.username.startsWith(USERNAME)) {

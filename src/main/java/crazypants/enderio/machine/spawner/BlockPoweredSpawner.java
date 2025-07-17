@@ -100,6 +100,7 @@ public class BlockPoweredSpawner extends AbstractMachineBlock<TilePoweredSpawner
     private Field fieldpersistenceRequired;
 
     public EventHandler handler;
+
     protected BlockPoweredSpawner() {
         super(ModObject.blockPoweredSpawner, TilePoweredSpawner.class);
 
@@ -229,14 +230,14 @@ public class BlockPoweredSpawner extends AbstractMachineBlock<TilePoweredSpawner
         }
     }
 
-    class EventHandler{
+    class EventHandler {
 
         @SubscribeEvent
         public void onBreakEvent(BlockEvent.BreakEvent evt) {
             if (evt.block instanceof BlockMobSpawner) {
                 if (evt.getPlayer() != null && !evt.getPlayer().capabilities.isCreativeMode
-                    && !evt.getPlayer().worldObj.isRemote
-                    && !evt.isCanceled()) {
+                        && !evt.getPlayer().worldObj.isRemote
+                        && !evt.isCanceled()) {
                     TileEntity tile = evt.getPlayer().worldObj.getTileEntity(evt.x, evt.y, evt.z);
                     if (tile instanceof TileEntityMobSpawner) {
 
@@ -292,8 +293,8 @@ public class BlockPoweredSpawner extends AbstractMachineBlock<TilePoweredSpawner
                             if (object instanceof TileEntityMobSpawner) {
                                 TileEntityMobSpawner spawner = (TileEntityMobSpawner) object;
                                 if (spawner.getWorldObj() == evt.world && spawner.xCoord == evt.x
-                                    && spawner.yCoord == evt.y
-                                    && spawner.zCoord == evt.z) {
+                                        && spawner.yCoord == evt.y
+                                        && spawner.zCoord == evt.z) {
                                     // Bingo!
                                     MobSpawnerBaseLogic logic = spawner.func_145881_a();
                                     if (logic != null) {
@@ -322,9 +323,9 @@ public class BlockPoweredSpawner extends AbstractMachineBlock<TilePoweredSpawner
         @SubscribeEvent
         public void handleAnvilEvent(AnvilUpdateEvent evt) {
             if (evt.left == null || evt.left.stackSize != 1
-                || evt.left.getItem() != Item.getItemFromBlock(EnderIO.blockPoweredSpawner)
-                || evt.right == null
-                || ItemBrokenSpawner.getMobTypeFromStack(evt.right) == null) {
+                    || evt.left.getItem() != Item.getItemFromBlock(EnderIO.blockPoweredSpawner)
+                    || evt.right == null
+                    || ItemBrokenSpawner.getMobTypeFromStack(evt.right) == null) {
                 return;
             }
 

@@ -39,6 +39,7 @@ public class ItemDarkSteelShears extends ItemShears
         implements IEnergyContainerItem, IAdvancedTooltipProvider, IDarkSteelItem {
 
     public EventHandler handler;
+
     public static boolean isEquipped(EntityPlayer player) {
         if (player == null) {
             return false;
@@ -326,10 +327,11 @@ public class ItemDarkSteelShears extends ItemShears
     }
 
     public class EventHandler {
+
         @SubscribeEvent
         public void onBreakSpeedEvent(PlayerEvent.BreakSpeed evt) {
             if (evt.originalSpeed > 2.0
-                && isEquippedAndPowered(evt.entityPlayer, Config.darkSteelShearsPowerUsePerDamagePoint)) {
+                    && isEquippedAndPowered(evt.entityPlayer, Config.darkSteelShearsPowerUsePerDamagePoint)) {
                 evt.newSpeed = evt.originalSpeed * Config.darkSteelShearsEffeciencyBoostWhenPowered;
             }
         }

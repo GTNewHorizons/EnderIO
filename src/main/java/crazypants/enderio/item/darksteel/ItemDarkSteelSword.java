@@ -430,13 +430,13 @@ public class ItemDarkSteelSword extends ItemSword
                     int toDrop = numPearls - existing;
                     if (toDrop > 0) {
                         evt.drops.add(
-                            Util.createDrop(
-                                player.worldObj,
-                                new ItemStack(Items.ender_pearl, toDrop, 0),
-                                evt.entityLiving.posX,
-                                evt.entityLiving.posY,
-                                evt.entityLiving.posZ,
-                                false));
+                                Util.createDrop(
+                                        player.worldObj,
+                                        new ItemStack(Items.ender_pearl, toDrop, 0),
+                                        evt.entityLiving.posX,
+                                        evt.entityLiving.posY,
+                                        evt.entityLiving.posZ,
+                                        false));
                     }
                 }
             }

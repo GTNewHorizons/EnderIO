@@ -22,6 +22,7 @@ public class BlockInhibitorObelisk extends BlockObeliskAbstract<TileInhibitorObe
 
     public static BlockInhibitorObelisk instance;
     public EventHandler handler;
+
     public static BlockInhibitorObelisk create() {
         BlockInhibitorObelisk res = new BlockInhibitorObelisk();
         res.init();
@@ -31,7 +32,7 @@ public class BlockInhibitorObelisk extends BlockObeliskAbstract<TileInhibitorObe
 
     protected BlockInhibitorObelisk() {
         super(ModObject.blockInhibitorObelisk, TileInhibitorObelisk.class);
-        handler =new EventHandler();
+        handler = new EventHandler();
     }
 
     @Override
@@ -60,6 +61,7 @@ public class BlockInhibitorObelisk extends BlockObeliskAbstract<TileInhibitorObe
     public Map<BlockCoord, Float> activeInhibitors = Maps.newHashMap();
 
     public class EventHandler {
+
         @SubscribeEvent
         public void onTeleport(TeleportEntityEvent event) {
             for (Entry<BlockCoord, Float> e : activeInhibitors.entrySet()) {

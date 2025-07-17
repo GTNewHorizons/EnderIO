@@ -172,6 +172,7 @@ public class BlockConduitBundle extends BlockEio
 
     private final Random rand = new Random();
     public EventHandler handler;
+
     protected BlockConduitBundle() {
         super(ModObject.blockConduitBundle.unlocalisedName, TileConduitBundle.class);
         setBlockBounds(0.334f, 0.334f, 0.334f, 0.667f, 0.667f, 0.667f);
@@ -1224,7 +1225,8 @@ public class BlockConduitBundle extends BlockEio
         return !bundle.getCoverSystem().getAllParts().isEmpty();
     }
 
-    public class EventHandler{
+    public class EventHandler {
+
         @SideOnly(Side.CLIENT)
         @SubscribeEvent
         public void onPlaySound(PlaySoundSourceEvent event) {
