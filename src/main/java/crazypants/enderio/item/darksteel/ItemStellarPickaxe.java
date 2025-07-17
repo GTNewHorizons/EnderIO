@@ -30,7 +30,6 @@ public class ItemStellarPickaxe extends ItemDarkSteelPickaxe implements IStellar
     public static ItemStellarPickaxe create() {
         ItemStellarPickaxe res = new ItemStellarPickaxe();
         res.init();
-        MinecraftForge.EVENT_BUS.register(res);
         return res;
     }
 

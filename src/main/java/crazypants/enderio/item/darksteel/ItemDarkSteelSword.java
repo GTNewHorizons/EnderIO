@@ -89,6 +89,7 @@ public class ItemDarkSteelSword extends ItemSword
         String str = name + "_sword";
         setUnlocalizedName(str);
         setTextureName(EnderIO.DOMAIN + ":" + str);
+        handler = new EventHandler();
     }
 
     public ItemDarkSteelSword() {

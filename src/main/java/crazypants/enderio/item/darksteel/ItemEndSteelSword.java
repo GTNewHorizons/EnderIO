@@ -35,7 +35,6 @@ public class ItemEndSteelSword extends ItemDarkSteelSword implements IEndSteelIt
     public static ItemEndSteelSword create() {
         ItemEndSteelSword res = new ItemEndSteelSword();
         res.init();
-        MinecraftForge.EVENT_BUS.register(res);
         return res;
     }
 

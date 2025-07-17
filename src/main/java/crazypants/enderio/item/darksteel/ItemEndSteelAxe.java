@@ -30,7 +30,6 @@ public class ItemEndSteelAxe extends ItemDarkSteelAxe implements IEndSteelItem {
     public static ItemEndSteelAxe create() {
         ItemEndSteelAxe res = new ItemEndSteelAxe();
         res.init();
-        MinecraftForge.EVENT_BUS.register(res);
         return res;
     }
 

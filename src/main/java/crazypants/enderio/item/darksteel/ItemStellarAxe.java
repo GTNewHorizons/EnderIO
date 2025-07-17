@@ -30,7 +30,6 @@ public class ItemStellarAxe extends ItemDarkSteelAxe implements IStellarItem {
     public static ItemStellarAxe create() {
         ItemStellarAxe res = new ItemStellarAxe();
         res.init();
-        MinecraftForge.EVENT_BUS.register(res);
         return res;
     }
 

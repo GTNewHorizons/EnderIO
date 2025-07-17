@@ -90,6 +90,7 @@ public class ItemDarkSteelAxe extends ItemAxe
         String str = name + "_axe";
         setUnlocalizedName(str);
         setTextureName(EnderIO.DOMAIN + ":" + str);
+        handler = new EventHandler();
     }
 
     @Override

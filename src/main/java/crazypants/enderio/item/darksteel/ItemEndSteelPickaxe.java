@@ -30,7 +30,6 @@ public class ItemEndSteelPickaxe extends ItemDarkSteelPickaxe implements IEndSte
     public static ItemEndSteelPickaxe create() {
         ItemEndSteelPickaxe res = new ItemEndSteelPickaxe();
         res.init();
-        MinecraftForge.EVENT_BUS.register(res);
         return res;
     }
 

@@ -35,7 +35,6 @@ public class ItemStellarSword extends ItemDarkSteelSword implements IStellarItem
     public static ItemStellarSword create() {
         ItemStellarSword res = new ItemStellarSword();
         res.init();
-        MinecraftForge.EVENT_BUS.register(res);
         return res;
     }
 
