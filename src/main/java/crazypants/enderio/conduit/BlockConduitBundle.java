@@ -160,7 +160,6 @@ public class BlockConduitBundle extends BlockEio
 
         BlockConduitBundle result = new BlockConduitBundle();
         result.init();
-        MinecraftForge.EVENT_BUS.register(result.handler);
         return result;
     }
 
@@ -171,7 +170,6 @@ public class BlockConduitBundle extends BlockEio
     private IIcon lastRemovedComponetIcon = null;
 
     private final Random rand = new Random();
-    public EventHandler handler;
 
     protected BlockConduitBundle() {
         super(ModObject.blockConduitBundle.unlocalisedName, TileConduitBundle.class);
@@ -191,8 +189,6 @@ public class BlockConduitBundle extends BlockEio
                 return "EnderIO:" + soundName + ".step";
             }
         };
-
-        handler = new EventHandler();
     }
 
     @SideOnly(Side.CLIENT)
@@ -302,6 +298,7 @@ public class BlockConduitBundle extends BlockEio
             EnderIO.guiHandler.registerGuiHandler(GuiHandler.GUI_ID_EXTERNAL_CONNECTION_BASE + dir.ordinal(), this);
         }
         EnderIO.guiHandler.registerGuiHandler(GuiHandler.GUI_ID_EXTERNAL_CONNECTION_SELECTOR, this);
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
     }
 
     @Override

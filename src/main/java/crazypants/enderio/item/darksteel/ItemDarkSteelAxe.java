@@ -43,8 +43,6 @@ import crazypants.enderio.machine.farm.farmers.TreeHarvestUtil;
 public class ItemDarkSteelAxe extends ItemAxe
         implements IEnergyContainerItem, IAdvancedTooltipProvider, IDarkSteelItem {
 
-    public EventHandler handler;
-
     public static boolean isEquipped(EntityPlayer player) {
         if (player == null) {
             return false;
@@ -69,7 +67,6 @@ public class ItemDarkSteelAxe extends ItemAxe
 
     public static ItemDarkSteelAxe create() {
         ItemDarkSteelAxe res = new ItemDarkSteelAxe();
-        MinecraftForge.EVENT_BUS.register(res.handler);
         res.init();
         return res;
     }
@@ -80,7 +77,6 @@ public class ItemDarkSteelAxe extends ItemAxe
 
     protected ItemDarkSteelAxe() {
         this("darkSteel", ItemDarkSteelSword.MATERIAL);
-        handler = new EventHandler();
     }
 
     protected ItemDarkSteelAxe(String name, ToolMaterial mat) {
@@ -90,7 +86,6 @@ public class ItemDarkSteelAxe extends ItemAxe
         String str = name + "_axe";
         setUnlocalizedName(str);
         setTextureName(EnderIO.DOMAIN + ":" + str);
-        handler = new EventHandler();
     }
 
     @Override
@@ -250,6 +245,7 @@ public class ItemDarkSteelAxe extends ItemAxe
 
     protected void init() {
         GameRegistry.registerItem(this, getUnlocalizedName());
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
     }
 
     @Override

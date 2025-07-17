@@ -21,18 +21,21 @@ import crazypants.enderio.machine.obelisk.BlockObeliskAbstract;
 public class BlockInhibitorObelisk extends BlockObeliskAbstract<TileInhibitorObelisk> {
 
     public static BlockInhibitorObelisk instance;
-    public EventHandler handler;
 
     public static BlockInhibitorObelisk create() {
         BlockInhibitorObelisk res = new BlockInhibitorObelisk();
         res.init();
-        MinecraftForge.EVENT_BUS.register(res.handler);
         return instance = res;
     }
 
     protected BlockInhibitorObelisk() {
         super(ModObject.blockInhibitorObelisk, TileInhibitorObelisk.class);
-        handler = new EventHandler();
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
     }
 
     @Override

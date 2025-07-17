@@ -38,8 +38,6 @@ import crazypants.enderio.machine.farm.farmers.HarvestResult;
 public class ItemDarkSteelShears extends ItemShears
         implements IEnergyContainerItem, IAdvancedTooltipProvider, IDarkSteelItem {
 
-    public EventHandler handler;
-
     public static boolean isEquipped(EntityPlayer player) {
         if (player == null) {
             return false;
@@ -64,13 +62,12 @@ public class ItemDarkSteelShears extends ItemShears
 
     public static ItemDarkSteelShears create() {
         ItemDarkSteelShears res = new ItemDarkSteelShears();
-        MinecraftForge.EVENT_BUS.register(res.handler);
         res.init();
         return res;
     }
 
-    protected final MultiHarvestComparator harvestComparator = new MultiHarvestComparator();
-    protected final EntityComparator entityComparator = new EntityComparator();
+    private final MultiHarvestComparator harvestComparator = new MultiHarvestComparator();
+    private final EntityComparator entityComparator = new EntityComparator();
     protected String name;
 
     protected ItemDarkSteelShears(String name) {
@@ -85,7 +82,6 @@ public class ItemDarkSteelShears extends ItemShears
 
     protected ItemDarkSteelShears() {
         this("darkSteel");
-        handler = new EventHandler();
     }
 
     @Override
@@ -226,6 +222,7 @@ public class ItemDarkSteelShears extends ItemShears
 
     protected void init() {
         GameRegistry.registerItem(this, getUnlocalizedName());
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
     }
 
     @Override
@@ -326,7 +323,7 @@ public class ItemDarkSteelShears extends ItemShears
         }
     }
 
-    public class EventHandler {
+    public static class EventHandler {
 
         @SubscribeEvent
         public void onBreakSpeedEvent(PlayerEvent.BreakSpeed evt) {

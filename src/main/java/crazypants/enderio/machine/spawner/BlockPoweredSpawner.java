@@ -89,8 +89,6 @@ public class BlockPoweredSpawner extends AbstractMachineBlock<TilePoweredSpawner
         PoweredSpawnerConfig.getInstance();
 
         BlockPoweredSpawner res = new BlockPoweredSpawner();
-        MinecraftForge.EVENT_BUS.register(res.handler);
-        FMLCommonHandler.instance().bus().register(res.handler);
         res.init();
         return res;
     }
@@ -98,8 +96,6 @@ public class BlockPoweredSpawner extends AbstractMachineBlock<TilePoweredSpawner
     private final List<UniqueIdentifier> toolBlackList = new ArrayList<UniqueIdentifier>();
 
     private Field fieldpersistenceRequired;
-
-    public EventHandler handler;
 
     protected BlockPoweredSpawner() {
         super(ModObject.blockPoweredSpawner, TilePoweredSpawner.class);
@@ -115,7 +111,14 @@ public class BlockPoweredSpawner extends AbstractMachineBlock<TilePoweredSpawner
         } catch (Exception e) {
             Log.error("BlockPoweredSpawner: Could not find field: persistenceRequired");
         }
-        handler = new EventHandler();
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        EventHandler handler = new EventHandler();
+        MinecraftForge.EVENT_BUS.register(handler);
+        FMLCommonHandler.instance().bus().register(handler);
     }
 
     private final Map<BlockCoord, ItemStack> dropCache = new HashMap<BlockCoord, ItemStack>();

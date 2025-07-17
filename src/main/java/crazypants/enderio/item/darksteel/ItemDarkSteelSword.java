@@ -72,14 +72,12 @@ public class ItemDarkSteelSword extends ItemSword
     public static ItemDarkSteelSword create() {
         ItemDarkSteelSword res = new ItemDarkSteelSword();
         res.init();
-        MinecraftForge.EVENT_BUS.register(res.handler);
         return res;
     }
 
     protected final int powerPerDamagePoint = Config.darkSteelPowerStorageBase / MATERIAL.getMaxUses();
     protected long lastBlickTick = -1;
     protected String name;
-    public EventHandler handler;
 
     public ItemDarkSteelSword(String name, ToolMaterial mat) {
         super(mat);
@@ -89,12 +87,10 @@ public class ItemDarkSteelSword extends ItemSword
         String str = name + "_sword";
         setUnlocalizedName(str);
         setTextureName(EnderIO.DOMAIN + ":" + str);
-        handler = new EventHandler();
     }
 
     public ItemDarkSteelSword() {
         this("darkSteel", MATERIAL);
-        handler = new EventHandler();
     }
 
     @Override
@@ -230,6 +226,7 @@ public class ItemDarkSteelSword extends ItemSword
 
     protected void init() {
         GameRegistry.registerItem(this, getUnlocalizedName());
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
     }
 
     @Override

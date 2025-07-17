@@ -22,16 +22,13 @@ import crazypants.enderio.xp.PacketGivePlayerXP;
 public class BlockKillerJoe extends AbstractMachineBlock<TileKillerJoe> {
 
     static final String USERNAME = "KillerJoe";
-    public EventHandler handler;
 
     public static BlockKillerJoe create() {
         PacketHandler.INSTANCE
                 .registerMessage(PacketSwing.class, PacketSwing.class, PacketHandler.nextID(), Side.CLIENT);
         PacketGivePlayerXP.register();
         PacketExperianceContainer.register();
-
         BlockKillerJoe res = new BlockKillerJoe();
-        MinecraftForge.EVENT_BUS.register(res.handler);
         res.init();
         return res;
     }
@@ -39,7 +36,12 @@ public class BlockKillerJoe extends AbstractMachineBlock<TileKillerJoe> {
     protected BlockKillerJoe() {
         super(ModObject.blockKillerJoe, TileKillerJoe.class);
         setStepSound(Block.soundTypeGlass);
-        handler = new EventHandler();
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
     }
 
     @Override
