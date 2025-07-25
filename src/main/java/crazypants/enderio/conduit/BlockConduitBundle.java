@@ -1231,6 +1231,7 @@ public class BlockConduitBundle extends BlockEio
             if ("silence.step".equals(path)) {
                 ISound snd = event.sound;
                 World world = EnderIO.proxy.getClientWorld();
+                if (world == null) return;
                 BlockCoord bc = new BlockCoord(snd.getXPosF(), snd.getYPosF(), snd.getZPosF());
                 TileEntity te = bc.getTileEntity(world);
                 if (te instanceof TileConduitBundle && ((TileConduitBundle) te).hasFacade()) {
