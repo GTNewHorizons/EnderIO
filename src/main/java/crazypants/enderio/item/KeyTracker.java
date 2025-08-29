@@ -17,6 +17,7 @@ import com.enderio.core.common.util.ChatUtil;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
+import cpw.mods.fml.common.gameevent.InputEvent.MouseInputEvent;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.api.teleport.IItemOfTravel;
 import crazypants.enderio.api.tool.IConduitControl;
@@ -38,6 +39,7 @@ import crazypants.enderio.teleport.TravelController;
 import crazypants.enderio.thaumcraft.GogglesOfRevealingUpgrade;
 import crazypants.util.BaublesUtil;
 import mods.railcraft.api.core.items.IToolGoggles;
+import org.lwjgl.input.Mouse;
 
 public class KeyTracker {
 
@@ -134,6 +136,18 @@ public class KeyTracker {
 
     @SubscribeEvent
     public void onKeyInput(KeyInputEvent event) {
+        handleInput();
+    }
+
+    // mouse button presses arrive on a separate event
+    @SubscribeEvent
+    public void onMouseInput(MouseInputEvent event) {
+        if (Mouse.getEventButton() >= 0) {
+            handleInput();
+        }
+    }
+
+    private void handleInput() {
         handleGlide();
         handleSoundDetector();
         handleNightVision();
