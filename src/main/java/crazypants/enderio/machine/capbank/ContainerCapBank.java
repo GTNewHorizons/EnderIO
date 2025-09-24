@@ -89,7 +89,9 @@ public class ContainerCapBank extends ContainerEnderTileEntity<TileCapBank> {
         }
 
         if (hasBaublesSlots()) {
-            for (int i = 0; i < baubles.getSizeInventory(); i++) {
+            // for (int i = 0; i < baubles.getSizeInventory(); i++) {
+            // Capped since the sprite only has 4 slots
+            for (int i = 0; i < Math.min(baubles.getSizeInventory(), 4); i++) {
                 addSlotToContainer(new Slot(baubles, i, -15 + armorOffset, 84 + i * 18) {
 
                     @Override
@@ -122,7 +124,9 @@ public class ContainerCapBank extends ContainerEnderTileEntity<TileCapBank> {
         int startHotBarSlot = endPlayerSlot + 1;
         int endHotBarSlot = startHotBarSlot + 9;
         int startBaublesSlot = endHotBarSlot + 1;
-        int endBaublesSlot = baubles == null ? 0 : startBaublesSlot + baubles.getSizeInventory();
+        // int endBaublesSlot = baubles == null ? 0 : startBaublesSlot + baubles.getSizeInventory();
+        // Capped since the sprite only has 4 slots
+        int endBaublesSlot = baubles == null ? 0 : startBaublesSlot + Math.min(baubles.getSizeInventory(), 4);
 
         ItemStack copystack = null;
         Slot slot = (Slot) inventorySlots.get(slotIndex);
