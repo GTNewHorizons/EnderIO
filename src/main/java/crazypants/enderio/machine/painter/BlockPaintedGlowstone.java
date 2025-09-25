@@ -199,7 +199,7 @@ public class BlockPaintedGlowstone extends BlockEio
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister IIconRegister) {
-        blockIcon = IIconRegister.registerIcon("enderio:conduitConnector");
+        blockIcon = IIconRegister.registerIcon("glowstone");
     }
 
     @Override
@@ -231,10 +231,12 @@ public class BlockPaintedGlowstone extends BlockEio
 
     @Override
     protected void processDrop(World world, int x, int y, int z, TileEntityEnder te, ItemStack drop) {
-        TileEntityPaintedBlock tef = (TileEntityPaintedBlock) te;
-        if (tef != null) {
+        if (te instanceof TileEntityPaintedBlock tef) {
             ItemStack itemStack = createItemStackForSourceBlock(tef.getSourceBlock(), tef.getSourceBlockMetadata());
-            drop.stackTagCompound = (NBTTagCompound) itemStack.stackTagCompound.copy();
+            NBTTagCompound tag = itemStack.stackTagCompound;
+            if (tag != null) {
+                drop.stackTagCompound = (NBTTagCompound) tag.copy();
+            }
         }
     }
 
