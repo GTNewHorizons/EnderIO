@@ -63,7 +63,8 @@ public final class PainterUtil {
                 sourceName = is.getDisplayName();
             }
         }
-        return EnderIO.lang.localize("blockPainter.paintedWith") + " " + (sourceName.isEmpty() ? EnderIO.lang.localize("blockPainter.paintedWith.none") : sourceName);
+        return EnderIO.lang.localize("blockPainter.paintedWith") + " "
+                + (sourceName.isEmpty() ? EnderIO.lang.localize("blockPainter.paintedWith.none") : sourceName);
     }
 
     public static void setSourceBlock(ItemStack item, Block source, int meta) {
