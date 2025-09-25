@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 import com.enderio.core.common.util.ChatUtil;
 
@@ -39,7 +40,6 @@ import crazypants.enderio.teleport.TravelController;
 import crazypants.enderio.thaumcraft.GogglesOfRevealingUpgrade;
 import crazypants.util.BaublesUtil;
 import mods.railcraft.api.core.items.IToolGoggles;
-import org.lwjgl.input.Mouse;
 
 public class KeyTracker {
 
