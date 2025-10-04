@@ -19,6 +19,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import com.enderio.core.common.util.BlockCoord;
 import com.mitchej123.hodgepodge.mixins.interfaces.INetherSeed;
 
+import crazypants.enderio.EnderIO;
 import crazypants.enderio.machine.farm.TileFarmStation;
 
 public class PlantableFarmer implements IFarmerJoe {
@@ -112,7 +113,7 @@ public class PlantableFarmer implements IFarmerJoe {
         worldObj.setBlock(bc.x, bc.y, bc.z, Blocks.air, 0, 1 | 2);
         Block target;
         // needed for Pam's nether seeds
-        if (plantable instanceof INetherSeed netherSeed) {
+        if (EnderIO.hasHP && plantable instanceof INetherSeed netherSeed) {
             target = netherSeed.hodgepodge$getPlant(null, 0, 0, 0);
         } else {
             target = plantable.getPlant(null, 0, 0, 0);
@@ -126,7 +127,7 @@ public class PlantableFarmer implements IFarmerJoe {
     protected boolean canPlant(World worldObj, BlockCoord bc, IPlantable plantable) {
         Block target;
         // needed for Pam's nether seeds
-        if (plantable instanceof INetherSeed netherSeed) {
+        if (EnderIO.hasHP && plantable instanceof INetherSeed netherSeed) {
             target = netherSeed.hodgepodge$getPlant(null, 0, 0, 0);
         } else {
             target = plantable.getPlant(null, 0, 0, 0);
@@ -197,7 +198,7 @@ public class PlantableFarmer implements IFarmerJoe {
     private boolean isPlantableForBlock(ItemStack stack, Block block) {
         if (stack.getItem() instanceof IPlantable plantable) {
             // needed for Pam's nether seeds
-            if (plantable instanceof INetherSeed netherSeed) {
+            if (EnderIO.hasHP && plantable instanceof INetherSeed netherSeed) {
                 return netherSeed.hodgepodge$getPlant(null, 0, 0, 0) == block;
             } else {
                 return plantable.getPlant(null, 0, 0, 0) == block;
