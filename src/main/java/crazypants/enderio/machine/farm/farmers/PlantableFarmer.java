@@ -17,7 +17,9 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.enderio.core.common.util.BlockCoord;
+import com.mitchej123.hodgepodge.mixins.interfaces.INetherSeed;
 
+import crazypants.enderio.EnderIO;
 import crazypants.enderio.machine.farm.TileFarmStation;
 
 public class PlantableFarmer implements IFarmerJoe {
@@ -109,7 +111,13 @@ public class PlantableFarmer implements IFarmerJoe {
 
     protected boolean plant(TileFarmStation farm, World worldObj, BlockCoord bc, IPlantable plantable) {
         worldObj.setBlock(bc.x, bc.y, bc.z, Blocks.air, 0, 1 | 2);
-        Block target = plantable.getPlant(null, 0, 0, 0);
+        Block target;
+        // needed for Pam's nether seeds
+        if (EnderIO.hasHP && plantable instanceof INetherSeed netherSeed) {
+            target = netherSeed.hodgepodge$getPlant(null, 0, 0, 0);
+        } else {
+            target = plantable.getPlant(null, 0, 0, 0);
+        }
         int meta = plantable.getPlantMetadata(null, 0, 0, 0);
         worldObj.setBlock(bc.x, bc.y, bc.z, target, meta, 1 | 2);
         farm.actionPerformed(false);
@@ -117,7 +125,13 @@ public class PlantableFarmer implements IFarmerJoe {
     }
 
     protected boolean canPlant(World worldObj, BlockCoord bc, IPlantable plantable) {
-        Block target = plantable.getPlant(null, 0, 0, 0);
+        Block target;
+        // needed for Pam's nether seeds
+        if (EnderIO.hasHP && plantable instanceof INetherSeed netherSeed) {
+            target = netherSeed.hodgepodge$getPlant(null, 0, 0, 0);
+        } else {
+            target = plantable.getPlant(null, 0, 0, 0);
+        }
         Block ground = worldObj.getBlock(bc.x, bc.y - 1, bc.z);
         if (target != null && target.canPlaceBlockAt(worldObj, bc.x, bc.y, bc.z)
                 && target.canBlockStay(worldObj, bc.x, bc.y, bc.z)
@@ -182,10 +196,14 @@ public class PlantableFarmer implements IFarmerJoe {
     }
 
     private boolean isPlantableForBlock(ItemStack stack, Block block) {
-        if (!(stack.getItem() instanceof IPlantable)) {
-            return false;
+        if (stack.getItem() instanceof IPlantable plantable) {
+            // needed for Pam's nether seeds
+            if (EnderIO.hasHP && plantable instanceof INetherSeed netherSeed) {
+                return netherSeed.hodgepodge$getPlant(null, 0, 0, 0) == block;
+            } else {
+                return plantable.getPlant(null, 0, 0, 0) == block;
+            }
         }
-        IPlantable plantable = (IPlantable) stack.getItem();
-        return plantable.getPlant(null, 0, 0, 0) == block;
+        return false;
     }
 }

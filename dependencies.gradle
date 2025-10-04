@@ -27,4 +27,5 @@ dependencies {
     compileOnly(rfg.deobf('maven.modrinth:immibis-microblocks:59.1.2')) // https://modrinth.com/mod/immibis-microblocks/version/59.1.2
 
     compileOnlyApi('com.github.GTNewHorizons:Angelica:1.0.0-beta56:api') {transitive = false}
+    compileOnly("com.github.GTNewHorizons:Hodgepodge:2.7.2:dev")
 }
