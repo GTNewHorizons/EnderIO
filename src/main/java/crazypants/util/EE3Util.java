@@ -1,5 +1,6 @@
 package crazypants.util;
 
+import static crazypants.enderio.EnderIO.hasGT5;
 import static crazypants.enderio.material.Material.BINDER_COMPOSITE;
 import static crazypants.enderio.material.Material.CONDUIT_BINDER;
 import static crazypants.enderio.material.Material.PHASED_IRON_NUGGET;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -20,6 +22,7 @@ import com.pahimar.ee3.api.exchange.EnergyValueRegistryProxy;
 import com.pahimar.ee3.api.exchange.RecipeRegistryProxy;
 
 import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.registry.GameRegistry;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.item.ItemEnderFood.EnderFood;
@@ -93,47 +96,59 @@ public class EE3Util {
      */
     public static void registerMiscRecipes() {
         if (IS_EE3_LOADED) {
-            ItemStack basicGear = new ItemStack(EnderIO.itemMachinePart, 1, MachinePart.BASIC_GEAR.ordinal());
-            ItemStack stick4 = new ItemStack(Items.stick, 4);
-            ItemStack cobble4 = new ItemStack(Blocks.cobblestone, 4);
-            registerRecipe(basicGear, stick4, cobble4);
-
-            ItemStack flour10 = new ItemStack(EnderIO.itemPowderIngot, 10, PowderIngot.FLOUR.ordinal());
-            ItemStack wheat5 = new ItemStack(Items.wheat, 5);
-            ItemStack seeds1 = new ItemStack(Items.wheat_seeds, 1);
-            registerRecipe(flour10, wheat5, seeds1);
+            if (!hasGT5) {
+                ItemStack basicGear = new ItemStack(EnderIO.itemMachinePart, 1, MachinePart.BASIC_GEAR.ordinal());
+                ItemStack stick4 = new ItemStack(Items.stick, 4);
+                ItemStack cobble4 = new ItemStack(Blocks.cobblestone, 4);
+                registerRecipe(basicGear, stick4, cobble4);
+                ItemStack flour10 = new ItemStack(EnderIO.itemPowderIngot, 10, PowderIngot.FLOUR.ordinal());
+                ItemStack wheat5 = new ItemStack(Items.wheat, 5);
+                ItemStack seeds1 = new ItemStack(Items.wheat_seeds, 1);
+                registerRecipe(flour10, wheat5, seeds1);
+            }
 
             ItemStack enderios = EnderFood.ENDERIOS.getStack();
             ItemStack bowl = new ItemStack(Items.bowl, 1);
             ItemStack wheat = new ItemStack(Items.wheat, 1);
             ItemStack milkb = new ItemStack(Items.milk_bucket, 1);
             FluidStack milk = FluidContainerRegistry.getFluidForFilledItem(milkb);
-            ItemStack dustEnderPearl = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.POWDER_ENDER.ordinal());
+            ItemStack dustEnderPearl;
+            if (hasGT5) {
+                dustEnderPearl = GameRegistry.findItemStack("gregtech", "gt.metaitem.01", 1);
+                Items.feather.setDamage(Objects.requireNonNull(dustEnderPearl), 2532);
+            } else {
+                dustEnderPearl = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.POWDER_ENDER.ordinal());
+            }
             if (milk != null) {
                 registerRecipe(enderios, bowl, milk, wheat, dustEnderPearl);
             } else {
                 registerRecipe(enderios, bowl, milkb, wheat, dustEnderPearl);
             }
 
-            ItemStack dustCoal = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.POWDER_COAL.ordinal());
-            ItemStack coal = new ItemStack(Items.coal, 1);
-            registerRecipe(dustCoal, coal);
+            if (!hasGT5) {
+                ItemStack dustCoal = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.POWDER_COAL.ordinal());
+                ItemStack coal = new ItemStack(Items.coal, 1);
+                registerRecipe(dustCoal, coal);
 
-            ItemStack dustIron = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.POWDER_IRON.ordinal());
-            ItemStack iron = new ItemStack(Items.iron_ingot, 1);
-            registerRecipe(dustIron, iron);
+                ItemStack dustIron = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.POWDER_IRON.ordinal());
+                ItemStack iron = new ItemStack(Items.iron_ingot, 1);
+                registerRecipe(dustIron, iron);
 
-            ItemStack dustGold = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.POWDER_GOLD.ordinal());
-            ItemStack gold = new ItemStack(Items.gold_ingot, 1);
-            registerRecipe(dustGold, gold);
+                ItemStack dustGold = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.POWDER_GOLD.ordinal());
+                ItemStack gold = new ItemStack(Items.gold_ingot, 1);
+                registerRecipe(dustGold, gold);
 
-            ItemStack dustObsidian4 = new ItemStack(EnderIO.itemPowderIngot, 4, PowderIngot.POWDER_OBSIDIAN.ordinal());
-            ItemStack obsidian = new ItemStack(Blocks.obsidian, 1);
-            registerRecipe(dustObsidian4, obsidian);
+                ItemStack dustObsidian4 = new ItemStack(
+                        EnderIO.itemPowderIngot,
+                        4,
+                        PowderIngot.POWDER_OBSIDIAN.ordinal());
+                ItemStack obsidian = new ItemStack(Blocks.obsidian, 1);
+                registerRecipe(dustObsidian4, obsidian);
 
-            ItemStack enderDust9 = new ItemStack(EnderIO.itemPowderIngot, 9, PowderIngot.POWDER_ENDER.ordinal());
-            ItemStack enderPearl = new ItemStack(Items.ender_pearl);
-            registerRecipe(enderDust9, enderPearl);
+                ItemStack enderDust9 = new ItemStack(EnderIO.itemPowderIngot, 9, PowderIngot.POWDER_ENDER.ordinal());
+                ItemStack enderPearl = new ItemStack(Items.ender_pearl);
+                registerRecipe(enderDust9, enderPearl);
+            }
 
             ItemStack cbc8 = BINDER_COMPOSITE.getStack(8);
             ItemStack sand2 = new ItemStack(Blocks.sand, 2);

@@ -1,5 +1,6 @@
 package crazypants.enderio.material;
 
+import static crazypants.enderio.EnderIO.hasGT5;
 import static crazypants.enderio.material.Alloy.DARK_STEEL;
 import static crazypants.enderio.material.Alloy.END_STEEL;
 import static crazypants.enderio.material.Alloy.ENERGETIC_ALLOY;
@@ -58,10 +59,13 @@ public class MaterialRecipes {
 
     public static void registerOresInDictionary() {
         // Ore Dictionary Registration
-        for (PowderIngot powder : PowderIngot.values()) {
-            if (!powder.hasDependancy()) {
-                OreDictionary
-                        .registerOre(powder.oreDictName, new ItemStack(EnderIO.itemPowderIngot, 1, powder.ordinal()));
+        if (!hasGT5) {
+            for (PowderIngot powder : PowderIngot.values()) {
+                if (!powder.hasDependancy()) {
+                    OreDictionary.registerOre(
+                            powder.oreDictName,
+                            new ItemStack(EnderIO.itemPowderIngot, 1, powder.ordinal()));
+                }
             }
         }
 
@@ -431,17 +435,19 @@ public class MaterialRecipes {
         RecipeUtil.addShaped(vibCry, "nnn", "ngn", "nnn", 'n', vibrantNugget, 'g', "gemEmerald");
 
         // Smelting
-        ItemStack dustIron = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.POWDER_IRON.ordinal());
-        ItemStack dustGold = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.POWDER_GOLD.ordinal());
-        ItemStack ingotIron = new ItemStack(Items.iron_ingot);
-        ItemStack ingotGold = new ItemStack(Items.gold_ingot);
+        if (!hasGT5) {
+            ItemStack dustIron = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.POWDER_IRON.ordinal());
+            ItemStack dustGold = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.POWDER_GOLD.ordinal());
+            ItemStack ingotIron = new ItemStack(Items.iron_ingot);
+            ItemStack ingotGold = new ItemStack(Items.gold_ingot);
 
-        GameRegistry.addSmelting(dustIron, ingotIron, 0);
-        GameRegistry.addSmelting(dustGold, ingotGold, 0);
+            GameRegistry.addSmelting(dustIron, ingotIron, 0);
+            GameRegistry.addSmelting(dustGold, ingotGold, 0);
 
-        // Ender Dusts
-        ItemStack enderDust = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.POWDER_ENDER.ordinal());
-        RecipeUtil.addShaped(new ItemStack(Items.ender_pearl), "eee", "eee", "eee", 'e', enderDust);
+            // Ender Dusts
+            ItemStack enderDust = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.POWDER_ENDER.ordinal());
+            RecipeUtil.addShaped(new ItemStack(Items.ender_pearl), "eee", "eee", "eee", 'e', enderDust);
+        }
 
         // Dark Iron Bars
         ItemStack diBars = new ItemStack(EnderIO.blockDarkIronBars, 16, 0);
@@ -564,24 +570,29 @@ public class MaterialRecipes {
         ItemStack darkRod = new ItemStack(EnderIO.itemMaterial, 1, Material.DARK_STEEL_ROD.ordinal());
         RecipeUtil.addShaped(darkRod, " ns", "nsn", "sn ", 's', darkSteel, 'n', endSteelNugget);
 
-        // Food
-        ItemStack flour = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.FLOUR.ordinal());
-        ItemStack bread = new ItemStack(Items.bread, 1, 0);
+        if (!hasGT5) {
+            // Food
+            ItemStack flour = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.FLOUR.ordinal());
+            ItemStack bread = new ItemStack(Items.bread, 1, 0);
 
-        GameRegistry.addSmelting(flour, bread, 0.35f);
+            GameRegistry.addSmelting(flour, bread, 0.35f);
+        }
 
         ItemStack enderios = EnderFood.ENDERIOS.getStack();
         RecipeUtil.addShapeless(enderios, Items.bowl, Items.milk_bucket, "cropWheat", "dustEnderPearl");
 
-        if (OreDictionaryHelper.hasCopper()) {
-            ItemStack dustCopper = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.POWDER_COPPER.ordinal());
-            ItemStack ingotCoppper = OreDictionaryPreferences.instance.getPreferred(OreDictionaryHelper.INGOT_COPPER);
-            GameRegistry.addSmelting(dustCopper, ingotCoppper, 0);
-        }
-        if (OreDictionaryHelper.hasTin()) {
-            ItemStack dustTin = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.POWDER_TIN.ordinal());
-            ItemStack ingotTin = OreDictionaryPreferences.instance.getPreferred(OreDictionaryHelper.INGOT_TIN);
-            GameRegistry.addSmelting(dustTin, ingotTin, 0);
+        if (!hasGT5) {
+            if (OreDictionaryHelper.hasCopper()) {
+                ItemStack dustCopper = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.POWDER_COPPER.ordinal());
+                ItemStack ingotCoppper = OreDictionaryPreferences.instance
+                        .getPreferred(OreDictionaryHelper.INGOT_COPPER);
+                GameRegistry.addSmelting(dustCopper, ingotCoppper, 0);
+            }
+            if (OreDictionaryHelper.hasTin()) {
+                ItemStack dustTin = new ItemStack(EnderIO.itemPowderIngot, 1, PowderIngot.POWDER_TIN.ordinal());
+                ItemStack ingotTin = OreDictionaryPreferences.instance.getPreferred(OreDictionaryHelper.INGOT_TIN);
+                GameRegistry.addSmelting(dustTin, ingotTin, 0);
+            }
         }
     }
 }

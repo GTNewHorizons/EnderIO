@@ -487,7 +487,9 @@ public class EnderIO {
         itemGrindingBall = ItemGrindingBall.create();
         itemAlloyEndergy = ItemAlloyEndergy.create();
         itemGrindingBallEndergy = ItemGrindingBallEndergy.create();
-        itemPowderIngot = ItemPowderIngot.create();
+        if (!hasGT5) {
+            itemPowderIngot = ItemPowderIngot.create();
+        }
 
         registerFluids();
 
@@ -727,7 +729,9 @@ public class EnderIO {
             SkeletonHandler.registerSkeleton(this);
         }
 
-        MaterialRecipes.registerDependantOresInDictionary();
+        if (!hasGT5) {
+            MaterialRecipes.registerDependantOresInDictionary();
+        }
 
         EnderfaceRecipes.addRecipes();
         MaterialRecipes.addRecipes();
