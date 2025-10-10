@@ -3,17 +3,17 @@
 dependencies {
     api('com.github.GTNewHorizons:EnderCore:0.5.0:dev') {transitive = false}
     compileOnly('com.github.GTNewHorizons:ForestryMC:4.10.17:dev')
-    compileOnly('com.github.GTNewHorizons:NotEnoughItems:2.8.6-GTNH:dev')
+    compileOnly('com.github.GTNewHorizons:NotEnoughItems:2.8.9-GTNH:dev')
     api("com.github.GTNewHorizons:GTNHLib:0.7.0:dev")
     compileOnly('com.github.GTNewHorizons:BuildCraft:7.1.45:dev')
     api('curse.maven:cofh-lib-220333:2388748') // https://www.curseforge.com/minecraft/mc-mods/cofh-lib/files/2388748
     shadowImplementation('cglib:cglib-nodep:3.3.0')
-    api("com.github.GTNewHorizons:TinkersConstruct:1.14.2-GTNH:dev")
+    api("com.github.GTNewHorizons:TinkersConstruct:1.14.4-GTNH:dev")
 
     compileOnly('com.github.GTNewHorizons:waila:1.9.0:api') {transitive = false}
-    compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-702-GTNH:api') {transitive = false}
+    compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-713-GTNH:api') {transitive = false}
     compileOnly('com.github.GTNewHorizons:Baubles:1.0.4:dev') {transitive = false}
-    compileOnly('com.github.GTNewHorizons:GT5-Unofficial:5.09.52.10:dev') {transitive = false}
+    compileOnly('com.github.GTNewHorizons:GT5-Unofficial:5.09.52.24:dev') {transitive = false}
     compileOnly("com.github.GTNewHorizons:ModularUI2:2.2.20-1.7.10:dev") {transitive = false}
     compileOnly('com.github.GTNewHorizons:Railcraft:9.17.0:dev') {transitive = false}
     compileOnly('com.github.GTNewHorizons:StorageDrawers:2.2.0-GTNH:api') {transitive = false}
@@ -26,6 +26,6 @@ dependencies {
     compileOnly(rfg.deobf('curse.maven:mekanism-268560:2475797')) // https://www.curseforge.com/minecraft/mc-mods/mekanism/files/2475797
     compileOnly(rfg.deobf('maven.modrinth:immibis-microblocks:59.1.2')) // https://modrinth.com/mod/immibis-microblocks/version/59.1.2
 
-    compileOnlyApi('com.github.GTNewHorizons:Angelica:1.0.0-beta57:api') {transitive = false}
+    compileOnlyApi('com.github.GTNewHorizons:Angelica:1.0.0-beta59:api') {transitive = false}
     compileOnly("com.github.GTNewHorizons:Hodgepodge:2.7.2:dev")
 }
