@@ -10,7 +10,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -41,8 +40,8 @@ public class NetworkedInventory {
 
     int tickDeficit;
 
-    // work around for a vanilla chest changing into a double chest without doing unneeded checks all the time
-    boolean recheckInv = false;
+    private TileEntity te;
+
     // Hack for TiC crafting station not working correctly when setting output slot to null
     boolean ticHack = false;
 
@@ -61,17 +60,11 @@ public class NetworkedInventory {
         this.location = location;
         world = con.getBundle().getWorld();
 
-        TileEntity te = world.getTileEntity(location.x, location.y, location.z);
-        if (te.getClass().getName().equals("tconstruct.tools.logic.CraftingStationLogic")) {
-            ticHack = true;
-        } else if (te.getClass().getName().contains("cpw.mods.ironchest")) {
-            recheckInv = true;
-        } else if (te instanceof TileEntityChest) {
-            recheckInv = true;
-        } else if (te instanceof TileInventoryPanel) {
-            inventoryPanel = true;
-        }
         updateInventory();
+    }
+
+    public boolean isInvalid() {
+        return te == null || te.isInvalid();
     }
 
     public boolean hasTarget(IItemConduit conduit, ForgeDirection dir) {
@@ -110,6 +103,13 @@ public class NetworkedInventory {
     }
 
     public void onTick() {
+        if (isInvalid()) {
+            updateInventory();
+            if (isInvalid()) {
+                return;
+            }
+        }
+
         if (tickDeficit > 0 || !canExtract() || !con.isExtractionRedstoneConditionMet(conDir)) {
             // do nothing
         } else {
@@ -144,11 +144,6 @@ public class NetworkedInventory {
     }
 
     private boolean transferItems() {
-
-        if (recheckInv) {
-            updateInventory();
-        }
-
         int[] slotIndices = getInventory().getAccessibleSlotsFromSide(inventorySide);
         if (slotIndices == null) {
             return false;
@@ -257,9 +252,6 @@ public class NetworkedInventory {
                 matchedStickyInput = of != null && of.isValid() && of.doesItemPassFilter(this, toExtract);
             }
             if (target.stickyInput || !matchedStickyInput) {
-                if (target.inv.recheckInv) {
-                    target.inv.updateInventory();
-                }
                 int inserted = target.inv.insertItem(toExtract);
                 if (inserted > 0) {
                     toExtract.stackSize -= inserted;
@@ -281,15 +273,38 @@ public class NetworkedInventory {
     }
 
     public final void updateInventory() {
-        TileEntity te = world.getTileEntity(location.x, location.y, location.z);
+        TileEntity newTe = world.getTileEntity(location.x, location.y, location.z);
+        if (newTe != te) {
+            te = newTe;
+            ticHack = false;
+            inventoryPanel = false;
+            if (te != null) {
+                if (te.getClass().getName().equals("tconstruct.tools.logic.CraftingStationLogic")) {
+                    ticHack = true;
+                } else if (te instanceof TileInventoryPanel) {
+                    inventoryPanel = true;
+                }
+            }
+            network.routesChanged();
+        }
+
         if (te instanceof ISidedInventory) {
             inv = (ISidedInventory) te;
         } else if (te instanceof IInventory) {
             inv = new InventoryWrapper((IInventory) te);
+        } else {
+            inv = null;
         }
     }
 
     private int insertItem(ItemStack item) {
+        if (isInvalid()) {
+            updateInventory();
+            if (isInvalid()) {
+                return 0;
+            }
+        }
+
         if (!canInsert() || item == null) {
             return 0;
         }
@@ -410,7 +425,7 @@ public class NetworkedInventory {
     }
 
     public ISidedInventory getInventoryRecheck() {
-        if (recheckInv) {
+        if (isInvalid()) {
             updateInventory();
         }
         return inv;
