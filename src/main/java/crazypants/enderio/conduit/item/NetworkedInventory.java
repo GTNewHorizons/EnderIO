@@ -40,7 +40,7 @@ public class NetworkedInventory {
 
     int tickDeficit;
 
-    private TileEntity te;
+    private TileEntity connectedTileEntity;
 
     // Hack for TiC crafting station not working correctly when setting output slot to null
     boolean ticHack = false;
@@ -64,7 +64,7 @@ public class NetworkedInventory {
     }
 
     public boolean isInvalid() {
-        return te == null || te.isInvalid();
+        return connectedTileEntity == null || connectedTileEntity.isInvalid();
     }
 
     public boolean hasTarget(IItemConduit conduit, ForgeDirection dir) {
@@ -274,24 +274,24 @@ public class NetworkedInventory {
 
     public final void updateInventory() {
         TileEntity newTe = world.getTileEntity(location.x, location.y, location.z);
-        if (newTe != te) {
-            te = newTe;
+        if (newTe != connectedTileEntity) {
+            connectedTileEntity = newTe;
             ticHack = false;
             inventoryPanel = false;
-            if (te != null) {
-                if (te.getClass().getName().equals("tconstruct.tools.logic.CraftingStationLogic")) {
+            if (connectedTileEntity != null) {
+                if (connectedTileEntity.getClass().getName().equals("tconstruct.tools.logic.CraftingStationLogic")) {
                     ticHack = true;
-                } else if (te instanceof TileInventoryPanel) {
+                } else if (connectedTileEntity instanceof TileInventoryPanel) {
                     inventoryPanel = true;
                 }
             }
             network.routesChanged();
         }
 
-        if (te instanceof ISidedInventory) {
-            inv = (ISidedInventory) te;
-        } else if (te instanceof IInventory) {
-            inv = new InventoryWrapper((IInventory) te);
+        if (connectedTileEntity instanceof ISidedInventory) {
+            inv = (ISidedInventory) connectedTileEntity;
+        } else if (connectedTileEntity instanceof IInventory) {
+            inv = new InventoryWrapper((IInventory) connectedTileEntity);
         } else {
             inv = null;
         }
