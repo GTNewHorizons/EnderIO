@@ -16,7 +16,7 @@ import com.enderio.core.common.util.RoundRobinIterator;
 
 import cofh.api.energy.IEnergyContainerItem;
 import cpw.mods.fml.common.gameevent.TickEvent.ServerTickEvent;
-import crazypants.enderio.conduit.ConduitNetworkTickHandler;
+import crazypants.enderio.EnderIO;
 import crazypants.enderio.conduit.ConduitNetworkTickHandler.TickListener;
 import crazypants.enderio.conduit.ConnectionMode;
 import crazypants.enderio.conduit.power.IPowerConduit;
@@ -212,7 +212,7 @@ public class CapBankNetwork implements ICapBankNetwork {
         long curTime = world.getTotalWorldTime();
         if (curTime != timeAtLastApply) {
             timeAtLastApply = curTime;
-            ConduitNetworkTickHandler.instance.addListener(tickListener);
+            EnderIO.proxy.conduitNetworkTickHandler.addListener(tickListener);
         }
     }
 

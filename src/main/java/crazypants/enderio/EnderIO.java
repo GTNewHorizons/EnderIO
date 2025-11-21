@@ -38,6 +38,7 @@ import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
 import cpw.mods.fml.common.event.FMLMissingMappingsEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.event.FMLServerStoppedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -111,7 +112,6 @@ import crazypants.enderio.machine.generator.zombie.BlockZombieGenerator.BlockEnd
 import crazypants.enderio.machine.generator.zombie.BlockZombieGenerator.BlockFrankenZombieGenerator;
 import crazypants.enderio.machine.generator.zombie.PacketNutrientTank;
 import crazypants.enderio.machine.hypercube.BlockHyperCube;
-import crazypants.enderio.machine.hypercube.HyperCubeRegister;
 import crazypants.enderio.machine.invpanel.BlockInventoryPanel;
 import crazypants.enderio.machine.killera.BlockKillerJoe;
 import crazypants.enderio.machine.light.BlockElectricLight;
@@ -894,22 +894,18 @@ public class EnderIO {
     }
 
     @EventHandler
-    public void serverStarted(FMLServerStartedEvent event) {
-        HyperCubeRegister.load();
-        ServerChannelRegister.load();
-    }
-
-    @SubscribeEvent
-    public void worldSaved(WorldEvent.Save event) {
-        // Only save together with the overworld, because this gets called for every dimension separately
-        if (event.world.provider != null && event.world.provider.dimensionId == 0) {
-            ServerChannelRegister.store();
-        }
+    public void onServerAboutToStart(FMLServerAboutToStartEvent event) {
+        proxy.onServerAboutToStart(event);
     }
 
     @EventHandler
-    public void serverStopped(FMLServerStoppedEvent event) {
-        HyperCubeRegister.unload();
+    public void onServerStarted(FMLServerStartedEvent event) {
+        proxy.onServerStarted(event);
+    }
+
+    @EventHandler
+    public void onServerStopped(FMLServerStoppedEvent event) {
+        proxy.onServerStopped(event);
     }
 
     @EventHandler
@@ -919,6 +915,14 @@ public class EnderIO {
                     && missingMapping.name.equals("EnderIO:itemInfiniteTravelStaff")) {
                 missingMapping.remap(itemTeleportStaff);
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void worldSaved(WorldEvent.Save event) {
+        // Only save together with the overworld, because this gets called for every dimension separately
+        if (event.world.provider != null && event.world.provider.dimensionId == 0) {
+            ServerChannelRegister.store();
         }
     }
 }
