@@ -7,6 +7,8 @@ import java.util.List;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+import crazypants.enderio.EnderIO;
+
 // I=base type, I is the base class of the implementations accepted by the network
 public abstract class AbstractConduitNetwork<T extends IConduit, I extends T> {
 
@@ -64,7 +66,7 @@ public abstract class AbstractConduitNetwork<T extends IConduit, I extends T> {
     public void addConduit(I con) {
         if (!conduits.contains(con)) {
             if (conduits.isEmpty()) {
-                ConduitNetworkTickHandler.instance.registerNetwork(this);
+                EnderIO.proxy.conduitNetworkTickHandler.registerNetwork(this);
             }
             conduits.add(con);
         }
@@ -75,7 +77,7 @@ public abstract class AbstractConduitNetwork<T extends IConduit, I extends T> {
             con.setNetwork(null);
         }
         conduits.clear();
-        ConduitNetworkTickHandler.instance.unregisterNetwork(this);
+        EnderIO.proxy.conduitNetworkTickHandler.unregisterNetwork(this);
     }
 
     public List<I> getConduits() {
