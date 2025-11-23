@@ -22,9 +22,8 @@ import crazypants.util.BaublesUtil;
 public class WirelessChargerController {
 
     public static WirelessChargerController instance = new WirelessChargerController();
-
-    public static final int RANGE = Config.wirelessChargerRange;
-    public static final int RANGE_SQ = RANGE * RANGE;
+    private static final int RANGE = Config.wirelessChargerRange;
+    private static final int RANGE_SQ = RANGE * RANGE;
 
     static {
         FMLCommonHandler.instance().bus().register(WirelessChargerController.instance);
@@ -56,26 +55,12 @@ public class WirelessChargerController {
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.side == Side.CLIENT || event.phase != TickEvent.Phase.END) {
-            return;
-        }
-        chargePlayersItems(event.player);
-    }
-
-    public int getChangeCount() {
-        return changeCount;
-    }
-
-    public void getChargers(World world, BlockCoord bc, Collection<IWirelessCharger> res) {
-        Map<BlockCoord, IWirelessCharger> chargers = getChargersForWorld(world);
-        for (IWirelessCharger wc : chargers.values()) {
-            if (wc.getLocation().getDistSq(bc) <= RANGE_SQ) {
-                res.add(wc);
-            }
+        if (event.side != Side.CLIENT && event.phase == TickEvent.Phase.END) {
+            chargePlayersItems(event.player);
         }
     }
 
-    public void chargePlayersItems(EntityPlayer player) {
+    private void chargePlayersItems(EntityPlayer player) {
         Map<BlockCoord, IWirelessCharger> chargers = getChargersForWorld(player.worldObj);
         if (chargers.isEmpty()) {
             return;
@@ -108,13 +93,21 @@ public class WirelessChargerController {
         return res;
     }
 
-    private Map<BlockCoord, IWirelessCharger> getChargersForWorld(World world) {
-        Map<BlockCoord, IWirelessCharger> res = perWorldChargers.get(world.provider.dimensionId);
-        if (res == null) {
-            res = new HashMap<BlockCoord, IWirelessCharger>();
-            perWorldChargers.put(world.provider.dimensionId, res);
+    public int getChangeCount() {
+        return changeCount;
+    }
+
+    public void getChargers(World world, BlockCoord bc, Collection<IWirelessCharger> res) {
+        Map<BlockCoord, IWirelessCharger> chargers = getChargersForWorld(world);
+        for (IWirelessCharger wc : chargers.values()) {
+            if (wc.getLocation().getDistSq(bc) <= RANGE_SQ) {
+                res.add(wc);
+            }
         }
-        return res;
+    }
+
+    private Map<BlockCoord, IWirelessCharger> getChargersForWorld(World world) {
+        return perWorldChargers.computeIfAbsent(world.provider.dimensionId, k -> new HashMap<>());
     }
 
     public Collection<IWirelessCharger> getChargers(World world) {

@@ -1,8 +1,6 @@
 package crazypants.enderio.machine.wireless;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
@@ -18,7 +16,7 @@ public class WirelessChargedLocation {
 
     public WirelessChargedLocation(TileEntity te) {
         this.te = te;
-        this.chargers = new ArrayList<IWirelessCharger>();
+        this.chargers = new ArrayList<>();
         /*
          * Set lastChangeCount to one less than the current change count so that the charger list is updated on first
          * use (unless ~4B changes happen in between). Do this instead directly updating so that WirelessChargedLocation
@@ -33,14 +31,10 @@ public class WirelessChargedLocation {
         lastChangeCount = wcc.getChangeCount();
         final BlockCoord bc = new BlockCoord(te);
         wcc.getChargers(te.getWorldObj(), bc, chargers);
-        Collections.sort(chargers, new Comparator<IWirelessCharger>() {
-
-            @Override
-            public int compare(IWirelessCharger o1, IWirelessCharger o2) {
-                int dist1 = o1.getLocation().getDistSq(bc);
-                int dist2 = o2.getLocation().getDistSq(bc);
-                return dist1 - dist2;
-            }
+        chargers.sort((o1, o2) -> {
+            int dist1 = o1.getLocation().getDistSq(bc);
+            int dist2 = o2.getLocation().getDistSq(bc);
+            return dist1 - dist2;
         });
     }
 
