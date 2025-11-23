@@ -8,6 +8,8 @@ import net.minecraft.tileentity.TileEntity;
 
 import com.enderio.core.common.util.BlockCoord;
 
+import crazypants.enderio.EnderIO;
+
 public class WirelessChargedLocation {
 
     private final TileEntity te;
@@ -22,11 +24,11 @@ public class WirelessChargedLocation {
          * use (unless ~4B changes happen in between). Do this instead directly updating so that WirelessChargedLocation
          * can be used while the TileEntity is still in construction (or loading).
          */
-        this.lastChangeCount = WirelessChargerController.instance.getChangeCount() - 1;
+        this.lastChangeCount = EnderIO.proxy.wirelessChargerController.getChangeCount() - 1;
     }
 
     private void updateChargers() {
-        WirelessChargerController wcc = WirelessChargerController.instance;
+        WirelessChargerController wcc = EnderIO.proxy.wirelessChargerController;
         chargers.clear();
         lastChangeCount = wcc.getChangeCount();
         final BlockCoord bc = new BlockCoord(te);
@@ -39,7 +41,7 @@ public class WirelessChargedLocation {
     }
 
     private void checkChangeCount() {
-        if (lastChangeCount != WirelessChargerController.instance.getChangeCount()) {
+        if (lastChangeCount != EnderIO.proxy.wirelessChargerController.getChangeCount()) {
             updateChargers();
         }
     }

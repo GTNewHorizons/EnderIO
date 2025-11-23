@@ -8,11 +8,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 
 import com.enderio.core.common.util.BlockCoord;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -21,19 +19,17 @@ import crazypants.util.BaublesUtil;
 
 public class WirelessChargerController {
 
-    public static WirelessChargerController instance = new WirelessChargerController();
     private static final int RANGE = Config.wirelessChargerRange;
     private static final int RANGE_SQ = RANGE * RANGE;
-
-    static {
-        FMLCommonHandler.instance().bus().register(WirelessChargerController.instance);
-        MinecraftForge.EVENT_BUS.register(WirelessChargerController.instance);
-    }
-
     private final Map<Integer, Map<BlockCoord, IWirelessCharger>> perWorldChargers = new HashMap<Integer, Map<BlockCoord, IWirelessCharger>>();
     private int changeCount;
 
-    private WirelessChargerController() {}
+    @SubscribeEvent
+    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        if (event.side != Side.CLIENT && event.phase == TickEvent.Phase.END) {
+            chargePlayersItems(event.player);
+        }
+    }
 
     public void registerCharger(IWirelessCharger charger) {
         if (charger == null) {
@@ -51,13 +47,6 @@ public class WirelessChargerController {
         Map<BlockCoord, IWirelessCharger> chargers = getChargersForWorld(capBank.getWorld());
         chargers.remove(capBank.getLocation());
         changeCount++;
-    }
-
-    @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.side != Side.CLIENT && event.phase == TickEvent.Phase.END) {
-            chargePlayersItems(event.player);
-        }
     }
 
     private void chargePlayersItems(EntityPlayer player) {
