@@ -10,18 +10,15 @@ import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 
 public class ConduitNetworkTickHandler {
 
-    public static final ConduitNetworkTickHandler instance = new ConduitNetworkTickHandler();
+    public interface TickListener {
 
-    public static interface TickListener {
+        void tickStart(TickEvent.ServerTickEvent evt);
 
-        public void tickStart(TickEvent.ServerTickEvent evt);
-
-        public void tickEnd(TickEvent.ServerTickEvent evt);
+        void tickEnd(TickEvent.ServerTickEvent evt);
     }
 
-    private final List<TickListener> listeners = new ArrayList<TickListener>();
-
-    private final IdentityHashMap<AbstractConduitNetwork<?, ?>, Boolean> networks = new IdentityHashMap<AbstractConduitNetwork<?, ?>, Boolean>();
+    private final List<TickListener> listeners = new ArrayList<>();
+    private final IdentityHashMap<AbstractConduitNetwork<?, ?>, Boolean> networks = new IdentityHashMap<>();
 
     public void addListener(TickListener listener) {
         listeners.add(listener);

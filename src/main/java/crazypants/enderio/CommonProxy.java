@@ -9,12 +9,18 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
+import cpw.mods.fml.common.event.FMLServerStartedEvent;
+import cpw.mods.fml.common.event.FMLServerStoppedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.common.gameevent.TickEvent.ServerTickEvent;
+import crazypants.enderio.conduit.ConduitNetworkTickHandler;
 import crazypants.enderio.conduit.IConduit;
 import crazypants.enderio.conduit.render.ConduitRenderer;
+import crazypants.enderio.machine.hypercube.HyperCubeRegister;
+import crazypants.enderio.machine.transceiver.ServerChannelRegister;
 
 public class CommonProxy {
 
@@ -23,6 +29,7 @@ public class CommonProxy {
     protected long serverTickCount = 0;
     protected long clientTickCount = 0;
     protected final TickTimer tickTimer = new TickTimer();
+    public ConduitNetworkTickHandler conduitNetworkTickHandler = null;
 
     public CommonProxy() {}
 
@@ -44,7 +51,7 @@ public class CommonProxy {
     }
 
     public void loadIcons() {
-        ;
+
     }
 
     public void load() {
@@ -74,6 +81,22 @@ public class CommonProxy {
 
     public ResourceLocation getGuiTexture(String name) {
         return new ResourceLocation(EnderIO.DOMAIN + TEXTURE_PATH + name + TEXTURE_EXT);
+    }
+
+    public void onServerAboutToStart(FMLServerAboutToStartEvent event) {
+        conduitNetworkTickHandler = new ConduitNetworkTickHandler();
+        FMLCommonHandler.instance().bus().register(conduitNetworkTickHandler);
+    }
+
+    public void onServerStarted(FMLServerStartedEvent event) {
+        HyperCubeRegister.load();
+        ServerChannelRegister.load();
+    }
+
+    public void onServerStopped(FMLServerStoppedEvent event) {
+        HyperCubeRegister.unload();
+        FMLCommonHandler.instance().bus().unregister(conduitNetworkTickHandler);
+        conduitNetworkTickHandler = null;
     }
 
     public final class TickTimer {

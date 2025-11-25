@@ -32,7 +32,6 @@ import com.enderio.core.client.render.BoundingBox;
 import com.enderio.core.common.util.BlockCoord;
 import com.enderio.core.common.util.Util;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.Optional.Interface;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -92,9 +91,6 @@ public class BlockConduitBundle extends BlockEio
     private static final String KEY_CONNECTOR_ICON_EXTERNAL = "enderIO:conduitConnectorExternal";
 
     public static BlockConduitBundle create() {
-
-        MinecraftForge.EVENT_BUS.register(ConduitNetworkTickHandler.instance);
-        FMLCommonHandler.instance().bus().register(ConduitNetworkTickHandler.instance);
 
         PacketHandler.INSTANCE
                 .registerMessage(PacketFluidLevel.class, PacketFluidLevel.class, PacketHandler.nextID(), Side.CLIENT);
