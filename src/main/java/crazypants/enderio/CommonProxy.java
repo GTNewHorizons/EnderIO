@@ -1,7 +1,5 @@
 package crazypants.enderio;
 
-import java.text.DecimalFormat;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -21,15 +19,15 @@ import crazypants.enderio.conduit.IConduit;
 import crazypants.enderio.conduit.render.ConduitRenderer;
 import crazypants.enderio.machine.hypercube.HyperCubeRegister;
 import crazypants.enderio.machine.transceiver.ServerChannelRegister;
+import crazypants.enderio.machine.wireless.WirelessChargerController;
 
 public class CommonProxy {
-
-    private static final DecimalFormat FORMAT = new DecimalFormat("########0.000");
 
     protected long serverTickCount = 0;
     protected long clientTickCount = 0;
     protected final TickTimer tickTimer = new TickTimer();
     public ConduitNetworkTickHandler conduitNetworkTickHandler = null;
+    public WirelessChargerController wirelessChargerController = null;
 
     public CommonProxy() {}
 
@@ -86,6 +84,8 @@ public class CommonProxy {
     public void onServerAboutToStart(FMLServerAboutToStartEvent event) {
         conduitNetworkTickHandler = new ConduitNetworkTickHandler();
         FMLCommonHandler.instance().bus().register(conduitNetworkTickHandler);
+        wirelessChargerController = new WirelessChargerController();
+        FMLCommonHandler.instance().bus().register(wirelessChargerController);
     }
 
     public void onServerStarted(FMLServerStartedEvent event) {
@@ -97,6 +97,8 @@ public class CommonProxy {
         HyperCubeRegister.unload();
         FMLCommonHandler.instance().bus().unregister(conduitNetworkTickHandler);
         conduitNetworkTickHandler = null;
+        FMLCommonHandler.instance().bus().unregister(wirelessChargerController);
+        wirelessChargerController = null;
     }
 
     public final class TickTimer {

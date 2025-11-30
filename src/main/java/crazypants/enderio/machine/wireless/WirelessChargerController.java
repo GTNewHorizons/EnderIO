@@ -8,11 +8,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 
 import com.enderio.core.common.util.BlockCoord;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -21,20 +19,17 @@ import crazypants.util.BaublesUtil;
 
 public class WirelessChargerController {
 
-    public static WirelessChargerController instance = new WirelessChargerController();
-
-    public static final int RANGE = Config.wirelessChargerRange;
-    public static final int RANGE_SQ = RANGE * RANGE;
-
-    static {
-        FMLCommonHandler.instance().bus().register(WirelessChargerController.instance);
-        MinecraftForge.EVENT_BUS.register(WirelessChargerController.instance);
-    }
-
+    private static final int RANGE = Config.wirelessChargerRange;
+    private static final int RANGE_SQ = RANGE * RANGE;
     private final Map<Integer, Map<BlockCoord, IWirelessCharger>> perWorldChargers = new HashMap<Integer, Map<BlockCoord, IWirelessCharger>>();
     private int changeCount;
 
-    private WirelessChargerController() {}
+    @SubscribeEvent
+    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        if (event.side != Side.CLIENT && event.phase == TickEvent.Phase.END) {
+            chargePlayersItems(event.player);
+        }
+    }
 
     public void registerCharger(IWirelessCharger charger) {
         if (charger == null) {
@@ -54,28 +49,7 @@ public class WirelessChargerController {
         changeCount++;
     }
 
-    @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.side == Side.CLIENT || event.phase != TickEvent.Phase.END) {
-            return;
-        }
-        chargePlayersItems(event.player);
-    }
-
-    public int getChangeCount() {
-        return changeCount;
-    }
-
-    public void getChargers(World world, BlockCoord bc, Collection<IWirelessCharger> res) {
-        Map<BlockCoord, IWirelessCharger> chargers = getChargersForWorld(world);
-        for (IWirelessCharger wc : chargers.values()) {
-            if (wc.getLocation().getDistSq(bc) <= RANGE_SQ) {
-                res.add(wc);
-            }
-        }
-    }
-
-    public void chargePlayersItems(EntityPlayer player) {
+    private void chargePlayersItems(EntityPlayer player) {
         Map<BlockCoord, IWirelessCharger> chargers = getChargersForWorld(player.worldObj);
         if (chargers.isEmpty()) {
             return;
@@ -108,13 +82,21 @@ public class WirelessChargerController {
         return res;
     }
 
-    private Map<BlockCoord, IWirelessCharger> getChargersForWorld(World world) {
-        Map<BlockCoord, IWirelessCharger> res = perWorldChargers.get(world.provider.dimensionId);
-        if (res == null) {
-            res = new HashMap<BlockCoord, IWirelessCharger>();
-            perWorldChargers.put(world.provider.dimensionId, res);
+    public int getChangeCount() {
+        return changeCount;
+    }
+
+    public void getChargers(World world, BlockCoord bc, Collection<IWirelessCharger> res) {
+        Map<BlockCoord, IWirelessCharger> chargers = getChargersForWorld(world);
+        for (IWirelessCharger wc : chargers.values()) {
+            if (wc.getLocation().getDistSq(bc) <= RANGE_SQ) {
+                res.add(wc);
+            }
         }
-        return res;
+    }
+
+    private Map<BlockCoord, IWirelessCharger> getChargersForWorld(World world) {
+        return perWorldChargers.computeIfAbsent(world.provider.dimensionId, k -> new HashMap<>());
     }
 
     public Collection<IWirelessCharger> getChargers(World world) {

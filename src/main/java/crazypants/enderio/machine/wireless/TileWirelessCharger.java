@@ -6,6 +6,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import cofh.api.energy.IEnergyContainerItem;
+import crazypants.enderio.EnderIO;
 import crazypants.enderio.TileEntityEio;
 import crazypants.enderio.network.PacketHandler;
 import crazypants.enderio.power.IInternalPowerReceiver;
@@ -28,7 +29,7 @@ public class TileWirelessCharger extends TileEntityEio implements IInternalPower
     @Override
     public void invalidate() {
         super.invalidate();
-        WirelessChargerController.instance.deregisterCharger(this);
+        EnderIO.proxy.wirelessChargerController.deregisterCharger(this);
         registered = false;
     }
 
@@ -40,7 +41,7 @@ public class TileWirelessCharger extends TileEntityEio implements IInternalPower
         }
 
         if (!registered) {
-            WirelessChargerController.instance.registerCharger(this);
+            EnderIO.proxy.wirelessChargerController.registerCharger(this);
             registered = true;
         }
 
