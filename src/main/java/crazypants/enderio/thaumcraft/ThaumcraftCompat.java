@@ -20,7 +20,6 @@ import crazypants.enderio.material.FrankenSkull;
 import crazypants.enderio.material.Material;
 import crazypants.enderio.power.Capacitors;
 import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 
@@ -153,19 +152,6 @@ public class ThaumcraftCompat {
         ThaumcraftApi.registerObjectTag(
                 new ItemStack(EnderIO.blockFusedQuartz, 1, BlockFusedQuartz.Type.ENLIGHTENED_GLASS.ordinal()),
                 new AspectList().add(Aspect.CRYSTAL, 2).add(Aspect.LIGHT, 8).add(Aspect.SENSES, 2));
-
-        // This is a horrible hack due to the fact that I am assembling my aspects after TC does recipe parsing
-        // Therefore I redo all EIO items
-        for (Object o : Item.itemRegistry.getKeys()) {
-            if (o instanceof String) {
-                String ownermod = ((String) o).substring(0, ((String) o).indexOf(':'));
-                if (EnderIO.MODID.equals(ownermod)) {
-                    for (int idx = 0; idx < 16; idx++) {
-                        addAspectsFromRecipes((Item) Item.itemRegistry.getObject((String) o), idx);
-                    }
-                }
-            }
-        }
     }
 
     private static AspectList getAspects(Block block) {
@@ -183,10 +169,6 @@ public class ThaumcraftCompat {
 
     private static AspectList getAspects(ItemStack item) {
         return new AspectList(item);
-    }
-
-    private static void addAspectsFromRecipes(Item item, int meta) {
-        ThaumcraftApi.registerObjectTag(new ItemStack(item, 1, meta), ThaumcraftApiHelper.generateTags(item, meta));
     }
 
     public static void loadUpgrades(List<IDarkSteelUpgrade> upgrades) {
