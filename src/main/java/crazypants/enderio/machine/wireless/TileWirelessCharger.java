@@ -29,6 +29,11 @@ public class TileWirelessCharger extends TileEntityEio implements IInternalPower
     @Override
     public void invalidate() {
         super.invalidate();
+
+        if (worldObj.isRemote) {
+            return;
+        }
+
         EnderIO.proxy.wirelessChargerController.deregisterCharger(this);
         registered = false;
     }
