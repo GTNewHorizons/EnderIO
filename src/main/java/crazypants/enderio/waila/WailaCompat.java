@@ -308,7 +308,7 @@ public class WailaCompat implements IWailaDataProvider {
                                 PowerDisplayUtil.abrevation()));
             }
 
-        } else if (itemStack.getItem() == EnderIO.itemLiquidConduit) {
+        } else if (itemStack.getItem() == EnderIO.itemLiquidConduit && !EnderIO.hasWailaPlugins) {
             NBTTagCompound nbtRoot = accessor.getNBTData();
             if (nbtRoot.hasKey("fluidLocked") && nbtRoot.hasKey("FluidName")) {
                 boolean fluidTypeLocked = nbtRoot.getBoolean("fluidLocked");
