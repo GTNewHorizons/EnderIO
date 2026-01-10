@@ -187,6 +187,10 @@ public class BlockTank extends AbstractMachineBlock<TileTank> implements IAdvanc
     @Override
     @SideOnly(Side.CLIENT)
     public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
+        if (EnderIO.hasWailaPlugins) {
+            return;
+        }
+
         if (itemstack.stackTagCompound != null && itemstack.stackTagCompound.hasKey("tankContents")) {
             FluidStack fl = FluidStack
                     .loadFluidStackFromNBT((NBTTagCompound) itemstack.stackTagCompound.getTag("tankContents"));
@@ -219,9 +223,11 @@ public class BlockTank extends AbstractMachineBlock<TileTank> implements IAdvanc
 
     @Override
     public void getWailaInfo(List<String> tooltip, EntityPlayer player, World world, int x, int y, int z) {
-        TileEntity te = world.getTileEntity(x, y, z);
-        if (te instanceof TileTank) {
-            TileTank tank = (TileTank) te;
+        if (EnderIO.hasWailaPlugins) {
+            return;
+        }
+
+        if (world.getTileEntity(x, y, z) instanceof TileTank tank) {
             FluidStack stored = tank.tank.getFluid();
             String fluid = stored == null ? EnderIO.lang.localize("tooltip.none")
                     : stored.getFluid().getLocalizedName(stored);
