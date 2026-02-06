@@ -65,6 +65,9 @@ public class EnderLiquidConduitNetwork extends AbstractConduitNetwork<ILiquidCon
 
     boolean filling;
 
+    // Reusable FluidStack to avoid allocations in fillFrom loop
+    private FluidStack reusableFluidStack;
+
     public EnderLiquidConduitNetwork(AbstractEnderLiquidConduit.Type type) {
         super(AbstractEnderLiquidConduit.class, ILiquidConduit.class);
         this.type = type;
@@ -144,8 +147,13 @@ public class EnderLiquidConduitNetwork extends AbstractConduitNetwork<ILiquidCon
             if (resource == null || tank == null || !matchedFilter(resource, tank.con, tank.conDir, true)) {
                 return 0;
             }
-            resource = resource.copy();
-            resource.amount = Math.min(resource.amount, type.getMaxIoPerTick());
+
+            // Only copy if we need to modify amount
+            int maxIo = type.getMaxIoPerTick();
+            if (resource.amount > maxIo) {
+                resource = resource.copy();
+                resource.amount = maxIo;
+            }
             int filled = 0;
             int remaining = resource.amount;
             // TODO: Only change starting pos of iterator is doFill is true so a false then true returns the same
@@ -158,13 +166,19 @@ public class EnderLiquidConduitNetwork extends AbstractConduitNetwork<ILiquidCon
                         && target.acceptsOuput
                         && target.isValid()
                         && matchedFilter(resource, target.con, target.conDir, false)) {
-                    int vol = target.externalTank.fill(target.tankDir, resource.copy(), doFill);
+                    // Use reused FluidStack instead of copying each iteration
+                    if (reusableFluidStack == null
+                            || !FluidStack.areFluidStackTagsEqual(resource, reusableFluidStack)) {
+                        reusableFluidStack = resource.copy();
+                    } else {
+                        reusableFluidStack.amount = remaining;
+                    }
+                    int vol = target.externalTank.fill(target.tankDir, reusableFluidStack, doFill);
                     remaining -= vol;
                     filled += vol;
                     if (remaining <= 0) {
                         break;
                     }
-                    resource.amount = remaining;
                 }
             }
             if (!tank.con.isRoundRobin(tank.conDir)) iterator.rewind();
