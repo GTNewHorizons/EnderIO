@@ -27,6 +27,6 @@ dependencies {
     compileOnly(rfg.deobf('curse.maven:mekanism-268560:2475797')) // https://www.curseforge.com/minecraft/mc-mods/mekanism/files/2475797
     compileOnly(rfg.deobf('maven.modrinth:immibis-microblocks:59.1.2')) // https://modrinth.com/mod/immibis-microblocks/version/59.1.2
 
-    compileOnlyApi('com.github.GTNewHorizons:Angelica:2.0.0-alpha19:api') {transitive = false}
+    compileOnlyApi('com.github.GTNewHorizons:Angelica:2.0.0-alpha18:api') {transitive = false}
     compileOnly("com.github.GTNewHorizons:Hodgepodge:2.7.58:dev")
 }
