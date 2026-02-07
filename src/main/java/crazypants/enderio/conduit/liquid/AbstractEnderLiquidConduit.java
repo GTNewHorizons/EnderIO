@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.function.Supplier;
+import java.util.function.IntSupplier;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -89,20 +89,20 @@ public abstract class AbstractEnderLiquidConduit extends AbstractLiquidConduit {
 
         STELLAR(() -> Config.stellarEnderFluidConduitExtractRate, () -> Config.stellarEnderFluidConduitMaxIoRate);
 
-        private final Supplier<Integer> getMaxExtractPerTick;
-        private final Supplier<Integer> getMaxIoPerTick;
+        private final IntSupplier getMaxExtractPerTick;
+        private final IntSupplier getMaxIoPerTick;
 
-        Type(Supplier<Integer> getMaxExtractPerTick, Supplier<Integer> getMaxIoPerTick) {
+        Type(IntSupplier getMaxExtractPerTick, IntSupplier getMaxIoPerTick) {
             this.getMaxExtractPerTick = getMaxExtractPerTick;
             this.getMaxIoPerTick = getMaxIoPerTick;
         }
 
         public int getMaxExtractPerTick() {
-            return getMaxExtractPerTick.get();
+            return getMaxExtractPerTick.getAsInt();
         }
 
         public int getMaxIoPerTick() {
-            return getMaxIoPerTick.get();
+            return getMaxIoPerTick.getAsInt();
         }
     }
 
