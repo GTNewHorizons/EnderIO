@@ -1,19 +1,21 @@
 package crazypants.enderio.machine.farm;
 
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.EnumSkyBlock;
@@ -31,7 +33,6 @@ import crazypants.enderio.ModObject;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.AbstractPoweredTaskEntity;
 import crazypants.enderio.machine.ContinuousTask;
-import crazypants.enderio.machine.IMachineRecipe.ResultStack;
 import crazypants.enderio.machine.IPoweredTask;
 import crazypants.enderio.machine.SlotDefinition;
 import crazypants.enderio.machine.farm.farmers.FarmersCommune;
@@ -47,6 +48,8 @@ public class TileFarmStation extends AbstractPoweredTaskEntity implements IRange
 
     private static final int TICKS_PER_WORK = 20;
     private boolean showingRange;
+
+    private final List<ItemStack> harvestBuffer = new ArrayList<>();
 
     @Override
     public World getWorld() {
@@ -424,6 +427,38 @@ public class TileFarmStation extends AbstractPoweredTaskEntity implements IRange
             wasActive = isActive();
             worldObj.updateLightByType(EnumSkyBlock.Block, xCoord, yCoord, zCoord);
         }
+        tryMoveFromBuffer();
+    }
+
+    private void tryMoveFromBuffer() {
+        if (harvestBuffer.isEmpty() || worldObj.isRemote) {
+            return;
+        }
+
+        List<ItemStack> toRemove = new ArrayList<>();
+        for (ItemStack stack : harvestBuffer) {
+            if (stack == null || stack.stackSize <= 0) {
+                toRemove.add(stack);
+                continue;
+            }
+
+            ItemStack remaining = tryInsertToInputSlots(stack);
+            if (remaining != null && remaining.stackSize > 0) {
+                remaining = tryInsertToOutputSlots(remaining);
+            }
+
+            if (remaining == null || remaining.stackSize == 0) {
+                toRemove.add(stack);
+            } else {
+                stack.stackSize = remaining.stackSize;
+            }
+        }
+
+        harvestBuffer.removeAll(toRemove);
+
+        if (!toRemove.isEmpty()) {
+            markDirty();
+        }
     }
 
     @Override
@@ -445,7 +480,16 @@ public class TileFarmStation extends AbstractPoweredTaskEntity implements IRange
             setNotification("noPower");
             return false;
         }
+
+        if (isBufferNotEmpty() || isOutputFull()) {
+            setNotification("outputFull");
+            return false;
+        }
         return true;
+    }
+
+    private boolean isBufferNotEmpty() {
+        return !harvestBuffer.isEmpty();
     }
 
     protected void doTick() {
@@ -488,7 +532,7 @@ public class TileFarmStation extends AbstractPoweredTaskEntity implements IRange
             block = worldObj.getBlock(bc.x, bc.y, bc.z);
         }
 
-        if (isOutputFull()) {
+        if (isOutputFull() || isBufferNotEmpty()) {
             setNotification("outputFull");
             return;
         }
@@ -507,10 +551,8 @@ public class TileFarmStation extends AbstractPoweredTaskEntity implements IRange
                         new TargetPoint(worldObj.provider.dimensionId, bc.x, bc.y, bc.z, Config.farmParticlesMaxRange));
                 for (EntityItem ei : harvest.getDrops()) {
                     if (ei != null) {
-                        insertHarvestDrop(ei, bc);
-                        if (!ei.isDead) {
-                            worldObj.spawnEntityInWorld(ei);
-                        }
+                        addToBuffer(ei.getEntityItem().copy());
+                        ei.setDead();
                     }
                 }
                 return;
@@ -550,6 +592,99 @@ public class TileFarmStation extends AbstractPoweredTaskEntity implements IRange
                 farmerJoe.inventory.mainInventory[0] = null;
             }
         }
+    }
+
+    private void addToBuffer(ItemStack stack) {
+        if (stack == null || stack.stackSize <= 0) {
+            return;
+        }
+
+        for (ItemStack bufStack : harvestBuffer) {
+            if (bufStack.isItemEqual(stack) && ItemStack.areItemStackTagsEqual(bufStack, stack)) {
+                int canAdd = bufStack.stackSize;
+                if (canAdd > 0) {
+                    int addAmount = Math.min(canAdd, stack.stackSize);
+                    bufStack.stackSize += addAmount;
+                    stack.stackSize -= addAmount;
+
+                    if (stack.stackSize <= 0) {
+                        markDirty();
+                        return;
+                    }
+                }
+            }
+        }
+
+        harvestBuffer.add(stack.copy());
+        markDirty();
+    }
+
+    private ItemStack tryInsertToInputSlots(ItemStack stack) {
+        if (stack == null || stack.stackSize <= 0) {
+            return null;
+        }
+
+        for (int i = minSupSlot; i <= maxSupSlot; i++) {
+            if (stack.stackSize <= 0) {
+                break;
+            }
+
+            ItemStack slotStack = inventory[i];
+            int stackLimit = getInventoryStackLimit(i);
+
+            if (isItemValidForSlot(i, stack)) {
+                if (slotStack == null) {
+                    if (!isSlotLocked(i)) {
+                        int amount = Math.min(stack.stackSize, stackLimit);
+                        inventory[i] = stack.copy();
+                        inventory[i].stackSize = amount;
+                        stack.stackSize -= amount;
+                        markDirty();
+                    }
+                } else if (slotStack.isItemEqual(stack) && ItemStack.areItemStackTagsEqual(slotStack, stack)) {
+                    int canAdd = Math.min(stackLimit - slotStack.stackSize, stack.stackSize);
+                    if (canAdd > 0) {
+                        slotStack.stackSize += canAdd;
+                        stack.stackSize -= canAdd;
+                        markDirty();
+                    }
+                }
+            }
+        }
+
+        return stack.stackSize > 0 ? stack : null;
+    }
+
+    private ItemStack tryInsertToOutputSlots(ItemStack stack) {
+        if (stack == null || stack.stackSize <= 0) {
+            return null;
+        }
+
+        for (int i = slotDefinition.minOutputSlot; i <= slotDefinition.maxOutputSlot; i++) {
+            if (stack.stackSize <= 0) {
+                break;
+            }
+
+            ItemStack slotStack = inventory[i];
+            int stackLimit = 64;
+
+            if (slotStack == null) {
+                int amount = Math.min(stack.stackSize, stackLimit);
+                inventory[i] = stack.copy();
+                inventory[i].stackSize = amount;
+                stack.stackSize -= amount;
+                markDirty();
+            } else if (slotStack.isItemEqual(stack) && ItemStack.areItemStackTagsEqual(slotStack, stack)) {
+                int canAdd = Math.min(stackLimit - slotStack.stackSize, stack.stackSize);
+                if (canAdd > 0) {
+                    slotStack.stackSize += canAdd;
+                    stack.stackSize -= canAdd;
+                    markDirty();
+                }
+            }
+        }
+
+        return stack.stackSize > 0 ? stack : null;
     }
 
     private int bonemealCooldown = 5; // no need to persist this
@@ -652,68 +787,6 @@ public class TileFarmStation extends AbstractPoweredTaskEntity implements IRange
         return minSupSlot + 3;
     }
 
-    private void insertHarvestDrop(Entity entity, BlockCoord bc) {
-        if (!worldObj.isRemote) {
-            if (entity instanceof EntityItem && !entity.isDead) {
-                EntityItem item = (EntityItem) entity;
-                ItemStack stack = item.getEntityItem().copy();
-                int numInserted = insertResult(stack, bc);
-                stack.stackSize -= numInserted;
-                item.setEntityItemStack(stack);
-                if (stack.stackSize == 0) {
-                    item.setDead();
-                }
-            }
-        }
-    }
-
-    private int insertResult(ItemStack stack, BlockCoord bc) {
-
-        int slot = bc != null ? getSupplySlotForCoord(bc) : minSupSlot;
-        int[] slots = new int[NUM_SUPPLY_SLOTS];
-        int k = 0;
-        for (int j = slot; j <= maxSupSlot; j++) {
-            slots[k++] = j;
-        }
-        for (int j = minSupSlot; j < slot; j++) {
-            slots[k++] = j;
-        }
-
-        int origSize = stack.stackSize;
-        stack = stack.copy();
-
-        int inserted = 0;
-        for (int j = 0; j < slots.length && inserted < stack.stackSize; j++) {
-            int i = slots[j];
-            ItemStack curStack = inventory[i];
-            int inventoryStackLimit = getInventoryStackLimit(i);
-            if (isItemValidForSlot(i, stack) && (curStack == null || curStack.stackSize < inventoryStackLimit)) {
-                if (curStack == null) {
-                    if (stack.stackSize < inventoryStackLimit) {
-                        inventory[i] = stack.copy();
-                        inserted = stack.stackSize;
-                    } else {
-                        inventory[i] = stack.copy();
-                        inserted = inventoryStackLimit;
-                        inventory[i].stackSize = inserted;
-                    }
-                } else if (curStack.isItemEqual(stack)) {
-                    inserted = Math.min(inventoryStackLimit - curStack.stackSize, stack.stackSize);
-                    inventory[i].stackSize += inserted;
-                }
-            }
-        }
-
-        stack.stackSize -= inserted;
-        if (inserted >= origSize) {
-            return origSize;
-        }
-
-        ResultStack[] in = new ResultStack[] { new ResultStack(stack) };
-        mergeResults(in);
-        return origSize - (in[0].item == null ? 0 : in[0].item.stackSize);
-    }
-
     private @Nonnull BlockCoord getNextCoord() {
 
         int size = getFarmSize();
@@ -750,11 +823,6 @@ public class TileFarmStation extends AbstractPoweredTaskEntity implements IRange
     @Override
     public String getInventoryName() {
         return EnderIO.blockFarmStation.getLocalizedName();
-    }
-
-    @Override
-    public boolean hasCustomInventoryName() {
-        return false;
     }
 
     @Override
@@ -811,6 +879,17 @@ public class TileFarmStation extends AbstractPoweredTaskEntity implements IRange
         } else if (slotLayoutVersion == 2) {
             inventory = (new ArrayMappingTool<ItemStack>("TTTSSSSOOOOOOC", "TTTBBSSSSOOOOOOC")).map(inventory);
         }
+
+        if (nbtRoot.hasKey("HarvestBuffer")) {
+            NBTTagList bufferList = nbtRoot.getTagList("HarvestBuffer", 10);
+            for (int i = 0; i < bufferList.tagCount(); i++) {
+                NBTTagCompound itemTag = bufferList.getCompoundTagAt(i);
+                ItemStack stack = ItemStack.loadItemStackFromNBT(itemTag);
+                if (stack != null && stack.stackSize > 0) {
+                    harvestBuffer.add(stack);
+                }
+            }
+        }
     }
 
     IPoweredTask createTask() {
@@ -834,6 +913,18 @@ public class TileFarmStation extends AbstractPoweredTaskEntity implements IRange
             nbtRoot.setIntArray("lockedSlots", locked);
         }
         nbtRoot.setInteger("slotLayoutVersion", 3);
+
+        if (!harvestBuffer.isEmpty()) {
+            NBTTagList bufferList = new NBTTagList();
+            for (ItemStack stack : harvestBuffer) {
+                if (stack != null && stack.stackSize > 0) {
+                    NBTTagCompound itemTag = new NBTTagCompound();
+                    stack.writeToNBT(itemTag);
+                    bufferList.appendTag(itemTag);
+                }
+            }
+            nbtRoot.setTag("HarvestBuffer", bufferList);
+        }
     }
 
     @Override

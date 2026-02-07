@@ -1,5 +1,8 @@
 package crazypants.enderio.material;
 
+import static net.minecraft.util.EnumChatFormatting.RESET;
+
+import java.text.DecimalFormat;
 import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -9,6 +12,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 
@@ -20,6 +24,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.EnderIOTab;
 import crazypants.enderio.ModObject;
+import crazypants.enderio.config.Config;
 import crazypants.enderio.power.BasicCapacitor;
 import crazypants.enderio.power.Capacitors;
 import crazypants.enderio.power.ICapacitor;
@@ -28,6 +33,7 @@ import crazypants.enderio.power.ICapacitorItem;
 public class ItemCapacitor extends Item implements ICapacitorItem {
 
     private static final BasicCapacitor CAP = new BasicCapacitor();
+    private static final String SPACE = "    ";
 
     public static ItemCapacitor create() {
         ItemCapacitor result = new ItemCapacitor();
@@ -104,12 +110,43 @@ public class ItemCapacitor extends Item implements ICapacitorItem {
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List<String> par3List,
             boolean par4) {
         if (par1ItemStack != null && par1ItemStack.getItemDamage() > 0 && par1ItemStack.getItemDamage() != 7) {
-            par3List.add(EnderIO.lang.localize("machine.tooltip.upgrade"));
+            ICapacitor capacitor = getCapacitor(par1ItemStack);
+            par3List.add(EnumChatFormatting.GREEN + EnderIO.lang.localize("machine.tooltip.upgrade.name"));
             if (SpecialTooltipHandler.showAdvancedTooltips()) {
-                SpecialTooltipHandler.addDetailedTooltipFromResources(par3List, "enderio.machine.tooltip.upgrade");
+                addUpgrades(par3List, capacitor);
+                addRangeUpgrade(par3List, capacitor);
             } else {
                 SpecialTooltipHandler.addShowDetailsTooltip(par3List);
             }
         }
+    }
+
+    public void addUpgrades(List<String> list, ICapacitor capacitor) {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        String tierString = EnumChatFormatting.AQUA + EnderIO.lang.localize("machine.tooltip.upgrade.tier");
+        String maxEnergyStorageString = EnumChatFormatting.AQUA
+                + EnderIO.lang.localize("machine.tooltip.upgrade.energystorage");
+        String maxEnergyReceivedString = EnumChatFormatting.AQUA
+                + EnderIO.lang.localize("machine.tooltip.upgrade.energyreceived");
+        String maxEnergyExtractedString = EnumChatFormatting.AQUA
+                + EnderIO.lang.localize("machine.tooltip.upgrade.energyextracted");
+        String upgrades = EnumChatFormatting.GOLD + EnderIO.lang.localize("machine.tooltip.upgrade");
+        String maxEnergyStorage = formatter.format(capacitor.getMaxEnergyStored());
+        int tier = capacitor.getTier();
+        String maxEnergyReceived = formatter.format(capacitor.getMaxEnergyReceived());
+        String maxEnergyExtracted = formatter.format(capacitor.getMaxEnergyExtracted());
+        list.add(upgrades);
+        list.add(SPACE + tierString + RESET + tier);
+        list.add(SPACE + maxEnergyReceivedString + RESET + maxEnergyReceived);
+        list.add(SPACE + maxEnergyExtractedString + RESET + maxEnergyExtracted);
+        list.add(SPACE + maxEnergyStorageString + RESET + maxEnergyStorage);
+    }
+
+    public void addRangeUpgrade(List<String> list, ICapacitor capacitor) {
+        String farmStation = EnumChatFormatting.AQUA + EnderIO.lang.localize("machine.tooltip.upgrade.farmstation");
+        String rangeUpgrade = EnumChatFormatting.GOLD + EnderIO.lang.localize("machine.tooltip.upgrade.range");
+        int range = Config.farmBonusSize * capacitor.getTier() - 1 + 2;
+        list.add(rangeUpgrade);
+        list.add(SPACE + farmStation + RESET + range);
     }
 }
