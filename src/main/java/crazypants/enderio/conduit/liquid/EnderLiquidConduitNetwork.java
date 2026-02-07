@@ -147,7 +147,6 @@ public class EnderLiquidConduitNetwork extends AbstractConduitNetwork<ILiquidCon
             resource = resource.copy();
             resource.amount = Math.min(resource.amount, type.getMaxIoPerTick());
             int filled = 0;
-            int remaining = resource.amount;
             // TODO: Only change starting pos of iterator is doFill is true so a false then true returns the same
 
             TankIterator iterator;
@@ -158,13 +157,13 @@ public class EnderLiquidConduitNetwork extends AbstractConduitNetwork<ILiquidCon
                         && target.acceptsOuput
                         && target.isValid()
                         && matchedFilter(resource, target.con, target.conDir, false)) {
-                    int vol = target.externalTank.fill(target.tankDir, resource.copy(), doFill);
-                    remaining -= vol;
+                    // Use reused FluidStack instead of copying each iteration
+                    int vol = target.externalTank.fill(target.tankDir, resource, doFill);
+                    resource.amount -= vol;
                     filled += vol;
-                    if (remaining <= 0) {
+                    if (resource.amount <= 0) {
                         break;
                     }
-                    resource.amount = remaining;
                 }
             }
             if (!tank.con.isRoundRobin(tank.conDir)) iterator.rewind();
