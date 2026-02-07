@@ -1,5 +1,7 @@
 package crazypants.enderio.material;
 
+import static net.minecraft.util.EnumChatFormatting.RESET;
+
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -27,8 +29,6 @@ import crazypants.enderio.power.BasicCapacitor;
 import crazypants.enderio.power.Capacitors;
 import crazypants.enderio.power.ICapacitor;
 import crazypants.enderio.power.ICapacitorItem;
-
-import static net.minecraft.util.EnumChatFormatting.RESET;
 
 public class ItemCapacitor extends Item implements ICapacitorItem {
 
