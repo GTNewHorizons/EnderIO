@@ -144,7 +144,7 @@ public class EnderLiquidConduitNetwork extends AbstractConduitNetwork<ILiquidCon
             if (resource == null || tank == null || !matchedFilter(resource, tank.con, tank.conDir, true)) {
                 return 0;
             }
-                resource = resource.copy();
+            resource = resource.copy();
             resource.amount = Math.min(resource.amount, type.getMaxIoPerTick());
             int filled = 0;
             // TODO: Only change starting pos of iterator is doFill is true so a false then true returns the same
