@@ -28,9 +28,12 @@ import crazypants.enderio.power.Capacitors;
 import crazypants.enderio.power.ICapacitor;
 import crazypants.enderio.power.ICapacitorItem;
 
+import static net.minecraft.util.EnumChatFormatting.RESET;
+
 public class ItemCapacitor extends Item implements ICapacitorItem {
 
     private static final BasicCapacitor CAP = new BasicCapacitor();
+    private static final String SPACE = "    ";
 
     public static ItemCapacitor create() {
         ItemCapacitor result = new ItemCapacitor();
@@ -106,21 +109,19 @@ public class ItemCapacitor extends Item implements ICapacitorItem {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List<String> par3List,
             boolean par4) {
-        String space = "    ";
-        EnumChatFormatting reset = EnumChatFormatting.RESET;
         if (par1ItemStack != null && par1ItemStack.getItemDamage() > 0 && par1ItemStack.getItemDamage() != 7) {
             ICapacitor capacitor = getCapacitor(par1ItemStack);
             par3List.add(EnumChatFormatting.GREEN + EnderIO.lang.localize("machine.tooltip.upgrade.name"));
             if (SpecialTooltipHandler.showAdvancedTooltips()) {
-                addUpgrades(par3List, capacitor, space, reset);
-                addRangeUpgrade(par3List, capacitor, space, reset);
+                addUpgrades(par3List, capacitor);
+                addRangeUpgrade(par3List, capacitor);
             } else {
                 SpecialTooltipHandler.addShowDetailsTooltip(par3List);
             }
         }
     }
 
-    public void addUpgrades(List<String> list, ICapacitor capacitor, String space, EnumChatFormatting reset) {
+    public void addUpgrades(List<String> list, ICapacitor capacitor) {
         DecimalFormat formatter = new DecimalFormat("#,###");
         String tierString = EnumChatFormatting.AQUA + EnderIO.lang.localize("machine.tooltip.upgrade.tier");
         String maxEnergyStorageString = EnumChatFormatting.AQUA
@@ -135,17 +136,17 @@ public class ItemCapacitor extends Item implements ICapacitorItem {
         String maxEnergyReceived = formatter.format(capacitor.getMaxEnergyReceived());
         String maxEnergyExtracted = formatter.format(capacitor.getMaxEnergyExtracted());
         list.add(upgrades);
-        list.add(space + tierString + reset + tier);
-        list.add(space + maxEnergyReceivedString + reset + maxEnergyReceived);
-        list.add(space + maxEnergyExtractedString + reset + maxEnergyExtracted);
-        list.add(space + maxEnergyStorageString + reset + maxEnergyStorage);
+        list.add(SPACE + tierString + RESET + tier);
+        list.add(SPACE + maxEnergyReceivedString + RESET + maxEnergyReceived);
+        list.add(SPACE + maxEnergyExtractedString + RESET + maxEnergyExtracted);
+        list.add(SPACE + maxEnergyStorageString + RESET + maxEnergyStorage);
     }
 
-    public void addRangeUpgrade(List<String> list, ICapacitor capacitor, String space, EnumChatFormatting reset) {
+    public void addRangeUpgrade(List<String> list, ICapacitor capacitor) {
         String farmStation = EnumChatFormatting.AQUA + EnderIO.lang.localize("machine.tooltip.upgrade.farmstation");
         String rangeUpgrade = EnumChatFormatting.GOLD + EnderIO.lang.localize("machine.tooltip.upgrade.range");
         int range = Config.farmBonusSize * capacitor.getTier() - 1 + 2;
         list.add(rangeUpgrade);
-        list.add(space + farmStation + reset + range);
+        list.add(SPACE + farmStation + RESET + range);
     }
 }

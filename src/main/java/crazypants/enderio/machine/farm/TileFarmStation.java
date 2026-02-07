@@ -621,7 +621,7 @@ public class TileFarmStation extends AbstractPoweredTaskEntity implements IRange
 
     private ItemStack tryInsertToInputSlots(ItemStack stack) {
         if (stack == null || stack.stackSize <= 0) {
-            return stack;
+            return null;
         }
 
         for (int i = minSupSlot; i <= maxSupSlot; i++) {
@@ -634,7 +634,7 @@ public class TileFarmStation extends AbstractPoweredTaskEntity implements IRange
 
             if (isItemValidForSlot(i, stack)) {
                 if (slotStack == null) {
-                    if (!isSlotLocked(i) || (inventory[i] != null && inventory[i].isItemEqual(stack))) {
+                    if (!isSlotLocked(i)) {
                         int amount = Math.min(stack.stackSize, stackLimit);
                         inventory[i] = stack.copy();
                         inventory[i].stackSize = amount;
@@ -657,7 +657,7 @@ public class TileFarmStation extends AbstractPoweredTaskEntity implements IRange
 
     private ItemStack tryInsertToOutputSlots(ItemStack stack) {
         if (stack == null || stack.stackSize <= 0) {
-            return stack;
+            return null;
         }
 
         for (int i = slotDefinition.minOutputSlot; i <= slotDefinition.maxOutputSlot; i++) {
