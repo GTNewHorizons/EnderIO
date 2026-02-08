@@ -85,37 +85,38 @@ public class EnderLiquidConduitNetwork extends AbstractConduitNetwork<ILiquidCon
             return false;
         }
 
-        if (tank.externalTank.getTankInfo(conDir.getOpposite()) != null) {
-            for (FluidTankInfo tankInfo : tank.externalTank.getTankInfo(conDir.getOpposite())) {
-                if (tankInfo == null || tankInfo.fluid == null) {
-                    continue;
-                }
-                FluidStack tryDrain = tankInfo.fluid.copy();
-                tryDrain.amount = type.getMaxExtractPerTick();
-                FluidStack drained = tank.externalTank.drain(conDir.getOpposite(), tryDrain, false);
-                if (drained == null || drained.amount <= 0
-                        || !matchedFilter(drained, con, conDir, true)
-                        || !tryDrain.isFluidEqual(drained)) {
-                    continue;
-                }
-                int amountAccepted = fillFrom(tank, drained.copy(), true);
-                if (amountAccepted <= 0) {
-                    continue;
-                }
-                tryDrain.amount = amountAccepted;
-                drained = tank.externalTank.drain(conDir.getOpposite(), tryDrain, true);
-                if (drained == null || drained.amount <= 0) {
-                    continue;
-                }
-                return true;
+        for (FluidTankInfo tankInfo : tank.externalTank.getTankInfo(conDir.getOpposite())) {
+            if (tankInfo == null || tankInfo.fluid == null) {
+                continue;
             }
+
+            FluidStack tryDrain = tankInfo.fluid.copy();
+            tryDrain.amount = type.getMaxExtractPerTick();
+            FluidStack drained = tank.externalTank.drain(conDir.getOpposite(), tryDrain, false);
+            if (drained == null || drained.amount <= 0
+                    || !matchedFilter(drained, con, conDir, true)
+                    || !tryDrain.isFluidEqual(drained)) {
+                continue;
+            }
+
+            int amountAccepted = fillFrom(tank, drained, true);
+            if (amountAccepted <= 0) {
+                continue;
+            }
+
+            tryDrain.amount = amountAccepted;
+            drained = tank.externalTank.drain(conDir.getOpposite(), tryDrain, true);
+            if (drained == null || drained.amount <= 0) {
+                continue;
+            }
+            return true;
         }
 
         FluidStack drained = tank.externalTank.drain(conDir.getOpposite(), type.getMaxExtractPerTick(), false);
         if (drained == null || drained.amount <= 0 || !matchedFilter(drained, con, conDir, true)) {
             return false;
         }
-        int amountAccepted = fillFrom(tank, drained.copy(), true);
+        int amountAccepted = fillFrom(tank, drained, true);
         if (amountAccepted <= 0) {
             return false;
         }
