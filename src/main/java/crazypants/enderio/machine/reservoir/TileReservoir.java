@@ -58,7 +58,7 @@ public class TileReservoir extends TileEntityEio implements IFluidHandler, ITank
         }
     }
 
-    static final FluidStack WATER_BUCKET = FluidRegistry.getFluidStack("water", BUCKET_VOLUME);
+    static final FluidStack WATER_BUCKET = new FluidStack(FluidRegistry.WATER, BUCKET_VOLUME);
 
     BlockCoord[] multiblock = null;
 
@@ -156,7 +156,7 @@ public class TileReservoir extends TileEntityEio implements IFluidHandler, ITank
         if (tank.getFluid() == null) {
             return true;
         }
-        if (fluid != null && fluid.getID() == tank.getFluid().getFluidID()) {
+        if (fluid != null && fluid == tank.getFluid().getFluid()) {
             return true;
         }
         return false;
@@ -167,7 +167,7 @@ public class TileReservoir extends TileEntityEio implements IFluidHandler, ITank
         if (tank.getFluid() == null || fluid == null) {
             return false;
         }
-        return tank.getFluid().getFluid().getID() == fluid.getID();
+        return tank.getFluid().getFluid() == fluid;
     }
 
     @Override
