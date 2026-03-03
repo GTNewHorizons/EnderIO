@@ -72,7 +72,7 @@ public class GasSettings extends BaseSettingsPanel {
     public void actionPerformed(GuiButton guiButton) {
         super.actionPerformed(guiButton);
         if (guiButton.id == ID_COLOR_BUTTON) {
-            conduit.setExtractionSignalColor(gui.getDir(), DyeColor.values()[colorB.getColorIndex()]);
+            conduit.setExtractionSignalColor(gui.getDir(), DyeColor.VALUES[colorB.getColorIndex()]);
             PacketHandler.INSTANCE.sendToServer(new PacketExtractMode(conduit, gui.getDir()));
         }
     }

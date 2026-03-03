@@ -172,7 +172,7 @@ public class LiquidSettings extends BaseSettingsPanel {
     public void actionPerformed(GuiButton guiButton) {
         super.actionPerformed(guiButton);
         if (guiButton.id == ID_COLOR_BUTTON) {
-            conduit.setExtractionSignalColor(gui.getDir(), DyeColor.values()[colorB.getColorIndex()]);
+            conduit.setExtractionSignalColor(gui.getDir(), DyeColor.VALUES[colorB.getColorIndex()]);
             PacketHandler.INSTANCE.sendToServer(new PacketExtractMode(conduit, gui.getDir()));
         } else if (guiButton.id == ID_INSERT_WHITELIST || guiButton.id == ID_EXTRACT_WHITELIST) {
             toggleBlacklist(guiButton.id == ID_EXTRACT_WHITELIST);
@@ -180,7 +180,7 @@ public class LiquidSettings extends BaseSettingsPanel {
             ColorButton btn = (ColorButton) guiButton;
             if (isEnder) {
 
-                DyeColor col = DyeColor.values()[btn.getColorIndex()];
+                DyeColor col = DyeColor.VALUES[btn.getColorIndex()];
                 boolean isInput = guiButton.id == ID_EXTRACT_CHANNEL;
 
                 if (isInput) {

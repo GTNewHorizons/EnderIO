@@ -61,8 +61,8 @@ public class PacketItemConduitFilter extends AbstractConduitPacket<IItemConduit>
         loopMode = buf.readBoolean();
         roundRobin = buf.readBoolean();
         priority = buf.readInt();
-        colIn = DyeColor.values()[buf.readShort()];
-        colOut = DyeColor.values()[buf.readShort()];
+        colIn = DyeColor.VALUES[buf.readShort()];
+        colOut = DyeColor.VALUES[buf.readShort()];
         inputFilter = FilterRegister.readFilter(buf);
         outputFilter = FilterRegister.readFilter(buf);
     }

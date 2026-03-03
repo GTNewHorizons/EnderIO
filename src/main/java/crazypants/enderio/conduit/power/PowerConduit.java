@@ -210,7 +210,7 @@ public class PowerConduit extends AbstractConduit implements IPowerConduit {
 
     @Override
     protected void readTypeSettings(ForgeDirection dir, NBTTagCompound dataRoot) {
-        setExtractionSignalColor(dir, DyeColor.values()[dataRoot.getShort("extractionSignalColor")]);
+        setExtractionSignalColor(dir, DyeColor.VALUES[dataRoot.getShort("extractionSignalColor")]);
         setExtractionRedstoneMode(RedstoneControlMode.values()[dataRoot.getShort("extractionRedstoneMode")], dir);
     }
 
@@ -262,8 +262,8 @@ public class PowerConduit extends AbstractConduit implements IPowerConduit {
             key = "pRsCol." + dir.name();
             if (nbtRoot.hasKey(key)) {
                 short ord = nbtRoot.getShort(key);
-                if (ord >= 0 && ord < DyeColor.values().length) {
-                    rsColors.put(dir, DyeColor.values()[ord]);
+                if (ord >= 0 && ord < DyeColor.VALUES.length) {
+                    rsColors.put(dir, DyeColor.VALUES[ord]);
                 }
             }
         }

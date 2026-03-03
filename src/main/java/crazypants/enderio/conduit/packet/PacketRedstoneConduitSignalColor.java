@@ -36,7 +36,7 @@ public class PacketRedstoneConduitSignalColor extends AbstractConduitPacket<IIns
     public void fromBytes(ByteBuf buf) {
         super.fromBytes(buf);
         dir = ForgeDirections.DIRECTIONS[buf.readShort()];
-        col = DyeColor.values()[buf.readShort()];
+        col = DyeColor.VALUES[buf.readShort()];
     }
 
     @Override

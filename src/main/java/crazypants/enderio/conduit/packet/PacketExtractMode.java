@@ -41,7 +41,7 @@ public class PacketExtractMode extends AbstractConduitPacket<IExtractor>
         super.fromBytes(buf);
         dir = ForgeDirections.DIRECTIONS[buf.readShort()];
         mode = RedstoneControlMode.values()[buf.readShort()];
-        color = DyeColor.values()[buf.readShort()];
+        color = DyeColor.VALUES[buf.readShort()];
     }
 
     @Override

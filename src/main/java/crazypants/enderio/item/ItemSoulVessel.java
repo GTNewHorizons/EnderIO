@@ -310,7 +310,7 @@ public class ItemSoulVessel extends Item implements IResourceTooltipProvider {
         if (colorIdx < 0 || colorIdx > 15) {
             return null;
         }
-        return DyeColor.values()[15 - colorIdx];
+        return DyeColor.VALUES[15 - colorIdx];
     }
 
     private float getHealthFromStack(ItemStack item) {

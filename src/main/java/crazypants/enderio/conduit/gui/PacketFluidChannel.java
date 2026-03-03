@@ -45,7 +45,7 @@ public class PacketFluidChannel extends AbstractConduitPacket<ILiquidConduit>
         super.fromBytes(buf);
         dir = ForgeDirections.DIRECTIONS[buf.readShort()];
         isInput = buf.readBoolean();
-        channel = DyeColor.values()[buf.readShort()];
+        channel = DyeColor.VALUES[buf.readShort()];
     }
 
     @Override
