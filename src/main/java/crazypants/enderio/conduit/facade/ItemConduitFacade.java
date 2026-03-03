@@ -35,7 +35,7 @@ import crazypants.enderio.machine.painter.PainterUtil;
 
 public class ItemConduitFacade extends Item implements IAdvancedTooltipProvider, IResourceTooltipProvider {
 
-    public static enum FacadeType {
+    public enum FacadeType {
 
         BASIC,
         HARDENED;
