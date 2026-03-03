@@ -26,12 +26,16 @@ public enum Capacitors {
 
     ENDERGISED_CAPACITOR(new BasicCapacitor(3, 400, 500000, 100), "endergisedCapacitor", "Ender");
 
+    /**
+     * Cached values() array for frequent read-only operations, the array should NOT be mutated.
+     */
+    public static final Capacitors[] VALUES = values();
     public final ICapacitor capacitor;
     public final String unlocalisedName;
     public final String iconKey;
     public final String oreDict;
 
-    private Capacitors(ICapacitor capacitor, String unlocalisedName, String oreDict) {
+    Capacitors(ICapacitor capacitor, String unlocalisedName, String oreDict) {
         this.capacitor = capacitor;
         this.unlocalisedName = "enderio." + unlocalisedName;
         this.iconKey = "enderio:" + unlocalisedName;

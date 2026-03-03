@@ -69,7 +69,7 @@ public class MaterialRecipes {
             }
         }
 
-        for (Capacitors capacitor : Capacitors.values()) {
+        for (Capacitors capacitor : Capacitors.VALUES) {
             OreDictionary.registerOre(
                     capacitor.getOreTag(),
                     new ItemStack(EnderIO.itemBasicCapacitor, 1, capacitor.ordinal()));

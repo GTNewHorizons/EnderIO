@@ -50,7 +50,7 @@ public class ItemCapacitor extends Item implements ICapacitorItem {
         setMaxDamage(0);
         setMaxStackSize(64);
 
-        icons = new IIcon[Capacitors.values().length];
+        icons = new IIcon[Capacitors.VALUES.length];
     }
 
     protected void init() {
@@ -60,30 +60,30 @@ public class ItemCapacitor extends Item implements ICapacitorItem {
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int damage) {
-        damage = MathHelper.clamp_int(damage, 0, Capacitors.values().length - 1);
+        damage = MathHelper.clamp_int(damage, 0, Capacitors.VALUES.length - 1);
         return icons[damage];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister IIconRegister) {
-        for (int i = 0; i < Capacitors.values().length; i++) {
-            icons[i] = IIconRegister.registerIcon(Capacitors.values()[i].iconKey);
+        for (int i = 0; i < Capacitors.VALUES.length; i++) {
+            icons[i] = IIconRegister.registerIcon(Capacitors.VALUES[i].iconKey);
         }
     }
 
     @Override
     public String getUnlocalizedName(ItemStack par1ItemStack) {
-        int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, Capacitors.values().length - 1);
-        return Capacitors.values()[i].unlocalisedName;
+        int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, Capacitors.VALUES.length - 1);
+        return Capacitors.VALUES[i].unlocalisedName;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
-        for (int j = 0; j < Capacitors.values().length; ++j) {
+        for (int j = 0; j < Capacitors.VALUES.length; ++j) {
             par3List.add(new ItemStack(par1, 1, j));
-            if (Capacitors.values()[j] == Capacitors.TOTEMIC_CAPACITOR) {
+            if (Capacitors.VALUES[j] == Capacitors.TOTEMIC_CAPACITOR) {
                 ItemStack stack = new ItemStack(par1, 1, j);
                 stack.addEnchantment(Enchantment.efficiency, 5);
                 par3List.add(stack);
@@ -93,16 +93,16 @@ public class ItemCapacitor extends Item implements ICapacitorItem {
 
     @Override
     public ICapacitor getCapacitor(ItemStack stack) {
-        int damage = MathHelper.clamp_int(stack.getItemDamage(), 0, Capacitors.values().length - 1);
+        int damage = MathHelper.clamp_int(stack.getItemDamage(), 0, Capacitors.VALUES.length - 1);
 
-        if (Capacitors.values()[damage] == Capacitors.TOTEMIC_CAPACITOR) {
+        if (Capacitors.VALUES[damage] == Capacitors.TOTEMIC_CAPACITOR) {
             damage = MathHelper.clamp_int(
                     EnchantmentHelper.getEnchantmentLevel(Enchantment.efficiency.effectId, stack) + 1,
                     1,
                     Capacitors.TOTEMIC_CAPACITOR.ordinal());
         }
 
-        return Capacitors.values()[damage].capacitor;
+        return Capacitors.VALUES[damage].capacitor;
     }
 
     @Override
