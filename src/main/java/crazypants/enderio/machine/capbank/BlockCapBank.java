@@ -54,6 +54,7 @@ import crazypants.enderio.power.PowerDisplayUtil;
 import crazypants.enderio.power.PowerHandlerUtil;
 import crazypants.enderio.tool.ToolUtil;
 import crazypants.enderio.waila.IWailaInfoProvider;
+import crazypants.util.ForgeDirections;
 
 public class BlockCapBank extends BlockEio
         implements IGuiHandler, IAdvancedTooltipProvider, IWailaInfoProvider, IRedstoneConnectable {
@@ -345,7 +346,7 @@ public class BlockCapBank extends BlockEio
         // }
 
         TileCapBank cb = (TileCapBank) te;
-        ForgeDirection face = ForgeDirection.values()[side];
+        ForgeDirection face = ForgeDirections.DIRECTIONS[side];
 
         int meta = ba.getBlockMetadata(x, y, z);
         meta = MathHelper.clamp_int(meta, 0, CapBankType.types().size() - 1);
@@ -452,14 +453,14 @@ public class BlockCapBank extends BlockEio
     protected ForgeDirection getDirForHeading(int heading) {
         switch (heading) {
             case 0:
-                return ForgeDirection.values()[2];
+                return ForgeDirections.DIRECTIONS[2];
             case 1:
-                return ForgeDirection.values()[5];
+                return ForgeDirections.DIRECTIONS[5];
             case 2:
-                return ForgeDirection.values()[3];
+                return ForgeDirections.DIRECTIONS[3];
             case 3:
             default:
-                return ForgeDirection.values()[4];
+                return ForgeDirections.DIRECTIONS[4];
         }
     }
 

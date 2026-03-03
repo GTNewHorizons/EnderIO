@@ -242,7 +242,7 @@ public class InsulatedRedstoneConduit extends RedstoneConduit implements IInsula
 
     @Override
     protected void readTypeSettings(ForgeDirection dir, NBTTagCompound dataRoot) {
-        setSignalColor(dir, DyeColor.values()[dataRoot.getShort("signalColor")]);
+        setSignalColor(dir, DyeColor.VALUES[dataRoot.getShort("signalColor")]);
         setOutputStrength(dir, dataRoot.getBoolean("signalStrong"));
     }
 
@@ -583,7 +583,7 @@ public class InsulatedRedstoneConduit extends RedstoneConduit implements IInsula
             int i = 0;
             for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
                 if (modes[i] >= 0) {
-                    forcedConnections.put(dir, ConnectionMode.values()[modes[i]]);
+                    forcedConnections.put(dir, ConnectionMode.VALUES[modes[i]]);
                 }
                 i++;
             }
@@ -595,7 +595,7 @@ public class InsulatedRedstoneConduit extends RedstoneConduit implements IInsula
             int i = 0;
             for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
                 if (cols[i] >= 0) {
-                    signalColors.put(dir, DyeColor.values()[cols[i]]);
+                    signalColors.put(dir, DyeColor.VALUES[cols[i]]);
                 }
                 i++;
             }

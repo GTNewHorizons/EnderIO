@@ -193,8 +193,8 @@ public abstract class AbstractGasConduit extends AbstractConduit implements IGas
             key = "extSC." + dir.name();
             if (nbtRoot.hasKey(key)) {
                 short ord = nbtRoot.getShort(key);
-                if (ord >= 0 && ord < DyeColor.values().length) {
-                    extractionColors.put(dir, DyeColor.values()[ord]);
+                if (ord >= 0 && ord < DyeColor.VALUES.length) {
+                    extractionColors.put(dir, DyeColor.VALUES[ord]);
                 }
             }
         }

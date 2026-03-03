@@ -18,6 +18,7 @@ import com.enderio.core.api.client.gui.IResourceTooltipProvider;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.EnderIOTab;
+import crazypants.util.ForgeDirections;
 
 public class BlockItemElectricLight extends ItemBlockWithMetadata implements IResourceTooltipProvider {
 
@@ -70,7 +71,7 @@ public class BlockItemElectricLight extends ItemBlockWithMetadata implements IRe
             return false;
         }
         if (world.getBlock(x, y, z) == field_150939_a) {
-            ForgeDirection onFace = ForgeDirection.values()[side].getOpposite();
+            ForgeDirection onFace = ForgeDirections.DIRECTIONS[side].getOpposite();
             TileEntity te = world.getTileEntity(x, y, z);
             if (te instanceof TileElectricLight) {
                 TileElectricLight el = ((TileElectricLight) te);

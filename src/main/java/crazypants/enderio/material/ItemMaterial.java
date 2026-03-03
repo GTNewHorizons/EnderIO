@@ -31,7 +31,7 @@ public class ItemMaterial extends Item {
         setCreativeTab(EnderIOTab.tabEnderIO);
         setUnlocalizedName(ModObject.itemMaterial.unlocalisedName);
 
-        icons = new IIcon[Material.values().length];
+        icons = new IIcon[Material.VALUES.length];
     }
 
     private void init() {
@@ -41,29 +41,29 @@ public class ItemMaterial extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int damage) {
-        damage = MathHelper.clamp_int(damage, 0, Material.values().length - 1);
+        damage = MathHelper.clamp_int(damage, 0, Material.VALUES.length - 1);
         return icons[damage];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister IIconRegister) {
-        int numParts = Material.values().length;
+        int numParts = Material.VALUES.length;
         for (int i = 0; i < numParts; i++) {
-            icons[i] = IIconRegister.registerIcon(Material.values()[i].iconKey);
+            icons[i] = IIconRegister.registerIcon(Material.VALUES[i].iconKey);
         }
     }
 
     @Override
     public String getUnlocalizedName(ItemStack par1ItemStack) {
-        int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, Material.values().length - 1);
-        return Material.values()[i].unlocalisedName;
+        int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, Material.VALUES.length - 1);
+        return Material.VALUES[i].unlocalisedName;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
-        for (int j = 0; j < Material.values().length; ++j) {
+        for (int j = 0; j < Material.VALUES.length; ++j) {
             par3List.add(new ItemStack(par1, 1, j));
         }
     }
@@ -74,7 +74,7 @@ public class ItemMaterial extends Item {
         if (par1ItemStack == null) {
             return false;
         }
-        int damage = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, Material.values().length - 1);
-        return Material.values()[damage].hasEffect;
+        int damage = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, Material.VALUES.length - 1);
+        return Material.VALUES[damage].hasEffect;
     }
 }

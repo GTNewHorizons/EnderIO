@@ -34,7 +34,7 @@ public class ItemAlloyEndergy extends Item {
         setCreativeTab(EnderIOTab.tabEnderIO);
         setUnlocalizedName(ModObject.itemAlloyEndergy.unlocalisedName);
 
-        numItems = AlloyEndergy.values().length;
+        numItems = AlloyEndergy.VALUES.length;
         if (useNuggets) {
             numItems = numItems * 2;
         }
@@ -55,13 +55,13 @@ public class ItemAlloyEndergy extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister IIconRegister) {
-        int numAlloys = AlloyEndergy.values().length;
+        int numAlloys = AlloyEndergy.VALUES.length;
         for (int i = 0; i < numAlloys; i++) {
-            icons[i] = IIconRegister.registerIcon(AlloyEndergy.values()[i].iconKey);
+            icons[i] = IIconRegister.registerIcon(AlloyEndergy.VALUES[i].iconKey);
         }
         if (useNuggets) {
             for (int i = 0; i < numAlloys; i++) {
-                icons[i + numAlloys] = IIconRegister.registerIcon(AlloyEndergy.values()[i].iconKey + "Nugget");
+                icons[i + numAlloys] = IIconRegister.registerIcon(AlloyEndergy.VALUES[i].iconKey + "Nugget");
             }
         }
     }
@@ -69,10 +69,10 @@ public class ItemAlloyEndergy extends Item {
     @Override
     public String getUnlocalizedName(ItemStack par1ItemStack) {
         int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, numItems - 1);
-        if (i < AlloyEndergy.values().length) {
-            return AlloyEndergy.values()[i].unlocalisedName;
+        if (i < AlloyEndergy.VALUES.length) {
+            return AlloyEndergy.VALUES[i].unlocalisedName;
         } else {
-            return AlloyEndergy.values()[i - AlloyEndergy.values().length].unlocalisedName + "Nugget";
+            return AlloyEndergy.VALUES[i - AlloyEndergy.VALUES.length].unlocalisedName + "Nugget";
         }
     }
 

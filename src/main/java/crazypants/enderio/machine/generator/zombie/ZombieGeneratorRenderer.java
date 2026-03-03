@@ -23,6 +23,7 @@ import com.enderio.core.common.vecmath.Vector3d;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import crazypants.util.ForgeDirections;
 import crazypants.util.RenderPassHelper;
 
 @SideOnly(Side.CLIENT)
@@ -64,7 +65,7 @@ public class ZombieGeneratorRenderer extends TileEntitySpecialRenderer implement
             Tessellator tes = Tessellator.instance;
             tes.startDrawingQuads();
 
-            ForgeDirection facingDir = ForgeDirection.values()[gen.facing];
+            ForgeDirection facingDir = ForgeDirections.DIRECTIONS[gen.facing];
             double facingOffset = 0.075;
 
             BoundingBox bb = BoundingBox.UNIT_CUBE.scale(0.85, 0.96, 0.85);

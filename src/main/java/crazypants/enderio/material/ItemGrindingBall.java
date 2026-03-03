@@ -36,14 +36,14 @@ public class ItemGrindingBall extends ItemAlloy {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister IIconRegister) {
-        int numAlloys = Alloy.values().length;
+        int numAlloys = Alloy.VALUES.length;
         for (int i = 0; i < numAlloys; i++)
-            icons[i] = IIconRegister.registerIcon(Alloy.values()[i].iconKey + "GrindingBall");
+            icons[i] = IIconRegister.registerIcon(Alloy.VALUES[i].iconKey + "GrindingBall");
     }
 
     @Override
     public String getUnlocalizedName(ItemStack par1ItemStack) {
         int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, numItems - 1);
-        return Alloy.values()[i].unlocalisedName + "_ball";
+        return Alloy.VALUES[i].unlocalisedName + "_ball";
     }
 }

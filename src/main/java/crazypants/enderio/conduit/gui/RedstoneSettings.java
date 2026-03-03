@@ -61,7 +61,7 @@ public class RedstoneSettings extends BaseSettingsPanel {
     public void actionPerformed(GuiButton guiButton) {
         super.actionPerformed(guiButton);
         if (guiButton.id == ID_COLOR_BUTTON && cb != null) {
-            insCon.setSignalColor(gui.getDir(), DyeColor.values()[cb.getColorIndex()]);
+            insCon.setSignalColor(gui.getDir(), DyeColor.VALUES[cb.getColorIndex()]);
             PacketHandler.INSTANCE.sendToServer(new PacketRedstoneConduitSignalColor(insCon, gui.getDir()));
         } else if (guiButton.id == ID_STRONG_BUTTON && strongCB != null) {
             insCon.setOutputStrength(gui.getDir(), strongCB.isSelected());

@@ -19,6 +19,7 @@ import com.gtnewhorizons.angelica.api.ThreadSafeISBRH;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import crazypants.enderio.ClientProxy;
 import crazypants.enderio.EnderIO;
+import crazypants.util.ForgeDirections;
 
 @ThreadSafeISBRH(perThread = true)
 public class SoulBinderRenderer implements ISimpleBlockRenderingHandler {
@@ -97,7 +98,7 @@ public class SoulBinderRenderer implements ISimpleBlockRenderingHandler {
     }
 
     private ForgeDirection forFacing(ForgeDirection side, int facing) {
-        return ForgeDirection.values()[ClientProxy.sideAndFacingToSpriteOffset[side.ordinal()][facing]];
+        return ForgeDirections.DIRECTIONS[ClientProxy.sideAndFacingToSpriteOffset[side.ordinal()][facing]];
     }
 
     private void renderSkull(ForgeDirection face, IIcon soulariumIcon, IIcon faceIcon) {

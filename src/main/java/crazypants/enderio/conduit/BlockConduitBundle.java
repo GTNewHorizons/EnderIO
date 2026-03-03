@@ -71,6 +71,7 @@ import crazypants.enderio.item.ItemConduitProbe;
 import crazypants.enderio.machine.painter.PainterUtil;
 import crazypants.enderio.network.PacketHandler;
 import crazypants.enderio.tool.ToolUtil;
+import crazypants.util.ForgeDirections;
 import crazypants.util.IFacade;
 import mods.immibis.core.api.multipart.IMultipartRenderingBlockMarker;
 import mods.immibis.core.api.multipart.IMultipartSystem;
@@ -819,7 +820,7 @@ public class BlockConduitBundle extends BlockEio
             return new ExternalConnectionContainer(
                     player.inventory,
                     (IConduitBundle) te,
-                    ForgeDirection.values()[id - GuiHandler.GUI_ID_EXTERNAL_CONNECTION_BASE]);
+                    ForgeDirections.DIRECTIONS[id - GuiHandler.GUI_ID_EXTERNAL_CONNECTION_BASE]);
         }
         return null;
     }
@@ -834,7 +835,7 @@ public class BlockConduitBundle extends BlockEio
             return new GuiExternalConnection(
                     player.inventory,
                     (IConduitBundle) te,
-                    ForgeDirection.values()[id - GuiHandler.GUI_ID_EXTERNAL_CONNECTION_BASE]);
+                    ForgeDirections.DIRECTIONS[id - GuiHandler.GUI_ID_EXTERNAL_CONNECTION_BASE]);
         }
         return null;
     }

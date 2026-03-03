@@ -10,6 +10,7 @@ import crazypants.enderio.conduit.item.IItemConduit;
 import crazypants.enderio.conduit.item.filter.ModItemFilter;
 import crazypants.enderio.conduit.packet.AbstractConduitPacket;
 import crazypants.enderio.conduit.packet.ConTypeEnum;
+import crazypants.util.ForgeDirections;
 import io.netty.buffer.ByteBuf;
 
 public class PacketModItemFilter extends AbstractConduitPacket<IItemConduit>
@@ -33,7 +34,7 @@ public class PacketModItemFilter extends AbstractConduitPacket<IItemConduit>
     @Override
     public void fromBytes(ByteBuf buf) {
         super.fromBytes(buf);
-        dir = ForgeDirection.values()[buf.readShort()];
+        dir = ForgeDirections.DIRECTIONS[buf.readShort()];
         isInput = buf.readBoolean();
         index = buf.readInt();
         boolean isNull = buf.readBoolean();

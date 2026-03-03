@@ -24,6 +24,7 @@ import crazypants.enderio.conduit.item.filter.IItemFilter;
 import crazypants.enderio.conduit.item.filter.ItemFilterLimited;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.invpanel.TileInventoryPanel;
+import crazypants.util.ForgeDirections;
 
 public class NetworkedInventory {
 
@@ -327,7 +328,7 @@ public class NetworkedInventory {
                 return 0;
             }
         }
-        return ItemUtil.doInsertItem(getInventory(), item, ForgeDirection.values()[inventorySide]);
+        return ItemUtil.doInsertItem(getInventory(), item, ForgeDirections.DIRECTIONS[inventorySide]);
     }
 
     void updateInsertOrder() {

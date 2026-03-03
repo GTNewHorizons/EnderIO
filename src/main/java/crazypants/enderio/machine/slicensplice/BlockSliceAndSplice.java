@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.GuiHandler;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.machine.AbstractMachineBlock;
+import crazypants.util.ForgeDirections;
 
 public class BlockSliceAndSplice extends AbstractMachineBlock<TileSliceAndSplice> {
 
@@ -84,7 +85,7 @@ public class BlockSliceAndSplice extends AbstractMachineBlock<TileSliceAndSplice
         TileSliceAndSplice te = (TileSliceAndSplice) world.getTileEntity(x, y, z);
         if (isActive(world, x, y, z) && te != null) {
 
-            ForgeDirection front = ForgeDirection.values()[te.facing];
+            ForgeDirection front = ForgeDirections.DIRECTIONS[te.facing];
 
             for (int i = 0; i < 2; i++) {
                 double px = x + 0.5 + front.offsetX * 0.6;

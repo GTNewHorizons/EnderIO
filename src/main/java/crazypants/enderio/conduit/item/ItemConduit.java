@@ -164,10 +164,10 @@ public class ItemConduit extends AbstractConduit implements IItemConduit {
 
     @Override
     protected void readTypeSettings(ForgeDirection dir, NBTTagCompound dataRoot) {
-        setExtractionSignalColor(dir, DyeColor.values()[dataRoot.getShort("extractionSignalColor")]);
+        setExtractionSignalColor(dir, DyeColor.VALUES[dataRoot.getShort("extractionSignalColor")]);
         setExtractionRedstoneMode(RedstoneControlMode.values()[dataRoot.getShort("extractionRedstoneMode")], dir);
-        setInputColor(dir, DyeColor.values()[dataRoot.getShort("inputColor")]);
-        setOutputColor(dir, DyeColor.values()[dataRoot.getShort("outputColor")]);
+        setInputColor(dir, DyeColor.VALUES[dataRoot.getShort("inputColor")]);
+        setOutputColor(dir, DyeColor.VALUES[dataRoot.getShort("outputColor")]);
         setSelfFeedEnabled(dir, dataRoot.getBoolean("selfFeed"));
         setRoundRobinEnabled(dir, dataRoot.getBoolean("roundRobin"));
         setOutputPriority(dir, dataRoot.getInteger("outputPriority"));
@@ -857,8 +857,8 @@ public class ItemConduit extends AbstractConduit implements IItemConduit {
             key = "extSC." + dir.name();
             if (nbtRoot.hasKey(key)) {
                 short ord = nbtRoot.getShort(key);
-                if (ord >= 0 && ord < DyeColor.values().length) {
-                    extractionColors.put(dir, DyeColor.values()[ord]);
+                if (ord >= 0 && ord < DyeColor.VALUES.length) {
+                    extractionColors.put(dir, DyeColor.VALUES[ord]);
                 }
             }
             key = "selfFeed." + dir.name();
@@ -882,16 +882,16 @@ public class ItemConduit extends AbstractConduit implements IItemConduit {
             key = "inSC." + dir.name();
             if (nbtRoot.hasKey(key)) {
                 short ord = nbtRoot.getShort(key);
-                if (ord >= 0 && ord < DyeColor.values().length) {
-                    inputColors.put(dir, DyeColor.values()[ord]);
+                if (ord >= 0 && ord < DyeColor.VALUES.length) {
+                    inputColors.put(dir, DyeColor.VALUES[ord]);
                 }
             }
 
             key = "outSC." + dir.name();
             if (nbtRoot.hasKey(key)) {
                 short ord = nbtRoot.getShort(key);
-                if (ord >= 0 && ord < DyeColor.values().length) {
-                    outputColors.put(dir, DyeColor.values()[ord]);
+                if (ord >= 0 && ord < DyeColor.VALUES.length) {
+                    outputColors.put(dir, DyeColor.VALUES[ord]);
                 }
             }
         }

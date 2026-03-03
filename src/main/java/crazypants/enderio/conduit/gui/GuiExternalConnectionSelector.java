@@ -23,6 +23,7 @@ import crazypants.enderio.conduit.IConduit;
 import crazypants.enderio.conduit.IConduitBundle;
 import crazypants.enderio.conduit.redstone.IInsulatedRedstoneConduit;
 import crazypants.enderio.network.PacketHandler;
+import crazypants.util.ForgeDirections;
 
 public class GuiExternalConnectionSelector extends GuiScreen {
 
@@ -51,7 +52,7 @@ public class GuiExternalConnectionSelector extends GuiScreen {
 
     @Override
     protected void actionPerformed(GuiButton b) {
-        ForgeDirection dir = ForgeDirection.values()[b.id];
+        ForgeDirection dir = ForgeDirections.DIRECTIONS[b.id];
         EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
         BlockCoord loc = cb.getLocation();
         PacketHandler.INSTANCE.sendToServer(new PacketOpenConduitUI(cb.getEntity(), dir));

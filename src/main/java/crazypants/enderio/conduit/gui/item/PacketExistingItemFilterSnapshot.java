@@ -14,17 +14,25 @@ import crazypants.enderio.conduit.item.NetworkedInventory;
 import crazypants.enderio.conduit.item.filter.ExistingItemFilter;
 import crazypants.enderio.conduit.packet.AbstractConduitPacket;
 import crazypants.enderio.conduit.packet.ConTypeEnum;
+import crazypants.util.ForgeDirections;
 import io.netty.buffer.ByteBuf;
 
 public class PacketExistingItemFilterSnapshot extends AbstractConduitPacket<IItemConduit>
         implements IMessageHandler<PacketExistingItemFilterSnapshot, IMessage> {
 
-    public static enum Opcode {
+    public enum Opcode {
+
         CLEAR,
         SET,
         MERGE,
         SET_BLACK,
-        UNSET_BLACK
+        UNSET_BLACK;
+
+        private static final Opcode[] VALUES = values();
+
+        public static Opcode fromOrdinal(int ordinal) {
+            return VALUES[ordinal];
+        }
     }
 
     private ForgeDirection dir;
@@ -43,9 +51,9 @@ public class PacketExistingItemFilterSnapshot extends AbstractConduitPacket<IIte
     @Override
     public void fromBytes(ByteBuf buf) {
         super.fromBytes(buf);
-        dir = ForgeDirection.values()[buf.readShort()];
+        dir = ForgeDirections.DIRECTIONS[buf.readShort()];
         isInput = buf.readBoolean();
-        opcode = Opcode.values()[buf.readByte() & 255];
+        opcode = Opcode.fromOrdinal(buf.readByte() & 255);
     }
 
     @Override
