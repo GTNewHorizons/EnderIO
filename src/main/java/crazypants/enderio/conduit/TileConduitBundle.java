@@ -51,6 +51,7 @@ import crazypants.enderio.conduit.power.IPowerConduit;
 import crazypants.enderio.conduit.redstone.IRedstoneConduit;
 import crazypants.enderio.conduit.redstone.InsulatedRedstoneConduit;
 import crazypants.enderio.config.Config;
+import crazypants.util.ForgeDirections;
 import li.cil.oc.api.network.Message;
 import li.cil.oc.api.network.Node;
 import mekanism.api.gas.Gas;
@@ -412,7 +413,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
         }
         // If you're wondering why I am not using conduit.writeToNBT, it is because there is some data that should not
         // persist, some of which causes crashes with energy conduits.
-        NBTTagCompound[] originalData = new NBTTagCompound[ForgeDirection.values().length];
+        NBTTagCompound[] originalData = new NBTTagCompound[ForgeDirections.DIRECTIONS.length];
         for (ForgeDirection conduitConnection : original.getExternalConnections()) {
             NBTTagCompound tag = new NBTTagCompound();
             original.writeConnectionSettingsToNBT(conduitConnection, tag);
@@ -423,7 +424,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
         for (int i = 0; i < originalData.length; i++) {
             NBTTagCompound nbt = originalData[i];
             if (nbt != null) {
-                replacement.readConduitSettingsFromNBT(ForgeDirection.values()[i], nbt);
+                replacement.readConduitSettingsFromNBT(ForgeDirections.DIRECTIONS[i], nbt);
             }
         }
     }

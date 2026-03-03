@@ -32,6 +32,7 @@ import crazypants.enderio.machine.painter.BasicPainterTemplate;
 import crazypants.enderio.machine.painter.IPaintedBlock;
 import crazypants.enderio.machine.painter.PaintSourceValidator;
 import crazypants.enderio.machine.painter.PainterUtil;
+import crazypants.util.ForgeDirections;
 
 public class ItemConduitFacade extends Item implements IAdvancedTooltipProvider, IResourceTooltipProvider {
 
@@ -115,7 +116,7 @@ public class ItemConduitFacade extends Item implements IAdvancedTooltipProvider,
             return true;
         }
 
-        ForgeDirection dir = ForgeDirection.values()[side];
+        ForgeDirection dir = ForgeDirections.DIRECTIONS[side];
         int placeX = x + dir.offsetX;
         int placeY = y + dir.offsetY;
         int placeZ = z + dir.offsetZ;

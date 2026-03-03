@@ -14,6 +14,7 @@ import crazypants.enderio.conduit.item.NetworkedInventory;
 import crazypants.enderio.conduit.item.filter.ExistingItemFilter;
 import crazypants.enderio.conduit.packet.AbstractConduitPacket;
 import crazypants.enderio.conduit.packet.ConTypeEnum;
+import crazypants.util.ForgeDirections;
 import io.netty.buffer.ByteBuf;
 
 public class PacketExistingItemFilterSnapshot extends AbstractConduitPacket<IItemConduit>
@@ -50,7 +51,7 @@ public class PacketExistingItemFilterSnapshot extends AbstractConduitPacket<IIte
     @Override
     public void fromBytes(ByteBuf buf) {
         super.fromBytes(buf);
-        dir = ForgeDirection.values()[buf.readShort()];
+        dir = ForgeDirections.DIRECTIONS[buf.readShort()];
         isInput = buf.readBoolean();
         opcode = Opcode.fromOrdinal(buf.readByte() & 255);
     }

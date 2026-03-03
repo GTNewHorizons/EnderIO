@@ -9,6 +9,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import crazypants.enderio.conduit.IExtractor;
 import crazypants.enderio.machine.RedstoneControlMode;
+import crazypants.util.ForgeDirections;
 import io.netty.buffer.ByteBuf;
 
 public class PacketExtractMode extends AbstractConduitPacket<IExtractor>
@@ -38,7 +39,7 @@ public class PacketExtractMode extends AbstractConduitPacket<IExtractor>
     @Override
     public void fromBytes(ByteBuf buf) {
         super.fromBytes(buf);
-        dir = ForgeDirection.values()[buf.readShort()];
+        dir = ForgeDirections.DIRECTIONS[buf.readShort()];
         mode = RedstoneControlMode.values()[buf.readShort()];
         color = DyeColor.values()[buf.readShort()];
     }

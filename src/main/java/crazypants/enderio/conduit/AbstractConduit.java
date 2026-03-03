@@ -47,6 +47,7 @@ import crazypants.enderio.conduit.power.IPowerConduit;
 import crazypants.enderio.conduit.power.PowerConduitNetwork;
 import crazypants.enderio.conduit.redstone.IRedstoneConduit;
 import crazypants.enderio.conduit.redstone.RedstoneConduitNetwork;
+import crazypants.util.ForgeDirections;
 import mods.immibis.microblocks.api.EnumPartClass;
 import mods.immibis.microblocks.api.EnumPosition;
 import mods.immibis.microblocks.api.IMicroblockCoverSystem;
@@ -382,13 +383,13 @@ public abstract class AbstractConduit implements IConduit {
         conduitConnections.clear();
         int[] dirs = nbtRoot.getIntArray("connections");
         for (int i = 0; i < dirs.length; i++) {
-            conduitConnections.add(ForgeDirection.values()[dirs[i]]);
+            conduitConnections.add(ForgeDirections.DIRECTIONS[dirs[i]]);
         }
 
         externalConnections.clear();
         dirs = nbtRoot.getIntArray("externalConnections");
         for (int i = 0; i < dirs.length; i++) {
-            externalConnections.add(ForgeDirection.values()[dirs[i]]);
+            externalConnections.add(ForgeDirections.DIRECTIONS[dirs[i]]);
         }
         active = nbtRoot.getBoolean("signalActive");
 

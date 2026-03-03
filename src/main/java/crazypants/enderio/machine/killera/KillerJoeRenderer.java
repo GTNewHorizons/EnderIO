@@ -26,6 +26,7 @@ import com.enderio.core.common.vecmath.Vector3d;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.machine.generator.zombie.ModelZombieJar;
+import crazypants.util.ForgeDirections;
 
 @SideOnly(Side.CLIENT)
 public class KillerJoeRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
@@ -130,7 +131,7 @@ public class KillerJoeRenderer extends TileEntitySpecialRenderer implements IIte
             bb = bb.scale(1, 0.85 * fullness, 1);
             float ty = -(0.85f - (bb.maxY - bb.minY)) / 2;
 
-            Vector3d offset = ForgeDirectionOffsets.offsetScaled(ForgeDirection.values()[gen.facing], -0.075);
+            Vector3d offset = ForgeDirectionOffsets.offsetScaled(ForgeDirections.DIRECTIONS[gen.facing], -0.075);
             bb = bb.translate((float) offset.x, ty, (float) offset.z);
 
             int brightness;

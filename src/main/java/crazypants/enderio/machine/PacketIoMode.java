@@ -10,6 +10,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import crazypants.enderio.network.PacketUtil;
+import crazypants.util.ForgeDirections;
 import io.netty.buffer.ByteBuf;
 
 public class PacketIoMode implements IMessage, IMessageHandler<PacketIoMode, IMessage> {
@@ -55,7 +56,7 @@ public class PacketIoMode implements IMessage, IMessageHandler<PacketIoMode, IMe
         y = buf.readInt();
         z = buf.readInt();
         mode = IoMode.values()[buf.readShort()];
-        face = ForgeDirection.values()[buf.readShort()];
+        face = ForgeDirections.DIRECTIONS[buf.readShort()];
     }
 
     @Override

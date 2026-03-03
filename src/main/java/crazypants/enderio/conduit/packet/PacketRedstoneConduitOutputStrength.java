@@ -6,6 +6,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import crazypants.enderio.conduit.redstone.IInsulatedRedstoneConduit;
+import crazypants.util.ForgeDirections;
 import io.netty.buffer.ByteBuf;
 
 public class PacketRedstoneConduitOutputStrength extends AbstractConduitPacket<IInsulatedRedstoneConduit>
@@ -32,7 +33,7 @@ public class PacketRedstoneConduitOutputStrength extends AbstractConduitPacket<I
     @Override
     public void fromBytes(ByteBuf buf) {
         super.fromBytes(buf);
-        dir = ForgeDirection.values()[buf.readShort()];
+        dir = ForgeDirections.DIRECTIONS[buf.readShort()];
         isStrong = buf.readBoolean();
     }
 

@@ -22,6 +22,7 @@ import crazypants.enderio.machine.wireless.WirelessChargedLocation;
 import crazypants.enderio.power.Capacitors;
 import crazypants.enderio.power.IInternalPowerReceiver;
 import crazypants.enderio.power.PowerHandlerUtil;
+import crazypants.util.ForgeDirections;
 
 public class TileElectricLight extends TileEntityEio implements IInternalPowerReceiver {
 
@@ -334,7 +335,7 @@ public class TileElectricLight extends TileEntityEio implements IInternalPowerRe
     @Override
     public void readCustomNBT(NBTTagCompound root) {
 
-        face = ForgeDirection.values()[root.getShort("face")];
+        face = ForgeDirections.DIRECTIONS[root.getShort("face")];
         isInvereted = root.getBoolean("isInverted");
         requiresPower = root.getBoolean("requiresPower");
         setWireless(root.getBoolean("isWireless"));
