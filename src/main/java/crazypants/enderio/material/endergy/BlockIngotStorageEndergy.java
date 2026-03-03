@@ -48,8 +48,8 @@ public class BlockIngotStorageEndergy extends BlockEio implements IAdvancedToolt
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister register) {
-        icons = new IIcon[AlloyEndergy.values().length];
-        for (AlloyEndergy alloy : AlloyEndergy.values()) {
+        icons = new IIcon[AlloyEndergy.VALUES.length];
+        for (AlloyEndergy alloy : AlloyEndergy.VALUES) {
             icons[alloy.ordinal()] = register.registerIcon(alloy.iconKey + "Block");
         }
     }
@@ -57,7 +57,7 @@ public class BlockIngotStorageEndergy extends BlockEio implements IAdvancedToolt
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta) {
-        meta = MathHelper.clamp_int(meta, 0, AlloyEndergy.values().length - 1);
+        meta = MathHelper.clamp_int(meta, 0, AlloyEndergy.VALUES.length - 1);
         return icons[meta];
     }
 
@@ -73,7 +73,7 @@ public class BlockIngotStorageEndergy extends BlockEio implements IAdvancedToolt
 
     @Override
     public float getBlockHardness(World world, int x, int y, int z) {
-        return AlloyEndergy.values()[world.getBlockMetadata(x, y, z)].getHardness();
+        return AlloyEndergy.VALUES[world.getBlockMetadata(x, y, z)].getHardness();
     }
 
     @Override

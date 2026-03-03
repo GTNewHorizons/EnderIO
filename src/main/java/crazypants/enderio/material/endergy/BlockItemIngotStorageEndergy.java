@@ -21,7 +21,7 @@ public class BlockItemIngotStorageEndergy extends ItemBlock {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return "tile." + AlloyEndergy.values()[stack.getItemDamage()].unlocalisedName;
+        return "tile." + AlloyEndergy.VALUES[stack.getItemDamage()].unlocalisedName;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class BlockItemIngotStorageEndergy extends ItemBlock {
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> list) {
-        for (AlloyEndergy alloy : AlloyEndergy.values()) {
+        for (AlloyEndergy alloy : AlloyEndergy.VALUES) {
             list.add(new ItemStack(this, 1, alloy.ordinal()));
         }
     }

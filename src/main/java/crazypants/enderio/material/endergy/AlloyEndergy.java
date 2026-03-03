@@ -19,13 +19,17 @@ public enum AlloyEndergy {
     ENERGETIC_SILVER("energeticSilver", 7.0f),
     VIVID_ALLOY("vividAlloy", 4.0f);
 
+    /**
+     * Cached values() array for frequent read-only operations, the array should NOT be mutated.
+     */
+    public static final AlloyEndergy[] VALUES = values();
     public final String unlocalisedName;
     public final String iconKey;
     private final List<String> oreIngots = new ArrayList<String>();
     private final List<String> oreBlocks = new ArrayList<String>();
     private final float hardness;
 
-    private AlloyEndergy(String baseName, float hardness, String oreDictName) {
+    AlloyEndergy(String baseName, float hardness, String oreDictName) {
         this.unlocalisedName = "enderio." + baseName;
         this.iconKey = "enderio:" + baseName;
         if (oreDictName != null) {
@@ -37,7 +41,7 @@ public enum AlloyEndergy {
         this.hardness = hardness;
     }
 
-    private AlloyEndergy(String baseName, float hardness) {
+    AlloyEndergy(String baseName, float hardness) {
         this(baseName, hardness, null);
     }
 
