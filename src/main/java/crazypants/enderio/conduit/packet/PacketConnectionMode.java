@@ -36,7 +36,7 @@ public class PacketConnectionMode extends AbstractConduitPacket<IConduit>
     public void fromBytes(ByteBuf buf) {
         super.fromBytes(buf);
         dir = ForgeDirections.DIRECTIONS[buf.readShort()];
-        mode = ConnectionMode.values()[buf.readShort()];
+        mode = ConnectionMode.VALUES[buf.readShort()];
     }
 
     @Override

@@ -119,7 +119,7 @@ public abstract class AbstractConduit implements IConduit {
             return false;
         }
         if (dataRoot.hasKey("connectionMode")) {
-            ConnectionMode mode = ConnectionMode.values()[dataRoot.getShort("connectionMode")];
+            ConnectionMode mode = ConnectionMode.VALUES[dataRoot.getShort("connectionMode")];
             setConnectionMode(dir, mode);
         }
         readTypeSettings(dir, dataRoot);
@@ -398,7 +398,7 @@ public abstract class AbstractConduit implements IConduit {
         if (modes != null && modes.length == 6) {
             int i = 0;
             for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
-                conectionModes.put(dir, ConnectionMode.values()[modes[i]]);
+                conectionModes.put(dir, ConnectionMode.VALUES[modes[i]]);
                 i++;
             }
         }

@@ -583,7 +583,7 @@ public class InsulatedRedstoneConduit extends RedstoneConduit implements IInsula
             int i = 0;
             for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
                 if (modes[i] >= 0) {
-                    forcedConnections.put(dir, ConnectionMode.values()[modes[i]]);
+                    forcedConnections.put(dir, ConnectionMode.VALUES[modes[i]]);
                 }
                 i++;
             }
