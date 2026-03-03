@@ -21,13 +21,17 @@ public enum Alloy {
     SOULARIUM("soularium", 10.0f),
     END_STEEL("endSteel", 10.0f);
 
+    /**
+     * Cached values() array for frequent read-only operations, the array should NOT be mutated.
+     */
+    public static final Alloy[] VALUES = values();
     public final String unlocalisedName;
     public final String iconKey;
     private final List<String> oreIngots = new ArrayList<String>();
     private final List<String> oreBlocks = new ArrayList<String>();
     private final float hardness;
 
-    private Alloy(String baseName, float hardness, String oreDictName) {
+    Alloy(String baseName, float hardness, String oreDictName) {
         this.unlocalisedName = "enderio." + baseName;
         this.iconKey = "enderio:" + baseName;
         if (oreDictName != null) {
@@ -40,7 +44,7 @@ public enum Alloy {
         this.hardness = hardness;
     }
 
-    private Alloy(String baseName, float hardness) {
+    Alloy(String baseName, float hardness) {
         this(baseName, hardness, null);
     }
 
