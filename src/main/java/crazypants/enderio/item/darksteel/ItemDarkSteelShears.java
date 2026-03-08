@@ -148,8 +148,9 @@ public class ItemDarkSteelShears extends ItemShears
                 Block target = player.worldObj.getBlock(bc2.x, bc2.y, bc2.z);
                 if (target instanceof IShearable
                         && ((IShearable) target).isShearable(itemstack, player.worldObj, bc2.x, bc2.y, bc2.z)) {
-                    super.onBlockStartBreak(itemstack, bc2.x, bc2.y, bc2.z, player);
-                    player.worldObj.setBlockToAir(bc2.x, bc2.y, bc2.z);
+                    if (!super.onBlockStartBreak(itemstack, bc2.x, bc2.y, bc2.z, player)) {
+                        player.worldObj.setBlockToAir(bc2.x, bc2.y, bc2.z);
+                    }
                 }
             }
         }
