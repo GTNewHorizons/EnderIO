@@ -122,12 +122,13 @@ public class ItemDarkSteelShears extends ItemShears
             BlockCoord bc = new BlockCoord(x, y, z);
             HarvestResult res = new HarvestResult(null, bc);
 
-            for (int dx = -Config.darkSteelShearsBlockAreaBoostWhenPowered; dx
-                    <= Config.darkSteelShearsBlockAreaBoostWhenPowered; dx++) {
-                for (int dy = -Config.darkSteelShearsBlockAreaBoostWhenPowered; dy
-                        <= Config.darkSteelShearsBlockAreaBoostWhenPowered; dy++) {
-                    for (int dz = -Config.darkSteelShearsBlockAreaBoostWhenPowered; dz
-                            <= Config.darkSteelShearsBlockAreaBoostWhenPowered; dz++) {
+            int range = Config.darkSteelShearsBlockAreaBoostWhenPowered;
+            for (int dx = -range; dx <= range; dx++) {
+                for (int dy = -range; dy <= range; dy++) {
+                    for (int dz = -range; dz <= range; dz++) {
+                        // Skip center block, already added via HarvestResult constructor
+                        if (dx == 0 && dy == 0 && dz == 0) continue;
+
                         Block block2 = player.worldObj.getBlock(x + dx, y + dy, z + dz);
                         if (block2 instanceof IShearable && ((IShearable) block2)
                                 .isShearable(itemstack, player.worldObj, x + dx, y + dy, z + dz)) {
@@ -144,8 +145,10 @@ public class ItemDarkSteelShears extends ItemShears
             int maxBlocks = Math.min(sortedTargets.size(), powerStored / Config.darkSteelShearsPowerUsePerDamagePoint);
             for (int i = 0; i < maxBlocks; i++) {
                 BlockCoord bc2 = sortedTargets.get(i);
-                super.onBlockStartBreak(itemstack, bc2.x, bc2.y, bc2.z, player);
-                if (bc2 != bc) {
+                Block target = player.worldObj.getBlock(bc2.x, bc2.y, bc2.z);
+                if (target instanceof IShearable
+                        && ((IShearable) target).isShearable(itemstack, player.worldObj, bc2.x, bc2.y, bc2.z)) {
+                    super.onBlockStartBreak(itemstack, bc2.x, bc2.y, bc2.z, player);
                     player.worldObj.setBlockToAir(bc2.x, bc2.y, bc2.z);
                 }
             }
