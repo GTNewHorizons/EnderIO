@@ -656,7 +656,6 @@ public class TravelController {
             }
         }
 
-        System.out.println(travelItemSlot);
         return travelItemSlot;
     }
 
