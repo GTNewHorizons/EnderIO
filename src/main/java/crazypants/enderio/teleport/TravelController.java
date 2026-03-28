@@ -47,7 +47,6 @@ import com.google.common.collect.Table;
 import com.google.common.collect.TreeBasedTable;
 import com.gtnewhorizon.gtnhlib.GTNHLib;
 
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
@@ -68,6 +67,7 @@ import crazypants.enderio.teleport.packet.PacketDrainStaff;
 import crazypants.enderio.teleport.packet.PacketLongDistanceTravelEvent;
 import crazypants.enderio.teleport.packet.PacketOpenAuthGui;
 import crazypants.enderio.teleport.packet.PacketTravelEvent;
+import crazypants.util.BackhandUtil;
 import crazypants.util.BaublesUtil;
 import xonin.backhand.api.core.BackhandUtils;
 
@@ -563,7 +563,7 @@ public class TravelController {
             return null;
         }
 
-        if (Loader.isModLoaded("backhand")) {
+        if (BackhandUtil.backhandLoaded) {
             final ItemStack offhand = BackhandUtils.getOffhandItem(ep);
             if (offhand != null && offhand.getItem() != null) {
                 final TravelSource source = getTravelSource(ep, offhand);
