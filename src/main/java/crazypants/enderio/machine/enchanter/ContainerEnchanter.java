@@ -29,7 +29,7 @@ public class ContainerEnchanter extends ContainerEnderTileEntity<TileEnchanter> 
 
             // @Override
             // public int getSlotStackLimit() {
-            //     return 1;
+            // return 1;
             // }
 
             @Override
@@ -92,7 +92,7 @@ public class ContainerEnchanter extends ContainerEnderTileEntity<TileEnchanter> 
                     te.markDirty();
                 }
 
-                curStack = te.getStackInSlot(0)
+                curStack = te.getStackInSlot(0);
                 if (curStack == null || curStack.stackSize <= 1) te.setInventorySlotContents(0, null);
                 else {
                     curStack = curStack.copy();
