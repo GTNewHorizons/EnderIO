@@ -1,5 +1,7 @@
 package crazypants.enderio.machine.enchanter;
 
+import static crazypants.enderio.EnderIO.isAutomagyLoaded;
+
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -9,9 +11,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import com.gtnewhorizon.gtnhlib.geometry.CubeIterator;
+
 import crazypants.enderio.ModObject;
 import crazypants.enderio.TileEntityEio;
 import crazypants.enderio.config.Config;
+import crazypants.enderio.xp.XpUtil;
 
 public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
@@ -84,6 +89,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         if (fromStack == null) {
             return null;
         }
+        if (slot == 2 && checkDrainXP(Math.min(amount, fromStack.stackSize))) return null;
         if (fromStack.stackSize <= amount) {
             inv[slot] = null;
             return fromStack;
@@ -94,6 +100,64 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         }
         fromStack.stackSize -= amount;
         return result;
+    }
+
+    // checks AND drains XP; returns true if xp is NOT sufficient
+    public boolean checkDrainXP(int amt) {
+        if (inv[2] == null || amt <= 0 || inv[2].stackSize < amt) return true;
+        int LV = getCurrentEnchantmentCost();
+        if (LV == 0) return false;
+        // xp *= amt;
+        int xpCost = XpUtil.getExperienceForLevel(LV*amt);
+        int xp;
+        absorb: {
+            if (true) {
+                CubeIterator iter = new CubeIterator(8);
+                while (iter.hasNext()) {
+                    iter.next();
+                    if (worldObj.getTileEntity(
+                            iter.n + xCoord,
+                            iter.l + yCoord,
+                            iter.m + zCoord) instanceof TileExperienceObelisk obelisk) {
+                        ExperienceContainer cont = obelisk.getContainer();
+                        xp = cont.getExperienceTotal();
+                        if (xp >= xpCost) {
+                            if (!worldObj.isRemote) {
+                                jarsToEmpty.forEach(j -> j.setXP(0));
+                                obelisksToEmpty.forEach(o -> o.drain(null, Integer.MAX_VALUE, true));
+                                cont.drain(null, Integer.MAX_VALUE, true);
+                                cont.addExperience(Math.max(0, xp - xpCost));
+                            }
+                            return false; // break absorb;
+                        }
+                        xpCost -= xp;
+                        obelisksToEmpty.add(cont);
+                    }
+                }
+            }
+            if (isAutomagyLoaded) {
+                CubeIterator iter = new CubeIterator(8);
+                while (iter.hasNext()) {
+                    iter.next();
+                    if (worldObj.getTileEntity(
+                            iter.n + xCoord,
+                            iter.l + yCoord,
+                            iter.m + zCoord) instanceof TileEntityJarXP jar) {
+                        xp = jar.getXP();
+                        if (xp >= xpCost) {
+                            if (!worldObj.isRemote) {
+                                jarsToEmpty.forEach(j -> j.setXP(0));
+                                jar.setXP(xp - xpCost);
+                            }
+                            return false; // break absorb;
+                        }
+                        xpCost -= xp;
+                        jarsToEmpty.add(jar);
+                    }
+                }
+            }
+            return true;
+        }
     }
 
     @Override
@@ -226,7 +290,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         return getEnchantmentCost(getCurrentEnchantmentRecipe());
     }
 
-    private int getEnchantmentCost(EnchanterRecipe currentEnchantment) {
+    public int getEnchantmentCost(EnchanterRecipe currentEnchantment) {
         ItemStack item = inv[1];
         if (item == null) {
             return 0;
@@ -257,16 +321,16 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     @Override
     public int[] getAccessibleSlotsFromSide(int p_94128_1_) {
-        return new int[0];
+        return p_94128_1_ == 0 ? new int[] { 2 } : new int[] { 0, 1 };
     }
 
     @Override
     public boolean canInsertItem(int p_102007_1_, ItemStack p_102007_2_, int p_102007_3_) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean canExtractItem(int p_102008_1_, ItemStack p_102008_2_, int p_102008_3_) {
-        return false;
+        return true;
     }
 }
