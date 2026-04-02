@@ -112,6 +112,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     }
 
     // checks AND drains XP; returns true if xp is NOT sufficient
+    // also removes the items from the other two slots when automation does the recipe
     public boolean checkDrainXP(int amt) {
         if (inv[2] == null || amt <= 0 || inv[2].stackSize < amt) return true;
         int LV = getCurrentEnchantmentCost();
@@ -137,7 +138,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
                                 cont.drain(null, Integer.MAX_VALUE, true);
                                 cont.addExperience(Math.max(0, xp - xpCost));
                             }
-                            return false; // break absorb;
+                            break absorb;
                         }
                         xpCost -= xp;
                         obelisksToEmpty.add(cont);
@@ -160,7 +161,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
                                 jarsToEmpty.forEach(j -> j.setXP(0));
                                 jar.setXP(xp - xpCost);
                             }
-                            return false; // break absorb;
+                            break absorb;
                         }
                         xpCost -= xp;
                         jarsToEmpty.add(jar);
@@ -169,6 +170,34 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
             }
             return true;
         }
+
+        EnchantmentData enchData = getCurrentEnchantmentData();
+        EnchanterRecipe recipe = getCurrentEnchantmentRecipe();
+        ItemStack curStack = getStackInSlot(1);
+        if (recipe == null || enchData == null || curStack == null || enchData.enchantmentLevel >= curStack.stackSize) {
+            setInventorySlotContents(1, (ItemStack) null);
+        } else {
+            curStack = curStack.copy();
+            curStack.stackSize -= recipe.getItemsPerLevel() * enchData.enchantmentLevel;
+            if (curStack.stackSize > 0) {
+                setInventorySlotContents(1, curStack);
+            } else {
+                setInventorySlotContents(1, null);
+            }
+            markDirty();
+        }
+
+        curStack = getStackInSlot(0);
+        if (curStack == null || curStack.stackSize <= 1) setInventorySlotContents(0, null);
+        else {
+            curStack = curStack.copy();
+            curStack.stackSize -= 1;
+            setInventorySlotContents(0, curStack);
+        }
+        if (!worldObj.isRemote) {
+            worldObj.playSoundEffect(xCoord + 0.5d, yCoord + 0.5d, zCoord + 0.5d, "block.anvil.place", 0.2f, 1.0f);
+        }
+        return false;
     }
 
     @Override
