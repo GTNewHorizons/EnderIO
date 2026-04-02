@@ -29,4 +29,5 @@ dependencies {
 
     compileOnlyApi('com.github.GTNewHorizons:Angelica:1.0.0-beta66a:api') {transitive = false}
     compileOnly("com.github.GTNewHorizons:Hodgepodge:2.7.58:dev")
+    compileOnly('curse.maven:automagy-222153:2285272')
 }
