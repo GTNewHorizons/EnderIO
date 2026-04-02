@@ -27,10 +27,10 @@ public class ContainerEnchanter extends ContainerEnderTileEntity<TileEnchanter> 
 
         addSlotToContainer(new Slot(te, 0, 27, 35) {
 
-            @Override
-            public int getSlotStackLimit() {
-                return 1;
-            }
+            // @Override
+            // public int getSlotStackLimit() {
+            //     return 1;
+            // }
 
             @Override
             public boolean isItemValid(ItemStack itemStack) {
@@ -92,7 +92,13 @@ public class ContainerEnchanter extends ContainerEnderTileEntity<TileEnchanter> 
                     te.markDirty();
                 }
 
-                te.setInventorySlotContents(0, (ItemStack) null);
+                curStack = te.getStackInSlot(0)
+                if (curStack == null || curStack.stackSize <= 1) te.setInventorySlotContents(0, null);
+                else {
+                    curStack = curStack.copy();
+                    curStack.stackSize -= 1;
+                    te.setInventorySlotContents(0, curStack);
+                }
                 if (!te.getWorldObj().isRemote) {
                     te.getWorldObj().playAuxSFX(1021, te.xCoord, te.yCoord, te.zCoord, 0);
                 }
