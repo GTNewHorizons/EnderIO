@@ -87,6 +87,10 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     @Override
     public ItemStack decrStackSize(int slot, int amount) {
+        return decrStackSize(slot, amount, true);
+    }
+
+    public ItemStack decrStackSize(int slot, int amount, boolean auto) {
         if (amount <= 0 || slot < 0 || slot >= inv.length || inv[slot] == null) {
             return null;
         }
@@ -94,7 +98,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         if (fromStack == null) {
             return null;
         }
-        if (slot == 2 && checkDrainXP(Math.min(amount, fromStack.stackSize))) return null;
+        if (slot == 2 && auto && checkDrainXP(Math.min(amount, fromStack.stackSize))) return null;
         if (fromStack.stackSize <= amount) {
             inv[slot] = null;
             return fromStack;
