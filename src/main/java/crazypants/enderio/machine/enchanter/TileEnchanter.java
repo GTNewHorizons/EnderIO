@@ -1,6 +1,6 @@
 package crazypants.enderio.machine.enchanter;
 
-import static crazypants.enderio.EnderIO.isAutomagyLoaded;
+import static crazypants.enderio.EnderIO.hasAutomagy;
 
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.player.EntityPlayer;
@@ -135,7 +135,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
                     }
                 }
             }
-            if (isAutomagyLoaded) {
+            if (hasAutomagy) {
                 CubeIterator iter = new CubeIterator(8);
                 while (iter.hasNext()) {
                     iter.next();
