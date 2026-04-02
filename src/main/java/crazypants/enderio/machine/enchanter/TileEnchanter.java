@@ -108,6 +108,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
             result.stackTagCompound = (NBTTagCompound) fromStack.stackTagCompound.copy();
         }
         fromStack.stackSize -= amount;
+        updateOut();
         return result;
     }
 
@@ -195,8 +196,9 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
             setInventorySlotContents(0, curStack);
         }
         if (!worldObj.isRemote) {
-            worldObj.playSoundEffect(xCoord + 0.5d, yCoord + 0.5d, zCoord + 0.5d, "block.anvil.place", 0.2f, 1.0f);
+            worldObj.playSoundEffect(xCoord + 0.5d, yCoord + 0.5d, zCoord + 0.5d, "random.anvil_land", 0.2f, 1.0f);
         }
+        updateOut();
         return false;
     }
 
@@ -215,7 +217,10 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         if (contents != null && contents.stackSize > getInventoryStackLimit()) {
             contents.stackSize = getInventoryStackLimit();
         }
-        if (inv[2] != null || inv[0] == null || inv[1] == null) return;
+        updateOut();
+    }
+
+    public void updateOut() {
         ItemStack output = null;
         EnchantmentData enchantment = getCurrentEnchantmentData();
         if (enchantment != null) {
