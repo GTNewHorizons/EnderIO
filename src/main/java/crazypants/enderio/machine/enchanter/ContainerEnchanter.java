@@ -59,6 +59,11 @@ public class ContainerEnchanter extends ContainerEnderTileEntity<TileEnchanter> 
         addSlotToContainer(new Slot(te, 2, 134, 35) {
 
             @Override
+            public ItemStack decrStackSize(int amt) {
+                return te.decrStackSize(2, amt, false);
+            }
+
+            @Override
             public int getSlotStackLimit() {
                 return 1;
             }
