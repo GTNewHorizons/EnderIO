@@ -2,6 +2,8 @@ package crazypants.enderio.machine.enchanter;
 
 import static crazypants.enderio.EnderIO.hasAutomagy;
 
+import java.util.ArrayList;
+
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -16,7 +18,10 @@ import com.gtnewhorizon.gtnhlib.geometry.CubeIterator;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.TileEntityEio;
 import crazypants.enderio.config.Config;
+import crazypants.enderio.machine.obelisk.xp.TileExperienceObelisk;
+import crazypants.enderio.xp.ExperienceContainer;
 import crazypants.enderio.xp.XpUtil;
+import tuhljin.automagy.tiles.TileEntityJarXP;
 
 public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
@@ -108,9 +113,10 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         int LV = getCurrentEnchantmentCost();
         if (LV == 0) return false;
         // xp *= amt;
-        int xpCost = XpUtil.getExperienceForLevel(LV*amt);
+        int xpCost = XpUtil.getExperienceForLevel(LV * amt);
         int xp;
         absorb: {
+            ArrayList<ExperienceContainer> obelisksToEmpty = new ArrayList<>();
             if (true) {
                 CubeIterator iter = new CubeIterator(8);
                 while (iter.hasNext()) {
@@ -123,7 +129,6 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
                         xp = cont.getExperienceTotal();
                         if (xp >= xpCost) {
                             if (!worldObj.isRemote) {
-                                jarsToEmpty.forEach(j -> j.setXP(0));
                                 obelisksToEmpty.forEach(o -> o.drain(null, Integer.MAX_VALUE, true));
                                 cont.drain(null, Integer.MAX_VALUE, true);
                                 cont.addExperience(Math.max(0, xp - xpCost));
@@ -136,6 +141,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
                 }
             }
             if (hasAutomagy) {
+                ArrayList<TileEntityJarXP> jarsToEmpty = new ArrayList<>();
                 CubeIterator iter = new CubeIterator(8);
                 while (iter.hasNext()) {
                     iter.next();
@@ -146,6 +152,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
                         xp = jar.getXP();
                         if (xp >= xpCost) {
                             if (!worldObj.isRemote) {
+                                obelisksToEmpty.forEach(o -> o.drain(null, Integer.MAX_VALUE, true));
                                 jarsToEmpty.forEach(j -> j.setXP(0));
                                 jar.setXP(xp - xpCost);
                             }
