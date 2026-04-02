@@ -217,7 +217,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         }
         if (inv[2] != null || inv[0] == null || inv[1] == null) return;
         ItemStack output = null;
-        EnchantmentData enchantment = getInv().getCurrentEnchantmentData();
+        EnchantmentData enchantment = getCurrentEnchantmentData();
         if (enchantment != null) {
             output = new ItemStack(Items.enchanted_book);
             Items.enchanted_book.addEnchantment(output, enchantment);
