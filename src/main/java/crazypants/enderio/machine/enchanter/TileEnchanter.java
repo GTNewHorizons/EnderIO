@@ -198,7 +198,6 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         if (!worldObj.isRemote) {
             worldObj.playSoundEffect(xCoord + 0.5d, yCoord + 0.5d, zCoord + 0.5d, "random.anvil_land", 0.2f, 1.0f);
         }
-        updateOut();
         return false;
     }
 
