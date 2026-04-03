@@ -11,10 +11,8 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import com.enderio.core.api.common.util.IProgressTile;
 import com.gtnewhorizon.gtnhlib.geometry.CubeIterator;
 
 import crazypants.enderio.ModObject;
@@ -25,7 +23,7 @@ import crazypants.enderio.xp.ExperienceContainer;
 import crazypants.enderio.xp.XpUtil;
 import tuhljin.automagy.tiles.TileEntityJarXP;
 
-public class TileEnchanter extends TileEntityEio implements ISidedInventory, IProgressTile {
+public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     private ItemStack[] inv = new ItemStack[3];
     private int[] stacksizes = { 0, 0 };
@@ -51,19 +49,6 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory, IPr
     @Override
     public boolean shouldUpdate() {
         return inv[0] != null && inv[1] != null;
-    }
-
-    @Override
-    public float getProgress() {
-        return 0;
-    }
-
-    @Override
-    public void setProgress(float progress) {}
-
-    @Override
-    public TileEntity getTileEntity() {
-        return this;
     }
 
     @Override
