@@ -26,7 +26,7 @@ import tuhljin.automagy.tiles.TileEntityJarXP;
 public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     private ItemStack[] inv = new ItemStack[3];
-    private byte[] stacksizes = new byte[2];
+    private byte[] stacksizes = { 0, 0 };
 
     private short facing = (short) ForgeDirection.NORTH.ordinal();
 
@@ -80,6 +80,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
             }
         }
         stacksizes = root.getByteArray("SizeCache");
+        if (stacksizes == null || stacksizes.length < 2) stacksizes = new int[2];
         facing = root.getShort("facing");
     }
 
