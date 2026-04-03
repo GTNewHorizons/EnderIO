@@ -39,7 +39,7 @@ public class ContainerEnchanter extends ContainerEnderTileEntity<TileEnchanter> 
 
             @Override
             public void onSlotChanged() {
-                updateOutput();
+                // updateOutput();
             }
         });
 
@@ -52,7 +52,7 @@ public class ContainerEnchanter extends ContainerEnderTileEntity<TileEnchanter> 
 
             @Override
             public void onSlotChanged() {
-                updateOutput();
+                // updateOutput();
             }
         });
 
