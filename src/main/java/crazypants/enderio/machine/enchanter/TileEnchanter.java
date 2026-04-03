@@ -11,8 +11,10 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import com.enderio.core.api.common.util.IProgressTile;
 import com.gtnewhorizon.gtnhlib.geometry.CubeIterator;
 
 import crazypants.enderio.ModObject;
@@ -23,9 +25,10 @@ import crazypants.enderio.xp.ExperienceContainer;
 import crazypants.enderio.xp.XpUtil;
 import tuhljin.automagy.tiles.TileEntityJarXP;
 
-public class TileEnchanter extends TileEntityEio implements ISidedInventory {
+public class TileEnchanter extends TileEntityEio implements ISidedInventory, IProgressTile {
 
     private ItemStack[] inv = new ItemStack[3];
+    private int[] stacksizes = { 0, 0 };
 
     private short facing = (short) ForgeDirection.NORTH.ordinal();
 
@@ -35,6 +38,32 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     public short getFacing() {
         return facing;
+    }
+
+    // The *ACTUAL* updateEntity and canUpdate are final in TileEntityEnder. Great.
+    // Now I have to make this pretend to be a progressable block; this is why you dont go crazy with final
+
+    @Override
+    protected void doUpdate() {
+        if (inv[0].stackSize != stacksizes[0] || inv[1].stackSize != stacksizes[1]) updateOut();
+    }
+
+    @Override
+    public boolean shouldUpdate() {
+        return inv[0] != null && inv[1] != null;
+    }
+
+    @Override
+    public float getProgress() {
+        return 0;
+    }
+
+    @Override
+    public void setProgress(float progress) {}
+
+    @Override
+    public TileEntity getTileEntity() {
+        return this;
     }
 
     @Override
