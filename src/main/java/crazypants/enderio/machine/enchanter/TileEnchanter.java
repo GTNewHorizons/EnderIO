@@ -175,27 +175,20 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
         EnchantmentData enchData = getCurrentEnchantmentData();
         EnchanterRecipe recipe = getCurrentEnchantmentRecipe();
-        ItemStack curStack = getStackInSlot(1);
+        ItemStack curStack = inv[1];
         if (recipe == null || enchData == null || curStack == null || enchData.enchantmentLevel >= curStack.stackSize) {
-            setInventorySlotContents(1, (ItemStack) null);
+            inv[1] = null;
         } else {
             curStack = curStack.copy();
             curStack.stackSize -= recipe.getItemsPerLevel() * enchData.enchantmentLevel;
-            if (curStack.stackSize > 0) {
-                setInventorySlotContents(1, curStack);
-            } else {
-                setInventorySlotContents(1, null);
-            }
+            inv[1] = curStack.stackSize > 0 ? curStack : null;
             markDirty();
         }
 
-        curStack = getStackInSlot(0);
-        if (curStack == null || curStack.stackSize <= 1) setInventorySlotContents(0, null);
-        else {
-            curStack = curStack.copy();
-            curStack.stackSize -= 1;
-            setInventorySlotContents(0, curStack);
-        }
+        curStack = inv[0];
+        if (curStack == null || curStack.stackSize <= 1) inv[0] = null;
+        else inv[0].stackSize -= 1;
+
         if (!worldObj.isRemote) {
             worldObj.playSoundEffect(xCoord + 0.5d, yCoord + 0.5d, zCoord + 0.5d, "random.anvil_land", 0.2f, 1.0f);
         }
