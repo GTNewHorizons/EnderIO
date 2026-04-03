@@ -26,7 +26,7 @@ import tuhljin.automagy.tiles.TileEntityJarXP;
 public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     private ItemStack[] inv = new ItemStack[3];
-    private int[] stacksizes = { 0, 0 };
+    private byte[] stacksizes = { 0, 0 };
 
     private short facing = (short) ForgeDirection.NORTH.ordinal();
 
@@ -39,7 +39,6 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     }
 
     // The *ACTUAL* updateEntity and canUpdate are final in TileEntityEnder. Great.
-    // Now I have to make this pretend to be a progressable block; this is why you dont go crazy with final
 
     @Override
     protected void doUpdate() {
@@ -64,6 +63,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
             }
         }
         root.setTag("Items", itemList);
+        root.setByteArray("SizeCache", stacksizes);
         root.setShort("facing", facing);
     }
 
@@ -79,6 +79,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
                 }
             }
         }
+        stacksizes = root.getByteArray("SizeCache");
         facing = root.getShort("facing");
     }
 
@@ -237,8 +238,8 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         }
         setOutput(output);
 
-        if (inv[0] != null) stacksizes[0] = inv[0].stackSize;
-        if (inv[1] != null) stacksizes[1] = inv[1].stackSize;
+        if (inv[0] != null) stacksizes[0] = (byte) inv[0].stackSize;
+        if (inv[1] != null) stacksizes[1] = (byte) inv[1].stackSize;
     }
 
     @Override
