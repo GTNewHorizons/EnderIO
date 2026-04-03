@@ -101,6 +101,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         if (slot == 2 && auto && checkDrainXP(Math.min(amount, fromStack.stackSize))) return null;
         if (fromStack.stackSize <= amount) {
             inv[slot] = null;
+            updateOut();
             return fromStack;
         }
         ItemStack result = new ItemStack(fromStack.getItem(), amount, fromStack.getItemDamage());
