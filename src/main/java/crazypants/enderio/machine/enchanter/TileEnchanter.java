@@ -80,7 +80,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
             }
         }
         stacksizes = root.getByteArray("SizeCache");
-        if (stacksizes == null || stacksizes.length < 2) stacksizes = new int[2];
+        if (stacksizes == null || stacksizes.length < 2) stacksizes = new byte[2];
         facing = root.getShort("facing");
     }
 
