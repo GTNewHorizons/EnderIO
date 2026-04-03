@@ -26,7 +26,7 @@ import tuhljin.automagy.tiles.TileEntityJarXP;
 public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     private ItemStack[] inv = new ItemStack[3];
-    private byte[] stacksizes = { 0, 0 };
+    private byte[] stacksizes = new byte[2];
 
     private short facing = (short) ForgeDirection.NORTH.ordinal();
 
@@ -42,12 +42,12 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     @Override
     protected void doUpdate() {
-        if (!shouldUpdate()) return;
+        if (!shouldUpdate_()) return;
         if (inv[0].stackSize != stacksizes[0] || inv[1].stackSize != stacksizes[1]) updateOut();
     }
 
-    @Override
-    public boolean shouldUpdate() {
+    // @Override
+    public boolean shouldUpdate_() {
         return inv[0] != null && inv[1] != null;
     }
 
