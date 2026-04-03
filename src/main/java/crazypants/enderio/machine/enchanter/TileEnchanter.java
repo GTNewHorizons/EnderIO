@@ -43,6 +43,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     @Override
     protected void doUpdate() {
+        if (!shouldUpdate()) return;
         if (inv[0].stackSize != stacksizes[0] || inv[1].stackSize != stacksizes[1]) updateOut();
     }
 
