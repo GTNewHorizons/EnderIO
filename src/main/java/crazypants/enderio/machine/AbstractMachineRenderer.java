@@ -29,7 +29,7 @@ import crazypants.enderio.machine.painter.PainterUtil;
 @ThreadSafeISBRH(perThread = true)
 public class AbstractMachineRenderer implements ISimpleBlockRenderingHandler, IItemRenderer {
 
-    private OverlayRenderer overlayRenderer = new OverlayRenderer() {
+    private final OverlayRenderer overlayRenderer = new OverlayRenderer() {
 
         @Override
         public void renderFace(CustomRenderBlocks rb, ForgeDirection face, Block par1Block, double x, double y,
@@ -40,7 +40,7 @@ public class AbstractMachineRenderer implements ISimpleBlockRenderingHandler, II
         }
     };
 
-    private CustomCubeRenderer ccr = new CustomCubeRenderer();
+    private final CustomCubeRenderer ccr = new CustomCubeRenderer();
 
     private final PaintedBlockRenderer paintedRenderer = new PaintedBlockRenderer(this.getRenderId(), null);
     // renderer for

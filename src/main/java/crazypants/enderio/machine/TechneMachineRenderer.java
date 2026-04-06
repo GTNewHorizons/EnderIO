@@ -18,8 +18,8 @@ import crazypants.enderio.EnderIO;
 
 public class TechneMachineRenderer<T extends AbstractMachineEntity> extends TechneModelRenderer {
 
-    private CustomCubeRenderer ccr = new CustomCubeRenderer();
-    private OverlayRenderer overlay = new OverlayRenderer();
+    private final CustomCubeRenderer ccr = new CustomCubeRenderer();
+    private final OverlayRenderer overlay = new OverlayRenderer();
 
     public TechneMachineRenderer(AbstractMachineBlock<T> block, String modelPath) {
         super(
