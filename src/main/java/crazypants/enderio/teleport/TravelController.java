@@ -1072,9 +1072,12 @@ public class TravelController {
             return;
         }
 
-        // Find the nearest travel anchor within roughly 10 degrees.
-        Optional<BlockCoord> selectedBlock = findBlocksWithinAngle(player, candidates.keySet(), 0.175, Double.MAX_VALUE)
-                .values().stream().findFirst();
+        // Find the nearest travel anchor within the configured angle (default ~10 degrees).
+        Optional<BlockCoord> selectedBlock = findBlocksWithinAngle(
+                player,
+                candidates.keySet(),
+                Config.travelAnchorSnapAngle,
+                Double.MAX_VALUE).values().stream().findFirst();
         selectedCoord = selectedBlock.orElse(null);
     }
 
