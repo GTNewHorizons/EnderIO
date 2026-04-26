@@ -3,10 +3,8 @@ package crazypants.enderio.machine.obelisk.weather;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFireworkSparkFX;
 import net.minecraft.entity.item.EntityFireworkRocket;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
@@ -53,12 +51,9 @@ public class EntityWeatherRocket extends EntityFireworkRocket {
     public void setDead() {
         super.setDead();
 
-        WeatherTask task = WeatherTask.values()[getDataWatcher().getWatchableObjectInt(DATA_ID)];
-        MinecraftServer server = MinecraftServer.getServer();
-
-        if (server != null && server.worldServers.length > 0) {
-            WorldServer worldserver = server.worldServers[0];
-            task.complete(worldserver);
+        if (!worldObj.isRemote) {
+            WeatherTask task = WeatherTask.values()[getDataWatcher().getWatchableObjectInt(DATA_ID)];
+            task.complete(worldObj);
         }
     }
 
