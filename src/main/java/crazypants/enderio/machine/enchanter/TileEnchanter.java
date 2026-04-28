@@ -136,7 +136,6 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         if (inv[2] == null || amt <= 0 || inv[2].stackSize < amt) return true;
         int LV = getCurrentEnchantmentCost();
         if (LV == 0) return false;
-        // xp *= amt;
         int xpCost = XpUtil.getExperienceForLevel(LV * amt);
         int xp;
         absorb: {
