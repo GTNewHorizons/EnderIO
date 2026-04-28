@@ -81,11 +81,8 @@ public class ContainerEnchanter extends ContainerEnderTileEntity<TileEnchanter> 
                         || enchData.enchantmentLevel >= curStack.stackSize) {
                     te.setInventorySlotContents(1, (ItemStack) null);
                 } else {
-                    curStack = curStack.copy();
                     curStack.stackSize -= recipe.getItemsPerLevel() * enchData.enchantmentLevel;
-                    if (curStack.stackSize > 0) {
-                        te.setInventorySlotContents(1, curStack);
-                    } else {
+                    if (curStack.stackSize <= 0) {
                         te.setInventorySlotContents(1, null);
                     }
                     te.markDirty();
@@ -94,7 +91,6 @@ public class ContainerEnchanter extends ContainerEnderTileEntity<TileEnchanter> 
                 curStack = te.getStackInSlot(0);
                 if (curStack == null || curStack.stackSize <= 1) te.setInventorySlotContents(0, null);
                 else {
-                    curStack = curStack.copy();
                     curStack.stackSize -= 1;
                     te.setInventorySlotContents(0, curStack);
                 }
