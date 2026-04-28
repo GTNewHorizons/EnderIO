@@ -25,8 +25,8 @@ import tuhljin.automagy.tiles.TileEntityJarXP;
 
 public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
-    private ItemStack[] inv = new ItemStack[3];
-    private byte[] stacksizes = new byte[2];
+    private final ItemStack[] inv = new ItemStack[3];
+    private final byte[] stacksizes = new byte[2];
 
     private short facing = (short) ForgeDirection.NORTH.ordinal();
 
@@ -115,7 +115,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         if (fromStack == null) {
             return null;
         }
-        if (slot == 2 && auto && checkDrainXP(Math.min(amount, fromStack.stackSize))) return null;
+        if (slot == 2 && auto && checkAndDrainXP(Math.min(amount, fromStack.stackSize))) return null;
         if (fromStack.stackSize <= amount) {
             inv[slot] = null;
             updateOut();
@@ -130,9 +130,8 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         return result;
     }
 
-    // checks AND drains XP; returns true if xp is NOT sufficient
-    // also removes the items from the other two slots when automation does the recipe
-    public boolean checkDrainXP(int amt) {
+    // part of the next method
+    public boolean absorbXP(int amt) {
         if (inv[2] == null || amt <= 0 || inv[2].stackSize < amt) return true;
         int LV = getCurrentEnchantmentCost();
         if (LV == 0) return false;
@@ -156,7 +155,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
                                 cont.drain(null, Integer.MAX_VALUE, true);
                                 cont.addExperience(Math.max(0, xp - xpCost));
                             }
-                            break absorb;
+                            return false;
                         }
                         xpCost -= xp;
                         obelisksToEmpty.add(cont);
@@ -179,7 +178,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
                                 jarsToEmpty.forEach(j -> j.setXP(0));
                                 jar.setXP(xp - xpCost);
                             }
-                            break absorb;
+                            return false;
                         }
                         xpCost -= xp;
                         jarsToEmpty.add(jar);
@@ -188,7 +187,13 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
             }
             return true;
         }
+        return false;
+    }
 
+    // checks AND drains XP; returns true if xp is NOT sufficient
+    // also removes the items from the other two slots when automation does the recipe
+    public boolean checkAndDrainXP(int amt) {
+        if (absorbXP(amt)) return true;
         EnchantmentData enchData = getCurrentEnchantmentData();
         EnchanterRecipe recipe = getCurrentEnchantmentRecipe();
         ItemStack curStack = inv[1];
