@@ -187,7 +187,6 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
             }
             return true;
         }
-        return false;
     }
 
     // checks AND drains XP; returns true if xp is NOT sufficient
