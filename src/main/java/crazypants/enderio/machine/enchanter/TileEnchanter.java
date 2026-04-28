@@ -390,8 +390,8 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     }
 
     @Override
-    public int[] getAccessibleSlotsFromSide(int p_94128_1_) {
-        return p_94128_1_ == 0 ? new int[] { 2 } : new int[] { 0, 1 };
+    public int[] getAccessibleSlotsFromSide(int side) {
+        return side == 0 ? new int[] { 2 } : new int[] { 0, 1 };
     }
 
     @Override
