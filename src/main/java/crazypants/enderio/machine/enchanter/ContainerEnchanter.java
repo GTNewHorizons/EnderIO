@@ -27,11 +27,6 @@ public class ContainerEnchanter extends ContainerEnderTileEntity<TileEnchanter> 
 
         addSlotToContainer(new Slot(te, 0, 27, 35) {
 
-            // @Override
-            // public int getSlotStackLimit() {
-            // return 1;
-            // }
-
             @Override
             public boolean isItemValid(ItemStack itemStack) {
                 return te.isItemValidForSlot(0, itemStack);
