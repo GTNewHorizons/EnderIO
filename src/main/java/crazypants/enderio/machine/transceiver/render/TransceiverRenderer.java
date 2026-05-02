@@ -127,16 +127,12 @@ public class TransceiverRenderer extends TileEntitySpecialRenderer implements II
         GL11.glPushMatrix();
 
         try {
-            switch (type) {
-                case EQUIPPED, EQUIPPED_FIRST_PERSON:
-                    if (adjustForItem) {
-                        GL11.glTranslatef(0f, 1f, 1f);
-                    } else {
-                        GL11.glTranslatef(0.5f, 0.5f, 0.5f);
-                    }
-                    break;
-                default:
-                    break;
+            if (type == ItemRenderType.EQUIPPED || type == ItemRenderType.EQUIPPED_FIRST_PERSON) {
+                if (adjustForItem) {
+                    GL11.glTranslatef(0f, 1f, 1f);
+                } else {
+                    GL11.glTranslatef(0.5f, 0.5f, 0.5f);
+                }
             }
 
             model.render();
