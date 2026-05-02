@@ -1,5 +1,6 @@
 package crazypants.enderio.machine.transceiver.render;
 
+import crazypants.enderio.Log;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -123,24 +124,24 @@ public class TransceiverRenderer extends TileEntitySpecialRenderer implements II
 
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
-        if (adjustForItem) {
+        GL11.glPushMatrix();
+
+        try {
             switch (type) {
-                case ENTITY:
-                    renderItem(0f, 0f, 0f);
-                    return;
-                case EQUIPPED:
-                case EQUIPPED_FIRST_PERSON:
-                    renderItem(0f, 1f, 1f);
-                    return;
-                case INVENTORY:
-                    renderItem(0f, 0f, 0f);
-                    return;
+                case EQUIPPED, EQUIPPED_FIRST_PERSON:
+                    if (adjustForItem) {
+                        GL11.glTranslatef(0f, 1f, 1f);
+                    } else {
+                        GL11.glTranslatef(0.5f, 0.5f, 0.5f);
+                    }
+                    break;
                 default:
-                    renderItem(0f, 0f, 0f);
-                    return;
+                    break;
             }
-        } else {
-            renderItem(0, 0, 0);
+
+            model.render();
+        } finally {
+            GL11.glPopMatrix();
         }
     }
 
@@ -170,32 +171,4 @@ public class TransceiverRenderer extends TileEntitySpecialRenderer implements II
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_BLEND);
     }
-
-    private void renderItem(float x, float y, float z) {
-        GL11.glPushMatrix();
-        GL11.glTranslatef(x, y, z);
-        model.render();
-        GL11.glPopMatrix();
-    }
-
-    // private class OverlayRenderer implements IRenderFace {
-    //
-    // @Override
-    // public void renderFace(CustomRenderBlocks rb, ForgeDirection face, Block par1Block, double x, double y, double
-    // z, IIcon texture, List<Vertex> refVertices,
-    // boolean translateToXyz) {
-    //
-    // ccr.getCustomRenderBlocks().doDefaultRenderFace(face,par1Block,x,y,z,texture);
-    // if(curEnt != null && par1Block instanceof AbstractMachineBlock) {
-    // IoMode mode = curEnt.getIoMode(face);
-    // IIcon tex = ((AbstractMachineBlock)par1Block).getOverlayIconForMode(mode);
-    // if(tex != null) {
-    // ccr.getCustomRenderBlocks().doDefaultRenderFace(face,par1Block,x,y,z, tex);
-    // }
-    // }
-    //
-    // }
-    //
-    // }
-
 }
