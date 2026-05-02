@@ -69,10 +69,20 @@ public class MachinePartRenderer implements IItemRenderer {
     }
 
     private void renderToInventory(ItemStack item, RenderBlocks renderBlocks) {
-        GL11.glEnable(GL11.GL_ALPHA_TEST);
-        renderBlocks.setOverrideBlockTexture(EnderIO.itemMachinePart.getIconFromDamage(item.getItemDamage()));
-        renderBlocks.renderBlockAsItem(Blocks.stone, 0, 1.0F);
-        renderBlocks.clearOverrideBlockTexture();
-        GL11.glDisable(GL11.GL_ALPHA_TEST);
+        GL11.glPushAttrib(
+            GL11.GL_ENABLE_BIT
+                | GL11.GL_COLOR_BUFFER_BIT
+                | GL11.GL_CURRENT_BIT
+                | GL11.GL_LIGHTING_BIT);
+
+        try {
+            GL11.glEnable(GL11.GL_ALPHA_TEST);
+
+            renderBlocks.setOverrideBlockTexture(EnderIO.itemMachinePart.getIconFromDamage(item.getItemDamage()));
+            renderBlocks.renderBlockAsItem(Blocks.stone, 0, 1.0F);
+        } finally {
+            renderBlocks.clearOverrideBlockTexture();
+            GL11.glPopAttrib();
+        }
     }
 }
