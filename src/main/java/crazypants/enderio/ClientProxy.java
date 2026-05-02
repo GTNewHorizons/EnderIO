@@ -256,7 +256,9 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileFarmStation.class, new FarmingStationSpecialRenderer());
 
         BlockSoulBinder.renderId = RenderingRegistry.getNextAvailableRenderId();
-        RenderingRegistry.registerBlockHandler(new SoulBinderRenderer());
+        SoulBinderRenderer soulBinderRenderer = new SoulBinderRenderer();
+        RenderingRegistry.registerBlockHandler(soulBinderRenderer);
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockSoulFuser), soulBinderRenderer);
 
         ObeliskRenderer defaultObeliskRenderer = new ObeliskRenderer();
         BlockObeliskAbstract.defaultObeliskRenderId = RenderingRegistry.getNextAvailableRenderId();
