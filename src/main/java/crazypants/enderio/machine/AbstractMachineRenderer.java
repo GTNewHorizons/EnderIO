@@ -112,6 +112,7 @@ public class AbstractMachineRenderer implements ISimpleBlockRenderingHandler, II
             ccr.renderBlock(world, block, x, y, z, overlayRenderer);
         }
         ccr.setOverrideTexture(null);
+        overlayRenderer.setTile(null);
 
         return true;
     }
