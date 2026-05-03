@@ -33,7 +33,6 @@ public class ZombieGeneratorRenderer extends TileEntitySpecialRenderer implement
 
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float tick) {
-
         World world = te.getWorldObj();
         TileZombieGenerator gen = (TileZombieGenerator) te;
 
@@ -104,26 +103,26 @@ public class ZombieGeneratorRenderer extends TileEntitySpecialRenderer implement
     }
 
     private void renderModel(GeneratorType gen, int facing) {
-
         GL11.glPushMatrix();
 
-        GL11.glTranslatef(0.5F, 0, 0.5F);
-        GL11.glRotatef(180F, 1F, 0F, 0F);
+        GL11.glTranslatef(0.5f, 0, 0.5f);
+        GL11.glRotatef(180f, 1f, 0f, 0f);
         GL11.glScalef(1.2f, 0.9f, 1.2f);
 
         ForgeDirection dir = ForgeDirection.getOrientation(facing);
         if (dir == ForgeDirection.SOUTH) {
             facing = 0;
-
         } else if (dir == ForgeDirection.WEST) {
             facing = -1;
         }
-        GL11.glRotatef(facing * -90F, 0F, 1F, 0F);
+        GL11.glRotatef(facing * -90f, 0f, 1f, 0f);
+
+        // Move the model in center of block
+        GL11.glTranslatef(0.0f, 0.0f, -0.0625f);
 
         RenderUtil.bindTexture(gen.getTexture());
-        model.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+        model.render(null, 0.0f, 0.0f, -0.1f, 0.0f, 0.0f, 0.0625f);
 
-        GL11.glTranslatef(-0.5F, 0, -0.5F);
         GL11.glPopMatrix();
     }
 
