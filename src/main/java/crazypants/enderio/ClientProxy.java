@@ -238,6 +238,8 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockPainter), machRen);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockCrafter), machRen);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockBuffer), machRen);
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockPoweredSpawner), machRen);
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockSliceAndSplice), machRen);
 
         MinecraftForgeClient.registerItemRenderer(EnderIO.itemBrokenSpawner, new BrokenSpawnerRenderer());
 
