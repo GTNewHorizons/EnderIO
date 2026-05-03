@@ -27,12 +27,12 @@ public class VacuumChestRenderer implements ISimpleBlockRenderingHandler, IItemR
         tessellator.startDrawingQuads();
 
         cr.render(
-            BoundingBox.UNIT_CUBE.scale(0.7f, 0.7f, 0.7f).translate(0f, -0.1f, 0f),
-            EnderIO.blockHyperCube.getIcon(0, 0));
+                BoundingBox.UNIT_CUBE.scale(0.7f, 0.7f, 0.7f).translate(0f, -0.1f, 0f),
+                EnderIO.blockHyperCube.getIcon(0, 0));
 
         cr.render(
-            BoundingBox.UNIT_CUBE.scale(1f, 1f, 1f).translate(0f, -0.1f, 0f),
-            EnderIO.blockVacuumChest.getIcon(0, 0));
+                BoundingBox.UNIT_CUBE.scale(1f, 1f, 1f).translate(0f, -0.1f, 0f),
+                EnderIO.blockVacuumChest.getIcon(0, 0));
 
         tessellator.draw();
     }

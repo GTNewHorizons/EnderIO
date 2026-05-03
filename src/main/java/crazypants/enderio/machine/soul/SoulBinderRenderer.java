@@ -34,11 +34,7 @@ public class SoulBinderRenderer implements ISimpleBlockRenderingHandler, IItemRe
     @Override
     public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
         GL11.glPushMatrix();
-        GL11.glPushAttrib(
-            GL11.GL_ENABLE_BIT
-                | GL11.GL_LIGHTING_BIT
-                | GL11.GL_CURRENT_BIT
-                | GL11.GL_COLOR_BUFFER_BIT);
+        GL11.glPushAttrib(GL11.GL_ENABLE_BIT | GL11.GL_LIGHTING_BIT | GL11.GL_CURRENT_BIT | GL11.GL_COLOR_BUFFER_BIT);
 
         try {
             GL11.glDisable(GL11.GL_LIGHTING);
@@ -136,11 +132,7 @@ public class SoulBinderRenderer implements ISimpleBlockRenderingHandler, IItemRe
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
         GL11.glPushMatrix();
-        GL11.glPushAttrib(
-            GL11.GL_ENABLE_BIT
-                | GL11.GL_LIGHTING_BIT
-                | GL11.GL_CURRENT_BIT
-                | GL11.GL_COLOR_BUFFER_BIT);
+        GL11.glPushAttrib(GL11.GL_ENABLE_BIT | GL11.GL_LIGHTING_BIT | GL11.GL_CURRENT_BIT | GL11.GL_COLOR_BUFFER_BIT);
 
         try {
             GL11.glDisable(GL11.GL_LIGHTING);

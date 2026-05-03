@@ -13,6 +13,8 @@ import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.model.obj.GroupObject;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import org.lwjgl.opengl.GL11;
+
 import com.enderio.core.client.render.CubeRenderer;
 import com.enderio.core.client.render.TechneModelRenderer;
 import com.enderio.core.client.render.TechneUtil;
@@ -20,7 +22,6 @@ import com.enderio.core.common.util.BlockCoord;
 import com.google.common.collect.Lists;
 
 import crazypants.enderio.EnderIO;
-import org.lwjgl.opengl.GL11;
 
 public class TelePadRenderer extends TechneModelRenderer implements IItemRenderer {
 
@@ -117,10 +118,10 @@ public class TelePadRenderer extends TechneModelRenderer implements IItemRendere
 
         try {
             renderInventoryBlock(
-                Block.getBlockFromItem(item.getItem()),
-                item.getItemDamage(),
-                0,
-                (RenderBlocks) data[0]);
+                    Block.getBlockFromItem(item.getItem()),
+                    item.getItemDamage(),
+                    0,
+                    (RenderBlocks) data[0]);
         } finally {
             GL11.glPopMatrix();
         }

@@ -45,11 +45,7 @@ public class ObeliskRenderer implements ISimpleBlockRenderingHandler {
 
         // Preserve GL state so this custom item renderer does not leak alpha/blend/color
         // state into subsequent item renders, such as Backhand offhand items.
-        GL11.glPushAttrib(
-            GL11.GL_ENABLE_BIT
-                | GL11.GL_COLOR_BUFFER_BIT
-                | GL11.GL_CURRENT_BIT
-                | GL11.GL_LIGHTING_BIT);
+        GL11.glPushAttrib(GL11.GL_ENABLE_BIT | GL11.GL_COLOR_BUFFER_BIT | GL11.GL_CURRENT_BIT | GL11.GL_LIGHTING_BIT);
 
         try {
             GL11.glDisable(GL11.GL_LIGHTING);
