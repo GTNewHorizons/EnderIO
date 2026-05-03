@@ -362,6 +362,7 @@ public class ClientProxy extends CommonProxy {
         TelePadRenderer telePadRenderer = new TelePadRenderer();
         RenderingRegistry.registerBlockHandler(telePadRenderer);
         ClientRegistry.bindTileEntitySpecialRenderer(TileTelePad.class, new TelePadSpecialRenderer(telePadRenderer));
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockTelePad), telePadRenderer);
 
         MinecraftForgeClient.registerItemRenderer(EnderIO.itemMachinePart, new MachinePartRenderer());
         MinecraftForgeClient.registerItemRenderer(EnderIO.itemConduitFacade, new FacadeRenderer());

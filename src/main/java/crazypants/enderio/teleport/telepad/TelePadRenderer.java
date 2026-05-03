@@ -6,8 +6,10 @@ import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.model.obj.GroupObject;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -18,8 +20,9 @@ import com.enderio.core.common.util.BlockCoord;
 import com.google.common.collect.Lists;
 
 import crazypants.enderio.EnderIO;
+import org.lwjgl.opengl.GL11;
 
-public class TelePadRenderer extends TechneModelRenderer {
+public class TelePadRenderer extends TechneModelRenderer implements IItemRenderer {
 
     private final Collection<GroupObject> strippedModel = Lists.newArrayList();
 
@@ -96,5 +99,30 @@ public class TelePadRenderer extends TechneModelRenderer {
         tessellator.startDrawingQuads();
         CubeRenderer.get().render(block, metadata);
         tessellator.draw();
+    }
+
+    @Override
+    public boolean handleRenderType(ItemStack item, ItemRenderType type) {
+        return type == ItemRenderType.EQUIPPED || type == ItemRenderType.EQUIPPED_FIRST_PERSON;
+    }
+
+    @Override
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
+        return true;
+    }
+
+    @Override
+    public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+        GL11.glPushMatrix();
+
+        try {
+            renderInventoryBlock(
+                Block.getBlockFromItem(item.getItem()),
+                item.getItemDamage(),
+                0,
+                (RenderBlocks) data[0]);
+        } finally {
+            GL11.glPopMatrix();
+        }
     }
 }
