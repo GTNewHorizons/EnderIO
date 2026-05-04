@@ -663,7 +663,7 @@ public class GuiInventoryPanel extends GuiMachineBase<TileInventoryPanel> {
         }
     }
 
-    class InvSlot extends GhostSlot {
+    static class InvSlot extends GhostSlot {
 
         ItemEntry entry;
         ItemStack stack;

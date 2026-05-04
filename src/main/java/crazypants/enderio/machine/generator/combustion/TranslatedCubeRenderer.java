@@ -51,7 +51,7 @@ public class TranslatedCubeRenderer {
         block.setBlockBounds(0, 0, 0, 1, 1, 1);
     }
 
-    private class XFormRenderer implements IRenderFace {
+    private static class XFormRenderer implements IRenderFace {
 
         VertexTransform xform;
         boolean enableLighting = true;

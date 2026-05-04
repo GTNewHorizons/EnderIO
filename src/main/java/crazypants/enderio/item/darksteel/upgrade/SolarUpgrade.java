@@ -117,7 +117,7 @@ public class SolarUpgrade extends AbstractUpgrade {
     }
 
     @SideOnly(Side.CLIENT)
-    private class Render implements IRenderUpgrade {
+    private static class Render implements IRenderUpgrade {
 
         private final EntityItem item = new EntityItem(Minecraft.getMinecraft().theWorld);
 

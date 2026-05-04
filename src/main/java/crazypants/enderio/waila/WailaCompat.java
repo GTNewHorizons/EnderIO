@@ -54,7 +54,7 @@ import mcp.mobius.waila.api.impl.ConfigHandler;
 
 public class WailaCompat implements IWailaDataProvider {
 
-    private class WailaWorldWrapper extends World {
+    private static class WailaWorldWrapper extends World {
 
         private final World wrapped;
 
@@ -152,7 +152,7 @@ public class WailaCompat implements IWailaDataProvider {
             if (facade != accessor.getBlock()) {
                 ItemStack ret = facade.getPickBlock(
                         pos,
-                        new WailaWorldWrapper(accessor.getWorld()),
+                    new WailaWorldWrapper(accessor.getWorld()),
                         pos.blockX,
                         pos.blockY,
                         pos.blockZ,

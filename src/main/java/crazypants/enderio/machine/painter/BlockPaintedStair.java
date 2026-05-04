@@ -243,7 +243,7 @@ public class BlockPaintedStair extends BlockStairs implements ITileEntityProvide
         return 0; // need to do custom dropping to maintain source metadata
     }
 
-    public final class PainterTemplate extends BasicPainterTemplate {
+    public static final class PainterTemplate extends BasicPainterTemplate {
 
         @Override
         public ResultStack[] getCompletedResult(float chance, MachineRecipeInput... inputs) {
