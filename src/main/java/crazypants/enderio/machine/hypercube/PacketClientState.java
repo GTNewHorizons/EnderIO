@@ -31,7 +31,7 @@ public class PacketClientState implements IMessage, IMessageHandler<PacketClient
         x = te.xCoord;
         y = te.yCoord;
         z = te.zCoord;
-        modes = new ArrayList<TileHyperCube.IoMode>(SubChannel.values().length);
+        modes = new ArrayList<>(SubChannel.values().length);
         for (SubChannel sc : SubChannel.values()) {
             modes.add(te.getModeForChannel(sc));
         }
@@ -78,7 +78,7 @@ public class PacketClientState implements IMessage, IMessageHandler<PacketClient
             }
         }
 
-        modes = new ArrayList<TileHyperCube.IoMode>(SubChannel.values().length);
+        modes = new ArrayList<>(SubChannel.values().length);
         for (int i = 0; i < SubChannel.values().length; i++) {
             short ordinal = buf.readShort();
             modes.add(IoMode.values()[ordinal]);

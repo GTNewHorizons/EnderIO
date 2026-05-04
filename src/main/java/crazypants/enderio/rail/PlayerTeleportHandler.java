@@ -19,7 +19,7 @@ public class PlayerTeleportHandler {
 
     public static final PlayerTeleportHandler instance = new PlayerTeleportHandler();
 
-    List<TeleportAction> queue = new ArrayList<TeleportAction>();
+    List<TeleportAction> queue = new ArrayList<>();
 
     @SubscribeEvent
     public void onServerTick(TickEvent.ServerTickEvent event) {

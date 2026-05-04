@@ -21,8 +21,7 @@ import com.enderio.core.common.vecmath.Vertex;
 
 public class ConnectionModeGeometry {
 
-    private static final EnumMap<ForgeDirection, List<Vertex>> VERTS = new EnumMap<ForgeDirection, List<Vertex>>(
-            ForgeDirection.class);
+    private static final EnumMap<ForgeDirection, List<Vertex>> VERTS = new EnumMap<>(ForgeDirection.class);
 
     static {
         float scale = 0.9f;
@@ -84,7 +83,7 @@ public class ConnectionModeGeometry {
     }
 
     private static List<Vertex> createVerticesForDir(BoundingBox refBB, VertexTransform xform) {
-        List<Vertex> result = new ArrayList<Vertex>(24);
+        List<Vertex> result = new ArrayList<>(24);
         for (ForgeDirection face : ForgeDirection.VALID_DIRECTIONS) {
             result.addAll(refBB.getCornersWithUvForFace(face));
         }

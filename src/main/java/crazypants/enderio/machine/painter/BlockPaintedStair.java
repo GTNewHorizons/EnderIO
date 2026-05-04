@@ -40,7 +40,7 @@ public class BlockPaintedStair extends BlockStairs implements ITileEntityProvide
 
     private IIcon lastRemovedComponetIcon = null;
 
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
     protected BlockPaintedStair() {
         super(Blocks.stone, 0);
@@ -243,7 +243,7 @@ public class BlockPaintedStair extends BlockStairs implements ITileEntityProvide
         return 0; // need to do custom dropping to maintain source metadata
     }
 
-    public final class PainterTemplate extends BasicPainterTemplate {
+    public static final class PainterTemplate extends BasicPainterTemplate {
 
         @Override
         public ResultStack[] getCompletedResult(float chance, MachineRecipeInput... inputs) {

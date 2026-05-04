@@ -20,7 +20,7 @@ import crazypants.enderio.conduit.IConduitBundle;
 
 public class RedstoneConduitNetwork extends AbstractConduitNetwork<IRedstoneConduit, IRedstoneConduit> {
 
-    private final Set<Signal> signals = new HashSet<Signal>();
+    private final Set<Signal> signals = new HashSet<>();
 
     boolean updatingNetwork = false;
 
@@ -45,7 +45,7 @@ public class RedstoneConduitNetwork extends AbstractConduitNetwork<IRedstoneCond
             con.setActive(false);
         }
         // Notify neighbours that all signals have been lost
-        List<Signal> copy = new ArrayList<Signal>(signals);
+        List<Signal> copy = new ArrayList<>(signals);
         signals.clear();
         for (Signal s : copy) {
             notifyNeigborsOfSignalUpdate(s);
@@ -172,7 +172,7 @@ public class RedstoneConduitNetwork extends AbstractConduitNetwork<IRedstoneCond
     }
 
     public void notifyNeigborsOfSignalUpdate(Signal signal) {
-        ArrayList<IRedstoneConduit> conduitsCopy = new ArrayList<IRedstoneConduit>(conduits);
+        ArrayList<IRedstoneConduit> conduitsCopy = new ArrayList<>(conduits);
         for (IRedstoneConduit con : conduitsCopy) {
             notifyConduitNeighbours(con, signal);
         }

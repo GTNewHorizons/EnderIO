@@ -10,7 +10,7 @@ import crazypants.enderio.api.tool.ITool;
 
 public class AEToolProvider implements IToolProvider, IToolImpl {
 
-    private AETool aeTool = new AETool();
+    private final AETool aeTool = new AETool();
 
     public AEToolProvider() throws Exception {
         // Do a check for so we throw an exception in the constructor if we dont have the

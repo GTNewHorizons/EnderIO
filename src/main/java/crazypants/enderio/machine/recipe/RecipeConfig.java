@@ -112,7 +112,7 @@ public class RecipeConfig {
     private boolean dumpOreDictionary = false;
     private boolean enabled = true;
 
-    private Map<String, RecipeGroup> recipeGroups = new HashMap<String, RecipeConfig.RecipeGroup>();
+    private Map<String, RecipeGroup> recipeGroups = new HashMap<>();
 
     public RecipeConfig() {}
 
@@ -187,7 +187,7 @@ public class RecipeConfig {
     }
 
     public List<Recipe> getRecipes(boolean isRecipePerInput) {
-        List<Recipe> result = new ArrayList<Recipe>(32);
+        List<Recipe> result = new ArrayList<>(32);
         for (RecipeGroup rg : recipeGroups.values()) {
             if (rg.isEnabled() && rg.isValid()) {
                 result.addAll(rg.createRecipes(isRecipePerInput));
@@ -212,7 +212,7 @@ public class RecipeConfig {
 
         private final String name;
 
-        private Map<String, RecipeElement> recipes = new LinkedHashMap<String, RecipeElement>();
+        private final Map<String, RecipeElement> recipes = new LinkedHashMap<>();
 
         private boolean enabled = true;
 
@@ -247,7 +247,7 @@ public class RecipeConfig {
         }
 
         public List<Recipe> createRecipes(boolean isRecipePerInput) {
-            List<Recipe> result = new ArrayList<Recipe>(recipes.size());
+            List<Recipe> result = new ArrayList<>(recipes.size());
             for (RecipeElement recipe : recipes.values()) {
                 if (recipe.isValid()) {
                     result.addAll(recipe.createRecipes(isRecipePerInput));
@@ -272,15 +272,15 @@ public class RecipeConfig {
 
     public static class RecipeElement {
 
-        private List<RecipeInput> inputs = new ArrayList<RecipeInput>();
+        private final List<RecipeInput> inputs = new ArrayList<>();
 
-        private List<RecipeOutput> outputs = new ArrayList<RecipeOutput>();
+        private final List<RecipeOutput> outputs = new ArrayList<>();
 
         private int energyRequired;
 
         private RecipeBonusType bonusType = RecipeBonusType.MULTIPLY_OUTPUT;
 
-        private String name;
+        private final String name;
 
         private boolean allowMissing = false;
         private boolean invalidated = false;
@@ -305,7 +305,7 @@ public class RecipeConfig {
 
             RecipeOutput[] outputArr = outputs.toArray(new RecipeOutput[outputs.size()]);
             RecipeInput[] inputArr = inputs.toArray(new RecipeInput[inputs.size()]);
-            List<Recipe> result = new ArrayList<Recipe>();
+            List<Recipe> result = new ArrayList<>();
             if (isRecipePerInput) {
                 for (RecipeInput input : inputs) {
                     result.add(new Recipe(input, energyRequired, bonusType, outputArr));

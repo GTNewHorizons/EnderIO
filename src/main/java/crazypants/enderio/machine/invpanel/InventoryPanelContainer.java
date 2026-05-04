@@ -68,7 +68,7 @@ public class InventoryPanelContainer extends AbstractMachineContainer<TileInvent
         if (te.getWorldObj().isRemote) {
             changedItems = null;
         } else {
-            changedItems = new HashSet<ItemEntry>();
+            changedItems = new HashSet<>();
         }
     }
 
@@ -297,7 +297,7 @@ public class InventoryPanelContainer extends AbstractMachineContainer<TileInvent
             return Collections.singletonList(getPlayerInventorySlotRange(true));
         }
         if (slotIndex >= firstSlotCraftingGrid && slotIndex < endSlotCraftingGrid) {
-            ArrayList<SlotRange> res = new ArrayList<SlotRange>();
+            ArrayList<SlotRange> res = new ArrayList<>();
             res.add(new SlotRange(firstSlotReturn, endSlotReturn, false));
             res.add(getPlayerInventorySlotRange(false));
             return res;

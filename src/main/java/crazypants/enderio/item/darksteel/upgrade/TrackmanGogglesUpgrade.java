@@ -11,7 +11,7 @@ import crazypants.enderio.item.darksteel.DarkSteelItems;
 
 public class TrackmanGogglesUpgrade extends AbstractUpgrade {
 
-    private static String UPGRADE_NAME = "trackmansGoggles";
+    private static final String UPGRADE_NAME = "trackmansGoggles";
 
     public static final TrackmanGogglesUpgrade INSTANCE = new TrackmanGogglesUpgrade();
 

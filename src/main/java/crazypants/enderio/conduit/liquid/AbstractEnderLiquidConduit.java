@@ -109,15 +109,11 @@ public abstract class AbstractEnderLiquidConduit extends AbstractLiquidConduit {
     private EnderLiquidConduitNetwork network;
     private int ticksSinceFailedExtract;
 
-    private final EnumMap<ForgeDirection, FluidFilter> outputFilters = new EnumMap<ForgeDirection, FluidFilter>(
-            ForgeDirection.class);
-    private final EnumMap<ForgeDirection, FluidFilter> inputFilters = new EnumMap<ForgeDirection, FluidFilter>(
-            ForgeDirection.class);
+    private final EnumMap<ForgeDirection, FluidFilter> outputFilters = new EnumMap<>(ForgeDirection.class);
+    private final EnumMap<ForgeDirection, FluidFilter> inputFilters = new EnumMap<>(ForgeDirection.class);
 
-    protected final EnumMap<ForgeDirection, DyeColor> outputColors = new EnumMap<ForgeDirection, DyeColor>(
-            ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, DyeColor> inputColors = new EnumMap<ForgeDirection, DyeColor>(
-            ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, DyeColor> outputColors = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, DyeColor> inputColors = new EnumMap<>(ForgeDirection.class);
 
     private int roundRobin = 0;
 

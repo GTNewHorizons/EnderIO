@@ -20,13 +20,13 @@ import crazypants.enderio.xp.PacketGivePlayerXP;
 
 public class GuiExperienceObelisk extends GuiMachineBase<TileExperienceObelisk> {
 
-    private IconButton p;
-    private IconButton pp;
-    private IconButton ppp;
+    private final IconButton p;
+    private final IconButton pp;
+    private final IconButton ppp;
 
-    private IconButton m;
-    private IconButton mm;
-    private IconButton mmm;
+    private final IconButton m;
+    private final IconButton mm;
+    private final IconButton mmm;
 
     public GuiExperienceObelisk(InventoryPlayer playerInv, TileExperienceObelisk te) {
         super(te, new ContainerNoInv(te), "experianceObelisk");

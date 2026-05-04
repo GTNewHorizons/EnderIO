@@ -70,7 +70,7 @@ public class TileZombieGenerator extends AbstractGeneratorEntity
         }
     }
 
-    private static int IO_MB_TICK = 250;
+    private static final int IO_MB_TICK = 250;
 
     final SmartTank fuelTank;
 

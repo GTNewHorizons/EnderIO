@@ -104,7 +104,7 @@ public class DarkSteelController {
 
     private static final EnumSet<Type> DEFAULT_ACTIVE = EnumSet.of(Type.SPEED, Type.STEP_ASSIST, Type.JUMP);
 
-    private final Map<UUID, EnumSet<Type>> allActive = new HashMap<UUID, EnumSet<Type>>();
+    private final Map<UUID, EnumSet<Type>> allActive = new HashMap<>();
 
     private boolean nightVisionActive = false;
     private boolean removeNightvision = false;

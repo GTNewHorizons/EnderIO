@@ -217,7 +217,7 @@ public class TileReservoir extends TileEntityEio implements IFluidHandler, ITank
 
     private void doUpdateTankNeighbours() {
         if (tankNeighbours == null) {
-            tankNeighbours = new ArrayList<TankNeighbour>();
+            tankNeighbours = new ArrayList<>();
         }
         tankNeighbours.clear();
         for (BlockCoord bc : multiblock) {

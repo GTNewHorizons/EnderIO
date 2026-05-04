@@ -205,8 +205,8 @@ public class ServerChannelRegister extends ChannelRegister {
 
     // -----------------------------------------------------------------------------------------------
 
-    private final List<TileTransceiver> transceivers = new ArrayList<TileTransceiver>();
-    private Map<Channel, RoundRobinIterator<TileTransceiver>> iterators = new HashMap<Channel, RoundRobinIterator<TileTransceiver>>();
+    private final List<TileTransceiver> transceivers = new ArrayList<>();
+    private final Map<Channel, RoundRobinIterator<TileTransceiver>> iterators = new HashMap<>();
 
     private ServerChannelRegister() {}
 
@@ -245,7 +245,7 @@ public class ServerChannelRegister extends ChannelRegister {
     public RoundRobinIterator<TileTransceiver> getIterator(Channel channel) {
         RoundRobinIterator<TileTransceiver> res = iterators.get(channel);
         if (res == null) {
-            res = new RoundRobinIterator<TileTransceiver>(transceivers);
+            res = new RoundRobinIterator<>(transceivers);
             iterators.put(channel, res);
         }
         return res;
@@ -271,7 +271,7 @@ public class ServerChannelRegister extends ChannelRegister {
     // Fluid
 
     public FluidTankInfo[] getTankInfoForChannels(TileTransceiver tileTransceiver, Set<Channel> channels) {
-        List<FluidTankInfo> infos = new ArrayList<FluidTankInfo>();
+        List<FluidTankInfo> infos = new ArrayList<>();
         for (TileTransceiver tran : transceivers) {
             if (tran != tileTransceiver) {
                 tran.getRecieveTankInfo(infos, channels);
@@ -396,7 +396,7 @@ public class ServerChannelRegister extends ChannelRegister {
 
     private static class SaveRunnable implements Runnable {
 
-        private ListMultimap<ChannelType, Channel> chans;
+        private final ListMultimap<ChannelType, Channel> chans;
 
         public SaveRunnable(ListMultimap<ChannelType, Channel> chans) {
             this.chans = chans;

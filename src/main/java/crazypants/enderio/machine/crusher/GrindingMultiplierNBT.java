@@ -12,10 +12,10 @@ public class GrindingMultiplierNBT implements IGrindingMultiplier {
 
     int durationMJ;
 
-    private static String CM = "grindBall.chanceMultiplier";
-    private static String PM = "grindBall.powerMultiplier";
-    private static String GM = "grindBall.grindingMultiplier";
-    private static String DMJ = "grindBall.durationMJ";
+    private static final String CM = "grindBall.chanceMultiplier";
+    private static final String PM = "grindBall.powerMultiplier";
+    private static final String GM = "grindBall.grindingMultiplier";
+    private static final String DMJ = "grindBall.durationMJ";
 
     public static GrindingMultiplierNBT readFromNBT(NBTTagCompound nbtRoot) {
         if (nbtRoot.hasKey(CM) && nbtRoot.hasKey(PM) && nbtRoot.hasKey(GM) && nbtRoot.hasKey(DMJ)) {

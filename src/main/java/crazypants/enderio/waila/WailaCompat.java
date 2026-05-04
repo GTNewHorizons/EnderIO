@@ -54,7 +54,7 @@ import mcp.mobius.waila.api.impl.ConfigHandler;
 
 public class WailaCompat implements IWailaDataProvider {
 
-    private class WailaWorldWrapper extends World {
+    private static class WailaWorldWrapper extends World {
 
         private final World wrapped;
 

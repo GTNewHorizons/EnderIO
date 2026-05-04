@@ -43,7 +43,7 @@ public class ItemSettings extends BaseSettingsPanel {
     private static final int ID_INSERT_CHANNEL = 23;
     private static final int ID_EXTRACT_CHANNEL = 27;
 
-    private @Nonnull IItemConduit itemConduit;
+    private final @Nonnull IItemConduit itemConduit;
 
     private final ToggleButton loopB;
     private final ToggleButton roundRobinB;
@@ -54,11 +54,11 @@ public class ItemSettings extends BaseSettingsPanel {
     private final RedstoneModeButton rsB;
     private final @Nonnull ColorButton colorB;
 
-    private ColorButton insertChannelB;
-    private ColorButton extractChannelB;
+    private final ColorButton insertChannelB;
+    private final ColorButton extractChannelB;
 
-    private int priLeft = 46;
-    private int priWidth = 32;
+    private static final int priLeft = 46;
+    private static final int priWidth = 32;
 
     private IItemFilterGui insertFilterGui;
     private IItemFilterGui extractFilterGui;

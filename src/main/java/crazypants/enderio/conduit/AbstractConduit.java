@@ -73,8 +73,7 @@ public abstract class AbstractConduit implements IConduit {
 
     protected List<CollidableComponent> collidables;
 
-    protected final EnumMap<ForgeDirection, ConnectionMode> conectionModes = new EnumMap<ForgeDirection, ConnectionMode>(
-            ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, ConnectionMode> conectionModes = new EnumMap<>(ForgeDirection.class);
 
     protected boolean collidablesDirty = true;
 
@@ -454,7 +453,7 @@ public abstract class AbstractConduit implements IConduit {
         needUpdateConnections = false;
 
         boolean externalConnectionsChanged = false;
-        List<ForgeDirection> copy = new ArrayList<ForgeDirection>(externalConnections);
+        List<ForgeDirection> copy = new ArrayList<>(externalConnections);
         // remove any no longer valid connections
         for (ForgeDirection dir : copy) {
             if (!canConnectToExternal(dir, false)) {
@@ -634,7 +633,7 @@ public abstract class AbstractConduit implements IConduit {
             return collidables;
         }
 
-        List<CollidableComponent> result = new ArrayList<CollidableComponent>();
+        List<CollidableComponent> result = new ArrayList<>();
         for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
             Collection<CollidableComponent> col = getCollidables(dir);
             if (col != null) {
