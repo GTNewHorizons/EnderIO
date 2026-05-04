@@ -62,7 +62,7 @@ public class ContainerTravelAccessable extends ContainerEnder<IInventory> implem
 
     private static class CtaGhostSlot extends GhostSlot {
 
-        private ITravelAccessable ta;
+        private final ITravelAccessable ta;
         boolean isAuth;
 
         public CtaGhostSlot(ITravelAccessable ta, int slotIndex, int x, int y, boolean isAuth) {

@@ -15,7 +15,7 @@ import crazypants.enderio.machine.farm.TileFarmStation;
 
 public class FlowerPicker implements IFarmerJoe {
 
-    protected List<Block> flowers = new ArrayList<Block>();
+    protected List<Block> flowers = new ArrayList<>();
 
     public FlowerPicker() {}
 
@@ -58,7 +58,7 @@ public class FlowerPicker implements IFarmerJoe {
         }
 
         World worldObj = farm.getWorldObj();
-        List<EntityItem> result = new ArrayList<EntityItem>();
+        List<EntityItem> result = new ArrayList<>();
 
         ArrayList<ItemStack> drops = block.getDrops(worldObj, bc.x, bc.y, bc.z, meta, farm.getMaxLootingValue());
         farm.damageHoe(1, bc);

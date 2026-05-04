@@ -129,7 +129,7 @@ public class ContainerTravelAuth extends ContainerEnder<AuthInventory> implement
 
     private static class AuthGhostSlot extends GhostSlot {
 
-        private AuthInventory inv;
+        private final AuthInventory inv;
 
         public AuthGhostSlot(AuthInventory ta, int slotIndex, int x, int y) {
             this.slot = slotIndex;

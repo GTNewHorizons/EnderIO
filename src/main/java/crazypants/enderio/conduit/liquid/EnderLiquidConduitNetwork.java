@@ -58,8 +58,8 @@ public class EnderLiquidConduitNetwork extends AbstractConduitNetwork<ILiquidCon
 
     private final AbstractEnderLiquidConduit.Type type;
 
-    List<NetworkTank> tanks = new ArrayList<NetworkTank>();
-    Map<NetworkTankKey, NetworkTank> tankMap = new HashMap<NetworkTankKey, NetworkTank>();
+    List<NetworkTank> tanks = new ArrayList<>();
+    Map<NetworkTankKey, NetworkTank> tankMap = new HashMap<>();
 
     Map<NetworkTank, TankIterator> iterators;
 
@@ -203,7 +203,7 @@ public class EnderLiquidConduitNetwork extends AbstractConduitNetwork<ILiquidCon
     }
 
     public FluidTankInfo[] getTankInfo(AbstractEnderLiquidConduit con, ForgeDirection conDir) {
-        List<FluidTankInfo> res = new ArrayList<FluidTankInfo>(tanks.size());
+        List<FluidTankInfo> res = new ArrayList<>(tanks.size());
         NetworkTank tank = getTank(con, conDir);
         for (NetworkTank target : tanks) {
             if (!target.equals(tank) && target.isValid()) {

@@ -18,7 +18,7 @@ public class GasConduitNetwork extends AbstractGasTankConduitNetwork<GasConduit>
 
     private final ConduitGasTank tank = new ConduitGasTank(0);
 
-    private final Set<GasOutput> outputs = new HashSet<GasOutput>();
+    private final Set<GasOutput> outputs = new HashSet<>();
 
     private Iterator<GasOutput> outputIterator;
 

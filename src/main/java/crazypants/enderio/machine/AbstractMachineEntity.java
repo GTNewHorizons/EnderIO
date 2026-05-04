@@ -102,7 +102,7 @@ public abstract class AbstractMachineEntity extends TileEntityEio
             return;
         }
         if (faceModes == null) {
-            faceModes = new EnumMap<ForgeDirection, IoMode>(ForgeDirection.class);
+            faceModes = new EnumMap<>(ForgeDirection.class);
         }
         faceModes.put(faceHit, mode);
         forceClientUpdate = true;

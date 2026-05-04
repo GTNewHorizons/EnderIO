@@ -15,7 +15,7 @@ public class SpeedUpgrade extends AbstractUpgrade {
 
     private static final String KEY_MULTIPLIER = "multiplier";
 
-    private static String UPGRADE_NAME = "speedBoost";
+    private static final String UPGRADE_NAME = "speedBoost";
 
     public static float[] WALK_MULTIPLIERS = new float[] { Config.darkSteelSpeedOneWalkModifier,
             Config.darkSteelSpeedTwoWalkMultiplier, Config.darkSteelSpeedThreeWalkMultiplier };
@@ -36,7 +36,7 @@ public class SpeedUpgrade extends AbstractUpgrade {
             3,
             Config.darkSteelSpeedThreeCost);
 
-    private short level;
+    private final short level;
     private float walkMultiplier;
     protected float sprintMultiplier;
 

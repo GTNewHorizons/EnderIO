@@ -14,10 +14,10 @@ import crazypants.enderio.config.Config;
 
 public class SolarPanelNetwork {
 
-    private List<TileEntitySolarPanel> panels;
+    private final List<TileEntitySolarPanel> panels;
     private boolean empty = true;
 
-    private EnergyStorage energy;
+    private final EnergyStorage energy;
     private boolean hasAppliedMaxEnergyConfig = false;
 
     public static final int ENERGY_PER = 10000;

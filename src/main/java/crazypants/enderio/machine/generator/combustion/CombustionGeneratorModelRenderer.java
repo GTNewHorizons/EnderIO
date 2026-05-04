@@ -23,7 +23,7 @@ public class CombustionGeneratorModelRenderer extends TileEntitySpecialRenderer 
 
     private static final String TEXTURE = "enderio:models/combustionGenerator.png";
 
-    private CombustionGeneratorModel model = new CombustionGeneratorModel();
+    private final CombustionGeneratorModel model = new CombustionGeneratorModel();
 
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float tick) {

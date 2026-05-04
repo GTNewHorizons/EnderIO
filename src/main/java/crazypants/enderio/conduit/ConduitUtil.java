@@ -254,7 +254,7 @@ public class ConduitUtil {
         if (!(te instanceof IConduitBundle)) {
             return Collections.emptyList();
         }
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<>();
         IConduitBundle root = (IConduitBundle) te;
         T con = root.getConduit(type);
         if (con != null) {
@@ -363,7 +363,7 @@ public class ConduitUtil {
             return;
         }
         IConduitBundle cb = (IConduitBundle) te;
-        Set<ForgeDirection> cons = new HashSet<ForgeDirection>();
+        Set<ForgeDirection> cons = new HashSet<>();
         boolean hasInsulated = false;
         for (IConduit con : cb.getConduits()) {
             cons.addAll(con.getExternalConnections());

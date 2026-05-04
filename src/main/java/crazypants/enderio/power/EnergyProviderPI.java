@@ -6,7 +6,7 @@ import cofh.api.energy.IEnergyProvider;
 
 public class EnergyProviderPI implements IPowerInterface {
 
-    private IEnergyProvider rfPower;
+    private final IEnergyProvider rfPower;
 
     public EnergyProviderPI(IEnergyProvider powerReceptor) {
         rfPower = powerReceptor;

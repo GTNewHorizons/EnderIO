@@ -108,7 +108,7 @@ public class MagnetController {
     private static List<Item> blacklist = null;
 
     private static void initBlacklist() {
-        blacklist = new ArrayList<Item>();
+        blacklist = new ArrayList<>();
         for (String name : Config.magnetBlacklist) {
             String[] parts = name.split(":");
             if (parts.length == 2) {
@@ -161,8 +161,7 @@ public class MagnetController {
                             }
                             if (gotOne) {
                                 if (arraylist == null) {
-                                    arraylist = new ArrayList<Entity>(
-                                            Config.magnetMaxItems > 0 ? Config.magnetMaxItems : 20);
+                                    arraylist = new ArrayList<>(Config.magnetMaxItems > 0 ? Config.magnetMaxItems : 20);
                                 }
                                 arraylist.add(entity);
                                 if (itemsRemaining-- <= 0) {

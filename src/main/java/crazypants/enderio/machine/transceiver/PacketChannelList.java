@@ -20,7 +20,7 @@ public class PacketChannelList implements IMessage, IMessageHandler<PacketChanne
     public PacketChannelList() {}
 
     public PacketChannelList(ChannelRegister register) {
-        channels = new ArrayList<Channel>();
+        channels = new ArrayList<>();
         for (ChannelType type : ChannelType.values()) {
             for (Channel channel : register.getChannelsForType(type)) {
                 channels.add(channel);
@@ -45,7 +45,7 @@ public class PacketChannelList implements IMessage, IMessageHandler<PacketChanne
     public void fromBytes(ByteBuf buf) {
         NBTTagCompound root = NetworkUtil.readNBTTagCompound(buf);
         NBTTagList tagList = (NBTTagList) root.getTag("chanList");
-        channels = new ArrayList<Channel>();
+        channels = new ArrayList<>();
         for (int i = 0; i < tagList.tagCount(); i++) {
             NBTTagCompound tag = tagList.getCompoundTagAt(i);
             Channel chan = Channel.readFromNBT(tag);

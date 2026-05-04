@@ -40,7 +40,7 @@ public class BlockPaintedCarpet extends BlockCarpet implements ITileEntityProvid
 
     private IIcon lastRemovedComponetIcon = null;
 
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
     protected BlockPaintedCarpet() {
         super();

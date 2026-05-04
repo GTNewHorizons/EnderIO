@@ -131,7 +131,7 @@ public class EnchanterRecipeHandler extends TemplateRecipeHandler {
     }
 
     public List<ItemStack> getInputs(RecipeInput input) {
-        List<ItemStack> result = new ArrayList<ItemStack>();
+        List<ItemStack> result = new ArrayList<>();
         result.add(input.getInput());
         ItemStack[] equivs = input.getEquivelentInputs();
         if (equivs != null && equivs.length > 0) {
@@ -177,7 +177,7 @@ public class EnchanterRecipeHandler extends TemplateRecipeHandler {
 
         public EnchanterRecipeNEI(EnchanterRecipe recipe) {
             this.recipe = recipe;
-            input = new ArrayList<PositionedStack>();
+            input = new ArrayList<>();
             input.add(new PositionedStack(new ItemStack(Items.writable_book), 22, 24));
             input.add(new PositionedStack(getInputs(recipe.getInput()), 71, 24));
 

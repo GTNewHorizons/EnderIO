@@ -40,9 +40,6 @@ public class FillGauge implements IInfoRenderer, IResourceManagerReloadListener 
         MIDDLE
     }
 
-    private IIcon barIcon;
-    private IIcon gaugeIcon;
-
     private float barHeightV;
 
     private Map<GaugeKey, List<Vertex>> gaugeVertexCache;
@@ -180,13 +177,13 @@ public class FillGauge implements IInfoRenderer, IResourceManagerReloadListener 
     }
 
     private void createVertexCache() {
-        barIcon = EnderIO.blockCapBank.getFillBarIcon();
+        IIcon barIcon = EnderIO.blockCapBank.getFillBarIcon();
         barMinV = barIcon.getMinV();
         barHeightV = barIcon.getMaxV() - barIcon.getMinV();
-        gaugeIcon = EnderIO.blockCapBank.getGaugeIcon();
+        IIcon gaugeIcon = EnderIO.blockCapBank.getGaugeIcon();
 
-        gaugeVertexCache = new HashMap<FillGauge.GaugeKey, List<Vertex>>();
-        levelVertexCache = new HashMap<FillGauge.GaugeKey, List<Vertex>>();
+        gaugeVertexCache = new HashMap<>();
+        levelVertexCache = new HashMap<>();
         for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
             if (dir.offsetY == 0) {
                 for (Type type : Type.values()) {
@@ -238,8 +235,8 @@ public class FillGauge implements IInfoRenderer, IResourceManagerReloadListener 
 
         public static final GaugeInfo DEFAULT = new GaugeInfo(1, 0);
 
-        private int height;
-        private int yPosition;
+        private final int height;
+        private final int yPosition;
         Type type;
 
         GaugeInfo(int height, int position) {

@@ -75,7 +75,7 @@ public class ItemFilter implements IInventory, IItemFilter {
         this.isAdvanced = isAdvanced;
         this.numItems = numItems;
         items = new ItemStack[numItems];
-        oreIds = new ArrayList<int[]>(numItems);
+        oreIds = new ArrayList<>(numItems);
         for (int i = 0; i < numItems; i++) {
             oreIds.add(null);
         }

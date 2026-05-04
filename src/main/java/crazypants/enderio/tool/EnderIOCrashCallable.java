@@ -20,7 +20,7 @@ public class EnderIOCrashCallable implements ICrashCallable {
     }
 
     private List<String> collectData() {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
         if (FMLCommonHandler.instance().getSide() == Side.CLIENT && FMLClientHandler.instance().hasOptifine()) {
             result.add(" * Optifine is installed. This is NOT supported.");
         }

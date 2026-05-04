@@ -53,7 +53,7 @@ public class TileTelePad extends TileTravelAnchor implements IInternalPowerRecei
     private boolean inNetwork;
     private boolean isMaster;
 
-    private EnergyStorage energy = new EnergyStorage(
+    private final EnergyStorage energy = new EnergyStorage(
             Config.telepadPowerStorageRF,
             Config.telepadPowerPerTickRF,
             Config.telepadPowerPerTickRF);
@@ -69,7 +69,7 @@ public class TileTelePad extends TileTravelAnchor implements IInternalPowerRecei
 
     private int lastSyncPowerStored;
 
-    private Queue<Entity> toTeleport = Queues.newArrayDeque();
+    private final Queue<Entity> toTeleport = Queues.newArrayDeque();
     private int powerUsed;
     private int maxPower;
 

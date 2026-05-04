@@ -22,7 +22,7 @@ public class EnchanterModelRenderer extends TileEntitySpecialRenderer implements
 
     private static final String TEXTURE = "enderio:models/BookStand.png";
 
-    private EnchanterModel model = new EnchanterModel();
+    private final EnchanterModel model = new EnchanterModel();
 
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float tick) {

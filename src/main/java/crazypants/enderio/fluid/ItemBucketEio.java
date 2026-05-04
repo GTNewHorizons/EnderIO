@@ -25,7 +25,7 @@ public class ItemBucketEio extends ItemBucket {
         return b;
     }
 
-    private String fluidName;
+    private final String fluidName;
 
     protected ItemBucketEio(Block block, String fluidName) {
         super(block);

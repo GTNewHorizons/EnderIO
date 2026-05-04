@@ -12,9 +12,9 @@ import crazypants.enderio.network.PacketHandler;
 
 public class RedstoneModeButton extends CycleButton<RedstoneControlMode> {
 
-    private IRedstoneModeControlable model;
+    private final IRedstoneModeControlable model;
 
-    private BlockCoord bc;
+    private final BlockCoord bc;
 
     private String tooltipKey = "enderio.gui.tooltip.redstoneControlMode";
 

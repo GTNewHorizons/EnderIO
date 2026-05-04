@@ -42,7 +42,7 @@ public class PickableFarmer extends CustomSeedFarmer {
         player.theItemInWorldManager
                 .activateBlockOrUseItem(player, player.worldObj, null, bc.x, bc.y, bc.z, 0, 0, 0, 0);
 
-        List<EntityItem> drops = new ArrayList<EntityItem>();
+        List<EntityItem> drops = new ArrayList<>();
 
         ItemStack[] inv = player.inventory.mainInventory;
         for (int slot = 0; slot < inv.length; slot++) {

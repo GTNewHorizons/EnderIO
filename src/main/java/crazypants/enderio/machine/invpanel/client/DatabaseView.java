@@ -44,7 +44,7 @@ public class DatabaseView {
     private final Collator collator;
 
     public DatabaseView() {
-        filteredItems = new ArrayList<ItemEntry>();
+        filteredItems = new ArrayList<>();
         currentFilter = "";
         collator = Collator.getInstance(LOCALE);
     }

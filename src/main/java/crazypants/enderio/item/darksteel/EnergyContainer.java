@@ -5,9 +5,9 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class EnergyContainer {
 
-    private int capacityRF;
-    private int maxReceiveRF;
-    private int maxExtractRF;
+    private final int capacityRF;
+    private final int maxReceiveRF;
+    private final int maxExtractRF;
 
     public EnergyContainer(int capacityRF, int maxReceiveRF, int maxExtractRF) {
         this.capacityRF = capacityRF;

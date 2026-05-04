@@ -7,7 +7,7 @@ final class ChangeLogList implements ChangeLog {
     final ArrayList<ChangeLog> clList;
 
     public ChangeLogList(ChangeLog cl0, ChangeLog cl1) {
-        clList = new ArrayList<ChangeLog>(2);
+        clList = new ArrayList<>(2);
         clList.add(cl0);
         clList.add(cl1);
     }

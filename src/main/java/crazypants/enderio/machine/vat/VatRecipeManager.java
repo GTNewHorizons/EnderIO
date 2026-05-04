@@ -28,7 +28,7 @@ public class VatRecipeManager {
         return instance;
     }
 
-    private final List<IRecipe> recipes = new ArrayList<IRecipe>();
+    private final List<IRecipe> recipes = new ArrayList<>();
 
     public VatRecipeManager() {}
 

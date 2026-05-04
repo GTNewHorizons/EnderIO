@@ -12,7 +12,7 @@ import crazypants.enderio.item.darksteel.upgrade.AbstractUpgrade;
 
 public class GogglesOfRevealingUpgrade extends AbstractUpgrade {
 
-    private static String UPGRADE_NAME = "gogglesRevealing";
+    private static final String UPGRADE_NAME = "gogglesRevealing";
 
     public static final GogglesOfRevealingUpgrade INSTANCE = new GogglesOfRevealingUpgrade();
 
