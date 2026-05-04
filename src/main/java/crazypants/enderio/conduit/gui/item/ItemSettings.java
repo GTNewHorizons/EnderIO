@@ -57,8 +57,8 @@ public class ItemSettings extends BaseSettingsPanel {
     private final ColorButton insertChannelB;
     private final ColorButton extractChannelB;
 
-    private final int priLeft = 46;
-    private final int priWidth = 32;
+    private static final int priLeft = 46;
+    private static final int priWidth = 32;
 
     private IItemFilterGui insertFilterGui;
     private IItemFilterGui extractFilterGui;

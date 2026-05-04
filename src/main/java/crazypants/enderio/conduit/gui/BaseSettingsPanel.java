@@ -31,7 +31,7 @@ public class BaseSettingsPanel implements ITabPanel {
     static final int ID_EXTRACT_ENABLED = 328;
     protected static final int ID_INSERT_FILTER_OPTIONS = 329;
     protected static final int ID_EXTRACT_FILTER_OPTIONS = 330;
-    protected final int ID_ENABLED = 331;
+    protected static final int ID_ENABLED = 331;
 
     protected final @Nonnull IWidgetIcon icon;
     protected final @Nonnull GuiExternalConnection gui;

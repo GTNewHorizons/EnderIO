@@ -92,8 +92,8 @@ public class TileSliceAndSplice extends AbstractPoweredTaskEntity {
             Capacitors.ENDERGISED_CAPACITOR.capacitor.getMaxEnergyStored(),
             POWER_PER_TICK_TEN);
 
-    private final int axeIndex = 6;
-    private final int shearsIndex = 7;
+    private static final int axeIndex = 6;
+    private static final int shearsIndex = 7;
     private EntityLivingBase fakePlayer;
 
     public TileSliceAndSplice() {

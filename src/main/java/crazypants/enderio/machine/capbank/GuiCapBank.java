@@ -48,13 +48,13 @@ public class GuiCapBank extends GuiContainerBaseEIO {
     private static final int POWER_HEIGHT = 68;
     protected static final int BOTTOM_POWER_Y = POWER_Y + POWER_HEIGHT;
 
-    private final int inputX = 78 + 24;
-    private final int inputY = 18;
+    private static final int inputX = 78 + 24;
+    private static final int inputY = 18;
 
-    private final int outputX = 78 + 24;
-    private final int outputY = 36;
+    private static final int outputX = 78 + 24;
+    private static final int outputY = 36;
 
-    private final int rightMargin = 8 + 24;
+    private static final int rightMargin = 8 + 24;
 
     private final TileCapBank capBank;
 

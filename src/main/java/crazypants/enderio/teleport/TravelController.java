@@ -92,7 +92,7 @@ public class TravelController {
 
     private int delayTimer = 0;
 
-    private final int timer = Config.travelAnchorCooldown;
+    private static final int timer = Config.travelAnchorCooldown;
 
     private boolean tempJump;
 

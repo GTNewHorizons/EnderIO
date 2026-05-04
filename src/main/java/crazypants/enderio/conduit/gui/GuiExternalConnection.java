@@ -70,7 +70,7 @@ public class GuiExternalConnection extends GuiContainerBaseEIO {
     private final List<ITabPanel> tabs = new ArrayList<>();
     private int activeTab = 0;
 
-    private final int tabYOffset = 4;
+    private static final int tabYOffset = 4;
 
     private final ExternalConnectionContainer container;
 

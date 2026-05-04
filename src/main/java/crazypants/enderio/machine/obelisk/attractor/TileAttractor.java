@@ -52,7 +52,7 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
     private int powerPerTick;
     private Set<EntityLiving> tracking = new HashSet<>();
     private int tickCounter = 0;
-    private final int maxMobsAttracted = 20;
+    private static final int maxMobsAttracted = 20;
 
     private boolean showingRange;
 

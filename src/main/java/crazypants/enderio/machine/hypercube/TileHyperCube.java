@@ -121,7 +121,7 @@ public class TileHyperCube extends TileEntityEio
     private Channel registeredChannel = null;
     private UUID owner;
 
-    private final boolean init = true;
+    private static final boolean init = true;
 
     private float milliBucketsTransfered = 0;
 

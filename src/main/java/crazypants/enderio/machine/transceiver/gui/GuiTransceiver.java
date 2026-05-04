@@ -28,7 +28,7 @@ public class GuiTransceiver extends GuiPoweredMachineBase<TileTransceiver> {
 
     private int activeTab = 0;
     private final List<ITabPanel> tabs = new ArrayList<>();
-    private final int tabYOffset = 4;
+    private static final int tabYOffset = 4;
     GeneralTab generalTab;
 
     public GuiTransceiver(InventoryPlayer par1InventoryPlayer, TileTransceiver te) {

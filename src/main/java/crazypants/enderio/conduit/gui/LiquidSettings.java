@@ -70,7 +70,7 @@ public class LiquidSettings extends BaseSettingsPanel {
     private static final Rectangle extractFilterBounds = new Rectangle(filterEX, filterY, 90, 18);
     private GuiToolTip[] filterToolTips;
 
-    private final boolean inOutShowIn = true;
+    private static final boolean inOutShowIn = true;
     private IconButton insertWhiteListB;
     private IconButton extractWhiteListB;
 

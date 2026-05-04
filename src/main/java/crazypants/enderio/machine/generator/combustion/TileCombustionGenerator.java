@@ -43,7 +43,7 @@ public class TileCombustionGenerator extends AbstractGeneratorEntity implements 
 
     private boolean generatedDirty = false;
 
-    private final int maxOutputTick = 1280;
+    private static final int maxOutputTick = 1280;
 
     private static final int IO_MB_TICK = 250;
 

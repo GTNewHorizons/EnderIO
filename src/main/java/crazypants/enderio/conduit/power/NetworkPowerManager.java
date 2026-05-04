@@ -26,8 +26,8 @@ public class NetworkPowerManager {
     int maxEnergyStored;
     int energyStored;
 
-    private final int updateRenderTicks = 10;
-    private final int inactiveTicks = 100;
+    private static final int updateRenderTicks = 10;
+    private static final int inactiveTicks = 100;
 
     private final List<ReceptorEntry> receptors = new ArrayList<>();
     private ListIterator<ReceptorEntry> receptorIterator = receptors.listIterator();
