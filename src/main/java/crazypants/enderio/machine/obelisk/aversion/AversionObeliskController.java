@@ -23,7 +23,7 @@ public class AversionObeliskController {
         MinecraftForge.EVENT_BUS.register(AversionObeliskController.instance);
     }
 
-    private Map<Integer, Map<BlockCoord, TileAversionObelisk>> perWorldGuards = new HashMap<Integer, Map<BlockCoord, TileAversionObelisk>>();
+    private final Map<Integer, Map<BlockCoord, TileAversionObelisk>> perWorldGuards = new HashMap<Integer, Map<BlockCoord, TileAversionObelisk>>();
 
     private AversionObeliskController() {}
 

@@ -89,7 +89,7 @@ public class ItemFusedQuartzFrame extends Item {
 
     public final class FramePainterRecipe extends BasicPainterTemplate {
 
-        private ItemFusedQuartzFrame i;
+        private final ItemFusedQuartzFrame i;
 
         public FramePainterRecipe(ItemFusedQuartzFrame itemFusedQuartzFrame) {
             i = itemFusedQuartzFrame;

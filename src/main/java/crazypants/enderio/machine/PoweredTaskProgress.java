@@ -10,7 +10,7 @@ import crazypants.enderio.machine.recipe.RecipeBonusType;
  */
 public class PoweredTaskProgress implements IPoweredTask {
 
-    private float progress;
+    private final float progress;
 
     public PoweredTaskProgress(IPoweredTask task) {
         progress = task.getProgress();

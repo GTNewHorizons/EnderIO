@@ -10,7 +10,7 @@ import crazypants.enderio.item.darksteel.DarkSteelItems;
 
 public class NightVisionUpgrade extends AbstractUpgrade {
 
-    private static String UPGRADE_NAME = "nightVision";
+    private static final String UPGRADE_NAME = "nightVision";
 
     public static final NightVisionUpgrade INSTANCE = new NightVisionUpgrade();
 

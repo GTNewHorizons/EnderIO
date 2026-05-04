@@ -34,7 +34,7 @@ public class TelePadSpecialRenderer extends TravelEntitySpecialRenderer {
 
     private final GroupObject glass;
 
-    private static Random rand = new Random();
+    private static final Random rand = new Random();
 
     public TelePadSpecialRenderer(TelePadRenderer telePadRenderer) {
         super();

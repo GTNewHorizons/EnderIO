@@ -13,7 +13,7 @@ import crazypants.enderio.machine.farm.TileFarmStation;
 public class FarmersCommune implements IFarmerJoe {
 
     public static FarmersCommune instance = new FarmersCommune();
-    private static List<ItemStack> disableTrees = new ArrayList<ItemStack>();
+    private static final List<ItemStack> disableTrees = new ArrayList<ItemStack>();
 
     public static void joinCommune(IFarmerJoe joe) {
         if (joe instanceof CustomSeedFarmer) {
@@ -27,7 +27,7 @@ public class FarmersCommune implements IFarmerJoe {
         throw new UnsupportedOperationException("As if this would be implemented. The commune is for life!");
     }
 
-    private List<IFarmerJoe> farmers = new ArrayList<IFarmerJoe>();
+    private final List<IFarmerJoe> farmers = new ArrayList<IFarmerJoe>();
 
     private FarmersCommune() {}
 

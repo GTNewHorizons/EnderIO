@@ -48,8 +48,8 @@ public class GuiTravelAccessable extends GuiContainerBaseEIO {
     private final String visibleDesc2Str;
 
     private final ITravelAccessable te;
-    private int col0x;
-    private int col1x;
+    private final int col0x;
+    private final int col1x;
     private int col2x;
 
     protected World world;

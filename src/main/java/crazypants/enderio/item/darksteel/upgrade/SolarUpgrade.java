@@ -57,7 +57,7 @@ public class SolarUpgrade extends AbstractUpgrade {
         return new ItemStack(EnderIO.blockSolarPanel, 1, level - 1);
     }
 
-    private byte level;
+    private final byte level;
 
     public SolarUpgrade(NBTTagCompound tag) {
         super(UPGRADE_NAME, tag);
@@ -119,7 +119,7 @@ public class SolarUpgrade extends AbstractUpgrade {
     @SideOnly(Side.CLIENT)
     private class Render implements IRenderUpgrade {
 
-        private EntityItem item = new EntityItem(Minecraft.getMinecraft().theWorld);
+        private final EntityItem item = new EntityItem(Minecraft.getMinecraft().theWorld);
 
         @Override
         public void render(RenderPlayerEvent event, ItemStack stack, boolean head) {

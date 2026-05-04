@@ -238,8 +238,8 @@ public class FillGauge implements IInfoRenderer, IResourceManagerReloadListener 
 
         public static final GaugeInfo DEFAULT = new GaugeInfo(1, 0);
 
-        private int height;
-        private int yPosition;
+        private final int height;
+        private final int yPosition;
         Type type;
 
         GaugeInfo(int height, int position) {

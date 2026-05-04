@@ -212,7 +212,7 @@ public class RecipeConfig {
 
         private final String name;
 
-        private Map<String, RecipeElement> recipes = new LinkedHashMap<String, RecipeElement>();
+        private final Map<String, RecipeElement> recipes = new LinkedHashMap<String, RecipeElement>();
 
         private boolean enabled = true;
 
@@ -272,15 +272,15 @@ public class RecipeConfig {
 
     public static class RecipeElement {
 
-        private List<RecipeInput> inputs = new ArrayList<RecipeInput>();
+        private final List<RecipeInput> inputs = new ArrayList<RecipeInput>();
 
-        private List<RecipeOutput> outputs = new ArrayList<RecipeOutput>();
+        private final List<RecipeOutput> outputs = new ArrayList<RecipeOutput>();
 
         private int energyRequired;
 
         private RecipeBonusType bonusType = RecipeBonusType.MULTIPLY_OUTPUT;
 
-        private String name;
+        private final String name;
 
         private boolean allowMissing = false;
         private boolean invalidated = false;

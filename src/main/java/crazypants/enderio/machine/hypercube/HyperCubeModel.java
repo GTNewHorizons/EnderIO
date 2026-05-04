@@ -16,7 +16,7 @@ public class HyperCubeModel extends ModelBase implements IModel {
     private static final String TEXTURE = "enderio:models/hyperCube.png";
     private static final String MODEL = "enderio:models/hyperCube.obj";
 
-    private IModelCustom model;
+    private final IModelCustom model;
 
     public HyperCubeModel() {
         model = AdvancedModelLoader.loadModel(new ResourceLocation(MODEL));

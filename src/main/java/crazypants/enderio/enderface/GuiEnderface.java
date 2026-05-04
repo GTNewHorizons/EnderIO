@@ -53,9 +53,9 @@ public class GuiEnderface extends GuiScreen {
     private final int ioX;
     private final int ioY;
     private final int ioZ;
-    private boolean chunkLoaded;
+    private final boolean chunkLoaded;
 
-    private List<ViewableBlocks> blocks = new ArrayList<ViewableBlocks>();
+    private final List<ViewableBlocks> blocks = new ArrayList<ViewableBlocks>();
 
     private int gw;
     private int gh;
@@ -77,7 +77,7 @@ public class GuiEnderface extends GuiScreen {
 
     private float scaleAnimX;
 
-    private int range;
+    private final int range;
 
     boolean dragging = false;
 

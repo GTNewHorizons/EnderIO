@@ -15,7 +15,7 @@ import crazypants.enderio.machine.capbank.TileCapBank;
 
 public class NetworkUtil {
 
-    private static AtomicInteger nextID = new AtomicInteger(0);
+    private static final AtomicInteger nextID = new AtomicInteger(0);
 
     public static void ensureValidNetwork(TileCapBank cap) {
         World world = cap.getWorldObj();

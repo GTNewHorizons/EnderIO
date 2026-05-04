@@ -52,7 +52,7 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
     private int powerPerTick;
     private Set<EntityLiving> tracking = new HashSet<EntityLiving>();
     private int tickCounter = 0;
-    private int maxMobsAttracted = 20;
+    private final int maxMobsAttracted = 20;
 
     private boolean showingRange;
 
@@ -400,10 +400,10 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
 
     private static class AttractTask extends EntityAIBase {
 
-        private EntityLiving mob;
-        private BlockCoord coord;
-        private FakePlayer target;
-        private String entityId;
+        private final EntityLiving mob;
+        private final BlockCoord coord;
+        private final FakePlayer target;
+        private final String entityId;
         private int updatesSincePathing;
 
         private boolean started = false;

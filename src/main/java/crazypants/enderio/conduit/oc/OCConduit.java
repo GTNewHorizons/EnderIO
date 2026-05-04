@@ -49,7 +49,7 @@ public class OCConduit extends AbstractConduit implements IOCConduit {
 
     protected OCConduitNetwork network;
 
-    private Map<ForgeDirection, DyeColor> signalColors = new HashMap<ForgeDirection, DyeColor>();
+    private final Map<ForgeDirection, DyeColor> signalColors = new HashMap<ForgeDirection, DyeColor>();
 
     public static IIcon[] coreTextures;
     public static IIcon[] longTextures;

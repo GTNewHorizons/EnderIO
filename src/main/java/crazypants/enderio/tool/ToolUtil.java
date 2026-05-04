@@ -132,8 +132,8 @@ public class ToolUtil {
 
     public static class YetaWrenchProxy implements MethodInterceptor {
 
-        private ItemYetaWrench item;
-        private Map<Class<?>, IToolImpl> impls;
+        private final ItemYetaWrench item;
+        private final Map<Class<?>, IToolImpl> impls;
 
         private YetaWrenchProxy(ItemYetaWrench item, List<IToolImpl> toolImpls) {
             this.item = item;

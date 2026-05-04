@@ -37,8 +37,8 @@ import crazypants.enderio.power.PowerDisplayUtil;
 
 public class VatRecipeHandler extends TemplateRecipeHandler {
 
-    private Rectangle inTankBounds = new Rectangle(25, 1, 15, 47);
-    private Rectangle outTankBounds = new Rectangle(127, 1, 15, 47);
+    private final Rectangle inTankBounds = new Rectangle(25, 1, 15, 47);
+    private final Rectangle outTankBounds = new Rectangle(127, 1, 15, 47);
 
     public VatRecipeHandler() {}
 
@@ -277,12 +277,12 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
 
     public class InnerVatRecipe extends TemplateRecipeHandler.CachedRecipe {
 
-        private List<PositionedStack> inputs = new ArrayList<>();
-        private ItemStackMap<Float> firstItemMultiplier = new ItemStackMap();
-        private ItemStackMap<Float> secondItemMultiplier = new ItemStackMap();
-        private Map<FluidStack, Float> fluidMultiplier = new HashMap<>();
-        private int energy;
-        private FluidStack result;
+        private final List<PositionedStack> inputs = new ArrayList<>();
+        private final ItemStackMap<Float> firstItemMultiplier = new ItemStackMap();
+        private final ItemStackMap<Float> secondItemMultiplier = new ItemStackMap();
+        private final Map<FluidStack, Float> fluidMultiplier = new HashMap<>();
+        private final int energy;
+        private final FluidStack result;
         private FluidStack inFluid;
 
         public int getEnergy() {

@@ -84,7 +84,7 @@ public class TravelController {
      */
     public SetMultimap<Integer, BlockCoord> travelDestinations = MultimapBuilder.hashKeys().hashSetValues().build();
 
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
     private boolean wasJumping = false;
 

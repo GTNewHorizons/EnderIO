@@ -21,10 +21,10 @@ public class LiquidConduitNetwork extends AbstractTankConduitNetwork<LiquidCondu
 
     private int ticksEmpty = 0;
 
-    private int maxFlowsPerTick = 10;
+    private final int maxFlowsPerTick = 10;
     private int lastFlowIndex = 0;
 
-    private boolean printFlowTiming = false;
+    private final boolean printFlowTiming = false;
 
     private int lastPushToken = 0;
 

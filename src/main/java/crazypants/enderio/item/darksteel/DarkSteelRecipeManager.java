@@ -43,7 +43,7 @@ public class DarkSteelRecipeManager {
 
     public static DarkSteelRecipeManager instance = new DarkSteelRecipeManager();
 
-    private List<IDarkSteelUpgrade> upgrades = new ArrayList<IDarkSteelUpgrade>();
+    private final List<IDarkSteelUpgrade> upgrades = new ArrayList<IDarkSteelUpgrade>();
 
     public DarkSteelRecipeManager() {
         upgrades.add(EnergyUpgrade.EMPOWERED);

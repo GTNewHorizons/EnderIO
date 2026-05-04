@@ -48,21 +48,21 @@ public class GuiCapBank extends GuiContainerBaseEIO {
     private static final int POWER_HEIGHT = 68;
     protected static final int BOTTOM_POWER_Y = POWER_Y + POWER_HEIGHT;
 
-    private int inputX = 78 + 24;
-    private int inputY = 18;
+    private final int inputX = 78 + 24;
+    private final int inputY = 18;
 
-    private int outputX = 78 + 24;
-    private int outputY = 36;
+    private final int outputX = 78 + 24;
+    private final int outputY = 36;
 
-    private int rightMargin = 8 + 24;
+    private final int rightMargin = 8 + 24;
 
     private final TileCapBank capBank;
 
-    private RedstoneModeButton inputRsButton;
-    private RedstoneModeButton outputRsButton;
+    private final RedstoneModeButton inputRsButton;
+    private final RedstoneModeButton outputRsButton;
 
-    private TextFieldEnder maxInputTF;
-    private TextFieldEnder maxOutputTF;
+    private final TextFieldEnder maxInputTF;
+    private final TextFieldEnder maxOutputTF;
 
     private final GuiOverlayIoConfig configOverlay;
     private final GuiButtonIoConfig configB;

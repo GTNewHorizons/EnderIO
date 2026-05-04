@@ -31,7 +31,7 @@ import crazypants.enderio.tool.SmartTank;
 
 public class TileTank extends AbstractMachineEntity implements IFluidHandler, ITankAccess, IComparatorOutput {
 
-    private static int IO_MB_TICK = 100;
+    private static final int IO_MB_TICK = 100;
 
     protected SmartTank tank; // = new FluidTankEio(16000);
     protected int lastUpdateLevel = -1;

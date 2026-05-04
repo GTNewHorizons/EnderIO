@@ -26,11 +26,11 @@ public class VanillaSmeltingRecipe implements IMachineRecipe {
     // We will use the same energy as per a standard furnace.
     // To do the conversion between fuel burning and RF, use the Stirling Gen
     // which produces ten RF per tick of burn time
-    private static int RF_PER_ITEM = TileEntityFurnace.getItemBurnTime(new ItemStack(Items.coal, 1, 0)) * 10 / 8;
+    private static final int RF_PER_ITEM = TileEntityFurnace.getItemBurnTime(new ItemStack(Items.coal, 1, 0)) * 10 / 8;
 
     private boolean enabled = true;
 
-    private List<RecipeInput> excludes = new ArrayList<RecipeInput>();
+    private final List<RecipeInput> excludes = new ArrayList<RecipeInput>();
 
     @Override
     public String getUid() {

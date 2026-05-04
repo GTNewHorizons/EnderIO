@@ -21,7 +21,7 @@ import crazypants.enderio.item.darksteel.DarkSteelItems;
 
 public class GliderUpgrade extends AbstractUpgrade {
 
-    private static String UPGRADE_NAME = "glide";
+    private static final String UPGRADE_NAME = "glide";
 
     public static final GliderUpgrade INSTANCE = new GliderUpgrade();
 
@@ -77,8 +77,8 @@ public class GliderUpgrade extends AbstractUpgrade {
     @SideOnly(Side.CLIENT)
     private class Render implements IRenderUpgrade {
 
-        private EntityItem item = new EntityItem(Minecraft.getMinecraft().theWorld);
-        private ItemStack glider = new ItemStack(DarkSteelItems.itemGliderWing, 1, 1);
+        private final EntityItem item = new EntityItem(Minecraft.getMinecraft().theWorld);
+        private final ItemStack glider = new ItemStack(DarkSteelItems.itemGliderWing, 1, 1);
 
         private Render() {
             item.setEntityItemStack(glider);

@@ -121,14 +121,14 @@ public class TileHyperCube extends TileEntityEio
     private Channel registeredChannel = null;
     private UUID owner;
 
-    private boolean init = true;
+    private final boolean init = true;
 
     private float milliBucketsTransfered = 0;
 
-    private EnumMap<SubChannel, IoMode> ioModes = new EnumMap<TileHyperCube.SubChannel, TileHyperCube.IoMode>(
+    private final EnumMap<SubChannel, IoMode> ioModes = new EnumMap<TileHyperCube.SubChannel, TileHyperCube.IoMode>(
             SubChannel.class);
 
-    private ItemRecieveBuffer recieveBuffer;
+    private final ItemRecieveBuffer recieveBuffer;
 
     protected RedstoneControlMode redstoneControlMode = RedstoneControlMode.IGNORE;
     protected boolean redstoneCheckPassed;

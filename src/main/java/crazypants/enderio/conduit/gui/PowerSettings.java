@@ -21,9 +21,9 @@ public class PowerSettings extends BaseSettingsPanel {
 
     private static final int ID_COLOR_BUTTON = GuiExternalConnection.nextButtonId();
 
-    private IPowerConduit conduit;
-    private RedstoneModeButton rsB;
-    private ColorButton colorB;
+    private final IPowerConduit conduit;
+    private final RedstoneModeButton rsB;
+    private final ColorButton colorB;
 
     protected PowerSettings(final GuiExternalConnection gui, IConduit con) {
         super(IconEIO.WRENCH_OVERLAY_POWER, EnderIO.lang.localize("itemPowerConduit.name"), gui, con);

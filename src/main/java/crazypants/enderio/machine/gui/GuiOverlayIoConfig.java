@@ -33,7 +33,7 @@ public class GuiOverlayIoConfig implements IGuiOverlay {
 
     private IoConfigRenderer renderer;
 
-    private List<BlockCoord> coords = new ArrayList<BlockCoord>();
+    private final List<BlockCoord> coords = new ArrayList<BlockCoord>();
 
     public GuiOverlayIoConfig(IIoConfigurable ioConf) {
         coords.add(ioConf.getLocation());

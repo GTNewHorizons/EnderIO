@@ -151,8 +151,8 @@ public class SoulBinderRecipeHandler extends TemplateRecipeHandler {
 
         private final ArrayList<PositionedStack> input = new ArrayList<PositionedStack>();
         private final PositionedStack output;
-        private int energy;
-        private int experience;
+        private final int energy;
+        private final int experience;
 
         public int getEnergy() {
             return energy;

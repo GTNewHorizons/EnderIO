@@ -149,11 +149,11 @@ public class InsulatedRedstoneConduit extends RedstoneConduit implements IInsula
         return CONNECTABLE_CLASSES;
     }
 
-    private Map<ForgeDirection, ConnectionMode> forcedConnections = new HashMap<ForgeDirection, ConnectionMode>();
+    private final Map<ForgeDirection, ConnectionMode> forcedConnections = new HashMap<ForgeDirection, ConnectionMode>();
 
-    private Map<ForgeDirection, DyeColor> signalColors = new HashMap<ForgeDirection, DyeColor>();
+    private final Map<ForgeDirection, DyeColor> signalColors = new HashMap<ForgeDirection, DyeColor>();
 
-    private Map<ForgeDirection, Boolean> signalStrengths = new HashMap<ForgeDirection, Boolean>();
+    private final Map<ForgeDirection, Boolean> signalStrengths = new HashMap<ForgeDirection, Boolean>();
 
     @Override
     public boolean onBlockActivated(EntityPlayer player, RaytraceResult res, List<RaytraceResult> all) {

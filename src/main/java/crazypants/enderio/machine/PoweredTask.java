@@ -24,9 +24,9 @@ public class PoweredTask implements IPoweredTask {
 
     private float requiredEnergy;
 
-    private RecipeBonusType bonusType;
+    private final RecipeBonusType bonusType;
 
-    private IMachineRecipe recipe;
+    private final IMachineRecipe recipe;
 
     private float chance;
 

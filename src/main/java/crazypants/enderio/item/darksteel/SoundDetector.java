@@ -26,9 +26,9 @@ public class SoundDetector {
     public static SoundDetector instance = new SoundDetector();
 
     private List<SoundSource> sounds;
-    private ArrayBlockingQueue<SoundSource> soundQueue = new ArrayBlockingQueue<SoundSource>(MAX_ENTITIES);
+    private final ArrayBlockingQueue<SoundSource> soundQueue = new ArrayBlockingQueue<SoundSource>(MAX_ENTITIES);
 
-    private Minecraft mc = Minecraft.getMinecraft();
+    private final Minecraft mc = Minecraft.getMinecraft();
 
     boolean enabled = false;
 

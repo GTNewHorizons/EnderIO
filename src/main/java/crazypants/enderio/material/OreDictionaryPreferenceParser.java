@@ -93,7 +93,7 @@ public final class OreDictionaryPreferenceParser extends DefaultHandler {
     public static final String AT_ITEM_NAME = "itemName";
     public static final String AT_MOD_ID = "modID";
 
-    private OreDictionaryPreferences prefs;
+    private final OreDictionaryPreferences prefs;
     private String oreDictName;
     private ItemStack prefStack;
 

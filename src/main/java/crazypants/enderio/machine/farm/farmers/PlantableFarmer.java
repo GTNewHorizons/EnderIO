@@ -24,7 +24,7 @@ import crazypants.enderio.machine.farm.TileFarmStation;
 
 public class PlantableFarmer implements IFarmerJoe {
 
-    private Set<Block> harvestExcludes = new HashSet<Block>();
+    private final Set<Block> harvestExcludes = new HashSet<Block>();
 
     public void addHarvestExlude(Block block) {
         harvestExcludes.add(block);

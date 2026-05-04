@@ -22,9 +22,9 @@ public class TranslatedCubeRenderer {
 
     public static TranslatedCubeRenderer instance = new TranslatedCubeRenderer();
 
-    private XFormRenderer xformRenderer = new XFormRenderer();
+    private final XFormRenderer xformRenderer = new XFormRenderer();
 
-    private CustomCubeRenderer ccr = new CustomCubeRenderer();
+    private final CustomCubeRenderer ccr = new CustomCubeRenderer();
 
     public void renderBoundingBox(int x, int y, int z, Block block, BoundingBox bb, VertexTransform vt,
             boolean enableLighting) {

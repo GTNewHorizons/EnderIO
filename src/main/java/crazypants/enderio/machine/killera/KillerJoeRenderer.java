@@ -35,7 +35,7 @@ public class KillerJoeRenderer extends TileEntitySpecialRenderer implements IIte
 
     private static final ItemStack DEFAULT_SWORD = new ItemStack(Items.iron_sword);
 
-    private ModelZombieJar model = new ModelZombieJar();
+    private final ModelZombieJar model = new ModelZombieJar();
 
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float tick) {

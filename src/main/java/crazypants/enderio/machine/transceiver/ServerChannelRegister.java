@@ -206,7 +206,7 @@ public class ServerChannelRegister extends ChannelRegister {
     // -----------------------------------------------------------------------------------------------
 
     private final List<TileTransceiver> transceivers = new ArrayList<TileTransceiver>();
-    private Map<Channel, RoundRobinIterator<TileTransceiver>> iterators = new HashMap<Channel, RoundRobinIterator<TileTransceiver>>();
+    private final Map<Channel, RoundRobinIterator<TileTransceiver>> iterators = new HashMap<Channel, RoundRobinIterator<TileTransceiver>>();
 
     private ServerChannelRegister() {}
 
@@ -396,7 +396,7 @@ public class ServerChannelRegister extends ChannelRegister {
 
     private static class SaveRunnable implements Runnable {
 
-        private ListMultimap<ChannelType, Channel> chans;
+        private final ListMultimap<ChannelType, Channel> chans;
 
         public SaveRunnable(ListMultimap<ChannelType, Channel> chans) {
             this.chans = chans;

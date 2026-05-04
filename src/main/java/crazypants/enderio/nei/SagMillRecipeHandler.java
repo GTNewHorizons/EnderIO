@@ -28,7 +28,7 @@ import crazypants.enderio.power.PowerDisplayUtil;
 
 public class SagMillRecipeHandler extends TemplateRecipeHandler {
 
-    private RecipeComparator comparator = new RecipeComparator();
+    private final RecipeComparator comparator = new RecipeComparator();
 
     @Override
     public String getRecipeName() {
@@ -155,11 +155,11 @@ public class SagMillRecipeHandler extends TemplateRecipeHandler {
 
         protected int numTargetOuput;
         protected int indexOfTargetOutput;
-        private List<PositionedStack> input;
-        private PositionedStack output;
-        private ArrayList<PositionedStack> otherOutputs;
-        private float[] outputChance;
-        private int energy;
+        private final List<PositionedStack> input;
+        private final PositionedStack output;
+        private final ArrayList<PositionedStack> otherOutputs;
+        private final float[] outputChance;
+        private final int energy;
 
         public int getEnergy() {
             return energy;

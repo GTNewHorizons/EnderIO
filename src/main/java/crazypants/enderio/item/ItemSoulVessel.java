@@ -49,7 +49,7 @@ public class ItemSoulVessel extends Item implements IResourceTooltipProvider {
 
     private IIcon filledIcon;
 
-    private List<String> blackList;
+    private final List<String> blackList;
 
     protected ItemSoulVessel() {
         setCreativeTab(EnderIOTab.tabEnderIO);

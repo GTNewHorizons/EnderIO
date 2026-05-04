@@ -39,7 +39,7 @@ public class BigItemFilterGui implements IItemFilterGui {
     private final IItemFilterContainer filterContainer;
     private final ItemFilter filter;
 
-    private int buttonIdOffset;
+    private final int buttonIdOffset;
     private int xOffset;
     private int yOffset;
 

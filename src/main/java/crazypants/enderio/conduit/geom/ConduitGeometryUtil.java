@@ -33,7 +33,7 @@ public class ConduitGeometryUtil {
 
     public static final float CONNECTOR_DEPTH = 0.05f;
 
-    private static Map<ForgeDirection, BoundingBox[]> EXTERNAL_CONNECTOR_BOUNDS = new HashMap<ForgeDirection, BoundingBox[]>();
+    private static final Map<ForgeDirection, BoundingBox[]> EXTERNAL_CONNECTOR_BOUNDS = new HashMap<ForgeDirection, BoundingBox[]>();
 
     static {
         setupBounds(0.5f);
@@ -106,9 +106,9 @@ public class ConduitGeometryUtil {
         return val < 0 ? 1 + val : val;
     }
 
-    private Map<GeometryKey, BoundingBox> boundsCache = new HashMap<GeometryKey, BoundingBox>();
+    private final Map<GeometryKey, BoundingBox> boundsCache = new HashMap<GeometryKey, BoundingBox>();
 
-    private EnumMap<ConduitConnectorType, BoundingBox> connectorBounds = new EnumMap<ConduitConnectorType, BoundingBox>(
+    private final EnumMap<ConduitConnectorType, BoundingBox> connectorBounds = new EnumMap<ConduitConnectorType, BoundingBox>(
             ConduitConnectorType.class);
 
     private ConduitGeometryUtil() {}

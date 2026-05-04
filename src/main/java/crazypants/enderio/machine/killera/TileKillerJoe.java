@@ -104,7 +104,7 @@ public class TileKillerJoe extends AbstractMachineEntity
 
     public static class ZombieCache {
 
-        private Set<EntityZombie> cache = Sets.newHashSet();
+        private final Set<EntityZombie> cache = Sets.newHashSet();
 
         @SubscribeEvent
         public void onSummonAid(SummonAidEvent event) {

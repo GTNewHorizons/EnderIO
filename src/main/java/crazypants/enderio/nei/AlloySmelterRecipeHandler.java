@@ -159,9 +159,9 @@ public class AlloySmelterRecipeHandler extends TemplateRecipeHandler {
 
     public class AlloySmelterRecipe extends TemplateRecipeHandler.CachedRecipe {
 
-        private ArrayList<PositionedStack> input;
+        private final ArrayList<PositionedStack> input;
         private PositionedStack output;
-        private int energy;
+        private final int energy;
 
         public int getEnergy() {
             return energy;

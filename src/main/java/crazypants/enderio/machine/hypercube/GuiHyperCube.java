@@ -55,26 +55,26 @@ public class GuiHyperCube extends GuiContainerBaseEIO {
 
     private final TileHyperCube cube;
 
-    private IconButton addButton;
-    private ToggleButton privateButton;
+    private final IconButton addButton;
+    private final ToggleButton privateButton;
 
-    private TextFieldEnder newChannelTF;
+    private final TextFieldEnder newChannelTF;
 
-    private GuiChannelList publicChannelList;
-    private GuiChannelList privateChannelList;
-    private ListSelectionListener<Channel> selectionListener;
+    private final GuiChannelList publicChannelList;
+    private final GuiChannelList privateChannelList;
+    private final ListSelectionListener<Channel> selectionListener;
 
-    private IconButton selectPublicB;
-    private IconButton deletePublicB;
+    private final IconButton selectPublicB;
+    private final IconButton deletePublicB;
 
-    private IconButton selectPrivateB;
-    private IconButton deletePrivateB;
+    private final IconButton selectPrivateB;
+    private final IconButton deletePrivateB;
 
-    private IconButton powerB;
-    private IconButton fluidB;
-    private IconButton itemB;
+    private final IconButton powerB;
+    private final IconButton fluidB;
+    private final IconButton itemB;
 
-    private RedstoneModeButton rsB;
+    private final RedstoneModeButton rsB;
 
     public GuiHyperCube(TileHyperCube te) {
         super(new ContainerHyperCube(), "hyperCube");

@@ -26,8 +26,8 @@ public class NetworkPowerManager {
     int maxEnergyStored;
     int energyStored;
 
-    private int updateRenderTicks = 10;
-    private int inactiveTicks = 100;
+    private final int updateRenderTicks = 10;
+    private final int inactiveTicks = 100;
 
     private final List<ReceptorEntry> receptors = new ArrayList<PowerConduitNetwork.ReceptorEntry>();
     private ListIterator<ReceptorEntry> receptorIterator = receptors.listIterator();

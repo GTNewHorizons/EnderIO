@@ -40,7 +40,7 @@ public class BlockPaintedStair extends BlockStairs implements ITileEntityProvide
 
     private IIcon lastRemovedComponetIcon = null;
 
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
     protected BlockPaintedStair() {
         super(Blocks.stone, 0);

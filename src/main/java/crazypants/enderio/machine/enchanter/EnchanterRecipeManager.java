@@ -9,7 +9,7 @@ import crazypants.enderio.Log;
 
 public class EnchanterRecipeManager {
 
-    private static EnchanterRecipeManager instance = new EnchanterRecipeManager();
+    private static final EnchanterRecipeManager instance = new EnchanterRecipeManager();
 
     public static EnchanterRecipeManager getInstance() {
         return instance;

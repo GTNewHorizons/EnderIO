@@ -45,7 +45,7 @@ public class CrusherRecipeManager {
 
     private final List<GrindingBall> balls = new ArrayList<GrindingBall>();
 
-    private Set<ItemStack> excludedStacks = new HashSet<ItemStack>();
+    private final Set<ItemStack> excludedStacks = new HashSet<ItemStack>();
 
     public CrusherRecipeManager() {}
 

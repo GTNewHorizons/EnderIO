@@ -16,7 +16,7 @@ import crazypants.enderio.ModObject;
 
 public class BlockItemPaintedSlab extends ItemSlab {
 
-    private boolean isFullBlock;
+    private final boolean isFullBlock;
 
     public BlockItemPaintedSlab(Block blk) {
         super(blk, EnderIO.blockPaintedSlab, EnderIO.blockPaintedDoubleSlab, blk == EnderIO.blockPaintedDoubleSlab);

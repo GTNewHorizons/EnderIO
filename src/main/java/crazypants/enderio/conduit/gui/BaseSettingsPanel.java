@@ -41,8 +41,8 @@ public class BaseSettingsPanel implements ITabPanel {
 
     protected ConnectionMode oldConnectionMode;
 
-    private @Nonnull String inputHeading;
-    private @Nonnull String outputHeading;
+    private final @Nonnull String inputHeading;
+    private final @Nonnull String outputHeading;
 
     private boolean insertEnabled = false;
     private boolean extractEnabled = false;

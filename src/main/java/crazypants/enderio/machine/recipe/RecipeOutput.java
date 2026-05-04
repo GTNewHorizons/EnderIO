@@ -10,7 +10,7 @@ public class RecipeOutput {
     private final FluidStack outputFluid;
     private final ItemStack output;
     private final float chance;
-    private float exp;
+    private final float exp;
 
     public RecipeOutput(Block output) {
         this(new ItemStack(output), 1);

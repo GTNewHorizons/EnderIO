@@ -16,7 +16,9 @@ import crazypants.enderio.config.Config;
 
 public class ContainerDarkSteelAnvil extends ContainerRepair {
 
-    private int x, y, z;
+    private final int x;
+    private final int y;
+    private final int z;
 
     private final Field _outputSlot = ReflectionHelper.findField(ContainerRepair.class, "outputSlot", "field_82852_f");
     private final Field _inputSlots = ReflectionHelper.findField(ContainerRepair.class, "inputSlots", "field_82853_g");

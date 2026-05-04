@@ -15,7 +15,7 @@ import io.netty.buffer.ByteBuf;
 
 public class PacketFarmAction implements IMessage, IMessageHandler<PacketFarmAction, IMessage> {
 
-    private static Random rand = new Random();
+    private static final Random rand = new Random();
 
     private List<BlockCoord> coords;
 
