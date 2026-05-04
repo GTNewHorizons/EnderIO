@@ -94,10 +94,6 @@ public class TravelController {
 
     private static final int timer = Config.travelAnchorCooldown;
 
-    private boolean tempJump;
-
-    private boolean tempSneak;
-
     private boolean showTargets = false;
 
     private boolean insufficientPower;
@@ -111,8 +107,6 @@ public class TravelController {
     private final HashMap<BlockCoord, Float> candidates = new HashMap<>();
 
     private boolean selectionEnabled = true;
-
-    private double fovRad;
 
     private double tanFovRad;
 
@@ -425,7 +419,7 @@ public class TravelController {
         currentView.setViewMatrix(mv);
         currentView.setViewport(0, 0, mc.displayWidth, mc.displayHeight);
 
-        fovRad = Math.toRadians(fov);
+        double fovRad = Math.toRadians(fov);
         tanFovRad = Math.tanh(fovRad);
     }
 
@@ -446,8 +440,8 @@ public class TravelController {
                 selectedCoord = null;
             }
             MovementInput input = player.movementInput;
-            tempJump = input.jump;
-            tempSneak = input.sneak;
+            boolean tempJump = input.jump;
+            boolean tempSneak = input.sneak;
 
             // Handles teleportation if a target is selected
             if ((input.jump && !wasJumping && onBlock && selectedCoord != null && delayTimer == 0)

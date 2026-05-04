@@ -20,11 +20,6 @@ public class ContainerDarkSteelAnvil extends ContainerRepair {
     private final int y;
     private final int z;
 
-    private final Field _outputSlot = ReflectionHelper.findField(ContainerRepair.class, "outputSlot", "field_82852_f");
-    private final Field _inputSlots = ReflectionHelper.findField(ContainerRepair.class, "inputSlots", "field_82853_g");
-    private final Field _materialCost = ReflectionHelper
-            .findField(ContainerRepair.class, "materialCost", "stackSizeToBeUsedInRepair", "field_82856_l");
-
     public ContainerDarkSteelAnvil(InventoryPlayer playerInv, final World world, final int x, final int y, final int z,
             EntityPlayer player) {
         super(playerInv, world, x, y, z, player);
@@ -33,8 +28,12 @@ public class ContainerDarkSteelAnvil extends ContainerRepair {
         final int materialCost;
 
         try {
+            Field _outputSlot = ReflectionHelper.findField(ContainerRepair.class, "outputSlot", "field_82852_f");
             outputSlot = (IInventory) _outputSlot.get(this);
+            Field _inputSlots = ReflectionHelper.findField(ContainerRepair.class, "inputSlots", "field_82853_g");
             inputSlots = (IInventory) _inputSlots.get(this);
+            Field _materialCost = ReflectionHelper
+                .findField(ContainerRepair.class, "materialCost", "stackSizeToBeUsedInRepair", "field_82856_l");
             materialCost = _materialCost.getInt(this);
         } catch (Exception e) {
             throw new RuntimeException(e);

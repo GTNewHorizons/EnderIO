@@ -64,7 +64,6 @@ public class GuiCapBank extends GuiContainerBaseEIO {
     private final TextFieldEnder maxInputTF;
     private final TextFieldEnder maxOutputTF;
 
-    private final GuiOverlayIoConfig configOverlay;
     private final GuiButtonIoConfig configB;
 
     private CapBankClientNetwork network;
@@ -154,7 +153,7 @@ public class GuiCapBank extends GuiContainerBaseEIO {
             coords.add(te.getLocation());
         }
 
-        configOverlay = new GuiOverlayIoConfig(coords) {
+        GuiOverlayIoConfig configOverlay = new GuiOverlayIoConfig(coords) {
 
             @Override
             protected String getLabelForMode(IoMode mode) {

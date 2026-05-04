@@ -25,7 +25,6 @@ public class SoundDetector {
 
     public static SoundDetector instance = new SoundDetector();
 
-    private List<SoundSource> sounds;
     private final ArrayBlockingQueue<SoundSource> soundQueue = new ArrayBlockingQueue<>(MAX_ENTITIES);
 
     private final Minecraft mc = Minecraft.getMinecraft();
@@ -63,7 +62,7 @@ public class SoundDetector {
             return;
         }
 
-        sounds = new ArrayList<>(MAX_ENTITIES);
+        List<SoundSource> sounds = new ArrayList<>(MAX_ENTITIES);
         soundQueue.drainTo(sounds);
 
         try {

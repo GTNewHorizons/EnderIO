@@ -37,7 +37,6 @@ public class ModItemFilterGui implements IItemFilterGui {
 
     private final IconButton whiteListB;
 
-    private final int inputOffsetX;
     private final int tfWidth;
     private final int tfTextureX;
     private final int tfTextureY;
@@ -56,13 +55,12 @@ public class ModItemFilterGui implements IItemFilterGui {
         } else {
             filter = (ModItemFilter) itemConduit.getOutputFilter(gui.getDir());
         }
-        inputOffsetX = x;
         tfWidth = 52;
         tfTextureX = 120;
         tfTextureY = 214;
 
-        inputBounds = new Rectangle[] { new Rectangle(inputOffsetX, y, 16, 16),
-                new Rectangle(inputOffsetX, y + 18, 16, 16), new Rectangle(inputOffsetX, y + 36, 16, 16) };
+        inputBounds = new Rectangle[] { new Rectangle(x, y, 16, 16),
+                new Rectangle(x, y + 18, 16, 16), new Rectangle(x, y + 36, 16, 16) };
 
         deleteButs = new IconButton[inputBounds.length];
         for (int i = 0; i < deleteButs.length; i++) {

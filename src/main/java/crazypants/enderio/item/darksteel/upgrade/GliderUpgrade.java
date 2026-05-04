@@ -78,9 +78,9 @@ public class GliderUpgrade extends AbstractUpgrade {
     private class Render implements IRenderUpgrade {
 
         private final EntityItem item = new EntityItem(Minecraft.getMinecraft().theWorld);
-        private final ItemStack glider = new ItemStack(DarkSteelItems.itemGliderWing, 1, 1);
 
         private Render() {
+            ItemStack glider = new ItemStack(DarkSteelItems.itemGliderWing, 1, 1);
             item.setEntityItemStack(glider);
         }
 

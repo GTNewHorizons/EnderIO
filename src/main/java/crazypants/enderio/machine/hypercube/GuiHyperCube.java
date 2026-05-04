@@ -62,7 +62,6 @@ public class GuiHyperCube extends GuiContainerBaseEIO {
 
     private final GuiChannelList publicChannelList;
     private final GuiChannelList privateChannelList;
-    private final ListSelectionListener<Channel> selectionListener;
 
     private final IconButton selectPublicB;
     private final IconButton deletePublicB;
@@ -151,15 +150,11 @@ public class GuiHyperCube extends GuiContainerBaseEIO {
         privateChannelList.setScrollButtonIds(102, 103);
         privateChannelList.setActiveChannel(isPrivate(activeChannel) ? activeChannel : null);
 
-        selectionListener = new ListSelectionListener<>() {
-
-            @Override
-            public void selectionChanged(GuiScrollableList<Channel> list, int selectedIndex) {
-                Channel selected = list.getSelectedElement();
-                if (selected != null) {
-                    GuiChannelList clear = list == publicChannelList ? privateChannelList : publicChannelList;
-                    clear.setSelection(-1);
-                }
+        ListSelectionListener<Channel> selectionListener = (list, selectedIndex) -> {
+            Channel selected = list.getSelectedElement();
+            if (selected != null) {
+                GuiChannelList clear = list == publicChannelList ? privateChannelList : publicChannelList;
+                clear.setSelection(-1);
             }
         };
 
