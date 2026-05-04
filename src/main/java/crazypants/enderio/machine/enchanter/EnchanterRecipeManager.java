@@ -15,7 +15,7 @@ public class EnchanterRecipeManager {
         return instance;
     }
 
-    private final List<EnchanterRecipe> recipes = new ArrayList<EnchanterRecipe>();
+    private final List<EnchanterRecipe> recipes = new ArrayList<>();
 
     public void loadRecipesFromConfig() {
         List<EnchanterRecipe> res = EnchanterRecipeParser.loadRecipeConfig();

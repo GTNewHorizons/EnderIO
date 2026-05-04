@@ -167,7 +167,7 @@ public class EnchanterRecipeParser extends DefaultHandler {
     public static final String AT_NAME = "name";
     private static final String AT_LEVEL = "costPerLevel";
 
-    private final List<EnchanterRecipe> result = new ArrayList<EnchanterRecipe>();
+    private final List<EnchanterRecipe> result = new ArrayList<>();
 
     private Enchantment curEnchantment = null;
     private int curLevelCost = -1;

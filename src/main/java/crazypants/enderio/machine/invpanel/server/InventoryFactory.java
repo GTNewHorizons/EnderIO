@@ -15,7 +15,7 @@ public abstract class InventoryFactory {
     private static final ArrayList<InventoryFactory> factories;
 
     static {
-        factories = new ArrayList<InventoryFactory>();
+        factories = new ArrayList<>();
         factories.add(new DSUFactory());
         if (Loader.isModLoaded("StorageDrawers")) {
             factories.add(new DrawerFactory());

@@ -12,7 +12,7 @@ public class CollidableCache {
 
     public static final CollidableCache instance = new CollidableCache();
 
-    private final Map<CacheKey, Collection<CollidableComponent>> cache = new HashMap<CollidableCache.CacheKey, Collection<CollidableComponent>>();
+    private final Map<CacheKey, Collection<CollidableComponent>> cache = new HashMap<>();
 
     public CacheKey createKey(Class<? extends IConduit> baseType, Offset offset, ForgeDirection dir, boolean isStub) {
         return new CacheKey(baseType, offset, dir, isStub);

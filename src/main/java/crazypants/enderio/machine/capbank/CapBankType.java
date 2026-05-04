@@ -62,7 +62,7 @@ public class CapBankType {
             "enderio:capacitorBankOutput",
             "enderio:capacitorBankLocked");
 
-    private static final List<CapBankType> TYPES = new ArrayList<CapBankType>();
+    private static final List<CapBankType> TYPES = new ArrayList<>();
 
     static {
         TYPES.add(CREATIVE);

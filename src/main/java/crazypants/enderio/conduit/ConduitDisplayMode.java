@@ -196,7 +196,7 @@ public class ConduitDisplayMode {
     }
 
     public static Iterable<ConduitDisplayMode> getRenderableModes() {
-        return FluentIterable.from(registrar).filter(new Predicate<ConduitDisplayMode>() {
+        return FluentIterable.from(registrar).filter(new Predicate<>() {
 
             @Override
             public boolean apply(ConduitDisplayMode input) {

@@ -26,7 +26,7 @@ public class CraftingHelperNEI extends CraftingHelper {
         if (overlayRenderer != null) {
             LayoutManager.overlayRenderer = (IRecipeOverlayRenderer) overlayRenderer;
         } else {
-            List<PositionedStack> list = new ArrayList<PositionedStack>();
+            List<PositionedStack> list = new ArrayList<>();
             for (int y = 0; y < 3; y++) {
                 for (int x = 0; x < 3; x++) {
                     ItemStack[] ingredient = ingredients[y * 3 + x];

@@ -161,7 +161,7 @@ public class GuiInventoryPanel extends GuiMachineBase<TileInventoryPanel> {
         infoTextFilter = EnderIO.lang.localize("gui.inventorypanel.info.filter");
         infoTextOffline = EnderIO.lang.localize("gui.inventorypanel.info.offline");
 
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
 
         SpecialTooltipHandler.addTooltipFromResources(list, "enderio.gui.inventorypanel.tooltip.return.line");
         addToolTip(new GuiToolTip(btnReturnArea, list) {
@@ -509,7 +509,7 @@ public class GuiInventoryPanel extends GuiMachineBase<TileInventoryPanel> {
 
     private void updateSortButton() {
         SortOrder order = view.getSortOrder();
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         SpecialTooltipHandler.addTooltipFromResources(
                 list,
                 "enderio.gui.inventorypanel.tooltip.sort." + order.name().toLowerCase(Locale.US)

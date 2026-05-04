@@ -173,7 +173,7 @@ public class RailcraftLinkUtil implements ICartLinkUtil {
         if (cart == null) {
             Collections.emptyList();
         }
-        List<EntityMinecart> result = new ArrayList<EntityMinecart>();
+        List<EntityMinecart> result = new ArrayList<>();
         ILinkageManager linkMan = CartTools.getLinkageManager(cart.worldObj);
         if (linkMan == null) {
             result.add(cart);

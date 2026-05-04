@@ -24,7 +24,7 @@ import crazypants.enderio.machine.farm.TileFarmStation;
 
 public class PlantableFarmer implements IFarmerJoe {
 
-    private final Set<Block> harvestExcludes = new HashSet<Block>();
+    private final Set<Block> harvestExcludes = new HashSet<>();
 
     public void addHarvestExlude(Block block) {
         harvestExcludes.add(block);
@@ -160,7 +160,7 @@ public class PlantableFarmer implements IFarmerJoe {
         }
 
         World worldObj = farm.getWorldObj();
-        List<EntityItem> result = new ArrayList<EntityItem>();
+        List<EntityItem> result = new ArrayList<>();
 
         ItemStack removedPlantable = null;
 

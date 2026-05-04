@@ -480,7 +480,7 @@ public class BlockConduitBundle extends BlockEio
         IConduitBundle te = (IConduitBundle) rte;
 
         boolean breakBlock = true;
-        List<ItemStack> drop = new ArrayList<ItemStack>();
+        List<ItemStack> drop = new ArrayList<>();
         if (ConduitUtil.isSolidFacadeRendered(te, player)) {
             breakBlock = false;
             ItemStack fac = new ItemStack(EnderIO.itemConduitFacade, 1, te.getFacadeType().ordinal());
@@ -538,7 +538,7 @@ public class BlockConduitBundle extends BlockEio
         if (type == null) {
             // broke a conector so drop any conduits with no connections as there
             // is no other way to remove these
-            List<IConduit> cons = new ArrayList<IConduit>(te.getConduits());
+            List<IConduit> cons = new ArrayList<>(te.getConduits());
             boolean droppedUnconected = false;
             for (IConduit con : cons) {
                 if (con.getConduitConnections().isEmpty() && con.getExternalConnections().isEmpty()
@@ -1035,7 +1035,7 @@ public class BlockConduitBundle extends BlockEio
             return null;
         }
         IConduitBundle bundle = (IConduitBundle) te;
-        List<RaytraceResult> hits = new ArrayList<RaytraceResult>();
+        List<RaytraceResult> hits = new ArrayList<>();
 
         if (player == null) {
             player = EnderIO.proxy.getClientPlayer();
@@ -1052,8 +1052,8 @@ public class BlockConduitBundle extends BlockEio
             }
         } else {
             ConduitDisplayMode mode = ConduitUtil.getDisplayMode(player);
-            Collection<CollidableComponent> components = new ArrayList<CollidableComponent>(
-                    bundle.getCollidableComponents());
+            Collection<CollidableComponent> components = new ArrayList<>(
+                bundle.getCollidableComponents());
             for (CollidableComponent component : components) {
                 if ((component.conduitType != null || mode == ConduitDisplayMode.ALL)
                         && ConduitUtil.renderConduit(player, component.conduitType)) {

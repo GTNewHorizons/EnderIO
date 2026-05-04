@@ -23,7 +23,7 @@ public class PowerConduitNetwork extends AbstractConduitNetwork<IPowerConduit, I
 
     public NetworkPowerManager powerManager;
 
-    private final Map<ReceptorKey, ReceptorEntry> powerReceptors = new HashMap<ReceptorKey, ReceptorEntry>();
+    private final Map<ReceptorKey, ReceptorEntry> powerReceptors = new HashMap<>();
 
     public PowerConduitNetwork() {
         super(IPowerConduit.class, IPowerConduit.class);
@@ -92,7 +92,7 @@ public class PowerConduitNetwork extends AbstractConduitNetwork<IPowerConduit, I
 
     public void powerReceptorRemoved(int x, int y, int z) {
         BlockCoord bc = new BlockCoord(x, y, z);
-        List<ReceptorKey> remove = new ArrayList<ReceptorKey>();
+        List<ReceptorKey> remove = new ArrayList<>();
         for (ReceptorKey key : powerReceptors.keySet()) {
             if (key != null && key.coord.equals(bc)) {
                 remove.add(key);

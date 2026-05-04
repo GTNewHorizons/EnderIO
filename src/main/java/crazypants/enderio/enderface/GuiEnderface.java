@@ -55,7 +55,7 @@ public class GuiEnderface extends GuiScreen {
     private final int ioZ;
     private final boolean chunkLoaded;
 
-    private final List<ViewableBlocks> blocks = new ArrayList<ViewableBlocks>();
+    private final List<ViewableBlocks> blocks = new ArrayList<>();
 
     private int gw;
     private int gh;

@@ -16,7 +16,7 @@ import crazypants.enderio.conduit.redstone.IRedstoneConduit;
 
 public class Offsets {
 
-    private static final Map<OffsetKey, Offset> OFFSETS = new HashMap<OffsetKey, Offset>();
+    private static final Map<OffsetKey, Offset> OFFSETS = new HashMap<>();
 
     static {
         OFFSETS.put(key(IRedstoneConduit.class, Axis.NONE), Offset.UP);

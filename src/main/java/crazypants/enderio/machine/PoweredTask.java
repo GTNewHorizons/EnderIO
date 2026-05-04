@@ -158,7 +158,7 @@ public class PoweredTask implements IPoweredTask {
             return null;
         }
 
-        List<MachineRecipeInput> ins = new ArrayList<MachineRecipeInput>(3);
+        List<MachineRecipeInput> ins = new ArrayList<>(3);
         for (int i = 0; i < inputItems.tagCount(); i++) {
             NBTTagCompound stackTag = inputItems.getCompoundTagAt(i);
             MachineRecipeInput mi = MachineRecipeInput.readFromNBT(stackTag);

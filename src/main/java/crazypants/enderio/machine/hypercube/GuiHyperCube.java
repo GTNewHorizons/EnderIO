@@ -151,7 +151,7 @@ public class GuiHyperCube extends GuiContainerBaseEIO {
         privateChannelList.setScrollButtonIds(102, 103);
         privateChannelList.setActiveChannel(isPrivate(activeChannel) ? activeChannel : null);
 
-        selectionListener = new ListSelectionListener<Channel>() {
+        selectionListener = new ListSelectionListener<>() {
 
             @Override
             public void selectionChanged(GuiScrollableList<Channel> list, int selectedIndex) {

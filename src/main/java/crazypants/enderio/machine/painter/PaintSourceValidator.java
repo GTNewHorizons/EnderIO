@@ -19,8 +19,8 @@ public class PaintSourceValidator {
     public static PaintSourceValidator instance = new PaintSourceValidator();
 
     private final boolean listsPopulated = false;
-    private final List<RecipeInput> whitelist = new ArrayList<RecipeInput>();
-    private final List<RecipeInput> blacklist = new ArrayList<RecipeInput>();
+    private final List<RecipeInput> whitelist = new ArrayList<>();
+    private final List<RecipeInput> blacklist = new ArrayList<>();
 
     public boolean isValidSourceDefault(ItemStack paintSource) {
         if (paintSource == null) {

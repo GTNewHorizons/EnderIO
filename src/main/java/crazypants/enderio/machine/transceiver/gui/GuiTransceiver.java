@@ -27,7 +27,7 @@ public class GuiTransceiver extends GuiPoweredMachineBase<TileTransceiver> {
     private static final int TAB_HEIGHT = 24;
 
     private int activeTab = 0;
-    private final List<ITabPanel> tabs = new ArrayList<ITabPanel>();
+    private final List<ITabPanel> tabs = new ArrayList<>();
     private final int tabYOffset = 4;
     GeneralTab generalTab;
 

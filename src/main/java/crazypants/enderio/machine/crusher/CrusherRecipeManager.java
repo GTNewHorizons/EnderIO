@@ -39,13 +39,13 @@ public class CrusherRecipeManager {
         return instance;
     }
 
-    private final List<Recipe> recipes = new ArrayList<Recipe>();
+    private final List<Recipe> recipes = new ArrayList<>();
 
-    private final List<RecipeInput> ballExcludes = new ArrayList<RecipeInput>();
+    private final List<RecipeInput> ballExcludes = new ArrayList<>();
 
-    private final List<GrindingBall> balls = new ArrayList<GrindingBall>();
+    private final List<GrindingBall> balls = new ArrayList<>();
 
-    private final Set<ItemStack> excludedStacks = new HashSet<ItemStack>();
+    private final Set<ItemStack> excludedStacks = new HashSet<>();
 
     public CrusherRecipeManager() {}
 

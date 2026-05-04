@@ -41,7 +41,7 @@ public class TileTravelAnchor extends TileEntityEio implements ITravelAccessable
 
     private @Nonnull UserIdent owner = UserIdent.nobody;
 
-    private final List<UserIdent> authorisedUsers = new ArrayList<UserIdent>();
+    private final List<UserIdent> authorisedUsers = new ArrayList<>();
 
     private boolean visible = true;
 

@@ -15,7 +15,7 @@ import crazypants.enderio.ModObject;
 
 public class CompositeInventory implements ISidedInventory {
 
-    private final List<InvEntry> inventories = new ArrayList<InvEntry>();
+    private final List<InvEntry> inventories = new ArrayList<>();
     private int size = 0;
 
     public void addInventory(CompositeInventory inv) {
@@ -97,7 +97,7 @@ public class CompositeInventory implements ISidedInventory {
 
     @Override
     public int[] getAccessibleSlotsFromSide(int var1) {
-        List<Integer> resList = new ArrayList<Integer>();
+        List<Integer> resList = new ArrayList<>();
         for (InvEntry inv : inventories) {
             int[] slots = inv.inv.getAccessibleSlotsFromSide(inv.side.ordinal());
             if (slots != null) {

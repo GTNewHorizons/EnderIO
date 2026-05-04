@@ -32,7 +32,7 @@ public class NetworkUtil {
         if (!cap.getType().isMultiblock()) {
             return Collections.emptyList();
         }
-        Collection<TileCapBank> res = new ArrayList<TileCapBank>();
+        Collection<TileCapBank> res = new ArrayList<>();
         getNeigbours(cap, res);
         return res;
     }

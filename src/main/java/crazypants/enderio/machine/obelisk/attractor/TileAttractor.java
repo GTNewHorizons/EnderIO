@@ -50,7 +50,7 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
     private int rangeSqu;
     private int range;
     private int powerPerTick;
-    private Set<EntityLiving> tracking = new HashSet<EntityLiving>();
+    private Set<EntityLiving> tracking = new HashSet<>();
     private int tickCounter = 0;
     private final int maxMobsAttracted = 20;
 
@@ -168,7 +168,7 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
         }
         tickCounter = 0;
 
-        Set<EntityLiving> trackingThisTick = new HashSet<EntityLiving>();
+        Set<EntityLiving> trackingThisTick = new HashSet<>();
         List<EntityLiving> entsInBounds = worldObj.getEntitiesWithinAABB(EntityLiving.class, attractorBounds);
 
         for (EntityLiving ent : entsInBounds) {
@@ -304,7 +304,7 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
     private void cancelCurrentTasks(EntityLiving ent) {
         Iterator<EntityAITasks.EntityAITaskEntry> iterator = ent.tasks.taskEntries.iterator();
 
-        List<EntityAITasks.EntityAITaskEntry> currentTasks = new ArrayList<EntityAITasks.EntityAITaskEntry>();
+        List<EntityAITasks.EntityAITaskEntry> currentTasks = new ArrayList<>();
         while (iterator.hasNext()) {
             EntityAITaskEntry entityaitaskentry = (EntityAITasks.EntityAITaskEntry) iterator.next();
             if (entityaitaskentry != null) {

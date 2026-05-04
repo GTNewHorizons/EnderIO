@@ -55,7 +55,7 @@ public class ItemSoulVessel extends Item implements IResourceTooltipProvider {
         setCreativeTab(EnderIOTab.tabEnderIO);
         setUnlocalizedName(ModObject.itemSoulVessel.unlocalisedName);
         setMaxStackSize(64);
-        blackList = new ArrayList<String>();
+        blackList = new ArrayList<>();
         for (String ent : Config.soulVesselBlackList) {
             blackList.add(ent);
         }

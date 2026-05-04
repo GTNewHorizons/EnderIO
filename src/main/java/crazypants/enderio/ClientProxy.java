@@ -262,9 +262,9 @@ public class ClientProxy extends CommonProxy {
         BlockObeliskAbstract.defaultObeliskRenderId = RenderingRegistry.getNextAvailableRenderId();
         RenderingRegistry.registerBlockHandler(defaultObeliskRenderer);
 
-        ObeliskSpecialRenderer<TileAttractor> attRen = new ObeliskSpecialRenderer<TileAttractor>(
-                new ItemStack(EnderIO.itemMaterial, 1, Material.ATTRACTOR_CRYSTAL.ordinal()),
-                defaultObeliskRenderer);
+        ObeliskSpecialRenderer<TileAttractor> attRen = new ObeliskSpecialRenderer<>(
+            new ItemStack(EnderIO.itemMaterial, 1, Material.ATTRACTOR_CRYSTAL.ordinal()),
+            defaultObeliskRenderer);
         ClientRegistry.bindTileEntitySpecialRenderer(TileAttractor.class, attRen);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockAttractor), attRen);
 
@@ -272,9 +272,9 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileAversionObelisk.class, sgr);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockSpawnGuard), sgr);
 
-        ObeliskSpecialRenderer<TileExperienceObelisk> eor = new ObeliskSpecialRenderer<TileExperienceObelisk>(
-                new ItemStack(EnderIO.itemXpTransfer),
-                defaultObeliskRenderer);
+        ObeliskSpecialRenderer<TileExperienceObelisk> eor = new ObeliskSpecialRenderer<>(
+            new ItemStack(EnderIO.itemXpTransfer),
+            defaultObeliskRenderer);
         ClientRegistry.bindTileEntitySpecialRenderer(TileExperienceObelisk.class, eor);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockExperianceOblisk), eor);
 
@@ -285,9 +285,9 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockWeatherObelisk), twr);
 
         BlockCombustionGenerator.renderId = RenderingRegistry.getNextAvailableRenderId();
-        TechneMachineRenderer<TileCombustionGenerator> cr = new TechneMachineRenderer<TileCombustionGenerator>(
-                EnderIO.blockCombustionGenerator,
-                "models/combustionGen");
+        TechneMachineRenderer<TileCombustionGenerator> cr = new TechneMachineRenderer<>(
+            EnderIO.blockCombustionGenerator,
+            "models/combustionGen");
         RenderingRegistry.registerBlockHandler(cr);
 
         ZombieGeneratorRenderer zgr = new ZombieGeneratorRenderer();
@@ -301,7 +301,7 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockKillerJoe), kjr);
 
         BlockVat.renderId = RenderingRegistry.getNextAvailableRenderId();
-        TechneMachineRenderer<TileVat> vr = new TechneMachineRenderer<TileVat>(EnderIO.blockVat, "models/vat");
+        TechneMachineRenderer<TileVat> vr = new TechneMachineRenderer<>(EnderIO.blockVat, "models/vat");
         RenderingRegistry.registerBlockHandler(vr);
 
         FusedQuartzFrameRenderer fqfr = new FusedQuartzFrameRenderer();

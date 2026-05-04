@@ -108,7 +108,7 @@ public class TravelController {
 
     Camera currentView = new Camera();
 
-    private final HashMap<BlockCoord, Float> candidates = new HashMap<BlockCoord, Float>();
+    private final HashMap<BlockCoord, Float> candidates = new HashMap<>();
 
     private boolean selectionEnabled = true;
 
@@ -116,7 +116,7 @@ public class TravelController {
 
     private double tanFovRad;
 
-    private final List<UniqueIdentifier> blackList = new ArrayList<GameRegistry.UniqueIdentifier>();
+    private final List<UniqueIdentifier> blackList = new ArrayList<>();
 
     private TravelController() {
         String[] blackListNames = Config.travelStaffBlinkBlackList;

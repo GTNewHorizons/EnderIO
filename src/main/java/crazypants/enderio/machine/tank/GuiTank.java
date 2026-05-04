@@ -78,7 +78,7 @@ public class GuiTank extends GuiMachineBase<TileTank> {
             }
         });
 
-        voidBut = new CycleButton<VoidMode>(this, 123, 155, 43, VoidMode.class);
+        voidBut = new CycleButton<>(this, 123, 155, 43, VoidMode.class);
     }
 
     @Override

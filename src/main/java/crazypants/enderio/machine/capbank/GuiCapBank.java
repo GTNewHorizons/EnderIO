@@ -144,7 +144,7 @@ public class GuiCapBank extends GuiContainerBaseEIO {
         });
         outputRsButton.setTooltipKey("enderio.gui.capBank.outputRs");
 
-        List<BlockCoord> coords = new ArrayList<BlockCoord>();
+        List<BlockCoord> coords = new ArrayList<>();
         if (network != null && network.getMembers().size() < 200) {
             for (TileCapBank cb : network.getMembers()) {
                 coords.add(cb.getLocation());

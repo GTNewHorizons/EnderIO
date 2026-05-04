@@ -30,7 +30,7 @@ public class GuiButtonIoConfig extends ToggleButton {
         String configTooltip = EnderIO.lang.localize("gui.machine.ioMode.overlay.tooltip");
         setUnselectedToolTip(configTooltip);
 
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         list.add(configTooltip);
         SpecialTooltipHandler.addTooltipFromResources(list, "enderio.gui.machine.ioMode.overlay.tooltip.visible.line");
         if (list.size() > 1) {

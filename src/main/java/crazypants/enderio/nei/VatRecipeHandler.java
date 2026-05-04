@@ -264,7 +264,7 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
     }
 
     public List<ItemStack> getInputs(RecipeInput input) {
-        List<ItemStack> result = new ArrayList<ItemStack>();
+        List<ItemStack> result = new ArrayList<>();
         result.add(input.getInput());
         ItemStack[] eq = input.getEquivelentInputs();
         if (eq != null) {

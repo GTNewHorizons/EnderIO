@@ -14,7 +14,7 @@ import crazypants.enderio.machine.AbstractMachineEntity;
 
 public class PowerDistributor {
 
-    private final List<Receptor> receptors = new ArrayList<Receptor>();
+    private final List<Receptor> receptors = new ArrayList<>();
     private ListIterator<Receptor> receptorIterator = receptors.listIterator();
     private boolean receptorsDirty = true;
 

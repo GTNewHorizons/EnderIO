@@ -26,7 +26,7 @@ public class PacketFarmAction implements IMessage, IMessageHandler<PacketFarmAct
     }
 
     public PacketFarmAction(BlockCoord bc) {
-        this.coords = new ArrayList<BlockCoord>(1);
+        this.coords = new ArrayList<>(1);
         this.coords.add(bc);
     }
 
@@ -44,7 +44,7 @@ public class PacketFarmAction implements IMessage, IMessageHandler<PacketFarmAct
     @Override
     public void fromBytes(ByteBuf buffer) {
         int size = buffer.readInt();
-        coords = new ArrayList<BlockCoord>(size);
+        coords = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
             coords.add(new BlockCoord(buffer.readInt(), buffer.readInt(), buffer.readInt()));
         }

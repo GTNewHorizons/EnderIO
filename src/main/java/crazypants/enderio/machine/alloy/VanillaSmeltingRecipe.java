@@ -30,7 +30,7 @@ public class VanillaSmeltingRecipe implements IMachineRecipe {
 
     private boolean enabled = true;
 
-    private final List<RecipeInput> excludes = new ArrayList<RecipeInput>();
+    private final List<RecipeInput> excludes = new ArrayList<>();
 
     @Override
     public String getUid() {
@@ -154,7 +154,7 @@ public class VanillaSmeltingRecipe implements IMachineRecipe {
     @Override
     public List<MachineRecipeInput> getQuantitiesConsumed(MachineRecipeInput[] inputs) {
         int consumed = 0;
-        List<MachineRecipeInput> result = new ArrayList<MachineRecipeInput>();
+        List<MachineRecipeInput> result = new ArrayList<>();
         for (MachineRecipeInput ri : inputs) {
             if (isValidInput(new MachineRecipeInput(ri.slotNumber, ri.item)) && consumed < 3
                     && ri != null
@@ -177,7 +177,7 @@ public class VanillaSmeltingRecipe implements IMachineRecipe {
         if (!enabled) {
             return Collections.emptyList();
         }
-        List<IRecipe> result = new ArrayList<IRecipe>();
+        List<IRecipe> result = new ArrayList<>();
         Map<ItemStack, ItemStack> metaList = FurnaceRecipes.smelting().getSmeltingList();
         for (Entry<ItemStack, ItemStack> entry : metaList.entrySet()) {
             ItemStack output = entry.getValue();

@@ -142,7 +142,7 @@ public class BaseSettingsPanel implements ITabPanel {
             }
         };
 
-        ArrayList<String> funcUpgradeTips = new ArrayList<String>();
+        ArrayList<String> funcUpgradeTips = new ArrayList<>();
         SpecialTooltipHandler.addTooltipFromResources(funcUpgradeTips, "enderio.gui.conduit.item.functionupgrade.line");
         for (FunctionUpgrade upgrade : FunctionUpgrade.values()) {
             funcUpgradeTips.add(EnderIO.lang.localizeExact(upgrade.unlocName.concat(".name")));

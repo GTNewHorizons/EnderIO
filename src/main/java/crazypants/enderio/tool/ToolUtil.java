@@ -55,8 +55,8 @@ public class ToolUtil {
         return instance;
     }
 
-    private final List<IToolProvider> toolProviders = new ArrayList<IToolProvider>();
-    private final List<IToolImpl> toolImpls = new ArrayList<IToolImpl>();
+    private final List<IToolProvider> toolProviders = new ArrayList<>();
+    private final List<IToolImpl> toolImpls = new ArrayList<>();
 
     private ToolUtil() {
 
@@ -137,7 +137,7 @@ public class ToolUtil {
 
         private YetaWrenchProxy(ItemYetaWrench item, List<IToolImpl> toolImpls) {
             this.item = item;
-            impls = new HashMap<Class<?>, IToolImpl>();
+            impls = new HashMap<>();
             for (IToolImpl tool : toolImpls) {
                 impls.put(tool.getInterface(), tool);
             }

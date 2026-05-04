@@ -185,8 +185,8 @@ public class FillGauge implements IInfoRenderer, IResourceManagerReloadListener 
         barHeightV = barIcon.getMaxV() - barIcon.getMinV();
         gaugeIcon = EnderIO.blockCapBank.getGaugeIcon();
 
-        gaugeVertexCache = new HashMap<FillGauge.GaugeKey, List<Vertex>>();
-        levelVertexCache = new HashMap<FillGauge.GaugeKey, List<Vertex>>();
+        gaugeVertexCache = new HashMap<>();
+        levelVertexCache = new HashMap<>();
         for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
             if (dir.offsetY == 0) {
                 for (Type type : Type.values()) {

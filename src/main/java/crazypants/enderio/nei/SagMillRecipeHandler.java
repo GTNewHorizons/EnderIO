@@ -67,7 +67,7 @@ public class SagMillRecipeHandler extends TemplateRecipeHandler {
     public void loadCraftingRecipes(final ItemStack result) {
 
         List<Recipe> recipes = CrusherRecipeManager.getInstance().getRecipes();
-        List<MillRecipe> toAdd = new ArrayList<MillRecipe>();
+        List<MillRecipe> toAdd = new ArrayList<>();
         for (Recipe recipe : recipes) {
             if (recipe.hasOuput(result)) {
                 MillRecipe res = new MillRecipe(
@@ -140,7 +140,7 @@ public class SagMillRecipeHandler extends TemplateRecipeHandler {
     }
 
     public List<ItemStack> getInputs(RecipeInput input) {
-        List<ItemStack> result = new ArrayList<ItemStack>();
+        List<ItemStack> result = new ArrayList<>();
         result.add(input.getInput());
         ItemStack[] eq = input.getEquivelentInputs();
         if (eq != null) {
@@ -203,13 +203,13 @@ public class SagMillRecipeHandler extends TemplateRecipeHandler {
         public MillRecipe(ItemStack targetedResult, int energy, RecipeInput ingredient, RecipeOutput[] outputs) {
             this.energy = energy;
 
-            input = new ArrayList<PositionedStack>(2);
+            input = new ArrayList<>(2);
             input.add(new PositionedStack(getInputs(ingredient), 74, 2));
 
             input.add(new PositionedStack(getBalls(), 116, 12));
 
             output = new PositionedStack(outputs[0].getOutput(), 43, 46);
-            otherOutputs = new ArrayList<PositionedStack>();
+            otherOutputs = new ArrayList<>();
             if (outputs.length > 1) {
                 otherOutputs.add(new PositionedStack(outputs[1].getOutput(), 64, 46));
             }
@@ -234,7 +234,7 @@ public class SagMillRecipeHandler extends TemplateRecipeHandler {
 
         private List<ItemStack> getBalls() {
             List<GrindingBall> daBalls = CrusherRecipeManager.getInstance().getBalls();
-            List<ItemStack> res = new ArrayList<ItemStack>();
+            List<ItemStack> res = new ArrayList<>();
             for (GrindingBall ball : daBalls) {
                 res.add(ball.getInput());
             }

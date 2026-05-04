@@ -50,7 +50,7 @@ public class GuiExternalConnection extends GuiContainerBaseEIO {
         return id;
     }
 
-    private static final Map<Class<? extends IConduit>, Integer> TAB_ORDER = new HashMap<Class<? extends IConduit>, Integer>();
+    private static final Map<Class<? extends IConduit>, Integer> TAB_ORDER = new HashMap<>();
 
     static {
         TAB_ORDER.put(IItemConduit.class, 0);
@@ -66,8 +66,8 @@ public class GuiExternalConnection extends GuiContainerBaseEIO {
     final IConduitBundle bundle;
     private final ForgeDirection dir;
 
-    private final List<IConduit> conduits = new ArrayList<IConduit>();
-    private final List<ITabPanel> tabs = new ArrayList<ITabPanel>();
+    private final List<IConduit> conduits = new ArrayList<>();
+    private final List<ITabPanel> tabs = new ArrayList<>();
     private int activeTab = 0;
 
     private final int tabYOffset = 4;
@@ -86,8 +86,8 @@ public class GuiExternalConnection extends GuiContainerBaseEIO {
 
         container.setInoutSlotsVisible(false, false);
 
-        List<IConduit> cons = new ArrayList<IConduit>(bundle.getConduits());
-        Collections.sort(cons, new Comparator<IConduit>() {
+        List<IConduit> cons = new ArrayList<>(bundle.getConduits());
+        Collections.sort(cons, new Comparator<>() {
 
             @Override
             public int compare(IConduit o1, IConduit o2) {
