@@ -16,6 +16,10 @@ class NormalInventory extends AbstractInventory {
     @Override
     int scanInventory(InventoryDatabaseServer db) {
         ISidedInventory inv = ni.getInventoryRecheck();
+        if (inv == null) {
+            setEmpty(db);
+            return 0;
+        }
         int side = ni.getInventorySide();
         int[] slotIndices = inv.getAccessibleSlotsFromSide(side);
         if (slotIndices == null || slotIndices.length == 0) {
@@ -40,6 +44,9 @@ class NormalInventory extends AbstractInventory {
     @Override
     public int extractItem(InventoryDatabaseServer db, ItemEntry entry, int slot, int count) {
         ISidedInventory inv = ni.getInventoryRecheck();
+        if (inv == null) {
+            return 0;
+        }
         int side = ni.getInventorySide();
         int[] slotIndices = inv.getAccessibleSlotsFromSide(side);
         if (slotIndices == null || slot >= slotIndices.length) {
