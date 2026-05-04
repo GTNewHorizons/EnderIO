@@ -109,7 +109,7 @@ public class ConduitGeometryUtil {
     private final Map<GeometryKey, BoundingBox> boundsCache = new HashMap<>();
 
     private final EnumMap<ConduitConnectorType, BoundingBox> connectorBounds = new EnumMap<>(
-        ConduitConnectorType.class);
+            ConduitConnectorType.class);
 
     private ConduitGeometryUtil() {}
 

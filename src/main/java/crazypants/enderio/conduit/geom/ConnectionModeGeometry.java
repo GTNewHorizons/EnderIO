@@ -21,8 +21,7 @@ import com.enderio.core.common.vecmath.Vertex;
 
 public class ConnectionModeGeometry {
 
-    private static final EnumMap<ForgeDirection, List<Vertex>> VERTS = new EnumMap<>(
-        ForgeDirection.class);
+    private static final EnumMap<ForgeDirection, List<Vertex>> VERTS = new EnumMap<>(ForgeDirection.class);
 
     static {
         float scale = 0.9f;

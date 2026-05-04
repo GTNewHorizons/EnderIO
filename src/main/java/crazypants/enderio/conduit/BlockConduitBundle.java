@@ -1052,8 +1052,7 @@ public class BlockConduitBundle extends BlockEio
             }
         } else {
             ConduitDisplayMode mode = ConduitUtil.getDisplayMode(player);
-            Collection<CollidableComponent> components = new ArrayList<>(
-                bundle.getCollidableComponents());
+            Collection<CollidableComponent> components = new ArrayList<>(bundle.getCollidableComponents());
             for (CollidableComponent component : components) {
                 if ((component.conduitType != null || mode == ConduitDisplayMode.ALL)
                         && ConduitUtil.renderConduit(player, component.conduitType)) {

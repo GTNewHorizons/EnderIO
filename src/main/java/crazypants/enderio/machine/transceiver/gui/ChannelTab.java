@@ -94,8 +94,8 @@ public class ChannelTab implements ITabPanel {
             @Override
             public boolean apply(@Nullable Channel input) {
                 return input != null
-                       && (input.isPublic() || input.getUser().equals(EnderIO.proxy.getClientPlayer().getGameProfile())
-                           || input.getUser() == UserIdent.nobody);
+                        && (input.isPublic() || input.getUser().equals(EnderIO.proxy.getClientPlayer().getGameProfile())
+                                || input.getUser() == UserIdent.nobody);
             }
         };
 

@@ -161,8 +161,7 @@ public class MagnetController {
                             }
                             if (gotOne) {
                                 if (arraylist == null) {
-                                    arraylist = new ArrayList<>(
-                                        Config.magnetMaxItems > 0 ? Config.magnetMaxItems : 20);
+                                    arraylist = new ArrayList<>(Config.magnetMaxItems > 0 ? Config.magnetMaxItems : 20);
                                 }
                                 arraylist.add(entity);
                                 if (itemsRemaining-- <= 0) {

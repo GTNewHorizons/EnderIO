@@ -59,8 +59,8 @@ public class ModItemFilterGui implements IItemFilterGui {
         tfTextureX = 120;
         tfTextureY = 214;
 
-        inputBounds = new Rectangle[] { new Rectangle(x, y, 16, 16),
-                new Rectangle(x, y + 18, 16, 16), new Rectangle(x, y + 36, 16, 16) };
+        inputBounds = new Rectangle[] { new Rectangle(x, y, 16, 16), new Rectangle(x, y + 18, 16, 16),
+                new Rectangle(x, y + 36, 16, 16) };
 
         deleteButs = new IconButton[inputBounds.length];
         for (int i = 0; i < deleteButs.length; i++) {

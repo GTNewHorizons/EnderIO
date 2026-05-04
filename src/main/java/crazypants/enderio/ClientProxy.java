@@ -263,8 +263,8 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerBlockHandler(defaultObeliskRenderer);
 
         ObeliskSpecialRenderer<TileAttractor> attRen = new ObeliskSpecialRenderer<>(
-            new ItemStack(EnderIO.itemMaterial, 1, Material.ATTRACTOR_CRYSTAL.ordinal()),
-            defaultObeliskRenderer);
+                new ItemStack(EnderIO.itemMaterial, 1, Material.ATTRACTOR_CRYSTAL.ordinal()),
+                defaultObeliskRenderer);
         ClientRegistry.bindTileEntitySpecialRenderer(TileAttractor.class, attRen);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockAttractor), attRen);
 
@@ -273,8 +273,8 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockSpawnGuard), sgr);
 
         ObeliskSpecialRenderer<TileExperienceObelisk> eor = new ObeliskSpecialRenderer<>(
-            new ItemStack(EnderIO.itemXpTransfer),
-            defaultObeliskRenderer);
+                new ItemStack(EnderIO.itemXpTransfer),
+                defaultObeliskRenderer);
         ClientRegistry.bindTileEntitySpecialRenderer(TileExperienceObelisk.class, eor);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockExperianceOblisk), eor);
 
@@ -286,8 +286,8 @@ public class ClientProxy extends CommonProxy {
 
         BlockCombustionGenerator.renderId = RenderingRegistry.getNextAvailableRenderId();
         TechneMachineRenderer<TileCombustionGenerator> cr = new TechneMachineRenderer<>(
-            EnderIO.blockCombustionGenerator,
-            "models/combustionGen");
+                EnderIO.blockCombustionGenerator,
+                "models/combustionGen");
         RenderingRegistry.registerBlockHandler(cr);
 
         ZombieGeneratorRenderer zgr = new ZombieGeneratorRenderer();

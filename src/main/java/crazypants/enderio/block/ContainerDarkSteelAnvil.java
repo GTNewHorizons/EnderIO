@@ -33,7 +33,7 @@ public class ContainerDarkSteelAnvil extends ContainerRepair {
             Field _inputSlots = ReflectionHelper.findField(ContainerRepair.class, "inputSlots", "field_82853_g");
             inputSlots = (IInventory) _inputSlots.get(this);
             Field _materialCost = ReflectionHelper
-                .findField(ContainerRepair.class, "materialCost", "stackSizeToBeUsedInRepair", "field_82856_l");
+                    .findField(ContainerRepair.class, "materialCost", "stackSizeToBeUsedInRepair", "field_82856_l");
             materialCost = _materialCost.getInt(this);
         } catch (Exception e) {
             throw new RuntimeException(e);

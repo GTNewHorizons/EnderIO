@@ -25,10 +25,8 @@ import mekanism.api.gas.IGasHandler;
 
 public abstract class AbstractGasConduit extends AbstractConduit implements IGasConduit {
 
-    protected final EnumMap<ForgeDirection, RedstoneControlMode> extractionModes = new EnumMap<>(
-        ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, DyeColor> extractionColors = new EnumMap<>(
-        ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, RedstoneControlMode> extractionModes = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, DyeColor> extractionColors = new EnumMap<>(ForgeDirection.class);
 
     protected final Map<ForgeDirection, Integer> externalRedstoneSignals = new HashMap<>();
     protected boolean redstoneStateDirty = true;

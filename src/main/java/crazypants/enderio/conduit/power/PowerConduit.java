@@ -106,10 +106,8 @@ public class PowerConduit extends AbstractConduit implements IPowerConduit {
 
     private int subtype;
 
-    protected final EnumMap<ForgeDirection, RedstoneControlMode> rsModes = new EnumMap<>(
-        ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, DyeColor> rsColors = new EnumMap<>(
-        ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, RedstoneControlMode> rsModes = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, DyeColor> rsColors = new EnumMap<>(ForgeDirection.class);
 
     protected EnumMap<ForgeDirection, Long> recievedTicks;
 

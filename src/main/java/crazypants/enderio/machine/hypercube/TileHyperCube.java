@@ -125,8 +125,7 @@ public class TileHyperCube extends TileEntityEio
 
     private float milliBucketsTransfered = 0;
 
-    private final EnumMap<SubChannel, IoMode> ioModes = new EnumMap<>(
-        SubChannel.class);
+    private final EnumMap<SubChannel, IoMode> ioModes = new EnumMap<>(SubChannel.class);
 
     private final ItemRecieveBuffer recieveBuffer;
 

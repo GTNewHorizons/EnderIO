@@ -73,8 +73,7 @@ public abstract class AbstractConduit implements IConduit {
 
     protected List<CollidableComponent> collidables;
 
-    protected final EnumMap<ForgeDirection, ConnectionMode> conectionModes = new EnumMap<>(
-        ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, ConnectionMode> conectionModes = new EnumMap<>(ForgeDirection.class);
 
     protected boolean collidablesDirty = true;
 

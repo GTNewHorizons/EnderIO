@@ -87,37 +87,24 @@ public class ItemConduit extends AbstractConduit implements IItemConduit {
 
     ItemConduitNetwork network;
 
-    protected final EnumMap<ForgeDirection, RedstoneControlMode> extractionModes = new EnumMap<>(
-        ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, DyeColor> extractionColors = new EnumMap<>(
-        ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, RedstoneControlMode> extractionModes = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, DyeColor> extractionColors = new EnumMap<>(ForgeDirection.class);
 
-    protected final EnumMap<ForgeDirection, IItemFilter> outputFilters = new EnumMap<>(
-        ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, IItemFilter> inputFilters = new EnumMap<>(
-        ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, ItemStack> outputFilterUpgrades = new EnumMap<>(
-        ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, ItemStack> inputFilterUpgrades = new EnumMap<>(
-        ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, ItemStack> speedUpgrades = new EnumMap<>(
-        ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, ItemStack> functionUpgrades = new EnumMap<>(
-        ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, IItemFilter> outputFilters = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, IItemFilter> inputFilters = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, ItemStack> outputFilterUpgrades = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, ItemStack> inputFilterUpgrades = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, ItemStack> speedUpgrades = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, ItemStack> functionUpgrades = new EnumMap<>(ForgeDirection.class);
 
-    protected final EnumMap<ForgeDirection, Boolean> selfFeed = new EnumMap<>(
-        ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, Boolean> selfFeed = new EnumMap<>(ForgeDirection.class);
 
-    protected final EnumMap<ForgeDirection, Boolean> roundRobin = new EnumMap<>(
-        ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, Boolean> roundRobin = new EnumMap<>(ForgeDirection.class);
 
-    protected final EnumMap<ForgeDirection, Integer> priority = new EnumMap<>(
-        ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, Integer> priority = new EnumMap<>(ForgeDirection.class);
 
-    protected final EnumMap<ForgeDirection, DyeColor> outputColors = new EnumMap<>(
-        ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, DyeColor> inputColors = new EnumMap<>(
-        ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, DyeColor> outputColors = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, DyeColor> inputColors = new EnumMap<>(ForgeDirection.class);
 
     private int metaData;
 

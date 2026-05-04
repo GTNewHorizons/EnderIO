@@ -152,7 +152,7 @@ public class WailaCompat implements IWailaDataProvider {
             if (facade != accessor.getBlock()) {
                 ItemStack ret = facade.getPickBlock(
                         pos,
-                    new WailaWorldWrapper(accessor.getWorld()),
+                        new WailaWorldWrapper(accessor.getWorld()),
                         pos.blockX,
                         pos.blockY,
                         pos.blockZ,
