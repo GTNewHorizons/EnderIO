@@ -23,7 +23,7 @@ public class BucketHandler {
         MinecraftForge.EVENT_BUS.register(instance);
     }
 
-    private Map<Block, Item> buckets = new HashMap<Block, Item>();
+    private final Map<Block, Item> buckets = new HashMap<>();
 
     private BucketHandler() {}
 

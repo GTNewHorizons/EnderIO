@@ -21,7 +21,7 @@ public enum EnderIOController {
 
     INSTANCE;
 
-    private TObjectIntMap<UUID> openedContainers = new TObjectIntHashMap<UUID>();
+    private final TObjectIntMap<UUID> openedContainers = new TObjectIntHashMap<>();
     private int clientWindowId;
     private boolean locked = false;
 

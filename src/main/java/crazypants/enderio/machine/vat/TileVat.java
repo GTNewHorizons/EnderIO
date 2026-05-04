@@ -28,7 +28,7 @@ public class TileVat extends AbstractPoweredTaskEntity implements IFluidHandler,
     final FluidTank inputTank = new FluidTank(FluidContainerRegistry.BUCKET_VOLUME * 8);
     final FluidTank outputTank = new FluidTank(FluidContainerRegistry.BUCKET_VOLUME * 8);
 
-    private static int IO_MB_TICK = 100;
+    private static final int IO_MB_TICK = 100;
 
     boolean tanksDirty = false;
 

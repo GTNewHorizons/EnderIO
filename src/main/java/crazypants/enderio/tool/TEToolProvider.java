@@ -13,7 +13,7 @@ import crazypants.enderio.api.tool.ITool;
 
 public class TEToolProvider implements IToolProvider, IToolImpl {
 
-    private TEHammer wrench = new TEHammer();
+    private final TEHammer wrench = new TEHammer();
 
     @Override
     public ITool getTool(ItemStack stack) {

@@ -26,9 +26,9 @@ import crazypants.util.ForgeDirections;
 @ThreadSafeISBRH(perThread = true)
 public class SoulBinderRenderer implements ISimpleBlockRenderingHandler, IItemRenderer {
 
-    private float skullScale = 0.5f;
-    private BoundingBox scaledBB = BoundingBox.UNIT_CUBE.scale(skullScale, skullScale, skullScale);
-    private IIcon[] icons = new IIcon[6];
+    private static final float skullScale = 0.5f;
+    private final BoundingBox scaledBB = BoundingBox.UNIT_CUBE.scale(skullScale, skullScale, skullScale);
+    private final IIcon[] icons = new IIcon[6];
     private IIcon override = null;
 
     @Override

@@ -7,7 +7,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class OreDictionaryRecipeInput extends RecipeInput {
 
-    private int oreId;
+    private final int oreId;
 
     public OreDictionaryRecipeInput(ItemStack itemStack, int oreId, int slot) {
         this(itemStack, oreId, 1, slot);

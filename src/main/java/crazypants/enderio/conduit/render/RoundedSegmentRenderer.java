@@ -22,9 +22,9 @@ import crazypants.enderio.conduit.geom.Offsets.Axis;
 public class RoundedSegmentRenderer {
 
     private static final int NUM_VERTICES = 16;
-    private static Vertex[][] DIR_COORDS = new Vertex[ForgeDirection.VALID_DIRECTIONS.length][];
-    private static Vertex[][] DIR_STUB_COORDS = new Vertex[ForgeDirection.VALID_DIRECTIONS.length][];
-    private static Vertex[][] DIR_STUB_CAPS = new Vertex[ForgeDirection.VALID_DIRECTIONS.length][];
+    private static final Vertex[][] DIR_COORDS = new Vertex[ForgeDirection.VALID_DIRECTIONS.length][];
+    private static final Vertex[][] DIR_STUB_COORDS = new Vertex[ForgeDirection.VALID_DIRECTIONS.length][];
+    private static final Vertex[][] DIR_STUB_CAPS = new Vertex[ForgeDirection.VALID_DIRECTIONS.length][];
 
     private static final Vector3d REF_TRANS = new Vector3d(0.5, 0.5, 0.5);
 

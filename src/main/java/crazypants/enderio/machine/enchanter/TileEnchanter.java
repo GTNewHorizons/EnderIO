@@ -15,7 +15,7 @@ import crazypants.enderio.config.Config;
 
 public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
-    private ItemStack[] inv = new ItemStack[3];
+    private final ItemStack[] inv = new ItemStack[3];
 
     private short facing = (short) ForgeDirection.NORTH.ordinal();
 

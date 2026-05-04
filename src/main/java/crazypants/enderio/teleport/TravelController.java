@@ -84,7 +84,7 @@ public class TravelController {
      */
     public SetMultimap<Integer, BlockCoord> travelDestinations = MultimapBuilder.hashKeys().hashSetValues().build();
 
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
     private boolean wasJumping = false;
 
@@ -92,11 +92,7 @@ public class TravelController {
 
     private int delayTimer = 0;
 
-    private final int timer = Config.travelAnchorCooldown;
-
-    private boolean tempJump;
-
-    private boolean tempSneak;
+    private static final int timer = Config.travelAnchorCooldown;
 
     private boolean showTargets = false;
 
@@ -108,15 +104,13 @@ public class TravelController {
 
     Camera currentView = new Camera();
 
-    private final HashMap<BlockCoord, Float> candidates = new HashMap<BlockCoord, Float>();
+    private final HashMap<BlockCoord, Float> candidates = new HashMap<>();
 
     private boolean selectionEnabled = true;
 
-    private double fovRad;
-
     private double tanFovRad;
 
-    private final List<UniqueIdentifier> blackList = new ArrayList<GameRegistry.UniqueIdentifier>();
+    private final List<UniqueIdentifier> blackList = new ArrayList<>();
 
     private TravelController() {
         String[] blackListNames = Config.travelStaffBlinkBlackList;
@@ -425,7 +419,7 @@ public class TravelController {
         currentView.setViewMatrix(mv);
         currentView.setViewport(0, 0, mc.displayWidth, mc.displayHeight);
 
-        fovRad = Math.toRadians(fov);
+        double fovRad = Math.toRadians(fov);
         tanFovRad = Math.tanh(fovRad);
     }
 
@@ -446,8 +440,8 @@ public class TravelController {
                 selectedCoord = null;
             }
             MovementInput input = player.movementInput;
-            tempJump = input.jump;
-            tempSneak = input.sneak;
+            boolean tempJump = input.jump;
+            boolean tempSneak = input.sneak;
 
             // Handles teleportation if a target is selected
             if ((input.jump && !wasJumping && onBlock && selectedCoord != null && delayTimer == 0)

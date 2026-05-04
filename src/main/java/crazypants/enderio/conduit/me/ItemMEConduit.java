@@ -13,7 +13,7 @@ import crazypants.enderio.gui.IconEIO;
 
 public class ItemMEConduit extends AbstractItemConduit {
 
-    private static ItemConduitSubtype[] subtypes = new ItemConduitSubtype[] {
+    private static final ItemConduitSubtype[] subtypes = new ItemConduitSubtype[] {
             new ItemConduitSubtype(ModObject.itemMEConduit.name(), "enderio:itemMeConduit"),
             new ItemConduitSubtype(ModObject.itemMEConduit.name() + "Dense", "enderio:itemMeConduitDense") };
 

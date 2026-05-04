@@ -9,7 +9,7 @@ import crazypants.enderio.item.darksteel.DarkSteelItems;
 
 public class SwimUpgrade extends AbstractUpgrade {
 
-    private static String UPGRADE_NAME = "swim";
+    private static final String UPGRADE_NAME = "swim";
 
     public static final SwimUpgrade INSTANCE = new SwimUpgrade();
 

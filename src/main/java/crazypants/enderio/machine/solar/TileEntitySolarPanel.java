@@ -26,7 +26,7 @@ import crazypants.enderio.waila.IWailaNBTProvider;
 
 public class TileEntitySolarPanel extends TileEntityEio implements IInternalPowerProvider, IWailaNBTProvider {
 
-    private final List<Receptor> receptors = new ArrayList<Receptor>();
+    private final List<Receptor> receptors = new ArrayList<>();
     private ListIterator<Receptor> receptorIterator = receptors.listIterator();
     private boolean receptorsDirty = true;
 

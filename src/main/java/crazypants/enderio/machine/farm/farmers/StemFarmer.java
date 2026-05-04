@@ -79,7 +79,7 @@ public class StemFarmer extends CustomSeedFarmer {
             }
         } while (!done);
 
-        List<BlockCoord> toClear = new ArrayList<BlockCoord>(res.getHarvestedBlocks());
+        List<BlockCoord> toClear = new ArrayList<>(res.getHarvestedBlocks());
         Collections.sort(toClear, COMP);
         for (BlockCoord coord : toClear) {
             farm.getWorldObj().setBlockToAir(coord.x, coord.y, coord.z);

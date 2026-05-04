@@ -123,7 +123,7 @@ public class ItemDarkSteelAxe extends ItemAxe
                 BlockCoord bc = new BlockCoord(X, Y, Z);
                 harvester.harvest(player.worldObj, bc, res);
 
-                List<BlockCoord> sortedTargets = new ArrayList<BlockCoord>(res.getHarvestedBlocks());
+                List<BlockCoord> sortedTargets = new ArrayList<>(res.getHarvestedBlocks());
                 harvestComparator.refPoint = bc;
                 Collections.sort(sortedTargets, harvestComparator);
 

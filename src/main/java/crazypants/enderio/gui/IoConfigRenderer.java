@@ -61,7 +61,7 @@ public class IoConfigRenderer {
     private double distance;
     private long initTime;
 
-    private Minecraft mc = Minecraft.getMinecraft();
+    private final Minecraft mc = Minecraft.getMinecraft();
     private World world = mc.thePlayer.worldObj;
 
     private final Vector3d origin = new Vector3d();
@@ -72,8 +72,8 @@ public class IoConfigRenderer {
 
     public BlockCoord originBC;
 
-    private List<BlockCoord> configurables = new ArrayList<BlockCoord>();
-    private List<BlockCoord> neighbours = new ArrayList<BlockCoord>();
+    private final List<BlockCoord> configurables = new ArrayList<>();
+    private final List<BlockCoord> neighbours = new ArrayList<>();
 
     private SelectedFace selection;
 
@@ -191,7 +191,7 @@ public class IoConfigRenderer {
     private void updateSelection(Vector3d start, Vector3d end) {
         start.add(origin);
         end.add(origin);
-        List<MovingObjectPosition> hits = new ArrayList<MovingObjectPosition>();
+        List<MovingObjectPosition> hits = new ArrayList<>();
 
         for (BlockCoord bc : configurables) {
             Block block = world.getBlock(bc.x, bc.y, bc.z);

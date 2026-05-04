@@ -174,7 +174,7 @@ public abstract class AbstractPoweredTaskEntity extends AbstractPowerConsumerEnt
     }
 
     protected void mergeResults(ResultStack[] results) {
-        List<ItemStack> outputStacks = new ArrayList<ItemStack>(slotDefinition.getNumOutputSlots());
+        List<ItemStack> outputStacks = new ArrayList<>(slotDefinition.getNumOutputSlots());
         if (slotDefinition.getNumOutputSlots() > 0) {
             for (int i = slotDefinition.minOutputSlot; i <= slotDefinition.maxOutputSlot; i++) {
                 ItemStack it = inventory[i];
@@ -275,7 +275,7 @@ public abstract class AbstractPoweredTaskEntity extends AbstractPowerConsumerEnt
     protected boolean canInsertResult(float chance, IMachineRecipe nextRecipe) {
 
         ResultStack[] nextResults = nextRecipe.getCompletedResult(chance, getRecipeInputs());
-        List<ItemStack> outputStacks = new ArrayList<ItemStack>(slotDefinition.getNumOutputSlots());
+        List<ItemStack> outputStacks = new ArrayList<>(slotDefinition.getNumOutputSlots());
         if (slotDefinition.getNumOutputSlots() > 0) {
             boolean allFull = true;
             for (int i = slotDefinition.minOutputSlot; i <= slotDefinition.maxOutputSlot; i++) {

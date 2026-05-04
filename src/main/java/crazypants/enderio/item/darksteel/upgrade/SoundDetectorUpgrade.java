@@ -9,7 +9,7 @@ import crazypants.enderio.item.darksteel.DarkSteelItems;
 
 public class SoundDetectorUpgrade extends AbstractUpgrade {
 
-    private static String UPGRADE_NAME = "soundDetector";
+    private static final String UPGRADE_NAME = "soundDetector";
 
     public static final SoundDetectorUpgrade INSTANCE = new SoundDetectorUpgrade();
 

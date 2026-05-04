@@ -43,7 +43,7 @@ public class TileCrafter extends AbstractPowerConsumerEntity implements IItemBuf
 
     public TileCrafter() {
         super(new SlotDefinition(9, 1));
-        containerItems = new ArrayList<ItemStack>();
+        containerItems = new ArrayList<>();
     }
 
     @Override

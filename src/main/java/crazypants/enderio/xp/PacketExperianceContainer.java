@@ -29,7 +29,7 @@ public class PacketExperianceContainer extends MessageTileEntity<TileEntity>
         }
     }
 
-    private ExperienceContainer xpCon;
+    private final ExperienceContainer xpCon;
 
     public PacketExperianceContainer() {
         xpCon = new ExperienceContainer();

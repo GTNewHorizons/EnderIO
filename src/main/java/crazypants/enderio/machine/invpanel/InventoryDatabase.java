@@ -26,9 +26,9 @@ public abstract class InventoryDatabase<ItemEntry extends ItemEntryBase> {
     protected int generation;
 
     public InventoryDatabase() {
-        simpleRegsitry = new HashMap<Integer, ItemEntry>();
-        complexRegistry = new HashMap<ItemEntry, ItemEntry>();
-        complexItems = new ArrayList<ItemEntry>();
+        simpleRegsitry = new HashMap<>();
+        complexRegistry = new HashMap<>();
+        complexItems = new ArrayList<>();
     }
 
     public int getGeneration() {

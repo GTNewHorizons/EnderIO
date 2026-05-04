@@ -49,13 +49,13 @@ public class ItemSoulVessel extends Item implements IResourceTooltipProvider {
 
     private IIcon filledIcon;
 
-    private List<String> blackList;
+    private final List<String> blackList;
 
     protected ItemSoulVessel() {
         setCreativeTab(EnderIOTab.tabEnderIO);
         setUnlocalizedName(ModObject.itemSoulVessel.unlocalisedName);
         setMaxStackSize(64);
-        blackList = new ArrayList<String>();
+        blackList = new ArrayList<>();
         for (String ent : Config.soulVesselBlackList) {
             blackList.add(ent);
         }

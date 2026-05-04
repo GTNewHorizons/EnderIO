@@ -31,7 +31,7 @@ public class BasicManyToOneRecipe implements IManyToOneRecipe {
     @Override
     public boolean isValidRecipeComponents(ItemStack... items) {
 
-        List<RecipeInput> inputs = new ArrayList<RecipeInput>(Arrays.asList(recipe.getInputs()));
+        List<RecipeInput> inputs = new ArrayList<>(Arrays.asList(recipe.getInputs()));
         for (ItemStack is : items) {
             if (is != null) {
                 RecipeInput remove = null;

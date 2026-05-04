@@ -14,7 +14,7 @@ public class ItemItemConduit extends AbstractItemConduit {
     // new ItemConduitSubtype(ModObject.itemItemConduit.name(), "enderio:itemItemConduit"),
     // new ItemConduitSubtype(ModObject.itemItemConduit.name() + "Empowered", "enderio:itemItemConduitAdvanced")
     // };
-    private static ItemConduitSubtype[] subtypes = new ItemConduitSubtype[] {
+    private static final ItemConduitSubtype[] subtypes = new ItemConduitSubtype[] {
             new ItemConduitSubtype(ModObject.itemItemConduit.name(), "enderio:itemItemConduit") };
 
     public static ItemItemConduit create() {

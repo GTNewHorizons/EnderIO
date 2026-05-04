@@ -25,7 +25,7 @@ import crazypants.enderio.xp.XpUtil;
 public class TileExperienceObelisk extends AbstractMachineEntity
         implements IFluidHandler, IHaveExperience, ITankAccess {
 
-    private ExperienceContainer xpCont = new ExperienceContainer(
+    private final ExperienceContainer xpCont = new ExperienceContainer(
             XpUtil.getExperienceForLevel(Config.xpObeliskMaxXpLevel));
 
     public TileExperienceObelisk() {
