@@ -53,16 +53,16 @@ import crazypants.util.RenderPassHelper;
 
 public class IoConfigRenderer {
 
-    protected static final RenderBlocks RB = new RenderBlocks();
+    protected final RenderBlocks RB = new RenderBlocks();
 
     private boolean dragging = false;
-    private float pitch = 0;
-    private float yaw = 0;
+    private float pitch;
+    private float yaw;
     private double distance;
     private long initTime;
 
     private final Minecraft mc = Minecraft.getMinecraft();
-    private World world = mc.thePlayer.worldObj;
+    private final World world;
 
     private final Vector3d origin = new Vector3d();
     private final Vector3d eye = new Vector3d();
