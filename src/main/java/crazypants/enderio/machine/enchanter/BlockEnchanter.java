@@ -148,6 +148,8 @@ public class BlockEnchanter extends BlockEio implements IGuiHandler, IResourceTo
     }
 
     // 0, 1, 2, 3, 4, 5, 8, 12, 20, 24, 32, 36, 48, 60, 64 are 0-15 respectively
+    // the power values are all possible values of the second slot to make automation possible
+    // (it has to be able to differentiate from them all)
     @Override
     public int getComparatorInputOverride(World worldIn, int x, int y, int z, int side) {
         if (worldIn.getTileEntity(x, y, z) instanceof IInventory inv) {
