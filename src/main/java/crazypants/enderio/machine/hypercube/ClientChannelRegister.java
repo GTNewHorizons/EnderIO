@@ -8,10 +8,10 @@ public class ClientChannelRegister {
 
     static final ClientChannelRegister instance = new ClientChannelRegister();
 
-    private final List<Channel> publicChannels = new ArrayList<Channel>();
+    private final List<Channel> publicChannels = new ArrayList<>();
     private final List<Channel> publicChannelsRO = Collections.unmodifiableList(publicChannels);
 
-    private final List<Channel> privateChannels = new ArrayList<Channel>();
+    private final List<Channel> privateChannels = new ArrayList<>();
     private final List<Channel> privateChannelsRO = Collections.unmodifiableList(privateChannels);
 
     void setPublicChannels(List<Channel> channels) {

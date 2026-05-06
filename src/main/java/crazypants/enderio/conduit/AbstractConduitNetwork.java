@@ -12,7 +12,7 @@ import crazypants.enderio.EnderIO;
 // I=base type, I is the base class of the implementations accepted by the network
 public abstract class AbstractConduitNetwork<T extends IConduit, I extends T> {
 
-    protected final List<I> conduits = new ArrayList<I>();
+    protected final List<I> conduits = new ArrayList<>();
 
     protected final Class<I> implClass;
     protected final Class<T> baseConduitClass;

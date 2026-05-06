@@ -39,7 +39,7 @@ public class VatMachineRecipe extends AbstractMachineRecipe {
     @Override
     public List<MachineRecipeInput> getQuantitiesConsumed(MachineRecipeInput[] inputs) {
 
-        List<MachineRecipeInput> result = new ArrayList<MachineRecipeInput>();
+        List<MachineRecipeInput> result = new ArrayList<>();
 
         VatRecipe rec = (VatRecipe) getRecipeForInputs(inputs);
         FluidStack inputFluidStack = rec.getRequiredFluidInput(inputs);

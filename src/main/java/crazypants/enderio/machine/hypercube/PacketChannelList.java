@@ -41,9 +41,9 @@ public class PacketChannelList implements IMessage, IMessageHandler<PacketChanne
         }
 
         if (res != null && !res.isEmpty()) {
-            channels = new ArrayList<Channel>(res);
+            channels = new ArrayList<>(res);
         } else {
-            channels = new ArrayList<Channel>();
+            channels = new ArrayList<>();
         }
     }
 
@@ -72,7 +72,7 @@ public class PacketChannelList implements IMessage, IMessageHandler<PacketChanne
             userId = null;
         }
         int numChannels = buffer.readInt();
-        channels = new ArrayList<Channel>();
+        channels = new ArrayList<>();
         for (int i = 0; i < numChannels; i++) {
             channels.add(new Channel(ByteBufUtils.readUTF8String(buffer), userId));
         }

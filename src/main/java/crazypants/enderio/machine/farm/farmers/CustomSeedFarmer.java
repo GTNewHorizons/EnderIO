@@ -24,7 +24,7 @@ public class CustomSeedFarmer implements IFarmerJoe {
     protected int grownBlockMeta;
     protected ItemStack seeds;
     protected boolean requiresFarmland = true;
-    protected List<Block> tilledBlocks = new ArrayList<Block>();
+    protected List<Block> tilledBlocks = new ArrayList<>();
     protected boolean ignoreSustainCheck = false;
     protected boolean disableTreeFarm;
 
@@ -141,7 +141,7 @@ public class CustomSeedFarmer implements IFarmerJoe {
         }
 
         World worldObj = farm.getWorldObj();
-        List<EntityItem> result = new ArrayList<EntityItem>();
+        List<EntityItem> result = new ArrayList<>();
 
         ArrayList<ItemStack> drops = block.getDrops(worldObj, bc.x, bc.y, bc.z, meta, farm.getMaxLootingValue());
         farm.damageHoe(1, bc);

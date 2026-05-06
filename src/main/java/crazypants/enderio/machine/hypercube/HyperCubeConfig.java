@@ -33,9 +33,9 @@ public class HyperCubeConfig {
 
     private final Properties props = new Properties();
 
-    private final List<Channel> publicChannels = new ArrayList<Channel>();
+    private final List<Channel> publicChannels = new ArrayList<>();
 
-    private final Map<UUID, List<Channel>> userChannels = new HashMap<UUID, List<Channel>>();
+    private final Map<UUID, List<Channel>> userChannels = new HashMap<>();
 
     private final File file;
 
@@ -135,7 +135,7 @@ public class HyperCubeConfig {
         loadChannelList(KEY_PUBLIC_CHANNELS, null, publicChannels);
 
         userChannels.clear();
-        List<String> users = new ArrayList<String>();
+        List<String> users = new ArrayList<>();
         String usersStr = props.getProperty(KEY_USERS, "");
         String[] usersSplit = usersStr.split(DELIM);
         for (String user : usersSplit) {
@@ -145,7 +145,7 @@ public class HyperCubeConfig {
         }
 
         for (String user : users) {
-            List<Channel> channels = new ArrayList<Channel>();
+            List<Channel> channels = new ArrayList<>();
             UUID uuid = PlayerUtil.getPlayerUIDUnstable(user);
             loadChannelList(user + KEY_USER_CHANNEL, uuid, channels);
             if (!channels.isEmpty()) {

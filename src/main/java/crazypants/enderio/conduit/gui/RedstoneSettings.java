@@ -25,8 +25,8 @@ public class RedstoneSettings extends BaseSettingsPanel {
 
     private CheckBox strongCB;
 
-    private String signalColorStr = EnderIO.lang.localize("gui.conduit.redstone.color");
-    private String signalStringthStr = EnderIO.lang.localize("gui.conduit.redstone.signalStrengh");
+    private final String signalColorStr = EnderIO.lang.localize("gui.conduit.redstone.color");
+    private final String signalStringthStr = EnderIO.lang.localize("gui.conduit.redstone.signalStrengh");
     private IInsulatedRedstoneConduit insCon;
 
     private int stongLabelX;

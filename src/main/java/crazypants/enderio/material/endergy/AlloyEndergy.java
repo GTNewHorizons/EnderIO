@@ -25,8 +25,8 @@ public enum AlloyEndergy {
     public static final AlloyEndergy[] VALUES = values();
     public final String unlocalisedName;
     public final String iconKey;
-    private final List<String> oreIngots = new ArrayList<String>();
-    private final List<String> oreBlocks = new ArrayList<String>();
+    private final List<String> oreIngots = new ArrayList<>();
+    private final List<String> oreBlocks = new ArrayList<>();
     private final float hardness;
 
     AlloyEndergy(String baseName, float hardness, String oreDictName) {

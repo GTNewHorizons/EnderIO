@@ -64,7 +64,7 @@ public class TileInventoryPanel extends AbstractMachineEntity implements IFluidH
     public TileInventoryPanel() {
         super(new SlotDefinition(0, 8, 11, 20, 21, 20));
         this.fuelTank = new SmartTank(EnderIO.fluidNutrientDistillation, Config.inventoryPanelFree ? 0 : 2000);
-        this.storedCraftingRecipes = new ArrayList<StoredCraftingRecipe>();
+        this.storedCraftingRecipes = new ArrayList<>();
     }
 
     public InventoryDatabaseServer getDatabaseServer() {

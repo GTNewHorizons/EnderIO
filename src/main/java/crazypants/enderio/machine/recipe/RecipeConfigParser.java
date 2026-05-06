@@ -108,7 +108,7 @@ public class RecipeConfigParser extends DefaultHandler {
     private boolean outputTagOpen = false;
     private boolean inputTagOpen = false;
 
-    private boolean debug = false;
+    private static final boolean debug = false;
 
     private boolean inCustomHandler = false;
 

@@ -2,7 +2,6 @@ package crazypants.enderio.item.darksteel.upgrade;
 
 import static org.lwjgl.opengl.GL11.glDepthMask;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -57,7 +56,7 @@ public class SolarUpgrade extends AbstractUpgrade {
         return new ItemStack(EnderIO.blockSolarPanel, 1, level - 1);
     }
 
-    private byte level;
+    private final byte level;
 
     public SolarUpgrade(NBTTagCompound tag) {
         super(UPGRADE_NAME, tag);
@@ -117,9 +116,9 @@ public class SolarUpgrade extends AbstractUpgrade {
     }
 
     @SideOnly(Side.CLIENT)
-    private class Render implements IRenderUpgrade {
+    private static class Render implements IRenderUpgrade {
 
-        private EntityItem item = new EntityItem(Minecraft.getMinecraft().theWorld);
+        private final EntityItem item = new EntityItem(null);
 
         @Override
         public void render(RenderPlayerEvent event, ItemStack stack, boolean head) {
@@ -132,8 +131,13 @@ public class SolarUpgrade extends AbstractUpgrade {
                 GL11.glRotated(180, 1, 0, 0);
                 GL11.glScalef(2.1f, 2.1f, 2.1f);
                 byte level = loadFromItem(stack).level;
-                item.setEntityItemStack(new ItemStack(EnderIO.blockSolarPanel, 1, level - 1));
-                RenderManager.instance.renderEntityWithPosYaw(item, 0, 0, 0, 0, 0);
+                try {
+                    item.setWorld(event.entityPlayer.worldObj);
+                    item.setEntityItemStack(new ItemStack(EnderIO.blockSolarPanel, 1, level - 1));
+                    RenderManager.instance.renderEntityWithPosYaw(item, 0, 0, 0, 0, 0);
+                } finally {
+                    item.setWorld(null);
+                }
             }
         }
     }

@@ -14,7 +14,7 @@ import crazypants.enderio.machine.MachineRecipeInput;
 
 public class ManyToOneRecipeManager {
 
-    private final List<IManyToOneRecipe> recipes = new ArrayList<IManyToOneRecipe>();
+    private final List<IManyToOneRecipe> recipes = new ArrayList<>();
 
     private final String coreFileName;
     private final String customFileName;

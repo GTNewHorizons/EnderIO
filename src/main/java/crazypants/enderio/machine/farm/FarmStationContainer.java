@@ -29,7 +29,7 @@ public class FarmStationContainer extends AbstractMachineContainer<TileFarmStati
 
     private static final Item[] slotItems1 = { Items.wooden_hoe, Items.stone_hoe, Items.iron_hoe, Items.golden_hoe,
             Items.diamond_hoe };
-    private static final List<ItemStack> slotItemsStacks1 = new ArrayList<ItemStack>();
+    private static final List<ItemStack> slotItemsStacks1 = new ArrayList<>();
 
     static {
         for (Item item : slotItems1) {
@@ -44,7 +44,7 @@ public class FarmStationContainer extends AbstractMachineContainer<TileFarmStati
             ? new Item[] { Items.shears, DarkSteelItems.itemDarkSteelShears,
                     GameRegistry.findItem("IC2", "itemTreetap") }
             : new Item[] { Items.shears, DarkSteelItems.itemDarkSteelShears };
-    public static final List<ItemStack> slotItemsSeeds = new ArrayList<ItemStack>();
+    public static final List<ItemStack> slotItemsSeeds = new ArrayList<>();
 
     static {
         slotItemsSeeds.add(new ItemStack(Items.wheat_seeds));
@@ -57,7 +57,7 @@ public class FarmStationContainer extends AbstractMachineContainer<TileFarmStati
         slotItemsSeeds.add(new ItemStack(Items.reeds));
     }
 
-    public static final List<ItemStack> slotItemsProduce = new ArrayList<ItemStack>();
+    public static final List<ItemStack> slotItemsProduce = new ArrayList<>();
 
     static {
         slotItemsProduce.add(new ItemStack(Blocks.log, 1, 0));
@@ -66,7 +66,7 @@ public class FarmStationContainer extends AbstractMachineContainer<TileFarmStati
         slotItemsProduce.add(new ItemStack(Items.apple));
     }
 
-    public static final List<ItemStack> slotItemsFertilizer = new ArrayList<ItemStack>();
+    public static final List<ItemStack> slotItemsFertilizer = new ArrayList<>();
 
     static {
         slotItemsFertilizer.add(new ItemStack(Items.dye, 1, 15));

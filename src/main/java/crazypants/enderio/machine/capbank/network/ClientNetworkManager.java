@@ -22,7 +22,7 @@ public class ClientNetworkManager {
         return instance;
     }
 
-    private final Map<Integer, CapBankClientNetwork> networks = new HashMap<Integer, CapBankClientNetwork>();
+    private final Map<Integer, CapBankClientNetwork> networks = new HashMap<>();
 
     ClientNetworkManager() {}
 

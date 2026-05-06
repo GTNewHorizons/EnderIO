@@ -138,7 +138,7 @@ public class ItemDarkSteelShears extends ItemShears
                 }
             }
 
-            List<BlockCoord> sortedTargets = new ArrayList<BlockCoord>(res.getHarvestedBlocks());
+            List<BlockCoord> sortedTargets = new ArrayList<>(res.getHarvestedBlocks());
             harvestComparator.refPoint = bc;
             Collections.sort(sortedTargets, harvestComparator);
 

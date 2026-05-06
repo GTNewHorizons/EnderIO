@@ -51,27 +51,27 @@ public class GuiPowerMonitor extends GuiContainerBaseEIO {
 
     private boolean isRedstoneMode = false;
 
-    private CheckBox enabledB;
+    private final CheckBox enabledB;
 
-    private TextFieldEnder startTF;
-    private TextFieldEnder endTF;
+    private final TextFieldEnder startTF;
+    private final TextFieldEnder endTF;
 
-    private String titleStr;
+    private final String titleStr;
 
-    private String engineTxt1;
-    private String engineTxt2;
-    private String engineTxt3;
-    private String engineTxt4;
-    private String engineTxt5;
-    private String engineTxt6;
+    private final String engineTxt1;
+    private final String engineTxt2;
+    private final String engineTxt3;
+    private final String engineTxt4;
+    private final String engineTxt5;
+    private final String engineTxt6;
 
-    private String monHeading1;
-    private String monHeading2;
-    private String monHeading3;
-    private String monHeading4;
-    private String monHeading5;
+    private final String monHeading1;
+    private final String monHeading2;
+    private final String monHeading3;
+    private final String monHeading4;
+    private final String monHeading5;
 
-    private String noNetworkError;
+    private final String noNetworkError;
 
     public GuiPowerMonitor(InventoryPlayer playerInv, final TilePowerMonitor te) {
         super(new ContainerNoInv(te), "powerMonitor");

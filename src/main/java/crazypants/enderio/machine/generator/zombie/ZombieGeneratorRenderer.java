@@ -29,7 +29,7 @@ import crazypants.util.RenderPassHelper;
 @SideOnly(Side.CLIENT)
 public class ZombieGeneratorRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
-    private ModelZombieJar model = new ModelZombieJar();
+    private final ModelZombieJar model = new ModelZombieJar();
 
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float tick) {

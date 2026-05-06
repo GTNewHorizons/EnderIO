@@ -43,7 +43,7 @@ public class DarkSteelRecipeManager {
 
     public static DarkSteelRecipeManager instance = new DarkSteelRecipeManager();
 
-    private List<IDarkSteelUpgrade> upgrades = new ArrayList<IDarkSteelUpgrade>();
+    private final List<IDarkSteelUpgrade> upgrades = new ArrayList<>();
 
     public DarkSteelRecipeManager() {
         upgrades.add(EnergyUpgrade.EMPOWERED);
@@ -207,7 +207,7 @@ public class DarkSteelRecipeManager {
     public void addAdvancedTooltipEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list,
             boolean flag) {
 
-        List<IDarkSteelUpgrade> applyableUpgrades = new ArrayList<IDarkSteelUpgrade>();
+        List<IDarkSteelUpgrade> applyableUpgrades = new ArrayList<>();
         for (IDarkSteelUpgrade upgrade : upgrades) {
             if (upgrade.hasUpgrade(itemstack)) {
                 upgrade.addDetailedEntries(itemstack, entityplayer, list, flag);

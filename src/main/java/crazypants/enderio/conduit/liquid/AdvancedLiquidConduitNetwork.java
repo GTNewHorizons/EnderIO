@@ -19,7 +19,7 @@ public class AdvancedLiquidConduitNetwork extends AbstractTankConduitNetwork<Adv
 
     private final ConduitTank tank = new ConduitTank(0);
 
-    private final Set<LiquidOutput> outputs = new HashSet<LiquidOutput>();
+    private final Set<LiquidOutput> outputs = new HashSet<>();
 
     private Iterator<LiquidOutput> outputIterator;
 

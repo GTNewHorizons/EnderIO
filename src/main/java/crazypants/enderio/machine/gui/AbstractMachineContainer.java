@@ -168,7 +168,7 @@ public abstract class AbstractMachineContainer<T extends AbstractMachineEntity> 
                 return Collections.singletonList(getPlayerInventorySlotRange(true));
             }
         } else if (slotNumber >= startPlayerSlot) {
-            List<SlotRange> res = new ArrayList<SlotRange>();
+            List<SlotRange> res = new ArrayList<>();
             addInputSlotRanges(res);
             addUpgradeSlotRanges(res);
             addPlayerSlotRanges(res, slotNumber);

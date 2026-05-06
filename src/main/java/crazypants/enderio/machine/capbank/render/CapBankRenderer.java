@@ -40,10 +40,10 @@ import crazypants.enderio.power.PowerHandlerUtil;
 @ThreadSafeISBRH(perThread = true)
 public class CapBankRenderer extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler, IItemRenderer {
 
-    private ConnectedTextureRenderer connectedTexRenderer;
+    private final ConnectedTextureRenderer connectedTexRenderer;
 
-    private Map<InfoDisplayType, IInfoRenderer> infoRenderers;
-    private FillGauge fillGaugeRenderer;
+    private final Map<InfoDisplayType, IInfoRenderer> infoRenderers;
+    private final FillGauge fillGaugeRenderer;
 
     public CapBankRenderer() {
         connectedTexRenderer = new ConnectedTextureRenderer();

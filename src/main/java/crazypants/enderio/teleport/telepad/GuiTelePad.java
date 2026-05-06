@@ -35,18 +35,21 @@ public class GuiTelePad extends GuiContainerBaseEIO implements IToggleableGui {
     ToggleTravelButton switchButton;
     GuiButton teleportButton;
 
-    private World world;
-    private TileTelePad te;
+    private final World world;
+    private final TileTelePad te;
 
-    private TextFieldEnder xTF, yTF, zTF, dimTF;
+    private final TextFieldEnder xTF;
+    private final TextFieldEnder yTF;
+    private final TextFieldEnder zTF;
+    private final TextFieldEnder dimTF;
 
-    private int powerX = 8;
-    private int powerY = 9;
-    private int powerScale = 100;
+    private static final int powerX = 8;
+    private static final int powerY = 9;
+    private static final int powerScale = 100;
 
-    private int progressX = 26;
-    private int progressY = 90;
-    private int progressScale = 124;
+    private static final int progressX = 26;
+    private static final int progressY = 90;
+    private static final int progressScale = 124;
 
     public static int SWITCH_X = 155, SWITCH_Y = 5;
 
