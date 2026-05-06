@@ -215,6 +215,7 @@ public class EnderIO {
     public static final boolean hasGT5 = Loader.isModLoaded("gregtech") && !Loader.isModLoaded("gregapi");
     public static final boolean hasHP = Loader.isModLoaded("hodgepodge");
     public static final boolean hasWailaPlugins = Loader.isModLoaded("wailaplugins");
+    public static final boolean hasAutomagy = Loader.isModLoaded("Automagy");
 
     // Materials
     public static ItemCapacitor itemBasicCapacitor;
