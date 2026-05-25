@@ -38,6 +38,10 @@ public class TileBuffer extends AbstractPowerConsumerEntity implements IPaintabl
         return BlockItemBuffer.Type.get(this).getUnlocalizedName();
     }
 
+    public String getGuiInventoryName() {
+        return BlockItemBuffer.Type.get(this).getGuiUnlocalizedName();
+    }
+
     @Override
     protected boolean isMachineItemValidForSlot(int i, ItemStack itemstack) {
         return true;

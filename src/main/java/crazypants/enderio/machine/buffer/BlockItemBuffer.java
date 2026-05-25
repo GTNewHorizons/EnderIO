@@ -44,6 +44,10 @@ public class BlockItemBuffer extends ItemBlockWithMetadata {
             return "tile." + ModObject.blockBuffer.unlocalisedName + "." + name().toLowerCase(Locale.US);
         }
 
+        public String getGuiUnlocalizedName() {
+            return "enderio.gui." + ModObject.blockBuffer.unlocalisedName + "." + name().toLowerCase(Locale.US);
+        }
+
         public static ItemStack getStack(Type type) {
             return new ItemStack(EnderIO.blockBuffer, 1, type.ordinal());
         }
