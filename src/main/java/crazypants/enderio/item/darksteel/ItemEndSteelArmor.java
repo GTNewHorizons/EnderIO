@@ -85,6 +85,6 @@ public class ItemEndSteelArmor extends ItemDarkSteelArmor implements IEndSteelIt
     @Optional.Method(modid = "gregtech_nh")
     @Override
     public boolean protectsAgainst(ItemStack itemStack, Hazard hazard) {
-        return true;
+        return hazard != Hazard.SPACE;
     }
 }
