@@ -20,12 +20,12 @@ public class HyperCubeRegister {
 
     public static HyperCubeRegister instance;
 
-    private final Map<Channel, List<TileHyperCube>> channelMapping = new HashMap<Channel, List<TileHyperCube>>();
+    private final Map<Channel, List<TileHyperCube>> channelMapping = new HashMap<>();
 
-    private final List<Channel> publicChannels = new ArrayList<Channel>();
+    private final List<Channel> publicChannels = new ArrayList<>();
     private final List<Channel> publicChannelsRO = Collections.unmodifiableList(publicChannels);
 
-    private final Map<UUID, List<Channel>> userChannels = new HashMap<UUID, List<Channel>>();
+    private final Map<UUID, List<Channel>> userChannels = new HashMap<>();
 
     // private Configuration config;
     private HyperCubeConfig conf;
@@ -49,7 +49,7 @@ public class HyperCubeRegister {
     public synchronized List<Channel> getChannelsForUser(UUID user) {
         List<Channel> result = userChannels.get(user);
         if (result == null) {
-            result = new ArrayList<Channel>();
+            result = new ArrayList<>();
             userChannels.put(user, result);
         }
         return result;
@@ -81,7 +81,7 @@ public class HyperCubeRegister {
         if (chans == null) {
             return Collections.emptyList();
         }
-        return new ArrayList<TileHyperCube>(chans);
+        return new ArrayList<>(chans);
     }
 
     public synchronized void addChannel(Channel channel) {
@@ -138,7 +138,7 @@ public class HyperCubeRegister {
         }
         List<TileHyperCube> result = channelMapping.get(channel);
         if (result == null) {
-            result = new ArrayList<TileHyperCube>();
+            result = new ArrayList<>();
             channelMapping.put(channel, result);
         }
         return result;

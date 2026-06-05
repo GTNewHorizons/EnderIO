@@ -12,7 +12,7 @@ import crazypants.enderio.gui.IconEIO;
 
 public class ItemOCConduit extends AbstractItemConduit {
 
-    private static ItemConduitSubtype[] subtypes = new ItemConduitSubtype[] {
+    private static final ItemConduitSubtype[] subtypes = new ItemConduitSubtype[] {
             new ItemConduitSubtype(ModObject.itemOCConduit.name(), "enderio:itemOCConduit") };
 
     public static ItemOCConduit create() {

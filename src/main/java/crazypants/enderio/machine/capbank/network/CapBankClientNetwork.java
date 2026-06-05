@@ -24,7 +24,7 @@ import crazypants.enderio.power.IPowerStorage;
 public class CapBankClientNetwork implements ICapBankNetwork {
 
     private final int id;
-    private final Map<BlockCoord, TileCapBank> members = new HashMap<BlockCoord, TileCapBank>();
+    private final Map<BlockCoord, TileCapBank> members = new HashMap<>();
     private int maxEnergySent;
     private int maxEnergyRecieved;
 
@@ -282,7 +282,7 @@ public class CapBankClientNetwork implements ICapBankNetwork {
     public IOInfo getIODisplayInfo(int x, int y, int z, ForgeDirection face) {
         DisplayInfoKey key = new DisplayInfoKey(x, y, z, face);
         if (ioDisplayInfoCache == null) {
-            ioDisplayInfoCache = new HashMap<DisplayInfoKey, IOInfo>();
+            ioDisplayInfoCache = new HashMap<>();
         }
         IOInfo value = ioDisplayInfoCache.get(key);
         if (value == null) {

@@ -11,7 +11,7 @@ import crazypants.enderio.item.darksteel.DarkSteelItems;
 
 public class NaturalistEyeUpgrade extends AbstractUpgrade {
 
-    private static String UPGRADE_NAME = "naturalistEye";
+    private static final String UPGRADE_NAME = "naturalistEye";
 
     public static final NaturalistEyeUpgrade INSTANCE = new NaturalistEyeUpgrade();
 

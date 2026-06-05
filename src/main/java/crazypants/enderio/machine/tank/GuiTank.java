@@ -52,7 +52,7 @@ public class GuiTank extends GuiMachineBase<TileTank> {
         }
     }
 
-    private CycleButton<VoidMode> voidBut;
+    private final CycleButton<VoidMode> voidBut;
 
     public GuiTank(InventoryPlayer par1InventoryPlayer, TileTank te) {
         super(te, new ContainerTank(par1InventoryPlayer, te), "tank");
@@ -78,7 +78,7 @@ public class GuiTank extends GuiMachineBase<TileTank> {
             }
         });
 
-        voidBut = new CycleButton<VoidMode>(this, 123, 155, 43, VoidMode.class);
+        voidBut = new CycleButton<>(this, 123, 155, 43, VoidMode.class);
     }
 
     @Override

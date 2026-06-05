@@ -120,7 +120,7 @@ public class TreeFarmer implements IFarmerJoe {
         harvester.harvest(farm, this, bc, res);
         Collections.sort(res.harvestedBlocks, comp);
 
-        List<BlockCoord> actualHarvests = new ArrayList<BlockCoord>();
+        List<BlockCoord> actualHarvests = new ArrayList<>();
 
         // avoid calling this in a loop
         boolean hasShears = farm.hasShears();

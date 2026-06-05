@@ -35,9 +35,9 @@ public class CapBankNetwork implements ICapBankNetwork {
 
     private static final int IO_CAP = 2000000000;
 
-    private final List<TileCapBank> capBanks = new ArrayList<TileCapBank>();
+    private final List<TileCapBank> capBanks = new ArrayList<>();
 
-    private final Set<EnergyReceptor> receptors = new HashSet<EnergyReceptor>();
+    private final Set<EnergyReceptor> receptors = new HashSet<>();
     private RoundRobinIterator<EnergyReceptor> receptorIterator;
 
     private final int id;
@@ -59,7 +59,7 @@ public class CapBankNetwork implements ICapBankNetwork {
 
     private CapBankType type;
 
-    private final Set<BlockCoord> redstoneRecievers = new HashSet<BlockCoord>();
+    private final Set<BlockCoord> redstoneRecievers = new HashSet<>();
 
     private RedstoneControlMode inputControlMode = RedstoneControlMode.IGNORE;
     private RedstoneControlMode outputControlMode = RedstoneControlMode.IGNORE;
@@ -103,7 +103,7 @@ public class CapBankNetwork implements ICapBankNetwork {
         if (cap == null) {
             return;
         }
-        Set<TileCapBank> work = new HashSet<TileCapBank>();
+        Set<TileCapBank> work = new HashSet<>();
         for (;;) {
             ICapBankNetwork network = cap.getNetwork();
             if (network != this) {
@@ -255,8 +255,8 @@ public class CapBankNetwork implements ICapBankNetwork {
         }
 
         if (receptorIterator == null) {
-            List<EnergyReceptor> rl = new ArrayList<EnergyReceptor>(receptors);
-            receptorIterator = new RoundRobinIterator<EnergyReceptor>(rl);
+            List<EnergyReceptor> rl = new ArrayList<>(receptors);
+            receptorIterator = new RoundRobinIterator<>(rl);
         }
 
         int totalSent = 0;

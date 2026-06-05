@@ -19,7 +19,7 @@ import crazypants.enderio.power.ICapacitor;
 
 public class PowerConduitEndergy extends PowerConduit {
 
-    static final Map<String, IIcon> ICONS = new HashMap<String, IIcon>();
+    static final Map<String, IIcon> ICONS = new HashMap<>();
 
     private static ICapacitor[] capacitors;
 

@@ -28,8 +28,8 @@ public class GrindingBallTagHandler implements CustomTagHandler {
     private static final String AT_CM = "chanceMultiplier";
     private static final String AT_DMJ = "durationRF";
 
-    Map<String, GrindingBall> balls = new HashMap<String, GrindingBall>();
-    List<RecipeInput> excludes = new ArrayList<RecipeInput>();
+    Map<String, GrindingBall> balls = new HashMap<>();
+    List<RecipeInput> excludes = new ArrayList<>();
 
     boolean processStack = false;
     boolean processExclude = false;

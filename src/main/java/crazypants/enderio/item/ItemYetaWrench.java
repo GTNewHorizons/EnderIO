@@ -198,7 +198,7 @@ public class ItemYetaWrench extends Item
 
     @Override
     public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
-        ArrayList<String> tmp = new ArrayList<String>();
+        ArrayList<String> tmp = new ArrayList<>();
         SpecialTooltipHandler.addDetailedTooltipFromResources(tmp, getUnlocalizedName());
         String keyName = Keyboard.getKeyName(KeyTracker.instance.getYetaWrenchMode().getKeyCode());
         for (String line : tmp) {

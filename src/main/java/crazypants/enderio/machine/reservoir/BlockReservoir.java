@@ -50,7 +50,7 @@ public class BlockReservoir extends BlockEio implements IResourceTooltipProvider
         }
     }
 
-    private IIcon[] mbIcons = new IIcon[8];
+    private final IIcon[] mbIcons = new IIcon[8];
     IIcon switchIcon;
 
     private BlockReservoir() {

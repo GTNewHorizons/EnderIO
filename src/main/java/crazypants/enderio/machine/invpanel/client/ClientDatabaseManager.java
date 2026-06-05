@@ -15,7 +15,7 @@ public class ClientDatabaseManager {
         FMLCommonHandler.instance().bus().register(this);
     }
 
-    private final HashMap<Integer, InventoryDatabaseClient> dbRegistry = new HashMap<Integer, InventoryDatabaseClient>();
+    private final HashMap<Integer, InventoryDatabaseClient> dbRegistry = new HashMap<>();
 
     public InventoryDatabaseClient getOrCreateDatabase(int generation) {
         InventoryDatabaseClient db = dbRegistry.get(generation);

@@ -283,8 +283,8 @@ public class BlockEnderRail extends BlockRail implements IResourceTooltipProvide
             CartLinkUtil.instance.updateCartLinks(world, cart);
         }
 
-        List<List<Entity>> toTeleport = new ArrayList<List<Entity>>(allCarts.size());
-        List<EntityMinecart> toDespawn = new ArrayList<EntityMinecart>(allCarts.size());
+        List<List<Entity>> toTeleport = new ArrayList<>(allCarts.size());
+        List<EntityMinecart> toDespawn = new ArrayList<>(allCarts.size());
         EntityPlayerMP playerToTP = null;
         EntityMinecart playerToMount = null;
         for (EntityMinecart cartInTrain : allCarts) {

@@ -4,8 +4,8 @@ import net.minecraft.item.ItemStack;
 
 public class BasicSoulBinderRecipe extends AbstractSoulBinderRecipe {
 
-    private ItemStack inputStack;
-    private ItemStack outputStack;
+    private final ItemStack inputStack;
+    private final ItemStack outputStack;
 
     public BasicSoulBinderRecipe(ItemStack inputStack, ItemStack outputStack, int energyRequired, int xpRequired,
             String uid, String... entityNames) {

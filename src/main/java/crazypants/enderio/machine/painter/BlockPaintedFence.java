@@ -41,7 +41,7 @@ public class BlockPaintedFence extends BlockFence implements ITileEntityProvider
 
     private IIcon lastRemovedComponetIcon = null;
 
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
     public BlockPaintedFence() {
         super(ModObject.blockPaintedFence.unlocalisedName, Material.wood);

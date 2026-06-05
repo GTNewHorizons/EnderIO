@@ -43,7 +43,7 @@ import crazypants.enderio.tool.ToolUtil;
 
 public class InsulatedRedstoneConduit extends RedstoneConduit implements IInsulatedRedstoneConduit {
 
-    static final Map<String, IIcon> ICONS = new HashMap<String, IIcon>();
+    static final Map<String, IIcon> ICONS = new HashMap<>();
 
     @SideOnly(Side.CLIENT)
     public static void initIcons() {
@@ -130,7 +130,7 @@ public class InsulatedRedstoneConduit extends RedstoneConduit implements IInsula
 
     private static Map<Class<?>, Boolean> getConnectableInterfaces() {
         if (CONNECTABLE_CLASSES == null) {
-            CONNECTABLE_CLASSES = new HashMap<Class<?>, Boolean>();
+            CONNECTABLE_CLASSES = new HashMap<>();
             CONNECTABLE_CLASSES.put(IRedstoneControl.class, false);
             try {
                 Class<?> conInterface = Class
@@ -149,11 +149,11 @@ public class InsulatedRedstoneConduit extends RedstoneConduit implements IInsula
         return CONNECTABLE_CLASSES;
     }
 
-    private Map<ForgeDirection, ConnectionMode> forcedConnections = new HashMap<ForgeDirection, ConnectionMode>();
+    private final Map<ForgeDirection, ConnectionMode> forcedConnections = new HashMap<>();
 
-    private Map<ForgeDirection, DyeColor> signalColors = new HashMap<ForgeDirection, DyeColor>();
+    private final Map<ForgeDirection, DyeColor> signalColors = new HashMap<>();
 
-    private Map<ForgeDirection, Boolean> signalStrengths = new HashMap<ForgeDirection, Boolean>();
+    private final Map<ForgeDirection, Boolean> signalStrengths = new HashMap<>();
 
     @Override
     public boolean onBlockActivated(EntityPlayer player, RaytraceResult res, List<RaytraceResult> all) {
@@ -460,7 +460,7 @@ public class InsulatedRedstoneConduit extends RedstoneConduit implements IInsula
         }
 
         DyeColor col = getSignalColor(side);
-        Set<Signal> result = new HashSet<Signal>();
+        Set<Signal> result = new HashSet<>();
         for (Signal signal : allSigs) {
             if (signal.color == col) {
                 result.add(signal);
@@ -494,7 +494,7 @@ public class InsulatedRedstoneConduit extends RedstoneConduit implements IInsula
         BoundingBox bb = ConduitGeometryUtil.instance.createBoundsForConnectionController(key.dir, key.offset);
         CollidableComponent cc = new CollidableComponent(IRedstoneConduit.class, bb, key.dir, COLOR_CONTROLLER_ID);
 
-        List<CollidableComponent> result = new ArrayList<CollidableComponent>();
+        List<CollidableComponent> result = new ArrayList<>();
         result.addAll(baseCollidables);
         result.add(cc);
 

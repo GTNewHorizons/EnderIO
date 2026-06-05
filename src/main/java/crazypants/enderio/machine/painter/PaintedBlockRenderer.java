@@ -19,8 +19,8 @@ import cpw.mods.fml.common.Optional;
 @Optional.Interface(modid = "angelica", iface = "com.gtnewhorizons.angelica.api.ThreadSafeISBRHFactory")
 public class PaintedBlockRenderer implements ISimpleBlockRenderingHandler, ThreadSafeISBRHFactory {
 
-    private int renderId;
-    private Block defaultBlock;
+    private final int renderId;
+    private final Block defaultBlock;
 
     public PaintedBlockRenderer(int renderId, Block defaultBlock) {
         this.renderId = renderId;

@@ -12,11 +12,11 @@ import crazypants.enderio.machine.obelisk.ObeliskSpecialRenderer;
 @SideOnly(Side.CLIENT)
 public class AversionObeliskRenderer extends ObeliskSpecialRenderer<TileAversionObelisk> {
 
-    private ItemStack offStack = new ItemStack(
+    private final ItemStack offStack = new ItemStack(
             EnderIO.blockEndermanSkull,
             1,
             BlockEndermanSkull.SkullType.TORMENTED.ordinal());
-    private ItemStack onStack = new ItemStack(
+    private final ItemStack onStack = new ItemStack(
             EnderIO.blockEndermanSkull,
             1,
             BlockEndermanSkull.SkullType.REANIMATED_TORMENTED.ordinal());

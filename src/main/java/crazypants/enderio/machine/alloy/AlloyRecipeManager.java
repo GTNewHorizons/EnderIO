@@ -66,7 +66,7 @@ public class AlloyRecipeManager extends ManyToOneRecipeManager {
 
         private Boolean enabled = null;
 
-        private List<RecipeInput> excludes = new ArrayList<RecipeInput>();
+        private final List<RecipeInput> excludes = new ArrayList<>();
 
         @Override
         public boolean startElement(String uri, String localName, String qName, Attributes attributes)

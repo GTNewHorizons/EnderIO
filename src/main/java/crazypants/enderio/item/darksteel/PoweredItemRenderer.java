@@ -20,7 +20,7 @@ import crazypants.enderio.item.darksteel.upgrade.EnergyUpgrade;
 
 public class PoweredItemRenderer implements IItemRenderer {
 
-    private RenderItem ri = new RenderItem();
+    private final RenderItem ri = new RenderItem();
 
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type) {

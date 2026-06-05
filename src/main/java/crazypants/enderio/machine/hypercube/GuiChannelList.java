@@ -13,7 +13,7 @@ import com.enderio.core.client.render.ColorUtil;
 
 public class GuiChannelList extends GuiScrollableList<Channel> {
 
-    private List<Channel> channels = new ArrayList<Channel>();
+    private List<Channel> channels = new ArrayList<>();
 
     private Channel activeChannel;
 

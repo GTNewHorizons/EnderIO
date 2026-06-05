@@ -60,7 +60,7 @@ public class GuiHandler implements IGuiHandler {
 
     public static final int GUI_ID_CAP_BANK = 142; // leave room for more machines
 
-    protected final Map<Integer, IGuiHandler> guiHandlers = new HashMap<Integer, IGuiHandler>();
+    protected final Map<Integer, IGuiHandler> guiHandlers = new HashMap<>();
 
     public void registerGuiHandler(int id, IGuiHandler handler) {
         guiHandlers.put(id, handler);

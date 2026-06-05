@@ -38,7 +38,7 @@ public class Recipe implements IRecipe {
             return false;
         }
 
-        List<RecipeInput> requiredInputs = new ArrayList<RecipeInput>();
+        List<RecipeInput> requiredInputs = new ArrayList<>();
         for (RecipeInput input : inputs) {
             if (input.getFluidInput() != null || input.getInput() != null) {
                 requiredInputs.add(input.copy());
@@ -113,7 +113,7 @@ public class Recipe implements IRecipe {
         if (inputs == null) {
             return Collections.emptyList();
         }
-        List<ItemStack> res = new ArrayList<ItemStack>(inputs.length);
+        List<ItemStack> res = new ArrayList<>(inputs.length);
         for (int i = 0; i < inputs.length; i++) {
             RecipeInput in = inputs[i];
             if (in != null && in.getInput() != null) {
@@ -128,7 +128,7 @@ public class Recipe implements IRecipe {
         if (inputs == null) {
             return Collections.emptyList();
         }
-        List<FluidStack> res = new ArrayList<FluidStack>(inputs.length);
+        List<FluidStack> res = new ArrayList<>(inputs.length);
         for (int i = 0; i < inputs.length; i++) {
             RecipeInput in = inputs[i];
             if (in != null && in.getFluidInput() != null) {

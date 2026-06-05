@@ -38,10 +38,10 @@ import crazypants.enderio.EnderIO;
 @SideOnly(Side.CLIENT)
 public class ObeliskSpecialRenderer<T extends TileEntity> extends TileEntitySpecialRenderer implements IItemRenderer {
 
-    private ItemStack floatingStack;
+    private final ItemStack floatingStack;
 
-    private Random rand = new Random();
-    private ObeliskRenderer blockRen;
+    private final Random rand = new Random();
+    private final ObeliskRenderer blockRen;
 
     public ObeliskSpecialRenderer(ItemStack itemStack, ObeliskRenderer renderer) {
         this.floatingStack = itemStack;

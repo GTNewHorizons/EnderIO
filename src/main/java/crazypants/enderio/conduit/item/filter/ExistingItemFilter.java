@@ -107,13 +107,13 @@ public class ExistingItemFilter implements IItemFilter {
     }
 
     public void setSnapshot(NetworkedInventory ni) {
-        snapshot = new ArrayList<ItemStack>();
+        snapshot = new ArrayList<>();
         mergeSnapshot(ni);
     }
 
     public void mergeSnapshot(NetworkedInventory ni) {
         if (snapshot == null) {
-            snapshot = new ArrayList<ItemStack>();
+            snapshot = new ArrayList<>();
         }
         int[] slots = ni.getInventory().getAccessibleSlotsFromSide(ni.getInventorySide());
         for (int i = 0; i < slots.length; i++) {
@@ -126,7 +126,7 @@ public class ExistingItemFilter implements IItemFilter {
 
     public boolean mergeSnapshot(IInventory inventory) {
         if (snapshot == null) {
-            snapshot = new ArrayList<ItemStack>();
+            snapshot = new ArrayList<>();
         }
         int size = inventory.getSizeInventory();
         boolean added = false;
@@ -200,7 +200,7 @@ public class ExistingItemFilter implements IItemFilter {
         readSettingsFromNBT(nbtRoot);
 
         if (nbtRoot.hasKey("snapshot")) {
-            snapshot = new ArrayList<ItemStack>();
+            snapshot = new ArrayList<>();
             NBTTagList itemList = (NBTTagList) nbtRoot.getTag("snapshot");
             for (int i = 0; i < itemList.tagCount(); i++) {
                 NBTTagCompound itemTag = itemList.getCompoundTagAt(i);
@@ -274,7 +274,7 @@ public class ExistingItemFilter implements IItemFilter {
             snapshot = null;
             return;
         }
-        snapshot = new ArrayList<ItemStack>(numItems);
+        snapshot = new ArrayList<>(numItems);
         for (int i = 0; i < numItems; i++) {
             NBTTagCompound itemTag = NetworkUtil.readNBTTagCompound(buf);
             ItemStack item = ItemStack.loadItemStackFromNBT(itemTag);

@@ -18,9 +18,9 @@ import crazypants.enderio.network.PacketHandler;
 public class OCSettings extends BaseSettingsPanel {
 
     private static final int ID_COLOR_BUTTON = GuiExternalConnection.nextButtonId();
-    private ColorButton cb;
+    private final ColorButton cb;
 
-    private String signalColorStr = EnderIO.lang.localize("gui.conduit.redstone.color");
+    private final String signalColorStr = EnderIO.lang.localize("gui.conduit.redstone.color");
     private final IOCConduit occon;
 
     public OCSettings(GuiExternalConnection gui, IConduit con) {

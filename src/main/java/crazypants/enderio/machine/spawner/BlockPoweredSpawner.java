@@ -93,7 +93,7 @@ public class BlockPoweredSpawner extends AbstractMachineBlock<TilePoweredSpawner
         return res;
     }
 
-    private final List<UniqueIdentifier> toolBlackList = new ArrayList<UniqueIdentifier>();
+    private final List<UniqueIdentifier> toolBlackList = new ArrayList<>();
 
     private Field fieldpersistenceRequired;
 
@@ -121,7 +121,7 @@ public class BlockPoweredSpawner extends AbstractMachineBlock<TilePoweredSpawner
         FMLCommonHandler.instance().bus().register(handler);
     }
 
-    private final Map<BlockCoord, ItemStack> dropCache = new HashMap<BlockCoord, ItemStack>();
+    private final Map<BlockCoord, ItemStack> dropCache = new HashMap<>();
 
     public boolean isBlackListed(String entityId) {
         return PoweredSpawnerConfig.getInstance().isBlackListed(entityId);

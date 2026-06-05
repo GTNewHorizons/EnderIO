@@ -38,26 +38,26 @@ public class ExistingItemFilterGui implements IItemFilterGui {
     private static final int ID_SHOW = GuiExternalConnection.nextButtonId();
     private static final int ID_MERGE = GuiExternalConnection.nextButtonId();
 
-    private IItemConduit itemConduit;
-    private GuiExternalConnection gui;
+    private final IItemConduit itemConduit;
+    private final GuiExternalConnection gui;
 
-    private ToggleButton useMetaB;
-    private ToggleButton useNbtB;
-    private ToggleButton useOreDictB;
-    private ToggleButton stickyB;
+    private final ToggleButton useMetaB;
+    private final ToggleButton useNbtB;
+    private final ToggleButton useOreDictB;
+    private final ToggleButton stickyB;
 
     private final IconButton whiteListB;
 
-    private GuiButton snapshotB;
-    private GuiButton clearB;
-    private GuiButton showB;
-    private GuiButton mergeB;
-    private SnapshotOverlay snapshotOverlay;
+    private final GuiButton snapshotB;
+    private final GuiButton clearB;
+    private final GuiButton showB;
+    private final GuiButton mergeB;
+    private final SnapshotOverlay snapshotOverlay;
 
     boolean isInput;
     private int buttonIdOffset = 0;
 
-    private ExistingItemFilter filter;
+    private final ExistingItemFilter filter;
 
     public ExistingItemFilterGui(GuiExternalConnection gui, IItemConduit itemConduit, boolean isInput) {
         this.gui = gui;

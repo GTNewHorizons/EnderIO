@@ -32,7 +32,7 @@ public abstract class AbstractMachineRecipe implements IMachineRecipe {
     @Override
     public List<MachineRecipeInput> getQuantitiesConsumed(MachineRecipeInput[] inputs) {
         IRecipe recipe = getRecipeForInputs(inputs);
-        List<MachineRecipeInput> result = new ArrayList<MachineRecipeInput>();
+        List<MachineRecipeInput> result = new ArrayList<>();
 
         // Need to make copies so we can reduce their values as we go
         MachineRecipeInput[] availableInputs = new MachineRecipeInput[inputs.length];
@@ -128,7 +128,7 @@ public abstract class AbstractMachineRecipe implements IMachineRecipe {
         if (outputs == null) {
             return new ResultStack[0];
         }
-        List<ResultStack> result = new ArrayList<ResultStack>();
+        List<ResultStack> result = new ArrayList<>();
         for (RecipeOutput output : outputs) {
             if (output.getChance() >= chance) {
                 if (output.isFluid()) {

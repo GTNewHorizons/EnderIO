@@ -12,7 +12,7 @@ public class JumpUpgrade extends AbstractUpgrade {
 
     private static final String KEY_LEVEL = "level";
 
-    private static String UPGRADE_NAME = "jumpBoost";
+    private static final String UPGRADE_NAME = "jumpBoost";
 
     public static JumpUpgrade JUMP_ONE = new JumpUpgrade(
             "enderio.darksteel.upgrade.jump_one",
@@ -27,7 +27,7 @@ public class JumpUpgrade extends AbstractUpgrade {
             3,
             Config.darkSteelJumpThreeCost);
 
-    private short level;
+    private final short level;
 
     public static boolean isEquipped(EntityPlayer player) {
         ItemStack boots = player.getEquipmentInSlot(1);

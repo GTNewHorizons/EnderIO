@@ -74,7 +74,7 @@ public class InventoryDatabaseServer extends InventoryDatabase<ItemEntry> {
                 return Collections.emptyList();
             }
             int numIDs = cdi.readVariable();
-            ArrayList<ItemEntry> items = new ArrayList<ItemEntry>(numIDs);
+            ArrayList<ItemEntry> items = new ArrayList<>(numIDs);
             for (int i = 0; i < numIDs; i++) {
                 int dbIndex = cdi.readVariable();
                 if (dbIndex < complexItems.size()) {

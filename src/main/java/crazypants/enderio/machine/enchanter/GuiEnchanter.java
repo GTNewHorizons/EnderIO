@@ -11,8 +11,8 @@ import crazypants.enderio.gui.GuiContainerBaseEIO;
 
 public class GuiEnchanter extends GuiContainerBaseEIO {
 
-    private TileEnchanter te;
-    private ContainerEnchanter container;
+    private final TileEnchanter te;
+    private final ContainerEnchanter container;
 
     public GuiEnchanter(EntityPlayer player, InventoryPlayer inventory, TileEnchanter te) {
         super(new ContainerEnchanter(player, inventory, te), "enchanter");

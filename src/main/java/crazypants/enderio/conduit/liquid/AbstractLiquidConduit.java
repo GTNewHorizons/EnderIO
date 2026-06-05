@@ -29,12 +29,10 @@ import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 
 public abstract class AbstractLiquidConduit extends AbstractConduit implements ILiquidConduit {
 
-    protected final EnumMap<ForgeDirection, RedstoneControlMode> extractionModes = new EnumMap<ForgeDirection, RedstoneControlMode>(
-            ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, DyeColor> extractionColors = new EnumMap<ForgeDirection, DyeColor>(
-            ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, RedstoneControlMode> extractionModes = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, DyeColor> extractionColors = new EnumMap<>(ForgeDirection.class);
 
-    protected final Map<ForgeDirection, Integer> externalRedstoneSignals = new HashMap<ForgeDirection, Integer>();
+    protected final Map<ForgeDirection, Integer> externalRedstoneSignals = new HashMap<>();
     protected boolean redstoneStateDirty = true;
 
     public static IFluidHandler getExternalFluidHandler(IBlockAccess world, BlockCoord bc) {

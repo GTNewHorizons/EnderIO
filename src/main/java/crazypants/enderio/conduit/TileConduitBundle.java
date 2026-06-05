@@ -564,7 +564,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
         cachedConnectors.clear();
 
         // TODO: What an unholly mess! (and it doesn't even work correctly...)
-        List<CollidableComponent> coreBounds = new ArrayList<CollidableComponent>();
+        List<CollidableComponent> coreBounds = new ArrayList<>();
         for (IConduit con : conduits) {
             addConduitCores(coreBounds, con);
         }
@@ -572,13 +572,13 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
         result.addAll(coreBounds);
 
         // 1st algorithm
-        List<CollidableComponent> conduitsBounds = new ArrayList<CollidableComponent>();
+        List<CollidableComponent> conduitsBounds = new ArrayList<>();
         for (IConduit con : conduits) {
             conduitsBounds.addAll(con.getCollidableComponents());
             addConduitCores(conduitsBounds, con);
         }
 
-        Set<Class<IConduit>> collidingTypes = new HashSet<Class<IConduit>>();
+        Set<Class<IConduit>> collidingTypes = new HashSet<>();
         for (CollidableComponent conCC : conduitsBounds) {
             for (CollidableComponent innerCC : conduitsBounds) {
                 if (!InsulatedRedstoneConduit.COLOR_CONTROLLER_ID.equals(innerCC.data)
@@ -592,7 +592,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
 
         // TODO: Remove the core geometries covered up by this as no point in rendering these
         if (!collidingTypes.isEmpty()) {
-            List<CollidableComponent> colCores = new ArrayList<CollidableComponent>();
+            List<CollidableComponent> colCores = new ArrayList<>();
             for (Class<IConduit> c : collidingTypes) {
                 IConduit con = getConduit(c);
                 if (con != null) {
@@ -624,7 +624,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
         for (IConduit con : conduits) {
 
             if (con.hasConnections()) {
-                List<CollidableComponent> cores = new ArrayList<CollidableComponent>();
+                List<CollidableComponent> cores = new ArrayList<>();
                 addConduitCores(cores, con);
                 if (cores.size() > 1) {
                     BoundingBox bb = cores.get(0).bound;

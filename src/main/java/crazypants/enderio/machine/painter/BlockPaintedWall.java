@@ -39,7 +39,7 @@ public class BlockPaintedWall extends BlockWall implements ITileEntityProvider, 
 
     private IIcon lastRemovedComponetIcon = null;
 
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
     public BlockPaintedWall() {
         super(Blocks.cobblestone);
