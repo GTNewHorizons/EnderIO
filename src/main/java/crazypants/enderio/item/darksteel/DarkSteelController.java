@@ -562,11 +562,13 @@ public class DarkSteelController {
     private void updateNightvision(EntityPlayer player) {
         if (isNightVisionUpgradeOrEnchEquipped(player) && nightVisionActive) {
             player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 210, 0, true));
-        }
-        if (!isNightVisionUpgradeOrEnchEquipped(player) && nightVisionActive) {
-            nightVisionActive = false;
-            removeNightvision = true;
-        }
+        } else if (!isNightVisionUpgradeOrEnchEquipped(player)
+                && player.getActivePotionEffect(Potion.nightVision) != null) {
+                    // Remove the effect when upgrade is not equipped (e.g. helmet removed), but do NOT
+                    // reset nightVisionActive — during dimension transitions the inventory is temporarily
+                    // empty, and resetting the flag would permanently disable night vision after portals.
+                    player.removePotionEffect(Potion.nightVision.getId());
+                }
         if (removeNightvision) {
             player.removePotionEffect(Potion.nightVision.getId());
             removeNightvision = false;
