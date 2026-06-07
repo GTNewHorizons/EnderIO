@@ -4,7 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 
 import com.enderio.core.common.util.DyeColor;
 
@@ -14,6 +13,7 @@ import crazypants.enderio.ModObject;
 import crazypants.enderio.machine.AbstractMachineBlock;
 import crazypants.enderio.machine.ContainerNoInv;
 import crazypants.enderio.network.PacketHandler;
+import crazypants.util.ForgeDirections;
 
 public class BlockPowerMonitor extends AbstractMachineBlock<TilePowerMonitor> {
 
@@ -74,7 +74,8 @@ public class BlockPowerMonitor extends AbstractMachineBlock<TilePowerMonitor> {
         TileEntity te = world.getTileEntity(x, y, z);
         if (te instanceof TilePowerMonitor) {
 
-            return ((TilePowerMonitor) te).getRednetOutputValue(ForgeDirection.values()[side], DyeColor.RED.ordinal());
+            return ((TilePowerMonitor) te)
+                    .getRednetOutputValue(ForgeDirections.DIRECTIONS[side], DyeColor.RED.ordinal());
         }
         return 0;
     }

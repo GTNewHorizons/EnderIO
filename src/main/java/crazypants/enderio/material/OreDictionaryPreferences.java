@@ -18,8 +18,8 @@ public final class OreDictionaryPreferences {
         OreDictionaryPreferenceParser.loadConfig();
     }
 
-    private Map<String, ItemStack> preferences = new HashMap<String, ItemStack>();
-    private Map<StackKey, ItemStack> stackCache = new HashMap<StackKey, ItemStack>();
+    private final Map<String, ItemStack> preferences = new HashMap<>();
+    private final Map<StackKey, ItemStack> stackCache = new HashMap<>();
 
     public void setPreference(String oreDictName, ItemStack stack) {
         if (oreDictName == null || stack == null) {

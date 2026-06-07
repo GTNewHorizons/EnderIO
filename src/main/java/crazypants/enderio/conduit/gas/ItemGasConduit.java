@@ -21,7 +21,7 @@ import crazypants.enderio.gui.IconEIO;
 
 public class ItemGasConduit extends AbstractItemConduit implements IAdvancedTooltipProvider {
 
-    private static ItemConduitSubtype[] subtypes = new ItemConduitSubtype[] {
+    private static final ItemConduitSubtype[] subtypes = new ItemConduitSubtype[] {
             new ItemConduitSubtype(ModObject.itemGasConduit.name(), "enderio:itemGasConduit"), };
 
     public static ItemGasConduit create() {

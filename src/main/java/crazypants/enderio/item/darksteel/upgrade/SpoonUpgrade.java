@@ -9,7 +9,7 @@ import crazypants.enderio.item.darksteel.DarkSteelItems;
 
 public class SpoonUpgrade extends AbstractUpgrade {
 
-    private static String UPGRADE_NAME = "spoon";
+    private static final String UPGRADE_NAME = "spoon";
 
     public static final SpoonUpgrade INSTANCE = new SpoonUpgrade();
 

@@ -16,11 +16,11 @@ import li.cil.oc.api.network.Visibility;
 @Interface(iface = "li.cil.oc.api.network.ManagedEnvironment", modid = "OpenComputersAPI|Network")
 public class OCConduitNetwork extends AbstractConduitNetwork<IOCConduit, IOCConduit> implements ManagedEnvironment {
 
-    private Node[] node = new Node[DyeColor.values().length];
+    private final Node[] node = new Node[DyeColor.VALUES.length];
 
     public OCConduitNetwork() {
         super(IOCConduit.class, IOCConduit.class);
-        for (DyeColor dyeColor : DyeColor.values()) {
+        for (DyeColor dyeColor : DyeColor.VALUES) {
             node[dyeColor.ordinal()] = Network.newNode(this, Visibility.Network).create();
             Network.joinNewNetwork(node[dyeColor.ordinal()]);
         }
@@ -68,7 +68,7 @@ public class OCConduitNetwork extends AbstractConduitNetwork<IOCConduit, IOCCond
 
     @Override
     public void destroyNetwork() {
-        for (DyeColor dyeColor : DyeColor.values()) {
+        for (DyeColor dyeColor : DyeColor.VALUES) {
             node[dyeColor.ordinal()].remove();
         }
         super.destroyNetwork();

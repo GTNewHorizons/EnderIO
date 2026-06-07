@@ -11,6 +11,7 @@ import crazypants.enderio.conduit.liquid.AbstractEnderLiquidConduit;
 import crazypants.enderio.conduit.liquid.ILiquidConduit;
 import crazypants.enderio.conduit.packet.AbstractConduitPacket;
 import crazypants.enderio.conduit.packet.ConTypeEnum;
+import crazypants.util.ForgeDirections;
 import io.netty.buffer.ByteBuf;
 
 public class PacketFluidChannel extends AbstractConduitPacket<ILiquidConduit>
@@ -42,9 +43,9 @@ public class PacketFluidChannel extends AbstractConduitPacket<ILiquidConduit>
     @Override
     public void fromBytes(ByteBuf buf) {
         super.fromBytes(buf);
-        dir = ForgeDirection.values()[buf.readShort()];
+        dir = ForgeDirections.DIRECTIONS[buf.readShort()];
         isInput = buf.readBoolean();
-        channel = DyeColor.values()[buf.readShort()];
+        channel = DyeColor.VALUES[buf.readShort()];
     }
 
     @Override

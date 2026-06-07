@@ -9,9 +9,9 @@ import crazypants.enderio.network.PacketHandler;
 
 public class ItemConduitFilterContainer implements IItemFilterContainer {
 
-    private IItemConduit itemConduit;
-    private ForgeDirection dir;
-    private boolean isInput;
+    private final IItemConduit itemConduit;
+    private final ForgeDirection dir;
+    private final boolean isInput;
 
     public ItemConduitFilterContainer(IItemConduit itemConduit, ForgeDirection dir, boolean isInput) {
         this.itemConduit = itemConduit;

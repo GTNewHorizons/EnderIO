@@ -69,13 +69,13 @@ public class MaterialRecipes {
             }
         }
 
-        for (Capacitors capacitor : Capacitors.values()) {
+        for (Capacitors capacitor : Capacitors.VALUES) {
             OreDictionary.registerOre(
                     capacitor.getOreTag(),
                     new ItemStack(EnderIO.itemBasicCapacitor, 1, capacitor.ordinal()));
         }
 
-        for (Alloy alloy : Alloy.values()) {
+        for (Alloy alloy : Alloy.VALUES) {
             boolean isPrimaryName = true;
             for (String oreDictName : alloy.getOreIngots()) {
                 OreDictionary.registerOre(oreDictName, alloy.getStackIngot());
@@ -99,7 +99,7 @@ public class MaterialRecipes {
             }
         }
 
-        for (AlloyEndergy alloy : AlloyEndergy.values()) {
+        for (AlloyEndergy alloy : AlloyEndergy.VALUES) {
             boolean isPrimaryName = true;
             for (String oreDictName : alloy.getOreIngots()) {
                 OreDictionary.registerOre(oreDictName, alloy.getStackIngot());
@@ -554,13 +554,13 @@ public class MaterialRecipes {
                 'b',
                 EnderIO.blockDarkIronBars);
 
-        for (Alloy alloy : Alloy.values()) {
+        for (Alloy alloy : Alloy.VALUES) {
             RecipeUtil.addShaped(alloy.getStackBlock(), "iii", "iii", "iii", 'i', alloy.getOreIngot());
             RecipeUtil.addShaped(alloy.getStackBall(5), " i ", "iii", " i ", 'i', alloy.getOreIngot());
             RecipeUtil.addShapeless(alloy.getStackIngot(9), alloy.getOreBlock());
         }
 
-        for (AlloyEndergy alloy : AlloyEndergy.values()) {
+        for (AlloyEndergy alloy : AlloyEndergy.VALUES) {
             RecipeUtil.addShaped(alloy.getStackBlock(), "iii", "iii", "iii", 'i', alloy.getOreIngot());
             RecipeUtil.addShaped(alloy.getStackBall(5), " i ", "iii", " i ", 'i', alloy.getOreIngot());
             RecipeUtil.addShapeless(alloy.getStackIngot(9), alloy.getOreBlock());

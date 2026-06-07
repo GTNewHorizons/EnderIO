@@ -68,7 +68,7 @@ public class RedstoneConduit extends AbstractConduit implements IRedstoneConduit
 
     protected RedstoneConduitNetwork network;
 
-    protected final List<Set<Signal>> externalSignals = new ArrayList<Set<Signal>>();
+    protected final List<Set<Signal>> externalSignals = new ArrayList<>();
 
     protected boolean neighbourDirty = true;
 
@@ -140,7 +140,7 @@ public class RedstoneConduit extends AbstractConduit implements IRedstoneConduit
             network.setNetworkEnabled(false);
         }
 
-        Set<Signal> res = new HashSet<Signal>();
+        Set<Signal> res = new HashSet<>();
         for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
             if ((side == null || dir == side) && acceptSignalsForDir(dir)) {
                 int input = getExternalPowerLevel(dir);

@@ -24,24 +24,19 @@ import crazypants.enderio.teleport.anchor.TravelEntitySpecialRenderer;
 
 public class TelePadSpecialRenderer extends TravelEntitySpecialRenderer {
 
-    private final Map<String, GroupObject> fullModel;
-
-    private final GroupObject blade1;
-    private final GroupObject blade2;
-    private final GroupObject blade3;
     // Reverse order for top to bottom
     private final List<GroupObject> blades;
 
     private final GroupObject glass;
 
-    private static Random rand = new Random();
+    private static final Random rand = new Random();
 
     public TelePadSpecialRenderer(TelePadRenderer telePadRenderer) {
         super();
-        fullModel = telePadRenderer.getFullModel();
-        blade1 = fullModel.get("blade1");
-        blade2 = fullModel.get("blade2");
-        blade3 = fullModel.get("blade3");
+        Map<String, GroupObject> fullModel = telePadRenderer.getFullModel();
+        GroupObject blade1 = fullModel.get("blade1");
+        GroupObject blade2 = fullModel.get("blade2");
+        GroupObject blade3 = fullModel.get("blade3");
         blades = Lists.newArrayList(blade3, blade2, blade1);
 
         glass = fullModel.get("glass");

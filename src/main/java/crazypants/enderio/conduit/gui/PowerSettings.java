@@ -21,9 +21,9 @@ public class PowerSettings extends BaseSettingsPanel {
 
     private static final int ID_COLOR_BUTTON = GuiExternalConnection.nextButtonId();
 
-    private IPowerConduit conduit;
-    private RedstoneModeButton rsB;
-    private ColorButton colorB;
+    private final IPowerConduit conduit;
+    private final RedstoneModeButton rsB;
+    private final ColorButton colorB;
 
     protected PowerSettings(final GuiExternalConnection gui, IConduit con) {
         super(IconEIO.WRENCH_OVERLAY_POWER, EnderIO.lang.localize("itemPowerConduit.name"), gui, con);
@@ -59,7 +59,7 @@ public class PowerSettings extends BaseSettingsPanel {
     public void actionPerformed(GuiButton guiButton) {
         super.actionPerformed(guiButton);
         if (guiButton.id == ID_COLOR_BUTTON) {
-            conduit.setExtractionSignalColor(gui.getDir(), DyeColor.values()[colorB.getColorIndex()]);
+            conduit.setExtractionSignalColor(gui.getDir(), DyeColor.VALUES[colorB.getColorIndex()]);
             PacketHandler.INSTANCE.sendToServer(new PacketExtractMode(conduit, gui.getDir()));
         }
     }

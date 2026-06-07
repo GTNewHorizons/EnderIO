@@ -19,7 +19,7 @@ import crazypants.enderio.config.Config;
 
 public class ItemLiquidConduit extends AbstractItemConduit implements IAdvancedTooltipProvider {
 
-    private static ItemConduitSubtype[] subtypes = new ItemConduitSubtype[] {
+    private static final ItemConduitSubtype[] subtypes = new ItemConduitSubtype[] {
             new ItemConduitSubtype(ModObject.itemLiquidConduit.name(), "enderio:itemLiquidConduit"),
             new ItemConduitSubtype(
                     ModObject.itemLiquidConduit.name() + "Advanced",

@@ -31,7 +31,7 @@ public class BaseSettingsPanel implements ITabPanel {
     static final int ID_EXTRACT_ENABLED = 328;
     protected static final int ID_INSERT_FILTER_OPTIONS = 329;
     protected static final int ID_EXTRACT_FILTER_OPTIONS = 330;
-    protected final int ID_ENABLED = 331;
+    protected static final int ID_ENABLED = 331;
 
     protected final @Nonnull IWidgetIcon icon;
     protected final @Nonnull GuiExternalConnection gui;
@@ -41,8 +41,8 @@ public class BaseSettingsPanel implements ITabPanel {
 
     protected ConnectionMode oldConnectionMode;
 
-    private @Nonnull String inputHeading;
-    private @Nonnull String outputHeading;
+    private final @Nonnull String inputHeading;
+    private final @Nonnull String outputHeading;
 
     private boolean insertEnabled = false;
     private boolean extractEnabled = false;
@@ -142,7 +142,7 @@ public class BaseSettingsPanel implements ITabPanel {
             }
         };
 
-        ArrayList<String> funcUpgradeTips = new ArrayList<String>();
+        ArrayList<String> funcUpgradeTips = new ArrayList<>();
         SpecialTooltipHandler.addTooltipFromResources(funcUpgradeTips, "enderio.gui.conduit.item.functionupgrade.line");
         for (FunctionUpgrade upgrade : FunctionUpgrade.values()) {
             funcUpgradeTips.add(EnderIO.lang.localizeExact(upgrade.unlocName.concat(".name")));

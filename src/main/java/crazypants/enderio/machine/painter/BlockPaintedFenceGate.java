@@ -42,7 +42,7 @@ public class BlockPaintedFenceGate extends BlockFenceGate implements ITileEntity
 
     private IIcon lastRemovedComponetIcon = null;
 
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
     public BlockPaintedFenceGate() {
         setCreativeTab(null);

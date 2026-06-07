@@ -90,7 +90,7 @@ public enum Fertilizer {
         }
     };
 
-    private ItemStack stack;
+    private final ItemStack stack;
 
     private Fertilizer(Item item) {
         this(new ItemStack(item));

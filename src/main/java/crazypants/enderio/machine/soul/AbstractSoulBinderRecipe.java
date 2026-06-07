@@ -118,7 +118,7 @@ public abstract class AbstractSoulBinderRecipe implements IMachineRecipe, ISoulB
 
     @Override
     public List<MachineRecipeInput> getQuantitiesConsumed(MachineRecipeInput[] inputs) {
-        List<MachineRecipeInput> result = new ArrayList<MachineRecipeInput>(inputs.length);
+        List<MachineRecipeInput> result = new ArrayList<>(inputs.length);
         for (MachineRecipeInput input : inputs) {
             if (input != null && input.item != null) {
                 ItemStack resStack = input.item.copy();

@@ -28,7 +28,7 @@ public class GuiConfigFactoryEIO extends GuiConfig {
     }
 
     private static List<IConfigElement> getConfigElements(GuiScreen parent) {
-        List<IConfigElement> list = new ArrayList<IConfigElement>();
+        List<IConfigElement> list = new ArrayList<>();
         String prefix = EnderIO.lang.addPrefix("config.");
 
         for (Section section : Config.sections) {

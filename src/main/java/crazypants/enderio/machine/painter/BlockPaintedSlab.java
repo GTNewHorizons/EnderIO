@@ -35,7 +35,7 @@ public class BlockPaintedSlab extends BlockSlab implements ITileEntityProvider, 
 
     private IIcon lastRemovedComponetIcon = null;
 
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
     private final boolean isDouble;
 

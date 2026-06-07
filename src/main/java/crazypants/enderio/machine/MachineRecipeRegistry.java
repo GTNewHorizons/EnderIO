@@ -11,7 +11,7 @@ public class MachineRecipeRegistry {
 
     public static final MachineRecipeRegistry instance = new MachineRecipeRegistry();
 
-    private final Map<String, Map<String, IMachineRecipe>> machineRecipes = new HashMap<String, Map<String, IMachineRecipe>>();
+    private final Map<String, Map<String, IMachineRecipe>> machineRecipes = new HashMap<>();
 
     public void registerRecipe(String machine, IMachineRecipe recipe) {
         getRecipesForMachine(machine).put(recipe.getUid(), recipe);
@@ -20,7 +20,7 @@ public class MachineRecipeRegistry {
     public Map<String, IMachineRecipe> getRecipesForMachine(String machineName) {
         Map<String, IMachineRecipe> res = machineRecipes.get(machineName);
         if (res == null) {
-            res = new LinkedHashMap<String, IMachineRecipe>();
+            res = new LinkedHashMap<>();
             machineRecipes.put(machineName, res);
         }
         return res;
@@ -57,7 +57,7 @@ public class MachineRecipeRegistry {
         if (input == null) {
             return Collections.emptyList();
         }
-        List<IMachineRecipe> result = new ArrayList<IMachineRecipe>();
+        List<IMachineRecipe> result = new ArrayList<>();
         Map<String, IMachineRecipe> recipes = getRecipesForMachine(machineName);
         for (IMachineRecipe recipe : recipes.values()) {
             if (recipe.isValidInput(input)) {

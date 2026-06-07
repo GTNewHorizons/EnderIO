@@ -60,7 +60,7 @@ public class ItemConduit extends AbstractConduit implements IItemConduit {
 
     public static final String ICON_KEY_ENDER = "enderio:ender_still";
 
-    static final Map<String, IIcon> ICONS = new HashMap<String, IIcon>();
+    static final Map<String, IIcon> ICONS = new HashMap<>();
 
     public static void initIcons() {
         IconUtil.addIconProvider(new IconUtil.IIconProvider() {
@@ -87,37 +87,24 @@ public class ItemConduit extends AbstractConduit implements IItemConduit {
 
     ItemConduitNetwork network;
 
-    protected final EnumMap<ForgeDirection, RedstoneControlMode> extractionModes = new EnumMap<ForgeDirection, RedstoneControlMode>(
-            ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, DyeColor> extractionColors = new EnumMap<ForgeDirection, DyeColor>(
-            ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, RedstoneControlMode> extractionModes = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, DyeColor> extractionColors = new EnumMap<>(ForgeDirection.class);
 
-    protected final EnumMap<ForgeDirection, IItemFilter> outputFilters = new EnumMap<ForgeDirection, IItemFilter>(
-            ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, IItemFilter> inputFilters = new EnumMap<ForgeDirection, IItemFilter>(
-            ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, ItemStack> outputFilterUpgrades = new EnumMap<ForgeDirection, ItemStack>(
-            ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, ItemStack> inputFilterUpgrades = new EnumMap<ForgeDirection, ItemStack>(
-            ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, ItemStack> speedUpgrades = new EnumMap<ForgeDirection, ItemStack>(
-            ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, ItemStack> functionUpgrades = new EnumMap<ForgeDirection, ItemStack>(
-            ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, IItemFilter> outputFilters = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, IItemFilter> inputFilters = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, ItemStack> outputFilterUpgrades = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, ItemStack> inputFilterUpgrades = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, ItemStack> speedUpgrades = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, ItemStack> functionUpgrades = new EnumMap<>(ForgeDirection.class);
 
-    protected final EnumMap<ForgeDirection, Boolean> selfFeed = new EnumMap<ForgeDirection, Boolean>(
-            ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, Boolean> selfFeed = new EnumMap<>(ForgeDirection.class);
 
-    protected final EnumMap<ForgeDirection, Boolean> roundRobin = new EnumMap<ForgeDirection, Boolean>(
-            ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, Boolean> roundRobin = new EnumMap<>(ForgeDirection.class);
 
-    protected final EnumMap<ForgeDirection, Integer> priority = new EnumMap<ForgeDirection, Integer>(
-            ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, Integer> priority = new EnumMap<>(ForgeDirection.class);
 
-    protected final EnumMap<ForgeDirection, DyeColor> outputColors = new EnumMap<ForgeDirection, DyeColor>(
-            ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, DyeColor> inputColors = new EnumMap<ForgeDirection, DyeColor>(
-            ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, DyeColor> outputColors = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, DyeColor> inputColors = new EnumMap<>(ForgeDirection.class);
 
     private int metaData;
 
@@ -146,7 +133,7 @@ public class ItemConduit extends AbstractConduit implements IItemConduit {
             metaData = 0;
         }
 
-        Map<ForgeDirection, ItemStack> converted = new HashMap<ForgeDirection, ItemStack>();
+        Map<ForgeDirection, ItemStack> converted = new HashMap<>();
 
         convertToItemUpgrades(filterMeta, converted, inputFilters);
         for (Entry<ForgeDirection, ItemStack> entry : converted.entrySet()) {
@@ -164,10 +151,10 @@ public class ItemConduit extends AbstractConduit implements IItemConduit {
 
     @Override
     protected void readTypeSettings(ForgeDirection dir, NBTTagCompound dataRoot) {
-        setExtractionSignalColor(dir, DyeColor.values()[dataRoot.getShort("extractionSignalColor")]);
+        setExtractionSignalColor(dir, DyeColor.VALUES[dataRoot.getShort("extractionSignalColor")]);
         setExtractionRedstoneMode(RedstoneControlMode.values()[dataRoot.getShort("extractionRedstoneMode")], dir);
-        setInputColor(dir, DyeColor.values()[dataRoot.getShort("inputColor")]);
-        setOutputColor(dir, DyeColor.values()[dataRoot.getShort("outputColor")]);
+        setInputColor(dir, DyeColor.VALUES[dataRoot.getShort("inputColor")]);
+        setOutputColor(dir, DyeColor.VALUES[dataRoot.getShort("outputColor")]);
         setSelfFeedEnabled(dir, dataRoot.getBoolean("selfFeed"));
         setRoundRobinEnabled(dir, dataRoot.getBoolean("roundRobin"));
         setOutputPriority(dir, dataRoot.getInteger("outputPriority"));
@@ -198,7 +185,7 @@ public class ItemConduit extends AbstractConduit implements IItemConduit {
 
     @Override
     public List<ItemStack> getDrops() {
-        List<ItemStack> res = new ArrayList<ItemStack>();
+        List<ItemStack> res = new ArrayList<>();
         res.add(createItem());
         for (ItemStack stack : speedUpgrades.values()) {
             res.add(stack);
@@ -857,8 +844,8 @@ public class ItemConduit extends AbstractConduit implements IItemConduit {
             key = "extSC." + dir.name();
             if (nbtRoot.hasKey(key)) {
                 short ord = nbtRoot.getShort(key);
-                if (ord >= 0 && ord < DyeColor.values().length) {
-                    extractionColors.put(dir, DyeColor.values()[ord]);
+                if (ord >= 0 && ord < DyeColor.VALUES.length) {
+                    extractionColors.put(dir, DyeColor.VALUES[ord]);
                 }
             }
             key = "selfFeed." + dir.name();
@@ -882,16 +869,16 @@ public class ItemConduit extends AbstractConduit implements IItemConduit {
             key = "inSC." + dir.name();
             if (nbtRoot.hasKey(key)) {
                 short ord = nbtRoot.getShort(key);
-                if (ord >= 0 && ord < DyeColor.values().length) {
-                    inputColors.put(dir, DyeColor.values()[ord]);
+                if (ord >= 0 && ord < DyeColor.VALUES.length) {
+                    inputColors.put(dir, DyeColor.VALUES[ord]);
                 }
             }
 
             key = "outSC." + dir.name();
             if (nbtRoot.hasKey(key)) {
                 short ord = nbtRoot.getShort(key);
-                if (ord >= 0 && ord < DyeColor.values().length) {
-                    outputColors.put(dir, DyeColor.values()[ord]);
+                if (ord >= 0 && ord < DyeColor.VALUES.length) {
+                    outputColors.put(dir, DyeColor.VALUES[ord]);
                 }
             }
         }

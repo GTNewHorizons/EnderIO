@@ -13,6 +13,7 @@ import crazypants.enderio.GuiHandler;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.machine.AbstractMachineBlock;
 import crazypants.enderio.network.PacketHandler;
+import crazypants.util.ForgeDirections;
 
 public class BlockCrusher extends AbstractMachineBlock<TileCrusher> {
 
@@ -70,7 +71,7 @@ public class BlockCrusher extends AbstractMachineBlock<TileCrusher> {
     public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
         TileCrusher te = (TileCrusher) world.getTileEntity(x, y, z);
         if (te != null && te.isActive()) {
-            ForgeDirection front = ForgeDirection.values()[te.facing];
+            ForgeDirection front = ForgeDirections.DIRECTIONS[te.facing];
 
             for (int i = 0; i < 3; i++) {
                 double px = x + 0.5 + front.offsetX * 0.51;

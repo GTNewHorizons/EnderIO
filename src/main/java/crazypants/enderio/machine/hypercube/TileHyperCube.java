@@ -107,11 +107,11 @@ public class TileHyperCube extends TileEntityEio
     private int lastSyncPowerStored = 0;
     private int storedEnergyRF;
 
-    private final List<Receptor> receptors = new ArrayList<Receptor>();
+    private final List<Receptor> receptors = new ArrayList<>();
     private ListIterator<Receptor> receptorIterator = receptors.listIterator();
     private boolean receptorsDirty = true;
 
-    private final List<NetworkFluidHandler> fluidHandlers = new ArrayList<NetworkFluidHandler>();
+    private final List<NetworkFluidHandler> fluidHandlers = new ArrayList<>();
     private boolean fluidHandlersDirty = true;
 
     private CompositeInventory localInventory = new CompositeInventory();
@@ -121,14 +121,13 @@ public class TileHyperCube extends TileEntityEio
     private Channel registeredChannel = null;
     private UUID owner;
 
-    private boolean init = true;
+    private static final boolean init = true;
 
     private float milliBucketsTransfered = 0;
 
-    private EnumMap<SubChannel, IoMode> ioModes = new EnumMap<TileHyperCube.SubChannel, TileHyperCube.IoMode>(
-            SubChannel.class);
+    private final EnumMap<SubChannel, IoMode> ioModes = new EnumMap<>(SubChannel.class);
 
-    private ItemRecieveBuffer recieveBuffer;
+    private final ItemRecieveBuffer recieveBuffer;
 
     protected RedstoneControlMode redstoneControlMode = RedstoneControlMode.IGNORE;
     protected boolean redstoneCheckPassed;
@@ -570,7 +569,7 @@ public class TileHyperCube extends TileEntityEio
 
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-        List<FluidTankInfo> res = new ArrayList<FluidTankInfo>();
+        List<FluidTankInfo> res = new ArrayList<>();
         for (NetworkFluidHandler h : getNetworkHandlers()) {
             FluidTankInfo[] ti = h.handler.getTankInfo(h.dirOp);
             if (ti != null) {
@@ -596,7 +595,7 @@ public class TileHyperCube extends TileEntityEio
         if (cubes == null || cubes.isEmpty()) {
             return Collections.emptyList();
         }
-        List<NetworkFluidHandler> result = new ArrayList<NetworkFluidHandler>();
+        List<NetworkFluidHandler> result = new ArrayList<>();
         for (TileHyperCube cube : cubes) {
             if (cube != this && cube != null) {
                 List<NetworkFluidHandler> handlers = cube.fluidHandlers;

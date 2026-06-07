@@ -7,6 +7,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import crazypants.enderio.conduit.liquid.AbstractEnderLiquidConduit;
 import crazypants.enderio.conduit.liquid.ILiquidConduit;
+import crazypants.util.ForgeDirections;
 import io.netty.buffer.ByteBuf;
 
 public class PacketRoundRobinMode extends AbstractConduitPacket<ILiquidConduit>
@@ -33,7 +34,7 @@ public class PacketRoundRobinMode extends AbstractConduitPacket<ILiquidConduit>
     @Override
     public void fromBytes(ByteBuf buf) {
         super.fromBytes(buf);
-        dir = ForgeDirection.values()[buf.readShort()];
+        dir = ForgeDirections.DIRECTIONS[buf.readShort()];
         roundRobin = buf.readBoolean();
     }
 

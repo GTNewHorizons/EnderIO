@@ -23,7 +23,7 @@ public class AversionObeliskController {
         MinecraftForge.EVENT_BUS.register(AversionObeliskController.instance);
     }
 
-    private Map<Integer, Map<BlockCoord, TileAversionObelisk>> perWorldGuards = new HashMap<Integer, Map<BlockCoord, TileAversionObelisk>>();
+    private final Map<Integer, Map<BlockCoord, TileAversionObelisk>> perWorldGuards = new HashMap<>();
 
     private AversionObeliskController() {}
 
@@ -67,7 +67,7 @@ public class AversionObeliskController {
     private Map<BlockCoord, TileAversionObelisk> getGuardsForWorld(World world) {
         Map<BlockCoord, TileAversionObelisk> res = perWorldGuards.get(world.provider.dimensionId);
         if (res == null) {
-            res = new HashMap<BlockCoord, TileAversionObelisk>();
+            res = new HashMap<>();
             perWorldGuards.put(world.provider.dimensionId, res);
         }
         return res;

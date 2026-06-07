@@ -24,6 +24,7 @@ import crazypants.enderio.conduit.item.filter.IItemFilter;
 import crazypants.enderio.conduit.item.filter.ItemFilterLimited;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.invpanel.TileInventoryPanel;
+import crazypants.util.ForgeDirections;
 
 public class NetworkedInventory {
 
@@ -33,8 +34,8 @@ public class NetworkedInventory {
     BlockCoord location;
     int inventorySide;
 
-    List<Target> sendPriority = new ArrayList<Target>();
-    RoundRobinIterator<Target> rrIter = new RoundRobinIterator<Target>(sendPriority);
+    List<Target> sendPriority = new ArrayList<>();
+    RoundRobinIterator<Target> rrIter = new RoundRobinIterator<>(sendPriority);
 
     private int extractFromSlot = -1;
 
@@ -327,7 +328,7 @@ public class NetworkedInventory {
                 return 0;
             }
         }
-        return ItemUtil.doInsertItem(getInventory(), item, ForgeDirection.values()[inventorySide]);
+        return ItemUtil.doInsertItem(getInventory(), item, ForgeDirections.DIRECTIONS[inventorySide]);
     }
 
     void updateInsertOrder() {
@@ -335,7 +336,7 @@ public class NetworkedInventory {
         if (!canExtract()) {
             return;
         }
-        List<Target> result = new ArrayList<NetworkedInventory.Target>();
+        List<Target> result = new ArrayList<>();
 
         for (NetworkedInventory other : network.inventories) {
             if ((con.isSelfFeedEnabled(conDir) || (other != this)) && other.canInsert()
@@ -353,8 +354,8 @@ public class NetworkedInventory {
             Collections.sort(sendPriority);
         } else {
             if (!result.isEmpty()) {
-                Map<BlockCoord, Integer> visited = new HashMap<BlockCoord, Integer>();
-                List<BlockCoord> steps = new ArrayList<BlockCoord>();
+                Map<BlockCoord, Integer> visited = new HashMap<>();
+                List<BlockCoord> steps = new ArrayList<>();
                 steps.add(con.getLocation());
                 calculateDistances(result, visited, steps, 0);
 
@@ -371,7 +372,7 @@ public class NetworkedInventory {
             return;
         }
 
-        ArrayList<BlockCoord> nextSteps = new ArrayList<BlockCoord>();
+        ArrayList<BlockCoord> nextSteps = new ArrayList<>();
         for (BlockCoord bc : steps) {
             IItemConduit con = network.conMap.get(bc);
             if (con != null) {

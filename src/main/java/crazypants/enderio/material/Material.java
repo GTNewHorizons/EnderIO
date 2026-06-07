@@ -29,16 +29,20 @@ public enum Material {
     ENDER_POWDER("enderCrystalPowder", true),
     PRECIENT_POWDER("precientPowder", true);
 
+    /**
+     * Cached values() array for frequent read-only operations, the array should NOT be mutated.
+     */
+    public static final Material[] VALUES = values();
     public final String unlocalisedName;
     public final String iconKey;
     public final String oreDict;
     public final boolean hasEffect;
 
-    private Material(String unlocalisedName) {
+    Material(String unlocalisedName) {
         this(unlocalisedName, false);
     }
 
-    private Material(String unlocalisedName, boolean hasEffect) {
+    Material(String unlocalisedName, boolean hasEffect) {
         this.unlocalisedName = "enderio." + unlocalisedName;
         this.iconKey = "enderio:" + unlocalisedName;
         this.hasEffect = hasEffect;
@@ -46,7 +50,7 @@ public enum Material {
     }
 
     public static void registerOres(Item item) {
-        for (Material m : values()) {
+        for (Material m : VALUES) {
             OreDictionary.registerOre(m.oreDict, new ItemStack(item, 1, m.ordinal()));
         }
     }

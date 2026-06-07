@@ -28,10 +28,8 @@ import crazypants.enderio.machine.transceiver.TileTransceiver;
 @SideOnly(Side.CLIENT)
 public class TransceiverRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
-    private IModel model;
-
-    private BoundingBox bb;
-
+    private final IModel model;
+    private final BoundingBox bb;
     private boolean adjustForItem = false;
 
     public TransceiverRenderer() {

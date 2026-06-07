@@ -14,7 +14,7 @@ public abstract class ItemFilter {
     public abstract boolean matches(ItemEntry entry);
 
     public static ItemFilter parse(String filter, Locale locale, IItemFilter filterCard) {
-        ArrayList<ItemFilter> list = new ArrayList<ItemFilter>();
+        ArrayList<ItemFilter> list = new ArrayList<>();
         if (filterCard != null) {
             list.add(new CardFilter(filterCard));
         }

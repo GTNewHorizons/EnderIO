@@ -49,7 +49,7 @@ public class OCConduit extends AbstractConduit implements IOCConduit {
 
     protected OCConduitNetwork network;
 
-    private Map<ForgeDirection, DyeColor> signalColors = new HashMap<ForgeDirection, DyeColor>();
+    private final Map<ForgeDirection, DyeColor> signalColors = new HashMap<>();
 
     public static IIcon[] coreTextures;
     public static IIcon[] longTextures;
@@ -86,7 +86,7 @@ public class OCConduit extends AbstractConduit implements IOCConduit {
 
     @Override
     protected void readTypeSettings(ForgeDirection dir, NBTTagCompound dataRoot) {
-        setSignalColor(dir, DyeColor.values()[dataRoot.getShort("signalColor")]);
+        setSignalColor(dir, DyeColor.VALUES[dataRoot.getShort("signalColor")]);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class OCConduit extends AbstractConduit implements IOCConduit {
         BoundingBox bb = ConduitGeometryUtil.instance.createBoundsForConnectionController(key.dir, key.offset);
         CollidableComponent cc = new CollidableComponent(IOCConduit.class, bb, key.dir, COLOR_CONTROLLER_ID);
 
-        List<CollidableComponent> result = new ArrayList<CollidableComponent>();
+        List<CollidableComponent> result = new ArrayList<>();
         result.addAll(baseCollidables);
         result.add(cc);
 
@@ -148,7 +148,7 @@ public class OCConduit extends AbstractConduit implements IOCConduit {
             int i = 0;
             for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
                 if (cols[i] >= 0) {
-                    signalColors.put(dir, DyeColor.values()[cols[i]]);
+                    signalColors.put(dir, DyeColor.VALUES[cols[i]]);
                 }
                 i++;
             }
@@ -274,7 +274,7 @@ public class OCConduit extends AbstractConduit implements IOCConduit {
                 BlockCoord bc = getLocation();
                 if (network != null) {
                     boolean noconnections = true;
-                    for (DyeColor color : DyeColor.values()) {
+                    for (DyeColor color : DyeColor.VALUES) {
                         if (node(color).neighbors().iterator().hasNext()) {
                             noconnections = false;
                             ChatComponentText coltxt = new ChatComponentText(color.getLocalisedName());
@@ -350,8 +350,8 @@ public class OCConduit extends AbstractConduit implements IOCConduit {
         if (loc != null && network != null) {
             World world = getBundle().getWorld();
             EnumSet<ForgeDirection> conns = getConnections();
-            for (DyeColor color : DyeColor.values()) {
-                Set<Node> should = new HashSet<Node>();
+            for (DyeColor color : DyeColor.VALUES) {
+                Set<Node> should = new HashSet<>();
                 for (ForgeDirection direction : conns) {
                     if (getSignalColor(direction) == color) {
                         TileEntity te = getLocation().getLocation(direction).getTileEntity(world);
@@ -417,7 +417,7 @@ public class OCConduit extends AbstractConduit implements IOCConduit {
         // we need to check if that node has another way of connecting to our
         // network. First find out which of our neighbor(s) it belongs to. May
         // be just one, may be many.
-        List<TileEntity> toCheck = new ArrayList<TileEntity>();
+        List<TileEntity> toCheck = new ArrayList<>();
         if (otherHost instanceof TileEntity) {
             TileEntity otherTe = (TileEntity) otherHost;
             toCheck.add(otherTe);

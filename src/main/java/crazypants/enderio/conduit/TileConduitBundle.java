@@ -51,6 +51,7 @@ import crazypants.enderio.conduit.power.IPowerConduit;
 import crazypants.enderio.conduit.redstone.IRedstoneConduit;
 import crazypants.enderio.conduit.redstone.InsulatedRedstoneConduit;
 import crazypants.enderio.config.Config;
+import crazypants.util.ForgeDirections;
 import li.cil.oc.api.network.Message;
 import li.cil.oc.api.network.Node;
 import mekanism.api.gas.Gas;
@@ -412,7 +413,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
         }
         // If you're wondering why I am not using conduit.writeToNBT, it is because there is some data that should not
         // persist, some of which causes crashes with energy conduits.
-        NBTTagCompound[] originalData = new NBTTagCompound[ForgeDirection.values().length];
+        NBTTagCompound[] originalData = new NBTTagCompound[ForgeDirections.DIRECTIONS.length];
         for (ForgeDirection conduitConnection : original.getExternalConnections()) {
             NBTTagCompound tag = new NBTTagCompound();
             original.writeConnectionSettingsToNBT(conduitConnection, tag);
@@ -423,7 +424,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
         for (int i = 0; i < originalData.length; i++) {
             NBTTagCompound nbt = originalData[i];
             if (nbt != null) {
-                replacement.readConduitSettingsFromNBT(ForgeDirection.values()[i], nbt);
+                replacement.readConduitSettingsFromNBT(ForgeDirections.DIRECTIONS[i], nbt);
             }
         }
     }
@@ -563,7 +564,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
         cachedConnectors.clear();
 
         // TODO: What an unholly mess! (and it doesn't even work correctly...)
-        List<CollidableComponent> coreBounds = new ArrayList<CollidableComponent>();
+        List<CollidableComponent> coreBounds = new ArrayList<>();
         for (IConduit con : conduits) {
             addConduitCores(coreBounds, con);
         }
@@ -571,13 +572,13 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
         result.addAll(coreBounds);
 
         // 1st algorithm
-        List<CollidableComponent> conduitsBounds = new ArrayList<CollidableComponent>();
+        List<CollidableComponent> conduitsBounds = new ArrayList<>();
         for (IConduit con : conduits) {
             conduitsBounds.addAll(con.getCollidableComponents());
             addConduitCores(conduitsBounds, con);
         }
 
-        Set<Class<IConduit>> collidingTypes = new HashSet<Class<IConduit>>();
+        Set<Class<IConduit>> collidingTypes = new HashSet<>();
         for (CollidableComponent conCC : conduitsBounds) {
             for (CollidableComponent innerCC : conduitsBounds) {
                 if (!InsulatedRedstoneConduit.COLOR_CONTROLLER_ID.equals(innerCC.data)
@@ -591,7 +592,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
 
         // TODO: Remove the core geometries covered up by this as no point in rendering these
         if (!collidingTypes.isEmpty()) {
-            List<CollidableComponent> colCores = new ArrayList<CollidableComponent>();
+            List<CollidableComponent> colCores = new ArrayList<>();
             for (Class<IConduit> c : collidingTypes) {
                 IConduit con = getConduit(c);
                 if (con != null) {
@@ -623,7 +624,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
         for (IConduit con : conduits) {
 
             if (con.hasConnections()) {
-                List<CollidableComponent> cores = new ArrayList<CollidableComponent>();
+                List<CollidableComponent> cores = new ArrayList<>();
                 addConduitCores(cores, con);
                 if (cores.size() > 1) {
                     BoundingBox bb = cores.get(0).bound;

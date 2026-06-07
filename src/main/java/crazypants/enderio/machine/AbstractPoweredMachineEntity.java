@@ -169,7 +169,7 @@ public abstract class AbstractPoweredMachineEntity extends AbstractMachineEntity
         if (contents == null || contents.getItem() != EnderIO.itemBasicCapacitor) {
             setCapacitor(Capacitors.BASIC_CAPACITOR);
         } else {
-            setCapacitor(Capacitors.values()[contents.getItemDamage()]);
+            setCapacitor(Capacitors.VALUES[contents.getItemDamage()]);
         }
     }
 
@@ -181,7 +181,7 @@ public abstract class AbstractPoweredMachineEntity extends AbstractMachineEntity
     @Override
     public void readCommon(NBTTagCompound nbtRoot) {
         super.readCommon(nbtRoot);
-        setCapacitor(Capacitors.values()[nbtRoot.getShort("capacitorType")]);
+        setCapacitor(Capacitors.VALUES[nbtRoot.getShort("capacitorType")]);
         int energy;
         if (nbtRoot.hasKey("storedEnergy")) {
             float storedEnergyMJ = nbtRoot.getFloat("storedEnergy");

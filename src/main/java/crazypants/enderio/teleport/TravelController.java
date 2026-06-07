@@ -15,6 +15,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -66,7 +67,9 @@ import crazypants.enderio.teleport.packet.PacketDrainStaff;
 import crazypants.enderio.teleport.packet.PacketLongDistanceTravelEvent;
 import crazypants.enderio.teleport.packet.PacketOpenAuthGui;
 import crazypants.enderio.teleport.packet.PacketTravelEvent;
+import crazypants.util.BackhandUtil;
 import crazypants.util.BaublesUtil;
+import xonin.backhand.api.core.BackhandUtils;
 
 public class TravelController {
 
@@ -81,7 +84,7 @@ public class TravelController {
      */
     public SetMultimap<Integer, BlockCoord> travelDestinations = MultimapBuilder.hashKeys().hashSetValues().build();
 
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
     private boolean wasJumping = false;
 
@@ -89,11 +92,7 @@ public class TravelController {
 
     private int delayTimer = 0;
 
-    private final int timer = Config.travelAnchorCooldown;
-
-    private boolean tempJump;
-
-    private boolean tempSneak;
+    private static final int timer = Config.travelAnchorCooldown;
 
     private boolean showTargets = false;
 
@@ -105,15 +104,13 @@ public class TravelController {
 
     Camera currentView = new Camera();
 
-    private final HashMap<BlockCoord, Float> candidates = new HashMap<BlockCoord, Float>();
+    private final HashMap<BlockCoord, Float> candidates = new HashMap<>();
 
     private boolean selectionEnabled = true;
 
-    private double fovRad;
-
     private double tanFovRad;
 
-    private final List<UniqueIdentifier> blackList = new ArrayList<GameRegistry.UniqueIdentifier>();
+    private final List<UniqueIdentifier> blackList = new ArrayList<>();
 
     private TravelController() {
         String[] blackListNames = Config.travelStaffBlinkBlackList;
@@ -422,7 +419,7 @@ public class TravelController {
         currentView.setViewMatrix(mv);
         currentView.setViewport(0, 0, mc.displayWidth, mc.displayHeight);
 
-        fovRad = Math.toRadians(fov);
+        double fovRad = Math.toRadians(fov);
         tanFovRad = Math.tanh(fovRad);
     }
 
@@ -443,8 +440,8 @@ public class TravelController {
                 selectedCoord = null;
             }
             MovementInput input = player.movementInput;
-            tempJump = input.jump;
-            tempSneak = input.sneak;
+            boolean tempJump = input.jump;
+            boolean tempSneak = input.sneak;
 
             // Handles teleportation if a target is selected
             if ((input.jump && !wasJumping && onBlock && selectedCoord != null && delayTimer == 0)
@@ -538,11 +535,36 @@ public class TravelController {
         return action < 2;
     }
 
+    @Nullable
+    private TravelSource getTravelSource(final EntityPlayer ep, final ItemStack stack) {
+        final Item item = stack.getItem();
+        if (item instanceof ItemTeleportStaff) {
+            if (((ItemTeleportStaff) item).isActive(ep, stack)) {
+                return TravelSource.TELEPORT_STAFF;
+            }
+        } else if (item instanceof IItemOfTravel) {
+            if (((IItemOfTravel) item).isActive(ep, stack)) {
+                return TravelSource.STAFF;
+            }
+        }
+        return null;
+    }
+
     /** Returns null if no travel item is in inventory/baubles. */
     @Nullable
     public TravelSource getTravelItemTravelSource(EntityPlayer ep, boolean checkInventoryAndBaubles) {
         if (ep == null) {
             return null;
+        }
+
+        if (BackhandUtil.backhandLoaded) {
+            final ItemStack offhand = BackhandUtils.getOffhandItem(ep);
+            if (offhand != null && offhand.getItem() != null) {
+                final TravelSource source = getTravelSource(ep, offhand);
+                if (source != null) {
+                    return source;
+                }
+            }
         }
 
         ItemStack equipped = ep.getCurrentEquippedItem();
@@ -552,16 +574,9 @@ public class TravelController {
                 equipped = findTravelItemInInventoryOrBaubles(ep);
             }
         }
+
         if (equipped != null) {
-            if (equipped.getItem() instanceof ItemTeleportStaff) {
-                if (((ItemTeleportStaff) equipped.getItem()).isActive(ep, equipped)) {
-                    return TravelSource.TELEPORT_STAFF;
-                }
-            } else if (equipped.getItem() instanceof IItemOfTravel) {
-                if (((IItemOfTravel) equipped.getItem()).isActive(ep, equipped)) {
-                    return TravelSource.STAFF;
-                }
-            }
+            return getTravelSource(ep, equipped);
         }
 
         return null;
@@ -634,6 +649,7 @@ public class TravelController {
                 }
             }
         }
+
         return travelItemSlot;
     }
 

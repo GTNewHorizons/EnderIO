@@ -45,8 +45,8 @@ public class BlockIngotStorage extends BlockEio implements IAdvancedTooltipProvi
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister register) {
-        icons = new IIcon[Alloy.values().length];
-        for (Alloy alloy : Alloy.values()) {
+        icons = new IIcon[Alloy.VALUES.length];
+        for (Alloy alloy : Alloy.VALUES) {
             icons[alloy.ordinal()] = register.registerIcon(alloy.iconKey + "Block");
         }
     }
@@ -54,7 +54,7 @@ public class BlockIngotStorage extends BlockEio implements IAdvancedTooltipProvi
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta) {
-        meta = MathHelper.clamp_int(meta, 0, Alloy.values().length - 1);
+        meta = MathHelper.clamp_int(meta, 0, Alloy.VALUES.length - 1);
         return icons[meta];
     }
 
@@ -70,7 +70,7 @@ public class BlockIngotStorage extends BlockEio implements IAdvancedTooltipProvi
 
     @Override
     public float getBlockHardness(World world, int x, int y, int z) {
-        return Alloy.values()[world.getBlockMetadata(x, y, z)].getHardness();
+        return Alloy.VALUES[world.getBlockMetadata(x, y, z)].getHardness();
     }
 
     @Override

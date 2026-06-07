@@ -10,6 +10,10 @@ public enum ConnectionMode {
     DISABLED("gui.conduit.ioMode.disabled"),
     NOT_SET("gui.conduit.ioMode.notSet");
 
+    /**
+     * Cached values() array for frequent read-only operations, the array should NOT be mutated.
+     */
+    public static final ConnectionMode[] VALUES = values();
     private final String unlocalisedName;
 
     ConnectionMode(String unlocalisedName) {
@@ -22,19 +26,19 @@ public enum ConnectionMode {
 
     public static ConnectionMode getNext(ConnectionMode mode) {
         int ord = mode.ordinal() + 1;
-        if (ord >= ConnectionMode.values().length) {
+        if (ord >= ConnectionMode.VALUES.length) {
             ord = 0;
         }
-        return ConnectionMode.values()[ord];
+        return ConnectionMode.VALUES[ord];
     }
 
     public static ConnectionMode getPrevious(ConnectionMode mode) {
 
         int ord = mode.ordinal() - 1;
         if (ord < 0) {
-            ord = ConnectionMode.values().length - 1;
+            ord = ConnectionMode.VALUES.length - 1;
         }
-        return ConnectionMode.values()[ord];
+        return ConnectionMode.VALUES[ord];
     }
 
     public boolean acceptsInput() {

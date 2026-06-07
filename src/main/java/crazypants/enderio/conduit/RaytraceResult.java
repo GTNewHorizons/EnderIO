@@ -33,7 +33,7 @@ public class RaytraceResult {
         if (origin == null || toSort == null) {
             return;
         }
-        Collections.sort(toSort, new Comparator<RaytraceResult>() {
+        Collections.sort(toSort, new Comparator<>() {
 
             @Override
             public int compare(RaytraceResult o1, RaytraceResult o2) {

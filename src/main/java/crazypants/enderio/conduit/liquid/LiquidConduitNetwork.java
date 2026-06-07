@@ -21,10 +21,10 @@ public class LiquidConduitNetwork extends AbstractTankConduitNetwork<LiquidCondu
 
     private int ticksEmpty = 0;
 
-    private int maxFlowsPerTick = 10;
+    private static final int maxFlowsPerTick = 10;
     private int lastFlowIndex = 0;
 
-    private boolean printFlowTiming = false;
+    private static final boolean printFlowTiming = false;
 
     private int lastPushToken = 0;
 
@@ -100,7 +100,7 @@ public class LiquidConduitNetwork extends AbstractTankConduitNetwork<LiquidCondu
     private boolean doFlow() {
 
         int pushToken = getNextPushToken();
-        List<FlowAction> actions = new ArrayList<FlowAction>();
+        List<FlowAction> actions = new ArrayList<>();
         for (int i = 0; i < Math.min(maxFlowsPerTick, conduits.size()); i++) {
 
             if (lastFlowIndex >= conduits.size()) {
@@ -116,7 +116,7 @@ public class LiquidConduitNetwork extends AbstractTankConduitNetwork<LiquidCondu
         boolean result = !actions.isEmpty();
 
         // Flush any tanks with a tiny bit left
-        List<LiquidConduit> toEmpty = new ArrayList<LiquidConduit>();
+        List<LiquidConduit> toEmpty = new ArrayList<>();
         for (LiquidConduit con : conduits) {
             if (con != null && con.getTank().getFluidAmount() < 10) {
                 toEmpty.add(con);
@@ -129,7 +129,7 @@ public class LiquidConduitNetwork extends AbstractTankConduitNetwork<LiquidCondu
             return result;
         }
 
-        List<LocatedFluidHandler> externals = new ArrayList<LocatedFluidHandler>();
+        List<LocatedFluidHandler> externals = new ArrayList<>();
         for (AbstractTankConduit con : conduits) {
             Set<ForgeDirection> extCons = con.getExternalConnections();
 

@@ -161,11 +161,16 @@ public class TravelEntitySpecialRenderer extends TileEntitySpecialRenderer {
                         GL11.glScalef(2, 2, 2);
 
                         if (ei == null) {
-                            ei = new EntityItem(tileentity.getWorldObj(), x, y, z, itemLabel);
+                            ei = new EntityItem(null, x, y, z, itemLabel);
                         } else {
                             ei.setEntityItemStack(itemLabel);
                         }
-                        RenderUtil.render3DItem(ei, false);
+                        try {
+                            ei.setWorld(tileentity.getWorldObj());
+                            RenderUtil.render3DItem(ei, false);
+                        } finally {
+                            ei.setWorld(null);
+                        }
                         GL11.glPopMatrix();
                     }
                     GL11.glPopMatrix();

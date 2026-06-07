@@ -8,6 +8,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import crazypants.enderio.conduit.redstone.IInsulatedRedstoneConduit;
+import crazypants.util.ForgeDirections;
 import io.netty.buffer.ByteBuf;
 
 public class PacketRedstoneConduitSignalColor extends AbstractConduitPacket<IInsulatedRedstoneConduit>
@@ -34,8 +35,8 @@ public class PacketRedstoneConduitSignalColor extends AbstractConduitPacket<IIns
     @Override
     public void fromBytes(ByteBuf buf) {
         super.fromBytes(buf);
-        dir = ForgeDirection.values()[buf.readShort()];
-        col = DyeColor.values()[buf.readShort()];
+        dir = ForgeDirections.DIRECTIONS[buf.readShort()];
+        col = DyeColor.VALUES[buf.readShort()];
     }
 
     @Override

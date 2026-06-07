@@ -12,6 +12,7 @@ import crazypants.enderio.GuiHandler;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.machine.AbstractMachineBlock;
 import crazypants.enderio.network.PacketHandler;
+import crazypants.util.ForgeDirections;
 
 public class BlockStirlingGenerator extends AbstractMachineBlock<TileEntityStirlingGenerator> {
 
@@ -59,7 +60,7 @@ public class BlockStirlingGenerator extends AbstractMachineBlock<TileEntityStirl
     public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
         TileEntityStirlingGenerator te = (TileEntityStirlingGenerator) world.getTileEntity(x, y, z);
         if (te != null && te.isActive()) {
-            ForgeDirection front = ForgeDirection.values()[te.facing];
+            ForgeDirection front = ForgeDirections.DIRECTIONS[te.facing];
 
             for (int i = 0; i < 2; i++) {
                 double px = x + 0.5 + front.offsetX * 0.6;

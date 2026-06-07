@@ -9,7 +9,7 @@ public class MpsUtil {
 
     public static final MpsUtil instance = new MpsUtil();
 
-    private static String WRENCH_MODUL_NAME = "Prototype OmniWrench";
+    private static final String WRENCH_MODUL_NAME = "Prototype OmniWrench";
 
     private boolean isMpsInstalled;
 

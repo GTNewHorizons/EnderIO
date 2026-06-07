@@ -26,9 +26,7 @@ import crazypants.enderio.machine.painter.TileEntityPaintedBlock;
 @ThreadSafeISBRH(perThread = false)
 public class FusedQuartzRenderer implements ISimpleBlockRenderingHandler {
 
-    static int renderPass;
-
-    private ConnectedTextureRenderer connectedTextureRenderer = new ConnectedTextureRenderer() {
+    private final ConnectedTextureRenderer connectedTextureRenderer = new ConnectedTextureRenderer() {
 
         @Override
         public boolean matchesMetadata(int meta1, int meta2) {

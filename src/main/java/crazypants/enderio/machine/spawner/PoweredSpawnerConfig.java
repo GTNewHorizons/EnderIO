@@ -29,9 +29,9 @@ public class PoweredSpawnerConfig {
         return instance;
     }
 
-    private final Map<String, Double> costs = new HashMap<String, Double>();
+    private final Map<String, Double> costs = new HashMap<>();
 
-    private final List<String> blackList = new ArrayList<String>();
+    private final List<String> blackList = new ArrayList<>();
 
     public double getCostMultiplierFor(String entity) {
         Double val = costs.get(entity);

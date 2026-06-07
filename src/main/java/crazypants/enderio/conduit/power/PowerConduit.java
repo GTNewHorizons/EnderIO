@@ -46,7 +46,7 @@ import crazypants.enderio.tool.ToolUtil;
 
 public class PowerConduit extends AbstractConduit implements IPowerConduit {
 
-    static final Map<String, IIcon> ICONS = new HashMap<String, IIcon>();
+    static final Map<String, IIcon> ICONS = new HashMap<>();
 
     private static ICapacitor[] capacitors;
 
@@ -106,14 +106,12 @@ public class PowerConduit extends AbstractConduit implements IPowerConduit {
 
     private int subtype;
 
-    protected final EnumMap<ForgeDirection, RedstoneControlMode> rsModes = new EnumMap<ForgeDirection, RedstoneControlMode>(
-            ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, DyeColor> rsColors = new EnumMap<ForgeDirection, DyeColor>(
-            ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, RedstoneControlMode> rsModes = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, DyeColor> rsColors = new EnumMap<>(ForgeDirection.class);
 
     protected EnumMap<ForgeDirection, Long> recievedTicks;
 
-    private final Map<ForgeDirection, Integer> externalRedstoneSignals = new HashMap<ForgeDirection, Integer>();
+    private final Map<ForgeDirection, Integer> externalRedstoneSignals = new HashMap<>();
 
     private boolean redstoneStateDirty = true;
 
@@ -210,7 +208,7 @@ public class PowerConduit extends AbstractConduit implements IPowerConduit {
 
     @Override
     protected void readTypeSettings(ForgeDirection dir, NBTTagCompound dataRoot) {
-        setExtractionSignalColor(dir, DyeColor.values()[dataRoot.getShort("extractionSignalColor")]);
+        setExtractionSignalColor(dir, DyeColor.VALUES[dataRoot.getShort("extractionSignalColor")]);
         setExtractionRedstoneMode(RedstoneControlMode.values()[dataRoot.getShort("extractionRedstoneMode")], dir);
     }
 
@@ -262,8 +260,8 @@ public class PowerConduit extends AbstractConduit implements IPowerConduit {
             key = "pRsCol." + dir.name();
             if (nbtRoot.hasKey(key)) {
                 short ord = nbtRoot.getShort(key);
-                if (ord >= 0 && ord < DyeColor.values().length) {
-                    rsColors.put(dir, DyeColor.values()[ord]);
+                if (ord >= 0 && ord < DyeColor.VALUES.length) {
+                    rsColors.put(dir, DyeColor.VALUES[ord]);
                 }
             }
         }
@@ -388,7 +386,7 @@ public class PowerConduit extends AbstractConduit implements IPowerConduit {
 
             if (getBundle() != null) {
                 if (recievedTicks == null) {
-                    recievedTicks = new EnumMap<ForgeDirection, Long>(ForgeDirection.class);
+                    recievedTicks = new EnumMap<>(ForgeDirection.class);
                 }
                 recievedTicks.put(from, getBundle().getWorld().getTotalWorldTime());
             }
@@ -544,7 +542,7 @@ public class PowerConduit extends AbstractConduit implements IPowerConduit {
         BoundingBox bb = ConduitGeometryUtil.instance.createBoundsForConnectionController(key.dir, key.offset);
         CollidableComponent cc = new CollidableComponent(IPowerConduit.class, bb, key.dir, COLOR_CONTROLLER_ID);
 
-        List<CollidableComponent> result = new ArrayList<CollidableComponent>();
+        List<CollidableComponent> result = new ArrayList<>();
         result.addAll(baseCollidables);
         result.add(cc);
 

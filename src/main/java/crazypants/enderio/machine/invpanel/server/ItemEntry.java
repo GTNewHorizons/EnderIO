@@ -8,7 +8,7 @@ import crazypants.enderio.machine.invpanel.ItemEntryBase;
 
 public class ItemEntry extends ItemEntryBase {
 
-    private final IdentityHashMap<SlotKey, SlotKey> slots = new IdentityHashMap<SlotKey, SlotKey>();
+    private final IdentityHashMap<SlotKey, SlotKey> slots = new IdentityHashMap<>();
 
     public ItemEntry(int dbID, int hash, int itemID, int meta, NBTTagCompound nbt) {
         super(dbID, hash, itemID, meta, nbt);

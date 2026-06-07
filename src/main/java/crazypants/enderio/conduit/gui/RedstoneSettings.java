@@ -25,8 +25,8 @@ public class RedstoneSettings extends BaseSettingsPanel {
 
     private CheckBox strongCB;
 
-    private String signalColorStr = EnderIO.lang.localize("gui.conduit.redstone.color");
-    private String signalStringthStr = EnderIO.lang.localize("gui.conduit.redstone.signalStrengh");
+    private final String signalColorStr = EnderIO.lang.localize("gui.conduit.redstone.color");
+    private final String signalStringthStr = EnderIO.lang.localize("gui.conduit.redstone.signalStrengh");
     private IInsulatedRedstoneConduit insCon;
 
     private int stongLabelX;
@@ -61,7 +61,7 @@ public class RedstoneSettings extends BaseSettingsPanel {
     public void actionPerformed(GuiButton guiButton) {
         super.actionPerformed(guiButton);
         if (guiButton.id == ID_COLOR_BUTTON && cb != null) {
-            insCon.setSignalColor(gui.getDir(), DyeColor.values()[cb.getColorIndex()]);
+            insCon.setSignalColor(gui.getDir(), DyeColor.VALUES[cb.getColorIndex()]);
             PacketHandler.INSTANCE.sendToServer(new PacketRedstoneConduitSignalColor(insCon, gui.getDir()));
         } else if (guiButton.id == ID_STRONG_BUTTON && strongCB != null) {
             insCon.setOutputStrength(gui.getDir(), strongCB.isSelected());

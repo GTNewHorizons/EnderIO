@@ -12,6 +12,7 @@ import crazypants.enderio.conduit.liquid.FluidFilter;
 import crazypants.enderio.conduit.liquid.ILiquidConduit;
 import crazypants.enderio.conduit.packet.AbstractConduitPacket;
 import crazypants.enderio.conduit.packet.ConTypeEnum;
+import crazypants.util.ForgeDirections;
 import io.netty.buffer.ByteBuf;
 
 public class PacketFluidFilter extends AbstractConduitPacket<ILiquidConduit>
@@ -44,7 +45,7 @@ public class PacketFluidFilter extends AbstractConduitPacket<ILiquidConduit>
     @Override
     public void fromBytes(ByteBuf buf) {
         super.fromBytes(buf);
-        dir = ForgeDirection.values()[buf.readShort()];
+        dir = ForgeDirections.DIRECTIONS[buf.readShort()];
         isInput = buf.readBoolean();
         NBTTagCompound tag = ByteBufUtils.readTag(buf);
         filter = new FluidFilter();

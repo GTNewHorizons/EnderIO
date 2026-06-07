@@ -53,8 +53,8 @@ public class TilePowerMonitor extends AbstractPowerConsumerEntity implements IIn
         if (currentlyEmmittedSignal == null) {
             return new int[16];
         }
-        int[] res = new int[DyeColor.values().length];
-        for (DyeColor col : DyeColor.values()) {
+        int[] res = new int[DyeColor.VALUES.length];
+        for (DyeColor col : DyeColor.VALUES) {
             res[col.ordinal()] = currentlyEmmittedSignal.color == col ? 15 : 0;
         }
         return res;

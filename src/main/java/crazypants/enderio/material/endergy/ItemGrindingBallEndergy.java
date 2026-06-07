@@ -36,14 +36,14 @@ public class ItemGrindingBallEndergy extends ItemAlloyEndergy {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister IIconRegister) {
-        int numAlloys = AlloyEndergy.values().length;
+        int numAlloys = AlloyEndergy.VALUES.length;
         for (int i = 0; i < numAlloys; i++)
-            icons[i] = IIconRegister.registerIcon(AlloyEndergy.values()[i].iconKey + "GrindingBall");
+            icons[i] = IIconRegister.registerIcon(AlloyEndergy.VALUES[i].iconKey + "GrindingBall");
     }
 
     @Override
     public String getUnlocalizedName(ItemStack par1ItemStack) {
         int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, numItems - 1);
-        return AlloyEndergy.values()[i].unlocalisedName + "GrindingBall";
+        return AlloyEndergy.VALUES[i].unlocalisedName + "GrindingBall";
     }
 }

@@ -140,7 +140,7 @@ public class BlockConduitFacade extends BlockEio implements IPaintedBlock, Clone
         return new Mimic(id, meta);
     }
 
-    class Mimic {
+    static class Mimic {
 
         int meta;
         Block block;

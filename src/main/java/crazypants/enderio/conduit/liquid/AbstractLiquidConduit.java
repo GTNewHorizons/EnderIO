@@ -29,12 +29,10 @@ import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 
 public abstract class AbstractLiquidConduit extends AbstractConduit implements ILiquidConduit {
 
-    protected final EnumMap<ForgeDirection, RedstoneControlMode> extractionModes = new EnumMap<ForgeDirection, RedstoneControlMode>(
-            ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, DyeColor> extractionColors = new EnumMap<ForgeDirection, DyeColor>(
-            ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, RedstoneControlMode> extractionModes = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, DyeColor> extractionColors = new EnumMap<>(ForgeDirection.class);
 
-    protected final Map<ForgeDirection, Integer> externalRedstoneSignals = new HashMap<ForgeDirection, Integer>();
+    protected final Map<ForgeDirection, Integer> externalRedstoneSignals = new HashMap<>();
     protected boolean redstoneStateDirty = true;
 
     public static IFluidHandler getExternalFluidHandler(IBlockAccess world, BlockCoord bc) {
@@ -204,7 +202,7 @@ public abstract class AbstractLiquidConduit extends AbstractConduit implements I
 
     @Override
     protected void readTypeSettings(ForgeDirection dir, NBTTagCompound dataRoot) {
-        setExtractionSignalColor(dir, DyeColor.values()[dataRoot.getShort("extractionSignalColor")]);
+        setExtractionSignalColor(dir, DyeColor.VALUES[dataRoot.getShort("extractionSignalColor")]);
         setExtractionRedstoneMode(RedstoneControlMode.values()[dataRoot.getShort("extractionRedstoneMode")], dir);
     }
 
@@ -248,8 +246,8 @@ public abstract class AbstractLiquidConduit extends AbstractConduit implements I
             key = "extSC." + dir.name();
             if (nbtRoot.hasKey(key)) {
                 short ord = nbtRoot.getShort(key);
-                if (ord >= 0 && ord < DyeColor.values().length) {
-                    extractionColors.put(dir, DyeColor.values()[ord]);
+                if (ord >= 0 && ord < DyeColor.VALUES.length) {
+                    extractionColors.put(dir, DyeColor.VALUES[ord]);
                 }
             }
         }

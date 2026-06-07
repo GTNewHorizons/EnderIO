@@ -109,15 +109,11 @@ public abstract class AbstractEnderLiquidConduit extends AbstractLiquidConduit {
     private EnderLiquidConduitNetwork network;
     private int ticksSinceFailedExtract;
 
-    private final EnumMap<ForgeDirection, FluidFilter> outputFilters = new EnumMap<ForgeDirection, FluidFilter>(
-            ForgeDirection.class);
-    private final EnumMap<ForgeDirection, FluidFilter> inputFilters = new EnumMap<ForgeDirection, FluidFilter>(
-            ForgeDirection.class);
+    private final EnumMap<ForgeDirection, FluidFilter> outputFilters = new EnumMap<>(ForgeDirection.class);
+    private final EnumMap<ForgeDirection, FluidFilter> inputFilters = new EnumMap<>(ForgeDirection.class);
 
-    protected final EnumMap<ForgeDirection, DyeColor> outputColors = new EnumMap<ForgeDirection, DyeColor>(
-            ForgeDirection.class);
-    protected final EnumMap<ForgeDirection, DyeColor> inputColors = new EnumMap<ForgeDirection, DyeColor>(
-            ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, DyeColor> outputColors = new EnumMap<>(ForgeDirection.class);
+    protected final EnumMap<ForgeDirection, DyeColor> inputColors = new EnumMap<>(ForgeDirection.class);
 
     private int roundRobin = 0;
 
@@ -424,10 +420,10 @@ public abstract class AbstractEnderLiquidConduit extends AbstractLiquidConduit {
         super.readTypeSettings(dir, dataRoot);
 
         if (dataRoot.hasKey("inputColor")) {
-            setInputColor(dir, DyeColor.values()[dataRoot.getShort("inputColor")]);
+            setInputColor(dir, DyeColor.VALUES[dataRoot.getShort("inputColor")]);
         }
         if (dataRoot.hasKey("outputColor")) {
-            setOutputColor(dir, DyeColor.values()[dataRoot.getShort("outputColor")]);
+            setOutputColor(dir, DyeColor.VALUES[dataRoot.getShort("outputColor")]);
         }
 
         if (dataRoot.hasKey("roundRobin")) {
@@ -542,16 +538,16 @@ public abstract class AbstractEnderLiquidConduit extends AbstractLiquidConduit {
             key = "inSC." + dir.name();
             if (nbtRoot.hasKey(key)) {
                 short ord = nbtRoot.getShort(key);
-                if (ord >= 0 && ord < DyeColor.values().length) {
-                    inputColors.put(dir, DyeColor.values()[ord]);
+                if (ord >= 0 && ord < DyeColor.VALUES.length) {
+                    inputColors.put(dir, DyeColor.VALUES[ord]);
                 }
             }
 
             key = "outSC." + dir.name();
             if (nbtRoot.hasKey(key)) {
                 short ord = nbtRoot.getShort(key);
-                if (ord >= 0 && ord < DyeColor.values().length) {
-                    outputColors.put(dir, DyeColor.values()[ord]);
+                if (ord >= 0 && ord < DyeColor.VALUES.length) {
+                    outputColors.put(dir, DyeColor.VALUES[ord]);
                 }
             }
         }

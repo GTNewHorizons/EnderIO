@@ -62,7 +62,7 @@ public class ItemGliderWing extends Item implements IResourceTooltipProvider {
 
     @Override
     public String getUnlocalizedName(ItemStack par1ItemStack) {
-        int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, Capacitors.values().length - 1);
+        int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, Capacitors.VALUES.length - 1);
         if (i == 0) {
             return super.getUnlocalizedName();
         }

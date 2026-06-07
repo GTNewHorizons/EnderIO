@@ -24,6 +24,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.EnderIOTab;
 import crazypants.enderio.ModObject;
+import crazypants.util.ForgeDirections;
 import mods.immibis.microblocks.api.IMicroblockCoverSystem;
 import mods.immibis.microblocks.api.IMicroblockSupporterTile;
 import mods.immibis.microblocks.api.MicroblockAPIUtils;
@@ -84,7 +85,7 @@ public abstract class AbstractItemConduit extends Item implements IConduitItem {
             }
             return true;
         } else {
-            ForgeDirection dir = ForgeDirection.values()[side];
+            ForgeDirection dir = ForgeDirections.DIRECTIONS[side];
             int placeX = x + dir.offsetX;
             int placeY = y + dir.offsetY;
             int placeZ = z + dir.offsetZ;

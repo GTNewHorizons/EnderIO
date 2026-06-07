@@ -42,7 +42,7 @@ public class TeleportUtil {
         newCart.setLocationAndAngles(toX + 0.5, toY, toZ + 0.5, cart.rotationYaw, cart.rotationPitch);
         newCart.isDead = false;
 
-        List<Entity> result = new ArrayList<Entity>();
+        List<Entity> result = new ArrayList<>();
         result.add(newCart);
 
         Entity passenger = cart.riddenByEntity;

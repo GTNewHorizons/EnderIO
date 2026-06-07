@@ -31,8 +31,8 @@ public class ItemEnderFood extends ItemFood implements IResourceTooltipProvider 
     @SideOnly(Side.CLIENT)
     public class SpecialFont extends FontRenderer {
 
-        private FontRenderer wrapped;
-        private ItemStack stack = EnderFood.ENDERIOS.getStack();
+        private final FontRenderer wrapped;
+        private final ItemStack stack = EnderFood.ENDERIOS.getStack();
         private int inARow = 0;
 
         public SpecialFont(FontRenderer wrapped) {

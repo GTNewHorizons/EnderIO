@@ -35,10 +35,10 @@ import crazypants.enderio.machine.transceiver.TileTransceiver;
 public class EnderRailController {
 
     // keep track of which carts we have received have left the track as they can't be teleported again until they have
-    private final Set<UUID> newlySpawnedCarts = new HashSet<UUID>();
+    private final Set<UUID> newlySpawnedCarts = new HashSet<>();
 
-    private final LinkedList<List<Entity>> cartsToSpawn = new LinkedList<List<Entity>>();
-    private final List<PlayerTpInfo> playersToRemount = new ArrayList<EnderRailController.PlayerTpInfo>();
+    private final LinkedList<List<Entity>> cartsToSpawn = new LinkedList<>();
+    private final List<PlayerTpInfo> playersToRemount = new ArrayList<>();
 
     private int ticksFailedToSpawn = 0;
 
@@ -60,7 +60,7 @@ public class EnderRailController {
         spawnRecievedCart();
 
         List<EntityMinecart> carts = getMinecartsOnTrack();
-        List<UUID> toRemove = new ArrayList<UUID>();
+        List<UUID> toRemove = new ArrayList<>();
 
         // any cart in the newly spawned list no longer on the track needs to be removed
         for (UUID recievedCartUID : newlySpawnedCarts) {
@@ -179,7 +179,7 @@ public class EnderRailController {
         List<EntityMinecart> entities = world.getEntitiesWithinAABB(
                 EntityMinecart.class,
                 AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1));
-        List<EntityMinecart> carts = new ArrayList<EntityMinecart>();
+        List<EntityMinecart> carts = new ArrayList<>();
         for (Object o : entities) {
             EntityMinecart cart = (EntityMinecart) o;
             if (!cart.isDead) {
@@ -193,7 +193,7 @@ public class EnderRailController {
         World worldObj = transciever.getWorldObj();
         while (cartList.tagCount() > 0) {
             NBTTagList entityList = (NBTTagList) cartList.removeTag(0);
-            List<Entity> ents = new ArrayList<Entity>(entityList.tagCount());
+            List<Entity> ents = new ArrayList<>(entityList.tagCount());
             for (int i = 0; i < entityList.tagCount(); i++) {
                 NBTTagCompound entityRoot = entityList.getCompoundTagAt(i);
                 Entity entity = EntityList.createEntityFromNBT(entityRoot, worldObj);

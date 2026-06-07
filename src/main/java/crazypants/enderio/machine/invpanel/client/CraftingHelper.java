@@ -224,7 +224,7 @@ public class CraftingHelper {
     static class Candidate {
 
         final ItemStack stack;
-        final ArrayList<Slot> sourceSlots = new ArrayList<Slot>();
+        final ArrayList<Slot> sourceSlots = new ArrayList<>();
         ItemEntry entry;
         int available;
         int used;

@@ -218,7 +218,7 @@ public class EnergyUpgrade extends AbstractUpgrade {
     @SideOnly(Side.CLIENT)
     public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
 
-        List<String> upgradeStr = new ArrayList<String>();
+        List<String> upgradeStr = new ArrayList<>();
         upgradeStr.add(EnumChatFormatting.DARK_AQUA + EnderIO.lang.localizeExact(getUnlocalizedName() + ".name"));
         SpecialTooltipHandler.addDetailedTooltipFromResources(upgradeStr, getUnlocalizedName());
 

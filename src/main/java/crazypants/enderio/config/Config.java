@@ -48,7 +48,7 @@ public final class Config {
     public static final List<Section> sections;
 
     static {
-        sections = new ArrayList<Section>();
+        sections = new ArrayList<>();
     }
 
     public static Configuration config;
@@ -388,7 +388,7 @@ public final class Config {
             "ThermalFoundation:tool.hoeSilver", "ThermalFoundation:tool.hoeElectrum", "ThermalFoundation:tool.hoeTin",
             "ThermalFoundation:tool.hoeLead", "ThermalFoundation:tool.hoeNickel", "ThermalFoundation:tool.hoePlatinum",
             "TwilightForest:item.steeleafHoe", "TwilightForest:item.ironwoodHoe", "IC2:itemToolBronzeHoe" };
-    public static List<ItemStack> farmHoes = new ArrayList<ItemStack>();
+    public static List<ItemStack> farmHoes = new ArrayList<>();
     public static int farmSaplingReserveAmount = 8;
     public static double farmParticlesMaxRange = 64;
     public static int farmParticlesCount = 15;

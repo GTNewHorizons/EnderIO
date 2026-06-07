@@ -26,17 +26,17 @@ public class NetworkPowerManager {
     int maxEnergyStored;
     int energyStored;
 
-    private int updateRenderTicks = 10;
-    private int inactiveTicks = 100;
+    private static final int updateRenderTicks = 10;
+    private static final int inactiveTicks = 100;
 
-    private final List<ReceptorEntry> receptors = new ArrayList<PowerConduitNetwork.ReceptorEntry>();
+    private final List<ReceptorEntry> receptors = new ArrayList<>();
     private ListIterator<ReceptorEntry> receptorIterator = receptors.listIterator();
 
-    private final List<ReceptorEntry> storageReceptors = new ArrayList<ReceptorEntry>();
+    private final List<ReceptorEntry> storageReceptors = new ArrayList<>();
 
     private boolean receptorsDirty = true;
 
-    private final Map<IPowerConduit, PowerTracker> powerTrackers = new HashMap<IPowerConduit, PowerTracker>();
+    private final Map<IPowerConduit, PowerTracker> powerTrackers = new HashMap<>();
 
     private final PowerTracker networkPowerTracker = new PowerTracker();
 
@@ -79,7 +79,7 @@ public class NetworkPowerManager {
 
     public long getPowerInReceptors() {
         long result = 0;
-        Set<Object> done = new HashSet<Object>();
+        Set<Object> done = new HashSet<>();
         for (ReceptorEntry re : receptors) {
             if (!re.emmiter.getConnectionsDirty()) {
                 IPowerInterface powerReceptor = re.powerInterface;
@@ -94,7 +94,7 @@ public class NetworkPowerManager {
 
     public long getMaxPowerInReceptors() {
         long result = 0;
-        Set<Object> done = new HashSet<Object>();
+        Set<Object> done = new HashSet<>();
         for (ReceptorEntry re : receptors) {
             if (!re.emmiter.getConnectionsDirty()) {
                 IPowerInterface powerReceptor = re.powerInterface;
@@ -346,13 +346,13 @@ public class NetworkPowerManager {
 
         int canExtract;
         int canFill;
-        Set<IPowerStorage> capBanks = new HashSet<IPowerStorage>();
+        Set<IPowerStorage> capBanks = new HashSet<>();
 
         double filledRatio;
         long stored = 0;
         long maxCap = 0;
 
-        List<CapBankSupplyEntry> enteries = new ArrayList<NetworkPowerManager.CapBankSupplyEntry>();
+        List<CapBankSupplyEntry> enteries = new ArrayList<>();
 
         CapBankSupply() {}
 

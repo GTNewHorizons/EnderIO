@@ -10,6 +10,7 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import crazypants.enderio.conduit.item.FilterRegister;
 import crazypants.enderio.conduit.item.IItemConduit;
 import crazypants.enderio.conduit.item.filter.IItemFilter;
+import crazypants.util.ForgeDirections;
 import io.netty.buffer.ByteBuf;
 
 public class PacketItemConduitFilter extends AbstractConduitPacket<IItemConduit>
@@ -56,12 +57,12 @@ public class PacketItemConduitFilter extends AbstractConduitPacket<IItemConduit>
     @Override
     public void fromBytes(ByteBuf buf) {
         super.fromBytes(buf);
-        dir = ForgeDirection.values()[buf.readShort()];
+        dir = ForgeDirections.DIRECTIONS[buf.readShort()];
         loopMode = buf.readBoolean();
         roundRobin = buf.readBoolean();
         priority = buf.readInt();
-        colIn = DyeColor.values()[buf.readShort()];
-        colOut = DyeColor.values()[buf.readShort()];
+        colIn = DyeColor.VALUES[buf.readShort()];
+        colOut = DyeColor.VALUES[buf.readShort()];
         inputFilter = FilterRegister.readFilter(buf);
         outputFilter = FilterRegister.readFilter(buf);
     }

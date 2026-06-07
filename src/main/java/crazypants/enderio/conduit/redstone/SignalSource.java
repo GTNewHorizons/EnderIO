@@ -77,11 +77,11 @@ public class SignalSource {
     }
 
     public static Set<SignalSource> fromIntArray(int[] enc) {
-        Set<SignalSource> result = new HashSet<SignalSource>();
+        Set<SignalSource> result = new HashSet<>();
         for (int i = 0; i < enc.length; i += 5) {
             // Signal sig = new Signal(enc[i], enc[i + 1], enc[i + 2], enc[i + 3], ForgeDirection.UNKNOWN,14,
             // SignalColor.values()[enc[i + 4]]);
-            // result.add(new SignalSource(sig, ForgeDirection.values()[enc[i + 4]]));
+            // result.add(new SignalSource(sig, ForgeDirections.DIRECTIONS[enc[i + 4]]));
         }
         return result;
     }
