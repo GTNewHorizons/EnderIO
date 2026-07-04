@@ -184,7 +184,7 @@ import crazypants.util.EE3Util;
 @Mod(modid = MODID, name = MOD_NAME, version = VERSION, dependencies = """
         required-after:CoFHLib@[1.7.10R1.0.3B3,);\
         required-after:endercore;\
-        required-after:gtnhlib@[0.2.10,);\
+        required-after:gtnhlib@[0.9.47,);\
         after:MineFactoryReloaded;\
         after:Forestry;\
         after:Waila@[1.5.8,);\
