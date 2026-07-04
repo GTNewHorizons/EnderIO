@@ -9,6 +9,6 @@ public class ColorUtils {
     public static final ColorResource
     // spotless:off
         priorityString  = color.rgb("priorityString",   "0x000000"),
-        suctionString   = color.rgb("suctionString",    "0x404040");
+        suctionString   = color.rgb("suctionString",    "0x000000");
     // spotless:on
 }
