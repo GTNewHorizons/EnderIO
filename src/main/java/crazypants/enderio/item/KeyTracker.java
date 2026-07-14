@@ -328,8 +328,10 @@ public class KeyTracker {
     }
 
     private void handleGlide() {
-        if (glideKey.isPressed()
-                && DarkSteelController.instance.isGliderUpgradeEquipped(Minecraft.getMinecraft().thePlayer)) {
+        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+        if (glideKey.isPressed() && DarkSteelController.instance.isGliderUpgradeEquipped(player)
+                && (DarkSteelController.instance.isGlideActive(player)
+                        || DarkSteelController.instance.canActivateGlide(player))) {
             toggleDarkSteelController(Type.GLIDE, "darksteel.upgrade.glider");
         }
     }

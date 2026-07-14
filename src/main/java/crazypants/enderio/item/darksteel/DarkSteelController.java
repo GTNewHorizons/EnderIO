@@ -41,6 +41,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.config.Config;
+import crazypants.enderio.etfuturum.EtFuturumCompat;
 import crazypants.enderio.item.darksteel.PacketUpgradeState.Type;
 import crazypants.enderio.item.darksteel.upgrade.EnergyUpgrade;
 import crazypants.enderio.item.darksteel.upgrade.GliderUpgrade;
@@ -146,6 +147,8 @@ public class DarkSteelController {
     }
 
     public void setActive(EntityPlayer player, Type type, boolean isActive) {
+        if (type == Type.GLIDE && isActive && !canActivateGlide(player)) return;
+
         EnumSet<Type> set = getActiveSet(player);
         if (isActive) {
             set.add(type);
@@ -156,6 +159,10 @@ public class DarkSteelController {
 
     public boolean isGlideActive(EntityPlayer player) {
         return isActive(player, Type.GLIDE);
+    }
+
+    public boolean canActivateGlide(EntityPlayer player) {
+        return !isElytraFlying(player);
     }
 
     public boolean isSpeedActive(EntityPlayer player) {
@@ -246,8 +253,10 @@ public class DarkSteelController {
     }
 
     private void updateGlide(EntityPlayer player) {
-        if (!isGlideActive(player) || !isGliderUpgradeEquipped(player)) {
-            return;
+        if (!isGlideActive(player) || !isGliderUpgradeEquipped(player)) return;
+
+        if (isElytraFlying(player)) {
+            stopElytraFlying(player);
         }
 
         if (!player.onGround && player.motionY < 0 && !player.isSneaking() && !player.isInWater()) {
@@ -286,6 +295,14 @@ public class DarkSteelController {
             player.motionY = verticalSpeed;
             player.fallDistance = 0f;
         }
+    }
+
+    private static boolean isElytraFlying(EntityPlayer player) {
+        return EnderIO.hasEtFuturum && EtFuturumCompat.isElytraFlying(player);
+    }
+
+    private static void stopElytraFlying(EntityPlayer player) {
+        if (EnderIO.hasEtFuturum) EtFuturumCompat.stopElytraFlying(player);
     }
 
     public boolean isGliderUpgradeEquipped(EntityPlayer player) {
