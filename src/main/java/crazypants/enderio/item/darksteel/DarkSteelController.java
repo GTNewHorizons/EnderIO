@@ -162,7 +162,7 @@ public class DarkSteelController {
     }
 
     public boolean canActivateGlide(EntityPlayer player) {
-        return !isElytraFlying(player);
+        return !EtFuturumCompat.isElytraFlying(player);
     }
 
     public boolean isSpeedActive(EntityPlayer player) {
@@ -255,8 +255,8 @@ public class DarkSteelController {
     private void updateGlide(EntityPlayer player) {
         if (!isGlideActive(player) || !isGliderUpgradeEquipped(player)) return;
 
-        if (isElytraFlying(player)) {
-            stopElytraFlying(player);
+        if (EtFuturumCompat.isElytraFlying(player)) {
+            EtFuturumCompat.stopElytraFlying(player);
         }
 
         if (!player.onGround && player.motionY < 0 && !player.isSneaking() && !player.isInWater()) {
@@ -295,14 +295,6 @@ public class DarkSteelController {
             player.motionY = verticalSpeed;
             player.fallDistance = 0f;
         }
-    }
-
-    private static boolean isElytraFlying(EntityPlayer player) {
-        return EnderIO.hasEtFuturum && EtFuturumCompat.isElytraFlying(player);
-    }
-
-    private static void stopElytraFlying(EntityPlayer player) {
-        if (EnderIO.hasEtFuturum) EtFuturumCompat.stopElytraFlying(player);
     }
 
     public boolean isGliderUpgradeEquipped(EntityPlayer player) {
