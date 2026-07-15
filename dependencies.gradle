@@ -11,6 +11,7 @@ dependencies {
     api("com.github.GTNewHorizons:TinkersConstruct:1.14.93-GTNH:dev")
 
     devOnlyNonPublishable('com.github.GTNewHorizons:waila:1.19.30:dev') {transitive = false}
+    compileOnly('ganymedes01.etfuturum:Et-Futurum-Requiem:2.6.48-GTNH:dev') {transitive = false}
     runtimeOnlyNonPublishable('com.github.GTNewHorizons:WAILAPlugins:0.7.2:dev') {transitive = false}
     compileOnly("com.github.GTNewHorizons:Backhand:1.8.11:dev") { transitive = false }
     compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-997-GTNH:api') {transitive = false}
