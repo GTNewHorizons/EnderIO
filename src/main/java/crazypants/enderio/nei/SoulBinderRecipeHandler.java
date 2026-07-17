@@ -149,10 +149,10 @@ public class SoulBinderRecipeHandler extends TemplateRecipeHandler {
 
     public class SoulBinderRecipeNEI extends TemplateRecipeHandler.CachedRecipe {
 
-        private final ArrayList<PositionedStack> input = new ArrayList<>();
-        private final PositionedStack output;
-        private final int energy;
-        private final int experience;
+        private final ArrayList<PositionedStack> input = new ArrayList<PositionedStack>();
+        private final ArrayList<PositionedStack> output = new ArrayList<>(2);
+        private int energy;
+        private int experience;
 
         public int getEnergy() {
             return energy;
@@ -201,7 +201,7 @@ public class SoulBinderRecipeHandler extends TemplateRecipeHandler {
         }
 
         private List<ItemStack> getSoulVialInputs(List<String> mobs) {
-            List<ItemStack> result = new ArrayList<>(mobs.size());
+            List<ItemStack> result = new ArrayList<ItemStack>(mobs.size());
             for (String mobName : mobs) {
                 ItemStack sv = new ItemStack(EnderIO.itemSoulVessel);
                 sv.stackTagCompound = new NBTTagCompound();
