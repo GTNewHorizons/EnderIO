@@ -22,6 +22,7 @@ import crazypants.enderio.machine.slicensplice.ContainerSliceAndSplice;
 import crazypants.enderio.machine.slicensplice.GuiSliceAndSplice;
 import crazypants.enderio.machine.slicensplice.SliceAndSpliceRecipeManager;
 import crazypants.enderio.power.PowerDisplayUtil;
+import crazypants.util.ColorUtils;
 
 public class SliceAndSpliceRecipeHandler extends TemplateRecipeHandler {
 
@@ -109,7 +110,7 @@ public class SliceAndSpliceRecipeHandler extends TemplateRecipeHandler {
 
         SliceAndSpliceRecipe recipe = (SliceAndSpliceRecipe) arecipes.get(recipeIndex);
         String energyString = PowerDisplayUtil.formatPower(recipe.getEnergy()) + " " + PowerDisplayUtil.abrevation();
-        GuiDraw.drawString(energyString, 100, 57, 0x808080, false);
+        GuiDraw.drawString(energyString, 100, 57, ColorUtils.neiEnergyString.getColor(), false);
     }
 
     public List<ItemStack> getInputs(RecipeInput input) {
