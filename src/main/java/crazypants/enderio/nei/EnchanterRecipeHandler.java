@@ -114,7 +114,7 @@ public class EnchanterRecipeHandler extends TemplateRecipeHandler {
     public void drawExtras(int recipeIndex) {
         EnchanterRecipeNEI recipe = (EnchanterRecipeNEI) arecipes.get(recipeIndex);
 
-        GuiDraw.drawStringC(recipe.getEnchantName(), 83, 10, ColorUtils.neiEnergyString.getColor(), false);
+        GuiDraw.drawStringC(recipe.getEnchantName(), 83, 10, ColorUtils.neiEnchantString.getColor(), false);
 
         int level = 1;
         List<PositionedStack> ingredients = recipe.getIngredients();
