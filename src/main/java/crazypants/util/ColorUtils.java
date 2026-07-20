@@ -8,7 +8,10 @@ public class ColorUtils {
 
     public static final ColorResource
     // spotless:off
-        priorityString  = color.rgb("priorityString",   "0x000000"),
-        suctionString   = color.rgb("suctionString",    "0x000000");
+        priorityString      = color.rgb("priorityString",       "0x000000"),
+        suctionString       = color.rgb("suctionString",        "0x000000"),
+        neiMultiplierString = color.rgb("neiMultiplierString",  "0x808080"),
+        neiEnchantString    = color.rgb("neiEnchantString",     "0x808080"),
+        neiEnergyString     = color.rgb("neiEnergyString",      "0x808080");
     // spotless:on
 }

@@ -25,6 +25,7 @@ import crazypants.enderio.machine.recipe.Recipe;
 import crazypants.enderio.machine.recipe.RecipeInput;
 import crazypants.enderio.machine.recipe.RecipeOutput;
 import crazypants.enderio.power.PowerDisplayUtil;
+import crazypants.util.ColorUtils;
 
 public class SagMillRecipeHandler extends TemplateRecipeHandler {
 
@@ -123,7 +124,7 @@ public class SagMillRecipeHandler extends TemplateRecipeHandler {
 
         MillRecipe recipe = (MillRecipe) arecipes.get(recipeIndex);
         String energyString = PowerDisplayUtil.formatPower(recipe.getEnergy()) + " " + PowerDisplayUtil.abrevation();
-        GuiDraw.drawString(energyString, 96, 33, 0x808080, false);
+        GuiDraw.drawString(energyString, 96, 33, ColorUtils.neiEnergyString.getColor(), false);
     }
 
     @Override
