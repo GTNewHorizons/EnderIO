@@ -34,6 +34,11 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
     private final Deque<NetworkedInventory> pendingFirstSort = new ArrayDeque<>(); // never-sorted entries, always
                                                                                    // drained before the cursor sweep
 
+    private int topologyVersion = 0; // bumped unconditionally by every addConduit() call; gates distanceCache
+                                     // validity
+
+    private final Map<BlockCoord, CachedDistances> distanceCache = new HashMap<>();
+
     private boolean doingSend = false;
 
     private int changeCount;
@@ -47,6 +52,7 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
     @Override
     public void addConduit(IItemConduit con) {
         super.addConduit(con);
+        topologyVersion++;
         conMap.put(con.getLocation(), con);
 
         TileEntity te = con.getBundle().getEntity();
@@ -244,6 +250,54 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
             }
         }
         return result;
+    }
+
+    private static final class CachedDistances {
+
+        final int topologyVersion;
+        final Map<BlockCoord, Integer> distances;
+
+        CachedDistances(int topologyVersion, Map<BlockCoord, Integer> distances) {
+            this.topologyVersion = topologyVersion;
+            this.distances = distances;
+        }
+    }
+
+    Map<BlockCoord, Integer> getDistancesFrom(BlockCoord source) {
+        CachedDistances cached = distanceCache.get(source);
+        if (cached != null && cached.topologyVersion == topologyVersion) {
+            return cached.distances;
+        }
+        Map<BlockCoord, Integer> distances = computeDistances(source);
+        distanceCache.put(source, new CachedDistances(topologyVersion, distances));
+        return distances;
+    }
+
+    private Map<BlockCoord, Integer> computeDistances(BlockCoord source) {
+        Map<BlockCoord, Integer> distances = new HashMap<>();
+        List<BlockCoord> steps = new ArrayList<>();
+        steps.add(source);
+        int distance = 0;
+        while (!steps.isEmpty()) {
+            List<BlockCoord> nextSteps = new ArrayList<>();
+            for (BlockCoord bc : steps) {
+                IItemConduit con = conMap.get(bc);
+                if (con == null) {
+                    continue; // no live conduit at this coordinate
+                }
+                Integer prevDist = distances.get(bc);
+                if (prevDist != null && prevDist <= distance) {
+                    continue;
+                }
+                distances.put(bc, distance);
+                for (ForgeDirection dir : con.getConduitConnections()) {
+                    nextSteps.add(bc.getLocation(dir));
+                }
+            }
+            steps = nextSteps;
+            distance++;
+        }
+        return distances;
     }
 
     // Sorts one NetworkedInventory and stamps it with the current sortEpoch. Both the
