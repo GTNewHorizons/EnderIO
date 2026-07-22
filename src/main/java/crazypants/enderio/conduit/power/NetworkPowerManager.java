@@ -36,6 +36,10 @@ public class NetworkPowerManager {
 
     private boolean receptorsDirty = true;
 
+    private boolean energyDirty = true;
+    private int ticksSinceEnergyResync = 0;
+    private static final int ENERGY_RESYNC_INTERVAL_TICKS = 200;
+
     private final Map<IPowerConduit, PowerTracker> powerTrackers = new HashMap<>();
 
     private final PowerTracker networkPowerTracker = new PowerTracker();
@@ -287,18 +291,31 @@ public class NetworkPowerManager {
     }
 
     private void updateNetorkStorage() {
-        maxEnergyStored = 0;
-        energyStored = 0;
-        for (IPowerConduit con : network.getConduits()) {
-            maxEnergyStored += con.getMaxEnergyStored();
-            con.onTick();
-            energyStored += con.getEnergyStored();
+        if (energyDirty || ticksSinceEnergyResync >= ENERGY_RESYNC_INTERVAL_TICKS) {
+            maxEnergyStored = 0;
+            energyStored = 0;
+            for (IPowerConduit con : network.getConduits()) {
+                maxEnergyStored += con.getMaxEnergyStored();
+                con.onTick();
+                energyStored += con.getEnergyStored();
+            }
+            energyDirty = false;
+            ticksSinceEnergyResync = 0;
+        } else {
+            for (IPowerConduit con : network.getConduits()) {
+                con.onTick();
+            }
+            ticksSinceEnergyResync++;
         }
         energyStored = MathHelper.clamp_int(energyStored, 0, maxEnergyStored);
     }
 
     public void receptorsChanged() {
         receptorsDirty = true;
+    }
+
+    public void energyChanged() {
+        energyDirty = true;
     }
 
     private void checkReceptors() {
@@ -354,50 +371,71 @@ public class NetworkPowerManager {
 
         List<CapBankSupplyEntry> enteries = new ArrayList<>();
 
+        boolean dirtySinceInit = false;
+
         CapBankSupply() {}
 
         void init() {
             capBanks.clear();
-            enteries.clear();
             canExtract = 0;
             canFill = 0;
             stored = 0;
             maxCap = 0;
+            dirtySinceInit = false;
 
             double toBalance = 0;
             double maxToBalance = 0;
+            int entryCount = 0;
 
-            for (ReceptorEntry rec : storageReceptors) {
-                IPowerStorage cb = (IPowerStorage) rec.powerInterface.getDelegate();
+            try {
+                for (ReceptorEntry rec : storageReceptors) {
+                    IPowerStorage cb = (IPowerStorage) rec.powerInterface.getDelegate();
 
-                boolean processed = capBanks.contains(cb.getController());
+                    boolean processed = capBanks.contains(cb.getController());
 
-                if (!processed) {
-                    stored += cb.getEnergyStoredL();
-                    maxCap += cb.getMaxEnergyStoredL();
-                    capBanks.add(cb.getController());
-                }
-
-                if (rec.emmiter.getConnectionMode(rec.direction) == ConnectionMode.IN_OUT) {
-                    toBalance += cb.getEnergyStoredL();
-                    maxToBalance += cb.getMaxEnergyStoredL();
-                }
-
-                long canGet = 0;
-                long canFill = 0;
-                if (cb.isNetworkControlledIo(rec.direction.getOpposite())) {
-                    if (cb.isOutputEnabled(rec.direction.getOpposite())) {
-                        canGet = Math.min(cb.getEnergyStoredL(), cb.getMaxOutput());
-                        canGet = Math.min(canGet, rec.emmiter.getMaxEnergyRecieved(rec.direction));
-                        canExtract += canGet;
+                    if (!processed) {
+                        stored += cb.getEnergyStoredL();
+                        maxCap += cb.getMaxEnergyStoredL();
+                        capBanks.add(cb.getController());
                     }
 
-                    if (cb.isInputEnabled(rec.direction.getOpposite())) {
-                        canFill = Math.min(cb.getMaxEnergyStoredL() - cb.getEnergyStoredL(), cb.getMaxInput());
-                        canFill = Math.min(canFill, rec.emmiter.getMaxEnergyExtracted(rec.direction));
-                        this.canFill += canFill;
+                    if (rec.emmiter.getConnectionMode(rec.direction) == ConnectionMode.IN_OUT) {
+                        toBalance += cb.getEnergyStoredL();
+                        maxToBalance += cb.getMaxEnergyStoredL();
                     }
-                    enteries.add(new CapBankSupplyEntry(cb, (int) canGet, (int) canFill, rec.emmiter, rec.direction));
+
+                    long canGet = 0;
+                    long canFill = 0;
+                    if (cb.isNetworkControlledIo(rec.direction.getOpposite())) {
+                        if (cb.isOutputEnabled(rec.direction.getOpposite())) {
+                            canGet = Math.min(cb.getEnergyStoredL(), cb.getMaxOutput());
+                            canGet = Math.min(canGet, rec.emmiter.getMaxEnergyRecieved(rec.direction));
+                            canExtract += canGet;
+                        }
+
+                        if (cb.isInputEnabled(rec.direction.getOpposite())) {
+                            canFill = Math.min(cb.getMaxEnergyStoredL() - cb.getEnergyStoredL(), cb.getMaxInput());
+                            canFill = Math.min(canFill, rec.emmiter.getMaxEnergyExtracted(rec.direction));
+                            this.canFill += canFill;
+                        }
+                        if (entryCount < enteries.size()) {
+                            enteries.get(entryCount).reset(cb, (int) canGet, (int) canFill, rec.emmiter, rec.direction);
+                        } else {
+                            enteries.add(
+                                    new CapBankSupplyEntry(
+                                            cb,
+                                            (int) canGet,
+                                            (int) canFill,
+                                            rec.emmiter,
+                                            rec.direction));
+                        }
+                        entryCount++;
+                    }
+                }
+            } finally {
+                // Trim any leftover slots after a mid-loop exception or a shrinking receptor count.
+                if (enteries.size() > entryCount) {
+                    enteries.subList(entryCount, enteries.size()).clear();
                 }
             }
 
@@ -411,7 +449,9 @@ public class NetworkPowerManager {
             if (enteries.size() < 2) {
                 return;
             }
-            init();
+            if (dirtySinceInit) {
+                init();
+            }
             int canRemove = 0;
             int canAdd = 0;
             for (CapBankSupplyEntry entry : enteries) {
@@ -453,6 +493,7 @@ public class NetworkPowerManager {
             if (canExtract <= 0 || amount <= 0) {
                 return;
             }
+            dirtySinceInit = true;
             double ratio = (double) amount / canExtract;
 
             for (CapBankSupplyEntry entry : enteries) {
@@ -472,6 +513,7 @@ public class NetworkPowerManager {
             if (canFill <= 0 || amount <= 0) {
                 return;
             }
+            dirtySinceInit = true;
             double ratio = (double) amount / canFill;
 
             for (CapBankSupplyEntry entry : enteries) {
@@ -490,18 +532,27 @@ public class NetworkPowerManager {
 
     private static class CapBankSupplyEntry {
 
-        final IPowerStorage capBank;
-        final int canExtract;
-        final int canFill;
+        IPowerStorage capBank;
+        int canExtract;
+        int canFill;
         int toBalance;
         IPowerConduit emmiter;
         ForgeDirection direction;
 
         private CapBankSupplyEntry(IPowerStorage capBank, int available, int canFill, IPowerConduit emmiter,
                 ForgeDirection direction) {
+            reset(capBank, available, canFill, emmiter, direction);
+        }
+
+        // NB: pooled slots get reused across init() calls, so toBalance must be reset here too -- otherwise
+        // a slot last used by an IN_OUT receptor keeps its stale nonzero toBalance after being handed to a
+        // non-IN_OUT one.
+        private void reset(IPowerStorage capBank, int available, int canFill, IPowerConduit emmiter,
+                ForgeDirection direction) {
             this.capBank = capBank;
-            canExtract = available;
+            this.canExtract = available;
             this.canFill = canFill;
+            this.toBalance = 0;
             this.emmiter = emmiter;
             this.direction = direction;
         }

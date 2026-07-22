@@ -383,6 +383,9 @@ public class PowerConduit extends AbstractConduit implements IPowerConduit {
         int result = (int) Math.min(maxReceive, freeSpace);
         if (!simulate && result > 0) {
             setEnergyStored(getEnergyStored() + result);
+            if (network != null && network.powerManager != null) {
+                network.powerManager.energyChanged();
+            }
 
             if (getBundle() != null) {
                 if (recievedTicks == null) {
