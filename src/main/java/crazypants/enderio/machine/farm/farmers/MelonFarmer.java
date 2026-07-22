@@ -9,7 +9,7 @@ import crazypants.enderio.machine.farm.TileFarmStation;
 
 public class MelonFarmer extends CustomSeedFarmer {
 
-    private Block grownBlock;
+    private final Block grownBlock;
 
     public MelonFarmer(Block plantedBlock, Block grownBlock, ItemStack seeds) {
         super(plantedBlock, seeds);

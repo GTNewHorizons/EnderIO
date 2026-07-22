@@ -14,7 +14,6 @@ import com.enderio.core.api.client.gui.IGuiOverlay;
 import com.enderio.core.api.client.gui.ListSelectionListener;
 import com.enderio.core.client.gui.button.IconButton;
 import com.enderio.core.client.gui.button.ToggleButton;
-import com.enderio.core.client.gui.widget.GuiScrollableList;
 import com.enderio.core.client.gui.widget.GuiToolTip;
 import com.enderio.core.client.gui.widget.TextFieldEnder;
 import com.enderio.core.client.render.ColorUtil;
@@ -55,26 +54,25 @@ public class GuiHyperCube extends GuiContainerBaseEIO {
 
     private final TileHyperCube cube;
 
-    private IconButton addButton;
-    private ToggleButton privateButton;
+    private final IconButton addButton;
+    private final ToggleButton privateButton;
 
-    private TextFieldEnder newChannelTF;
+    private final TextFieldEnder newChannelTF;
 
-    private GuiChannelList publicChannelList;
-    private GuiChannelList privateChannelList;
-    private ListSelectionListener<Channel> selectionListener;
+    private final GuiChannelList publicChannelList;
+    private final GuiChannelList privateChannelList;
 
-    private IconButton selectPublicB;
-    private IconButton deletePublicB;
+    private final IconButton selectPublicB;
+    private final IconButton deletePublicB;
 
-    private IconButton selectPrivateB;
-    private IconButton deletePrivateB;
+    private final IconButton selectPrivateB;
+    private final IconButton deletePrivateB;
 
-    private IconButton powerB;
-    private IconButton fluidB;
-    private IconButton itemB;
+    private final IconButton powerB;
+    private final IconButton fluidB;
+    private final IconButton itemB;
 
-    private RedstoneModeButton rsB;
+    private final RedstoneModeButton rsB;
 
     public GuiHyperCube(TileHyperCube te) {
         super(new ContainerHyperCube(), "hyperCube");
@@ -151,15 +149,11 @@ public class GuiHyperCube extends GuiContainerBaseEIO {
         privateChannelList.setScrollButtonIds(102, 103);
         privateChannelList.setActiveChannel(isPrivate(activeChannel) ? activeChannel : null);
 
-        selectionListener = new ListSelectionListener<Channel>() {
-
-            @Override
-            public void selectionChanged(GuiScrollableList<Channel> list, int selectedIndex) {
-                Channel selected = list.getSelectedElement();
-                if (selected != null) {
-                    GuiChannelList clear = list == publicChannelList ? privateChannelList : publicChannelList;
-                    clear.setSelection(-1);
-                }
+        ListSelectionListener<Channel> selectionListener = (list, selectedIndex) -> {
+            Channel selected = list.getSelectedElement();
+            if (selected != null) {
+                GuiChannelList clear = list == publicChannelList ? privateChannelList : publicChannelList;
+                clear.setSelection(-1);
             }
         };
 

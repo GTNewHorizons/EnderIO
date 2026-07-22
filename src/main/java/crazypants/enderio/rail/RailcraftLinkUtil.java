@@ -173,7 +173,7 @@ public class RailcraftLinkUtil implements ICartLinkUtil {
         if (cart == null) {
             Collections.emptyList();
         }
-        List<EntityMinecart> result = new ArrayList<EntityMinecart>();
+        List<EntityMinecart> result = new ArrayList<>();
         ILinkageManager linkMan = CartTools.getLinkageManager(cart.worldObj);
         if (linkMan == null) {
             result.add(cart);
@@ -214,8 +214,6 @@ public class RailcraftLinkUtil implements ICartLinkUtil {
         private final Vector3d refPoint = new Vector3d();
         private final Vector3d loc1 = new Vector3d();
         private final Vector3d loc2 = new Vector3d();
-        private double d1;
-        private double d2;
 
         TrainOrderComparator(EntityMinecart head) {
             set(refPoint, head);
@@ -225,8 +223,8 @@ public class RailcraftLinkUtil implements ICartLinkUtil {
         public int compare(EntityMinecart o1, EntityMinecart o2) {
             set(loc1, o1);
             set(loc2, o2);
-            d1 = refPoint.distanceSquared(loc1);
-            d2 = refPoint.distanceSquared(loc2);
+            double d1 = refPoint.distanceSquared(loc1);
+            double d2 = refPoint.distanceSquared(loc2);
             return Double.compare(d1, d2);
         }
 

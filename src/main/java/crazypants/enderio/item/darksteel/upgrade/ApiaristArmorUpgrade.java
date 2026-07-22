@@ -11,7 +11,7 @@ import crazypants.enderio.item.darksteel.ItemDarkSteelArmor;
 
 public class ApiaristArmorUpgrade extends AbstractUpgrade {
 
-    private static String UPGRADE_NAME = "apiaristArmor";
+    private static final String UPGRADE_NAME = "apiaristArmor";
 
     private static final String forestryItemNames[] = { "apiaristHelmet", "apiaristChest", "apiaristLegs",
             "apiaristBoots" };

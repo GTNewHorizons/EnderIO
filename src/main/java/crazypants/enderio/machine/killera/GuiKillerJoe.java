@@ -32,8 +32,8 @@ public class GuiKillerJoe extends GuiMachineBase<TileKillerJoe> {
     private static final int XP_ID = 3489;
     private static final int XP10_ID = 34892;
 
-    private IconButton xpB;
-    private IconButton xp10B;
+    private final IconButton xpB;
+    private final IconButton xp10B;
 
     public GuiKillerJoe(InventoryPlayer inventory, final TileKillerJoe tileEntity) {
         super(tileEntity, new ContainerKillerJoe(inventory, tileEntity), "killerJoe");

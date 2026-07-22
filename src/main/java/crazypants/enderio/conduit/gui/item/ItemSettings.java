@@ -31,6 +31,7 @@ import crazypants.enderio.gui.RedstoneModeButton;
 import crazypants.enderio.machine.IRedstoneModeControlable;
 import crazypants.enderio.machine.RedstoneControlMode;
 import crazypants.enderio.network.PacketHandler;
+import crazypants.util.ColorUtils;
 
 public class ItemSettings extends BaseSettingsPanel {
 
@@ -43,7 +44,7 @@ public class ItemSettings extends BaseSettingsPanel {
     private static final int ID_INSERT_CHANNEL = 23;
     private static final int ID_EXTRACT_CHANNEL = 27;
 
-    private @Nonnull IItemConduit itemConduit;
+    private final @Nonnull IItemConduit itemConduit;
 
     private final ToggleButton loopB;
     private final ToggleButton roundRobinB;
@@ -54,11 +55,11 @@ public class ItemSettings extends BaseSettingsPanel {
     private final RedstoneModeButton rsB;
     private final @Nonnull ColorButton colorB;
 
-    private ColorButton insertChannelB;
-    private ColorButton extractChannelB;
+    private final ColorButton insertChannelB;
+    private final ColorButton extractChannelB;
 
-    private int priLeft = 46;
-    private int priWidth = 32;
+    private static final int priLeft = 46;
+    private static final int priWidth = 32;
 
     private IItemFilterGui insertFilterGui;
     private IItemFilterGui extractFilterGui;
@@ -239,7 +240,7 @@ public class ItemSettings extends BaseSettingsPanel {
 
         String priority = EnderIO.lang.localize("gui.conduit.item.priority");
         fr.drawString(priority, left + 12, top1 + 25, ColorUtil.getRGB(Color.black));
-        fr.drawString(str, left + priLeft + priWidth - sw - gap, top1 + 25, ColorUtil.getRGB(Color.black));
+        fr.drawString(str, left + priLeft + priWidth - sw - gap, top1 + 25, ColorUtils.priorityString.getColor());
 
         if (insertFilterGui != null) insertFilterGui.renderCustomOptions(top1, par1, par2, par3);
         if (extractFilterGui != null) extractFilterGui.renderCustomOptions(top1, par1, par2, par3);

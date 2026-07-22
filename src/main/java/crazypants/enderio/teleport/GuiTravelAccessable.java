@@ -43,13 +43,10 @@ public class GuiTravelAccessable extends GuiContainerBaseEIO {
     private final String publicStr;
     private final String privateStr;
     private final String protectedStr;
-    private final String visibleStr;
-    private final String visibleDesc1Str;
-    private final String visibleDesc2Str;
 
     private final ITravelAccessable te;
-    private int col0x;
-    private int col1x;
+    private final int col0x;
+    private final int col1x;
     private int col2x;
 
     protected World world;
@@ -66,9 +63,9 @@ public class GuiTravelAccessable extends GuiContainerBaseEIO {
         publicStr = EnderIO.lang.localize("gui.travelAccessable.public");
         privateStr = EnderIO.lang.localize("gui.travelAccessable.private");
         protectedStr = EnderIO.lang.localize("gui.travelAccessable.protected");
-        visibleStr = EnderIO.lang.localize("gui.travelAccessable.tooltip.visible");
-        visibleDesc1Str = EnderIO.lang.localize("gui.travelAccessable.tooltip.visible.desc1");
-        visibleDesc2Str = EnderIO.lang.localize("gui.travelAccessable.tooltip.visible.desc2");
+        String visibleStr = EnderIO.lang.localize("gui.travelAccessable.tooltip.visible");
+        String visibleDesc1Str = EnderIO.lang.localize("gui.travelAccessable.tooltip.visible.desc1");
+        String visibleDesc2Str = EnderIO.lang.localize("gui.travelAccessable.tooltip.visible.desc2");
 
         FontRenderer fr = Minecraft.getMinecraft().fontRenderer;
 

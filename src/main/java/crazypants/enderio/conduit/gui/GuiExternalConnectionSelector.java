@@ -34,7 +34,7 @@ public class GuiExternalConnectionSelector extends GuiScreen {
 
     public GuiExternalConnectionSelector(IConduitBundle cb) {
         this.cb = cb;
-        cons = new HashSet<ForgeDirection>();
+        cons = new HashSet<>();
         for (IConduit con : cb.getConduits()) {
             if (con instanceof IInsulatedRedstoneConduit) {
                 Set<ForgeDirection> conCons = con.getConduitConnections();

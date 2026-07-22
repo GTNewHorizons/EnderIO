@@ -24,6 +24,7 @@ import crazypants.enderio.machine.MachineRecipeRegistry;
 import crazypants.enderio.machine.soul.GuiSoulBinder;
 import crazypants.enderio.machine.soul.ISoulBinderRecipe;
 import crazypants.enderio.power.PowerDisplayUtil;
+import crazypants.util.ColorUtils;
 
 public class SoulBinderRecipeHandler extends TemplateRecipeHandler {
 
@@ -132,7 +133,7 @@ public class SoulBinderRecipeHandler extends TemplateRecipeHandler {
         SoulBinderRecipeNEI recipe = (SoulBinderRecipeNEI) arecipes.get(recipeIndex);
 
         String energyString = PowerDisplayUtil.formatPower(recipe.getEnergy()) + " " + PowerDisplayUtil.abrevation();
-        GuiDraw.drawStringC(energyString, 83, 45, 0x808080, false);
+        GuiDraw.drawStringC(energyString, 83, 45, ColorUtils.neiEnergyString.getColor(), false);
 
         int cost = recipe.getExperience();
         if (cost > 0) {
@@ -141,7 +142,7 @@ public class SoulBinderRecipeHandler extends TemplateRecipeHandler {
         }
     }
 
-    private static final ArrayList<PositionedStack> EMPTY_VIAL_OUTPUT = new ArrayList<PositionedStack>();
+    private static final ArrayList<PositionedStack> EMPTY_VIAL_OUTPUT = new ArrayList<>();
 
     static {
         EMPTY_VIAL_OUTPUT.add(new PositionedStack(new ItemStack(EnderIO.itemSoulVessel), 101, 23));
@@ -149,10 +150,10 @@ public class SoulBinderRecipeHandler extends TemplateRecipeHandler {
 
     public class SoulBinderRecipeNEI extends TemplateRecipeHandler.CachedRecipe {
 
-        private final ArrayList<PositionedStack> input = new ArrayList<PositionedStack>();
+        private final ArrayList<PositionedStack> input = new ArrayList<>();
         private final PositionedStack output;
-        private int energy;
-        private int experience;
+        private final int energy;
+        private final int experience;
 
         public int getEnergy() {
             return energy;
@@ -201,7 +202,7 @@ public class SoulBinderRecipeHandler extends TemplateRecipeHandler {
         }
 
         private List<ItemStack> getSoulVialInputs(List<String> mobs) {
-            List<ItemStack> result = new ArrayList<ItemStack>(mobs.size());
+            List<ItemStack> result = new ArrayList<>(mobs.size());
             for (String mobName : mobs) {
                 ItemStack sv = new ItemStack(EnderIO.itemSoulVessel);
                 sv.stackTagCompound = new NBTTagCompound();

@@ -22,8 +22,8 @@ public class InventoryDatabaseClient extends InventoryDatabase<ItemEntry> {
 
     InventoryDatabaseClient(int generation) {
         this.generation = generation;
-        clientItems = new ArrayList<ItemEntry>();
-        requestedItems = new HashSet<Integer>();
+        clientItems = new ArrayList<>();
+        requestedItems = new HashSet<>();
     }
 
     public int getItemsChangeCount() {
@@ -147,7 +147,7 @@ public class InventoryDatabaseClient extends InventoryDatabase<ItemEntry> {
     private List<Integer> addMissingItems(List<Integer> list, Integer dbId) {
         if (!requestedItems.contains(dbId)) {
             if (list == null) {
-                list = new ArrayList<Integer>();
+                list = new ArrayList<>();
             }
             list.add(dbId);
             requestedItems.add(dbId);

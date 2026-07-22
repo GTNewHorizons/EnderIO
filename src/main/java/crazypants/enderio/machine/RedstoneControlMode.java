@@ -19,7 +19,7 @@ public enum RedstoneControlMode implements ICycleEnum {
     OFF(IconEIO.REDSTONE_MODE_WITHOUT_SIGNAL),
     NEVER(IconEIO.REDSTONE_MODE_NEVER);
 
-    private IWidgetIcon icon;
+    private final IWidgetIcon icon;
 
     RedstoneControlMode(IWidgetIcon icon) {
         this.icon = icon;

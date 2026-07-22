@@ -87,9 +87,9 @@ public class ItemFusedQuartzFrame extends Item {
         list.add(PainterUtil.getTooltTipText(item));
     }
 
-    public final class FramePainterRecipe extends BasicPainterTemplate {
+    public static final class FramePainterRecipe extends BasicPainterTemplate {
 
-        private ItemFusedQuartzFrame i;
+        private final ItemFusedQuartzFrame i;
 
         public FramePainterRecipe(ItemFusedQuartzFrame itemFusedQuartzFrame) {
             i = itemFusedQuartzFrame;

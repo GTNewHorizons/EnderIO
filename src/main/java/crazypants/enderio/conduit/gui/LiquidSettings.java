@@ -62,7 +62,7 @@ public class LiquidSettings extends BaseSettingsPanel {
     private final ILiquidConduit conduit;
 
     private AbstractEnderLiquidConduit eConduit;
-    private boolean isEnder;
+    private final boolean isEnder;
     private static final int filterIX = 4;
     private static final int filterEX = 104;
     private static final int filterY = 63;
@@ -70,7 +70,7 @@ public class LiquidSettings extends BaseSettingsPanel {
     private static final Rectangle extractFilterBounds = new Rectangle(filterEX, filterY, 90, 18);
     private GuiToolTip[] filterToolTips;
 
-    private boolean inOutShowIn = true;
+    private static final boolean inOutShowIn = true;
     private IconButton insertWhiteListB;
     private IconButton extractWhiteListB;
 

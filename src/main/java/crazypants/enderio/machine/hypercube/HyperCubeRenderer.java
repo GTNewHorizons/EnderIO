@@ -23,9 +23,9 @@ import crazypants.enderio.config.Config;
 @SideOnly(Side.CLIENT)
 public class HyperCubeRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
-    private IModel model;
+    private final IModel model;
 
-    private BoundingBox bb;
+    private final BoundingBox bb;
 
     private boolean adjustForItem = false;
 

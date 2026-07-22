@@ -89,7 +89,7 @@ public class ChannelTab implements ITabPanel {
         deleteChannelB = new IconButton(parent, DELETE_CHANNEL_BUTTON_ID, x + w - 20, y + h + 4, IconEIO.MINUS);
         deleteChannelB.setToolTip(EnderIO.lang.localize("gui.trans.deleteChannel"));
 
-        Predicate<Channel> predicate = new Predicate<Channel>() {
+        Predicate<Channel> predicate = new Predicate<>() {
 
             @Override
             public boolean apply(@Nullable Channel input) {
@@ -116,7 +116,7 @@ public class ChannelTab implements ITabPanel {
 
         recieveB = new IconButton(parent, RECIEVE_BUTTON_ID, x - 24, y + h / 2 - 9, IconEIO.ARROWS);
 
-        selectionListener = new ListSelectionListener<Channel>() {
+        selectionListener = new ListSelectionListener<>() {
 
             @Override
             public void selectionChanged(GuiScrollableList<Channel> list, int selectedIndex) {

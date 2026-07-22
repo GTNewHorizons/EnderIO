@@ -48,23 +48,22 @@ public class GuiCapBank extends GuiContainerBaseEIO {
     private static final int POWER_HEIGHT = 68;
     protected static final int BOTTOM_POWER_Y = POWER_Y + POWER_HEIGHT;
 
-    private int inputX = 78 + 24;
-    private int inputY = 18;
+    private static final int inputX = 78 + 24;
+    private static final int inputY = 18;
 
-    private int outputX = 78 + 24;
-    private int outputY = 36;
+    private static final int outputX = 78 + 24;
+    private static final int outputY = 36;
 
-    private int rightMargin = 8 + 24;
+    private static final int rightMargin = 8 + 24;
 
     private final TileCapBank capBank;
 
-    private RedstoneModeButton inputRsButton;
-    private RedstoneModeButton outputRsButton;
+    private final RedstoneModeButton inputRsButton;
+    private final RedstoneModeButton outputRsButton;
 
-    private TextFieldEnder maxInputTF;
-    private TextFieldEnder maxOutputTF;
+    private final TextFieldEnder maxInputTF;
+    private final TextFieldEnder maxOutputTF;
 
-    private final GuiOverlayIoConfig configOverlay;
     private final GuiButtonIoConfig configB;
 
     private CapBankClientNetwork network;
@@ -144,7 +143,7 @@ public class GuiCapBank extends GuiContainerBaseEIO {
         });
         outputRsButton.setTooltipKey("enderio.gui.capBank.outputRs");
 
-        List<BlockCoord> coords = new ArrayList<BlockCoord>();
+        List<BlockCoord> coords = new ArrayList<>();
         if (network != null && network.getMembers().size() < 200) {
             for (TileCapBank cb : network.getMembers()) {
                 coords.add(cb.getLocation());
@@ -154,7 +153,7 @@ public class GuiCapBank extends GuiContainerBaseEIO {
             coords.add(te.getLocation());
         }
 
-        configOverlay = new GuiOverlayIoConfig(coords) {
+        GuiOverlayIoConfig configOverlay = new GuiOverlayIoConfig(coords) {
 
             @Override
             protected String getLabelForMode(IoMode mode) {

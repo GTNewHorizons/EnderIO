@@ -21,7 +21,7 @@ public class WirelessChargerController {
 
     private static final int RANGE = Config.wirelessChargerRange;
     private static final int RANGE_SQ = RANGE * RANGE;
-    private final Map<Integer, Map<BlockCoord, IWirelessCharger>> perWorldChargers = new HashMap<Integer, Map<BlockCoord, IWirelessCharger>>();
+    private final Map<Integer, Map<BlockCoord, IWirelessCharger>> perWorldChargers = new HashMap<>();
     private int changeCount;
 
     @SubscribeEvent

@@ -10,7 +10,7 @@ import crazypants.enderio.api.tool.ITool;
 
 public class BuildCraftToolProvider implements IToolProvider, IToolImpl {
 
-    private BCWrench wrench = new BCWrench();
+    private final BCWrench wrench = new BCWrench();
 
     public BuildCraftToolProvider() throws Exception {
         // Do a check for so we throw an exception in the constructor if we dont have the

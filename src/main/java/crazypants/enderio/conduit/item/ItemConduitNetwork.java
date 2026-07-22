@@ -19,10 +19,10 @@ import crazypants.enderio.machine.invpanel.server.InventoryDatabaseServer;
 
 public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IItemConduit> {
 
-    final List<NetworkedInventory> inventories = new ArrayList<NetworkedInventory>();
-    private final Map<BlockCoord, List<NetworkedInventory>> invMap = new HashMap<BlockCoord, List<NetworkedInventory>>();
+    final List<NetworkedInventory> inventories = new ArrayList<>();
+    private final Map<BlockCoord, List<NetworkedInventory>> invMap = new HashMap<>();
 
-    final Map<BlockCoord, IItemConduit> conMap = new HashMap<BlockCoord, IItemConduit>();
+    final Map<BlockCoord, IItemConduit> conMap = new HashMap<>();
 
     private boolean requiresSort = true;
 
@@ -77,7 +77,7 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
     }
 
     public List<NetworkedInventory> getInventoryPanelSources() {
-        ArrayList<NetworkedInventory> res = new ArrayList<NetworkedInventory>();
+        ArrayList<NetworkedInventory> res = new ArrayList<>();
         for (NetworkedInventory inv : inventories) {
             if (inv.con.hasInventoryPanelUpgrade(inv.conDir)) {
                 res.add(inv);
@@ -89,7 +89,7 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
     private List<NetworkedInventory> getOrCreate(BlockCoord bc) {
         List<NetworkedInventory> res = invMap.get(bc);
         if (res == null) {
-            res = new ArrayList<NetworkedInventory>();
+            res = new ArrayList<>();
             invMap.put(bc, res);
         }
         return res;
@@ -177,7 +177,7 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
     }
 
     public List<String> getTargetsForExtraction(BlockCoord extractFrom, IItemConduit con, ItemStack input) {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
 
         List<NetworkedInventory> invs = getOrCreate(extractFrom);
         for (NetworkedInventory source : invs) {
@@ -203,7 +203,7 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
     }
 
     public List<String> getInputSourcesFor(IItemConduit con, ForgeDirection dir, ItemStack input) {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
         for (NetworkedInventory inv : inventories) {
             if (inv.hasTarget(con, dir)) {
                 IItemFilter f = inv.con.getInputFilter(inv.conDir);

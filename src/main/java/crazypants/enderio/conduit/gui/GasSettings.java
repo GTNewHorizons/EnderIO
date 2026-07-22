@@ -28,13 +28,13 @@ public class GasSettings extends BaseSettingsPanel {
 
     private static final int ID_COLOR_BUTTON = GuiExternalConnection.nextButtonId();
 
-    private RedstoneModeButton rsB;
+    private final RedstoneModeButton rsB;
 
-    private ColorButton colorB;
+    private final ColorButton colorB;
 
-    private String autoExtractStr = EnderIO.lang.localize("gui.conduit.gas.autoExtract");
+    private final String autoExtractStr = EnderIO.lang.localize("gui.conduit.gas.autoExtract");
 
-    private IGasConduit conduit;
+    private final IGasConduit conduit;
 
     protected GasSettings(final GuiExternalConnection gui, IConduit con) {
         super(IconEIO.WRENCH_OVERLAY_GAS, EnderIO.lang.localize("itemGasConduit.name"), gui, con);

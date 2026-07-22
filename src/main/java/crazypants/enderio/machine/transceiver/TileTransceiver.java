@@ -146,7 +146,7 @@ public class TileTransceiver extends AbstractPoweredTaskEntity
     }
 
     private void removeUnregsiteredChannels(SetMultimap<ChannelType, Channel> chans) {
-        List<Channel> toRemove = new ArrayList<Channel>();
+        List<Channel> toRemove = new ArrayList<>();
         for (Channel chan : chans.values()) {
             if (!ServerChannelRegister.instance.getChannelsForType(chan.getType()).contains(chan)) {
                 toRemove.add(chan);

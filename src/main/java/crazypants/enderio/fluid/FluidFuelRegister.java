@@ -22,10 +22,10 @@ public class FluidFuelRegister implements IFluidRegister {
     private static final String KEY_TOTAL_BURN_TIME = "totalBurnTime";
     private static final String KEY_COOLING_PER_MB = "coolingPerMb";
 
-    private final Map<String, IFluidCoolant> coolants = new HashMap<String, IFluidCoolant>();
-    private final Map<String, IFluidFuel> fuels = new HashMap<String, IFluidFuel>();
+    private final Map<String, IFluidCoolant> coolants = new HashMap<>();
+    private final Map<String, IFluidFuel> fuels = new HashMap<>();
 
-    private final List<IFluidRegister> otherRegisters = new ArrayList<IFluidRegister>();
+    private final List<IFluidRegister> otherRegisters = new ArrayList<>();
 
     private FluidFuelRegister() {
         addCoolant(FluidRegistry.WATER, 0.0023f);

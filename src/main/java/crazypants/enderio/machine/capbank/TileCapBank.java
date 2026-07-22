@@ -64,7 +64,7 @@ public class TileCapBank extends TileEntityEio
     private boolean redstoneStateDirty = true;
     private boolean isRecievingRedstoneSignal;
 
-    private final List<EnergyReceptor> receptors = new ArrayList<EnergyReceptor>();
+    private final List<EnergyReceptor> receptors = new ArrayList<>();
     private boolean receptorsDirty = true;
 
     private ICapBankNetwork network;
@@ -270,7 +270,7 @@ public class TileCapBank extends TileEntityEio
             }
         } else {
             if (faceModes == null) {
-                faceModes = new EnumMap<ForgeDirection, IoMode>(ForgeDirection.class);
+                faceModes = new EnumMap<>(ForgeDirection.class);
             }
             faceModes.put(faceHit, mode);
         }
@@ -357,7 +357,7 @@ public class TileCapBank extends TileEntityEio
         }
 
         if (faceDisplayTypes == null) {
-            faceDisplayTypes = new EnumMap<ForgeDirection, InfoDisplayType>(ForgeDirection.class);
+            faceDisplayTypes = new EnumMap<>(ForgeDirection.class);
         }
 
         if (type == InfoDisplayType.NONE) {
@@ -377,7 +377,7 @@ public class TileCapBank extends TileEntityEio
         if (faceDisplayTypes == null) {
             return;
         }
-        List<ForgeDirection> reset = new ArrayList<ForgeDirection>();
+        List<ForgeDirection> reset = new ArrayList<>();
         for (Entry<ForgeDirection, InfoDisplayType> entry : faceDisplayTypes.entrySet()) {
             BlockCoord bc = getLocation().getLocation(entry.getKey());
             Block block = worldObj.getBlock(bc.x, bc.y, bc.z);

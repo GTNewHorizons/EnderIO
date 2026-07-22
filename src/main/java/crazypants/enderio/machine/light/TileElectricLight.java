@@ -170,20 +170,20 @@ public class TileElectricLight extends TileEntityEio implements IInternalPowerRe
     private void updateLightNodes() {
         Set<BlockCoord> before;
         if (lightNodes != null && !lightNodes.isEmpty()) {
-            before = new HashSet<BlockCoord>(lightNodes.size());
+            before = new HashSet<>(lightNodes.size());
             for (TileLightNode node : lightNodes) {
                 before.add(node.getLocation());
             }
         } else {
             before = Collections.emptySet();
         }
-        Set<BlockCoord> after = new HashSet<BlockCoord>(17);
+        Set<BlockCoord> after = new HashSet<>(17);
         updatingLightNodes = true;
         try {
             if (lightNodeCoords != null) {
 
                 // just loaded
-                lightNodes = new ArrayList<TileLightNode>();
+                lightNodes = new ArrayList<>();
                 for (int i = 0; i < lightNodeCoords.length; i += 3) {
                     TileEntity te = worldObj
                             .getTileEntity(lightNodeCoords[i], lightNodeCoords[i + 1], lightNodeCoords[i + 2]);
@@ -195,7 +195,7 @@ public class TileElectricLight extends TileEntityEio implements IInternalPowerRe
 
             } else if (lightNodes == null) { // just created
 
-                lightNodes = new ArrayList<TileLightNode>();
+                lightNodes = new ArrayList<>();
             }
 
             for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {

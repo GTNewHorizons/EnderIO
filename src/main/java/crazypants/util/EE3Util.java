@@ -179,7 +179,7 @@ public class EE3Util {
 
     public static void registerBasicToManyRecipe(Recipe recipe) {
         if (IS_EE3_LOADED) {
-            List<ItemStack> in = new ArrayList<ItemStack>();
+            List<ItemStack> in = new ArrayList<>();
             for (RecipeInput r0 : recipe.getInputs()) {
                 in.add(r0.getInput().copy());
             }

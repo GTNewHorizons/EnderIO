@@ -35,11 +35,11 @@ public class LimitedItemFilterGui implements IItemFilterGui {
 
     private final IItemFilterContainer filterContainer;
     private final ItemFilter filter;
-    private int buttonIdOffset;
-    private int xOffset;
-    private int yOffset;
+    private final int buttonIdOffset;
+    private final int xOffset;
+    private final int yOffset;
     final boolean isStickyModeAvailable;
-    private boolean isInput;
+    private final boolean isInput;
 
     public LimitedItemFilterGui(GuiContainerBaseEIO gui, IItemFilterContainer filterContainer,
             boolean isStickyModeAvailable, boolean isInput) {

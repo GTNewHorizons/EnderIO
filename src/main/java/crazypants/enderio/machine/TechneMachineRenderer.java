@@ -18,8 +18,8 @@ import crazypants.enderio.EnderIO;
 
 public class TechneMachineRenderer<T extends AbstractMachineEntity> extends TechneModelRenderer {
 
-    private CustomCubeRenderer ccr = new CustomCubeRenderer();
-    private OverlayRenderer overlay = new OverlayRenderer();
+    private final CustomCubeRenderer ccr = new CustomCubeRenderer();
+    private final OverlayRenderer overlay = new OverlayRenderer();
 
     public TechneMachineRenderer(AbstractMachineBlock<T> block, String modelPath) {
         super(
@@ -51,7 +51,7 @@ public class TechneMachineRenderer<T extends AbstractMachineEntity> extends Tech
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
             RenderBlocks renderer) {
         @SuppressWarnings("unchecked")
-        T te = (T) world.getTileEntity(x, y, z);
+        final T te = (T) world.getTileEntity(x, y, z);
         if (te != null) {
             setFacingDir(te.getFacingDir());
             overlay.setTile(te);
@@ -62,6 +62,8 @@ public class TechneMachineRenderer<T extends AbstractMachineEntity> extends Tech
         if (renderer.overrideBlockTexture == null) {
             ccr.renderBlock(world, block, x, y, z, overlay);
         }
+
+        overlay.setTile(null);
 
         return true;
     }

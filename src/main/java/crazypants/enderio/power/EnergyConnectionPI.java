@@ -6,7 +6,7 @@ import cofh.api.energy.IEnergyConnection;
 
 public class EnergyConnectionPI implements IPowerInterface {
 
-    private IEnergyConnection delegate;
+    private final IEnergyConnection delegate;
 
     public EnergyConnectionPI(IEnergyConnection delegate) {
         this.delegate = delegate;

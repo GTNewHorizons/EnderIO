@@ -22,6 +22,7 @@ import crazypants.enderio.machine.alloy.GuiAlloySmelter;
 import crazypants.enderio.machine.recipe.IRecipe;
 import crazypants.enderio.machine.recipe.RecipeInput;
 import crazypants.enderio.power.PowerDisplayUtil;
+import crazypants.util.ColorUtils;
 
 public class AlloySmelterRecipeHandler extends TemplateRecipeHandler {
 
@@ -61,7 +62,7 @@ public class AlloySmelterRecipeHandler extends TemplateRecipeHandler {
             return;
         }
 
-        List<IRecipe> recipes = new ArrayList<IRecipe>(AlloyRecipeManager.getInstance().getRecipes());
+        List<IRecipe> recipes = new ArrayList<>(AlloyRecipeManager.getInstance().getRecipes());
         recipes.addAll(AlloyRecipeManager.getInstance().getVanillaRecipe().getAllRecipes());
         for (IRecipe recipe : recipes) {
             ItemStack output = recipe.getOutputs()[0].getOutput();
@@ -75,7 +76,7 @@ public class AlloySmelterRecipeHandler extends TemplateRecipeHandler {
     @Override
     public void loadCraftingRecipes(String outputId, Object... results) {
         if (outputId.equals("EnderIOAlloySmelter") && getClass() == AlloySmelterRecipeHandler.class) {
-            List<IRecipe> recipes = new ArrayList<IRecipe>(AlloyRecipeManager.getInstance().getRecipes());
+            List<IRecipe> recipes = new ArrayList<>(AlloyRecipeManager.getInstance().getRecipes());
             recipes.addAll(AlloyRecipeManager.getInstance().getVanillaRecipe().getAllRecipes());
             for (IRecipe recipe : recipes) {
                 ItemStack output = recipe.getOutputs()[0].getOutput();
@@ -89,7 +90,7 @@ public class AlloySmelterRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
-        List<IRecipe> recipes = new ArrayList<IRecipe>(AlloyRecipeManager.getInstance().getRecipes());
+        List<IRecipe> recipes = new ArrayList<>(AlloyRecipeManager.getInstance().getRecipes());
         recipes.addAll(AlloyRecipeManager.getInstance().getVanillaRecipe().getAllRecipes());
         for (IRecipe recipe : recipes) {
             if (recipe.isValidInput(0, ingredient)) {
@@ -114,11 +115,11 @@ public class AlloySmelterRecipeHandler extends TemplateRecipeHandler {
         drawProgressBar(99, 31, 166, 0, 22, 13, 48, 3);
         AlloySmelterRecipe recipe = (AlloySmelterRecipe) arecipes.get(recipeIndex);
         String energyString = PowerDisplayUtil.formatPower(recipe.getEnergy()) + " " + PowerDisplayUtil.abrevation();
-        GuiDraw.drawString(energyString, 100, 52, 0x808080, false);
+        GuiDraw.drawString(energyString, 100, 52, ColorUtils.neiEnergyString.getColor(), false);
     }
 
     public List<ItemStack> getInputs(RecipeInput input) {
-        List<ItemStack> result = new ArrayList<ItemStack>();
+        List<ItemStack> result = new ArrayList<>();
         result.add(input.getInput());
         ItemStack[] equivs = input.getEquivelentInputs();
         if (equivs != null) {
@@ -140,7 +141,7 @@ public class AlloySmelterRecipeHandler extends TemplateRecipeHandler {
                     result.add(item.copy());
                 }
             }
-            List<ItemStack> result2 = new ArrayList<ItemStack>();
+            List<ItemStack> result2 = new ArrayList<>();
             for (ItemStack candidate : result) {
                 boolean skip = false;
                 for (ItemStack existing : result2) {
@@ -159,9 +160,9 @@ public class AlloySmelterRecipeHandler extends TemplateRecipeHandler {
 
     public class AlloySmelterRecipe extends TemplateRecipeHandler.CachedRecipe {
 
-        private ArrayList<PositionedStack> input;
+        private final ArrayList<PositionedStack> input;
         private PositionedStack output;
-        private int energy;
+        private final int energy;
 
         public int getEnergy() {
             return energy;
@@ -179,7 +180,7 @@ public class AlloySmelterRecipeHandler extends TemplateRecipeHandler {
 
         public AlloySmelterRecipe(int energy, RecipeInput[] ingredients, ItemStack result) {
             int recipeSize = ingredients.length;
-            this.input = new ArrayList<PositionedStack>();
+            this.input = new ArrayList<>();
             if (recipeSize > 0) {
                 this.input.add(new PositionedStack(getInputs(ingredients[0]), 50, 13));
             }

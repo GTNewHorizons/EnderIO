@@ -17,7 +17,7 @@ public class RangeEntity extends Entity {
     private Vector3d lastRange;
     private AxisAlignedBB lastBounds;
     private final IRanged spawnGuard;
-    private int color;
+    private final int color;
     private AxisAlignedBB rangeBounds;
     private Vector3d range;
 

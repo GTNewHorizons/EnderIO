@@ -16,8 +16,8 @@ import forestry.api.genetics.AlleleManager;
 
 public class ForestryFarmer implements IFarmerJoe {
 
-    private ITreeRoot root;
-    private Item forestrySapling;
+    private final ITreeRoot root;
+    private final Item forestrySapling;
 
     private ForestryFarmer(ITreeRoot root, Item forestrySapling) {
         this.root = root;

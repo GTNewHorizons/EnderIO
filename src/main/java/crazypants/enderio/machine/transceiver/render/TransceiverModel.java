@@ -18,7 +18,7 @@ public class TransceiverModel extends ModelBase implements IModel {
     private static final String TEXTURE = "enderio:models/transceiver.png";
     private static final String MODEL = "enderio:models/transceiver.obj";
 
-    private IModelCustom model;
+    private final IModelCustom model;
 
     public TransceiverModel() {
         model = AdvancedModelLoader.loadModel(new ResourceLocation(MODEL));

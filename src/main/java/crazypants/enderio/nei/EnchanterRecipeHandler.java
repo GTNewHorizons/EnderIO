@@ -24,6 +24,7 @@ import crazypants.enderio.machine.enchanter.EnchanterRecipeManager;
 import crazypants.enderio.machine.enchanter.GuiEnchanter;
 import crazypants.enderio.machine.enchanter.TileEnchanter;
 import crazypants.enderio.machine.recipe.RecipeInput;
+import crazypants.util.ColorUtils;
 
 public class EnchanterRecipeHandler extends TemplateRecipeHandler {
 
@@ -113,7 +114,7 @@ public class EnchanterRecipeHandler extends TemplateRecipeHandler {
     public void drawExtras(int recipeIndex) {
         EnchanterRecipeNEI recipe = (EnchanterRecipeNEI) arecipes.get(recipeIndex);
 
-        GuiDraw.drawStringC(recipe.getEnchantName(), 83, 10, 0x808080, false);
+        GuiDraw.drawStringC(recipe.getEnchantName(), 83, 10, ColorUtils.neiEnchantString.getColor(), false);
 
         int level = 1;
         List<PositionedStack> ingredients = recipe.getIngredients();
@@ -131,7 +132,7 @@ public class EnchanterRecipeHandler extends TemplateRecipeHandler {
     }
 
     public List<ItemStack> getInputs(RecipeInput input) {
-        List<ItemStack> result = new ArrayList<ItemStack>();
+        List<ItemStack> result = new ArrayList<>();
         result.add(input.getInput());
         ItemStack[] equivs = input.getEquivelentInputs();
         if (equivs != null && equivs.length > 0) {
@@ -177,7 +178,7 @@ public class EnchanterRecipeHandler extends TemplateRecipeHandler {
 
         public EnchanterRecipeNEI(EnchanterRecipe recipe) {
             this.recipe = recipe;
-            input = new ArrayList<PositionedStack>();
+            input = new ArrayList<>();
             input.add(new PositionedStack(new ItemStack(Items.writable_book), 22, 24));
             input.add(new PositionedStack(getInputs(recipe.getInput()), 71, 24));
 

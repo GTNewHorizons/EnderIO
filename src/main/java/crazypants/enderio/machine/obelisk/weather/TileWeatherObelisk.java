@@ -106,7 +106,7 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
 
     private static final ICapacitor cap = Capacitors.BASIC_CAPACITOR.capacitor;
 
-    private FluidTank inputTank = new FluidTank(8000);
+    private final FluidTank inputTank = new FluidTank(8000);
 
     /* client fields */
     private float progress = 0; // client only

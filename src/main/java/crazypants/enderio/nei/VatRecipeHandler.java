@@ -34,11 +34,12 @@ import crazypants.enderio.machine.recipe.RecipeInput;
 import crazypants.enderio.machine.vat.GuiVat;
 import crazypants.enderio.machine.vat.VatRecipeManager;
 import crazypants.enderio.power.PowerDisplayUtil;
+import crazypants.util.ColorUtils;
 
 public class VatRecipeHandler extends TemplateRecipeHandler {
 
-    private Rectangle inTankBounds = new Rectangle(25, 1, 15, 47);
-    private Rectangle outTankBounds = new Rectangle(127, 1, 15, 47);
+    private final Rectangle inTankBounds = new Rectangle(25, 1, 15, 47);
+    private final Rectangle outTankBounds = new Rectangle(127, 1, 15, 47);
 
     public VatRecipeHandler() {}
 
@@ -183,7 +184,7 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
         }
 
         String energyString = PowerDisplayUtil.formatPower(rec.energy) + " " + PowerDisplayUtil.abrevation();
-        GuiDraw.drawStringC(energyString, 86, 54, 0x808080, false);
+        GuiDraw.drawStringC(energyString, 86, 54, ColorUtils.neiEnergyString.getColor(), false);
 
         Fluid outputFluid = rec.result.getFluid();
         List<PositionedStack> stacks = rec.getIngredients();
@@ -191,7 +192,7 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
             float mult = VatRecipeManager.getInstance()
                     .getMultiplierForInput(rec.inFluid.getFluid(), ps.item, outputFluid);
             String str = "x" + mult;
-            GuiDraw.drawStringC(str, ps.relx + 8, ps.rely + 19, 0x808080, false);
+            GuiDraw.drawStringC(str, ps.relx + 8, ps.rely + 19, ColorUtils.neiMultiplierString.getColor(), false);
         }
 
     }
@@ -264,7 +265,7 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
     }
 
     public List<ItemStack> getInputs(RecipeInput input) {
-        List<ItemStack> result = new ArrayList<ItemStack>();
+        List<ItemStack> result = new ArrayList<>();
         result.add(input.getInput());
         ItemStack[] eq = input.getEquivelentInputs();
         if (eq != null) {
@@ -277,12 +278,12 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
 
     public class InnerVatRecipe extends TemplateRecipeHandler.CachedRecipe {
 
-        private List<PositionedStack> inputs = new ArrayList<>();
-        private ItemStackMap<Float> firstItemMultiplier = new ItemStackMap();
-        private ItemStackMap<Float> secondItemMultiplier = new ItemStackMap();
-        private Map<FluidStack, Float> fluidMultiplier = new HashMap<>();
-        private int energy;
-        private FluidStack result;
+        private final List<PositionedStack> inputs = new ArrayList<>();
+        private final ItemStackMap<Float> firstItemMultiplier = new ItemStackMap();
+        private final ItemStackMap<Float> secondItemMultiplier = new ItemStackMap();
+        private final Map<FluidStack, Float> fluidMultiplier = new HashMap<>();
+        private final int energy;
+        private final FluidStack result;
         private FluidStack inFluid;
 
         public int getEnergy() {

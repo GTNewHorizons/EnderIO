@@ -16,7 +16,7 @@ import crazypants.enderio.power.PowerDisplayUtil;
 public abstract class GuiPoweredMachineBase<T extends AbstractPoweredMachineEntity> extends GuiMachineBase<T> {
 
     protected static final int POWER_Y = 14;
-    protected final int POWER_X = 15;
+    protected static final int POWER_X = 15;
     protected static final int POWER_WIDTH = 10;
     protected static final int POWER_HEIGHT = 42;
     protected static final int BOTTOM_POWER_Y = POWER_Y + POWER_HEIGHT;

@@ -27,7 +27,7 @@ import crazypants.enderio.teleport.anchor.TravelEntitySpecialRenderer;
 @SideOnly(Side.CLIENT)
 public class EnderIoRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
-    private TravelEntitySpecialRenderer selectionRenderer = new TravelEntitySpecialRenderer() {
+    private final TravelEntitySpecialRenderer selectionRenderer = new TravelEntitySpecialRenderer() {
 
         protected void renderBlock() {}
 

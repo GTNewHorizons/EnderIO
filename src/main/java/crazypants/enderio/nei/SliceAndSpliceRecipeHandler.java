@@ -22,6 +22,7 @@ import crazypants.enderio.machine.slicensplice.ContainerSliceAndSplice;
 import crazypants.enderio.machine.slicensplice.GuiSliceAndSplice;
 import crazypants.enderio.machine.slicensplice.SliceAndSpliceRecipeManager;
 import crazypants.enderio.power.PowerDisplayUtil;
+import crazypants.util.ColorUtils;
 
 public class SliceAndSpliceRecipeHandler extends TemplateRecipeHandler {
 
@@ -61,7 +62,7 @@ public class SliceAndSpliceRecipeHandler extends TemplateRecipeHandler {
             return;
         }
 
-        List<IRecipe> recipes = new ArrayList<IRecipe>(SliceAndSpliceRecipeManager.getInstance().getRecipes());
+        List<IRecipe> recipes = new ArrayList<>(SliceAndSpliceRecipeManager.getInstance().getRecipes());
         for (IRecipe recipe : recipes) {
             ItemStack output = recipe.getOutputs()[0].getOutput();
             if (result.getItem() == output.getItem() && result.getItemDamage() == output.getItemDamage()) {
@@ -74,7 +75,7 @@ public class SliceAndSpliceRecipeHandler extends TemplateRecipeHandler {
     @Override
     public void loadCraftingRecipes(String outputId, Object... results) {
         if (outputId.equals("EnderIOSliceAndSplice") && getClass() == SliceAndSpliceRecipeHandler.class) {
-            List<IRecipe> recipes = new ArrayList<IRecipe>(SliceAndSpliceRecipeManager.getInstance().getRecipes());
+            List<IRecipe> recipes = new ArrayList<>(SliceAndSpliceRecipeManager.getInstance().getRecipes());
             for (IRecipe recipe : recipes) {
                 SliceAndSpliceRecipe res = new SliceAndSpliceRecipe(recipe);
                 arecipes.add(res);
@@ -86,7 +87,7 @@ public class SliceAndSpliceRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
-        List<IRecipe> recipes = new ArrayList<IRecipe>(SliceAndSpliceRecipeManager.getInstance().getRecipes());
+        List<IRecipe> recipes = new ArrayList<>(SliceAndSpliceRecipeManager.getInstance().getRecipes());
         for (IRecipe recipe : recipes) {
             if (recipe.isValidInput(0, ingredient)) {
                 SliceAndSpliceRecipe res = new SliceAndSpliceRecipe(recipe);
@@ -109,11 +110,11 @@ public class SliceAndSpliceRecipeHandler extends TemplateRecipeHandler {
 
         SliceAndSpliceRecipe recipe = (SliceAndSpliceRecipe) arecipes.get(recipeIndex);
         String energyString = PowerDisplayUtil.formatPower(recipe.getEnergy()) + " " + PowerDisplayUtil.abrevation();
-        GuiDraw.drawString(energyString, 100, 57, 0x808080, false);
+        GuiDraw.drawString(energyString, 100, 57, ColorUtils.neiEnergyString.getColor(), false);
     }
 
     public List<ItemStack> getInputs(RecipeInput input) {
-        List<ItemStack> result = new ArrayList<ItemStack>();
+        List<ItemStack> result = new ArrayList<>();
         result.add(input.getInput());
         ItemStack[] equivs = input.getEquivelentInputs();
         if (equivs != null) {
@@ -126,9 +127,9 @@ public class SliceAndSpliceRecipeHandler extends TemplateRecipeHandler {
 
     public class SliceAndSpliceRecipe extends TemplateRecipeHandler.CachedRecipe {
 
-        private ArrayList<PositionedStack> input;
+        private final ArrayList<PositionedStack> input;
         private PositionedStack output;
-        private int energy;
+        private final int energy;
 
         public int getEnergy() {
             return energy;
@@ -145,7 +146,7 @@ public class SliceAndSpliceRecipeHandler extends TemplateRecipeHandler {
         }
 
         public SliceAndSpliceRecipe(IRecipe recipe) {
-            input = new ArrayList<PositionedStack>();
+            input = new ArrayList<>();
             int yOff = 11;
             int xOff = 13;
 

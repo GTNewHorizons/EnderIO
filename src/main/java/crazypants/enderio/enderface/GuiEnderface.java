@@ -53,9 +53,9 @@ public class GuiEnderface extends GuiScreen {
     private final int ioX;
     private final int ioY;
     private final int ioZ;
-    private boolean chunkLoaded;
+    private final boolean chunkLoaded;
 
-    private List<ViewableBlocks> blocks = new ArrayList<ViewableBlocks>();
+    private final List<ViewableBlocks> blocks = new ArrayList<>();
 
     private int gw;
     private int gh;
@@ -77,8 +77,6 @@ public class GuiEnderface extends GuiScreen {
 
     private float scaleAnimX;
 
-    private int range;
-
     boolean dragging = false;
 
     private double distance;
@@ -92,7 +90,7 @@ public class GuiEnderface extends GuiScreen {
         this.ioY = ioY;
         this.ioZ = ioZ;
 
-        range = Config.enderIoRange;
+        int range = Config.enderIoRange;
         distance = 10 + (range * 2);
 
         TileEntity te = world.getTileEntity(ioX, ioY, ioZ);

@@ -137,7 +137,7 @@ public abstract class GuiMachineBase<T extends AbstractMachineEntity> extends Gu
 
     protected void addProgressTooltip(int x, int y, int w, int h) {
         if (progressTooltips == null) {
-            progressTooltips = new ArrayList<GuiToolTip>();
+            progressTooltips = new ArrayList<>();
         }
 
         GuiToolTip tt = new GuiToolTip(new Rectangle(x, y, w, h), (String[]) null);
