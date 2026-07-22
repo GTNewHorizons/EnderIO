@@ -37,6 +37,14 @@ public class NetworkedInventory {
     List<Target> sendPriority = new ArrayList<>();
     RoundRobinIterator<Target> rrIter = new RoundRobinIterator<>(sendPriority);
 
+    private boolean hasBeenSorted = false;
+
+    // Stamped by ItemConduitNetwork.sortOne() with the network's sortEpoch at the moment this
+    // inventory was last sorted. Lets the cursor sweep tell "already sorted this pass" (skip for
+    // free) apart from "still pending" without a second, separate tracking structure. Never
+    // serialized; purely a same-instance scheduling aid, discarded with the owning network.
+    int sortedInEpoch = 0;
+
     private int extractFromSlot = -1;
 
     int tickDeficit;
@@ -109,6 +117,12 @@ public class NetworkedInventory {
             if (isInvalid()) {
                 return;
             }
+        }
+
+        if (!hasBeenSorted) {
+            // Sort pass has not reached this inventory yet; sendPriority is still empty.
+            // ItemConduitNetwork.doNetworkTick() will sort it within its per-tick budget.
+            return;
         }
 
         if (tickDeficit > 0 || !canExtract() || !con.isExtractionRedstoneConditionMet(conDir)) {
@@ -332,6 +346,7 @@ public class NetworkedInventory {
     }
 
     void updateInsertOrder() {
+        hasBeenSorted = true;
         sendPriority.clear();
         if (!canExtract()) {
             return;
