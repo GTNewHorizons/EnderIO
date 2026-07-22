@@ -614,6 +614,11 @@ public class ItemConduit extends AbstractConduit implements IItemConduit {
     }
 
     @Override
+    public boolean needsUpdateEntityTick() {
+        return isBaseUpdateWorkPending();
+    }
+
+    @Override
     public IIcon getTextureForInputMode() {
         return ICONS.get(ICON_KEY_INPUT);
     }

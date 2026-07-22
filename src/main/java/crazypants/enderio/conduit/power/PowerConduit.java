@@ -426,6 +426,11 @@ public class PowerConduit extends AbstractConduit implements IPowerConduit {
     }
 
     @Override
+    public boolean needsUpdateEntityTick() {
+        return isBaseUpdateWorkPending();
+    }
+
+    @Override
     public boolean canConnectToExternal(ForgeDirection direction, boolean ignoreDisabled) {
         IPowerInterface rec = getExternalPowerReceptor(direction);
 

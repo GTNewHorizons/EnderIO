@@ -127,6 +127,16 @@ public interface IConduit {
 
     void updateEntity(World worldObj);
 
+    /**
+     * Whether this conduit has real work waiting for its next updateEntity call. The bundle's tick loop uses this to
+     * skip updateEntity entirely for conduits with nothing to do. Defaults to true, so a conduit type keeps ticking
+     * every tick unless it overrides this. Only override this in a type whose updateEntity does no per-tick work beyond
+     * AbstractConduit's own.
+     */
+    default boolean needsUpdateEntityTick() {
+        return true;
+    }
+
     boolean onNeighborBlockChange(Block blockId);
 
     boolean onNeighborChange(IBlockAccess world, int x, int y, int z, int tileX, int tileY, int tileZ);
