@@ -145,6 +145,7 @@ public final class Config {
     public static int travelAnchorCooldown = 0;
     public static boolean travelAnchorSneak = true;
     public static boolean travelAnchorSkipWarning = true;
+    public static double travelAnchorSnapAngle = 0.175;
 
     public static int travelStaffMaxDistance = 128;
     public static float travelStaffPowerPerBlockRF = 250;
@@ -1161,6 +1162,14 @@ public final class Config {
                         travelAnchorSkipWarning,
                         "Travel Anchors send a chat warning when skipping inaccessible anchors")
                 .getBoolean(travelAnchorSkipWarning);
+
+        travelAnchorSnapAngle = Math.toRadians(
+                config.get(
+                        sectionAnchor.name,
+                        "travelAnchorSnapAngle",
+                        Math.round(Math.toDegrees(travelAnchorSnapAngle)),
+                        "The maximum angle to snap to an anchor when selecting target")
+                        .getDouble(Math.toDegrees(travelAnchorSnapAngle)));
 
         travelStaffMaxDistance = config
                 .get(
