@@ -23,6 +23,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovementInput;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 import org.lwjgl.opengl.GL11;
@@ -161,8 +162,12 @@ public class DarkSteelController {
         return isActive(player, Type.GLIDE);
     }
 
+    public boolean isGlideAllowedInDimension(EntityPlayer player) {
+        return !Config.darkSteelGliderDimensionBlocklistHash.contains(player.dimension);
+    }
+
     public boolean canActivateGlide(EntityPlayer player) {
-        return !EtFuturumCompat.isElytraFlying(player);
+        return !EtFuturumCompat.isElytraFlying(player) && isGlideAllowedInDimension(player);
     }
 
     public boolean isSpeedActive(EntityPlayer player) {
@@ -196,6 +201,15 @@ public class DarkSteelController {
             updateSwim(player);
 
             updateSolar(player);
+        }
+    }
+
+    @SubscribeEvent
+    public void onJoinDimension(EntityJoinWorldEvent event) {
+        if (event.entity instanceof EntityPlayer player) {
+            if (!isGlideAllowedInDimension(player)) {
+                setActive(player, Type.GLIDE, false);
+            }
         }
     }
 
