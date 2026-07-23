@@ -1,6 +1,8 @@
 package crazypants.enderio.conduit.item;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,17 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
 
     private boolean requiresSort = true;
 
+    private int sortCursor = 0; // persistent amortization cursor into inventories
+    private boolean sortDirty = false; // a trigger arrived mid-pass; do one more full clean pass
+    private int sortEpoch = 1; // stamped onto each NetworkedInventory sorted this pass; gates the free skip below
+    private final Deque<NetworkedInventory> pendingFirstSort = new ArrayDeque<>(); // never-sorted entries, always
+                                                                                   // drained before the cursor sweep
+
+    private int topologyVersion = 0; // bumped unconditionally by every addConduit() call; gates distanceCache
+                                     // validity
+
+    private final Map<BlockCoord, CachedDistances> distanceCache = new HashMap<>();
+
     private boolean doingSend = false;
 
     private int changeCount;
@@ -39,6 +52,7 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
     @Override
     public void addConduit(IItemConduit con) {
         super.addConduit(con);
+        topologyVersion++;
         conMap.put(con.getLocation(), con);
 
         TileEntity te = con.getBundle().getEntity();
@@ -64,7 +78,9 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
         NetworkedInventory inv = new NetworkedInventory(this, externalInventory, itemConduit, direction, bc);
         inventories.add(inv);
         getOrCreate(bc).add(inv);
-        requiresSort = true;
+        pendingFirstSort.add(inv);
+        markSortPending();
+        changeCount++;
     }
 
     public NetworkedInventory getInventory(IItemConduit conduit, ForgeDirection dir) {
@@ -106,14 +122,35 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
             }
         }
         if (remove != null) {
+            // Capture the pre-removal index so a mid-sweep removal at an already-swept slot can
+            // shift sortCursor back by one; otherwise a not-yet-swept entry shifted below the
+            // cursor by the removal would be skipped for the rest of the epoch.
+            int idx = inventories.indexOf(remove);
             invs.remove(remove);
             inventories.remove(remove);
-            requiresSort = true;
+            if (idx >= 0 && idx < sortCursor) {
+                sortCursor--;
+            }
+            pendingFirstSort.remove(remove);
+            markSortPending();
+            changeCount++;
         }
     }
 
     public void routesChanged() {
-        requiresSort = true;
+        markSortPending();
+        changeCount++;
+    }
+
+    private void markSortPending() {
+        if (requiresSort && sortCursor > 0) {
+            sortDirty = true;
+        } else {
+            if (!requiresSort) {
+                sortEpoch++; // a fresh pass begins; old sortedInEpoch stamps must no longer match
+            }
+            requiresSort = true;
+        }
     }
 
     public void inventoryPanelSourcesChanged() {
@@ -215,17 +252,103 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
         return result;
     }
 
+    private static final class CachedDistances {
+
+        final int topologyVersion;
+        final Map<BlockCoord, Integer> distances;
+
+        CachedDistances(int topologyVersion, Map<BlockCoord, Integer> distances) {
+            this.topologyVersion = topologyVersion;
+            this.distances = distances;
+        }
+    }
+
+    Map<BlockCoord, Integer> getDistancesFrom(BlockCoord source) {
+        CachedDistances cached = distanceCache.get(source);
+        if (cached != null && cached.topologyVersion == topologyVersion) {
+            return cached.distances;
+        }
+        Map<BlockCoord, Integer> distances = computeDistances(source);
+        distanceCache.put(source, new CachedDistances(topologyVersion, distances));
+        return distances;
+    }
+
+    private Map<BlockCoord, Integer> computeDistances(BlockCoord source) {
+        Map<BlockCoord, Integer> distances = new HashMap<>();
+        List<BlockCoord> steps = new ArrayList<>();
+        steps.add(source);
+        int distance = 0;
+        while (!steps.isEmpty()) {
+            List<BlockCoord> nextSteps = new ArrayList<>();
+            for (BlockCoord bc : steps) {
+                IItemConduit con = conMap.get(bc);
+                if (con == null) {
+                    continue; // no live conduit at this coordinate
+                }
+                Integer prevDist = distances.get(bc);
+                if (prevDist != null && prevDist <= distance) {
+                    continue;
+                }
+                distances.put(bc, distance);
+                for (ForgeDirection dir : con.getConduitConnections()) {
+                    nextSteps.add(bc.getLocation(dir));
+                }
+            }
+            steps = nextSteps;
+            distance++;
+        }
+        return distances;
+    }
+
+    // Sorts one NetworkedInventory and stamps it with the current sortEpoch. Both the
+    // pendingFirstSort drain and the cursor sweep below must go through this helper exclusively,
+    // so an entry drained here is recognized (and free-skipped) by the sweep instead of being
+    // sorted a second time.
+    private void sortOne(NetworkedInventory ni) {
+        ni.updateInsertOrder();
+        ni.sortedInEpoch = sortEpoch;
+    }
+
     @Override
     public void doNetworkTick() {
-        for (NetworkedInventory ni : inventories) {
-            if (requiresSort) {
-                ni.updateInsertOrder();
-            }
-            ni.onTick();
-        }
         if (requiresSort) {
-            requiresSort = false;
-            changeCount++;
+            int budget = MAX_INVENTORY_SORTS_PER_TICK;
+
+            // Never-sorted entries always go first, so a freshly built or rebuilt network drains
+            // within ceil(N / MAX_INVENTORY_SORTS_PER_TICK) ticks instead of a same-tick burst.
+            while (budget > 0 && !pendingFirstSort.isEmpty()) {
+                sortOne(pendingFirstSort.poll());
+                budget--;
+            }
+
+            int size = inventories.size();
+            while (sortCursor < size) {
+                NetworkedInventory ni = inventories.get(sortCursor);
+                if (ni.sortedInEpoch == sortEpoch) {
+                    // Already sorted this epoch (e.g. drained above); skip for free, no budget cost.
+                    sortCursor++;
+                    continue;
+                }
+                if (budget == 0) {
+                    break;
+                }
+                sortOne(ni);
+                sortCursor++;
+                budget--;
+            }
+            if (sortCursor >= size) {
+                if (sortDirty) {
+                    sortDirty = false; // one more clean pass starts next tick; requiresSort stays true
+                    sortEpoch++; // fresh pass begins; old sortedInEpoch stamps no longer match
+                    sortCursor = 0;
+                } else {
+                    requiresSort = false; // a full pass completed with nothing new arriving during it
+                    sortCursor = 0;
+                }
+            }
+        }
+        for (NetworkedInventory ni : inventories) {
+            ni.onTick();
         }
         if (database != null) {
             database.tick();
@@ -237,4 +360,7 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
     }
 
     static int MAX_SLOT_CHECK_PER_TICK = 64;
+    static int MAX_INVENTORY_SORTS_PER_TICK = 8; // peak updateInsertOrder() calls per tick; a full rebuild of N
+                                                 // inventories costs exactly N sorts, converging within ceil(N/8)
+                                                 // ticks; route-config changes propagate within ceil(N/8) ticks
 }
