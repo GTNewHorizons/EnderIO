@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -69,7 +70,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         root.setTag("Items", itemList);
         root.setByteArray("SizeCache", stacksizes);
         root.setShort("facing", facing);
-        root.setIntArray("XpCache", cachedXPsources.toArray());
+        root.setIntArray("XpCache", cachedXPsources.stream().mapToInt(i -> i).toArray();
     }
 
     @Override
@@ -89,7 +90,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         facing = root.getShort("facing");
         cachedXPsources.clear();
         int[] xpcache = root.getIntArray("XpCache");
-        if (xpcache != null) Arrays.asList(xpcache).forEach(cachedXPsources::add);
+        if (xpcache != null) Arrays.asList(xpcache).forEach(i->cachedXPsources.add(i));
     }
 
     @Override
@@ -145,7 +146,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         if (inv[2] == null) return false;
         int LV = getCurrentEnchantmentCost();
         if (LV == 0) return true;
-        return cacheXP(XpUtil.getExperienceForLevel(LV * amt));
+        return cacheXP(XpUtil.getExperienceForLevel(LV));
     }   
 
     public boolean cacheXP(int xpCost) {
@@ -453,12 +454,12 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     @Override
     public boolean canInsertItem(int p_102007_1_, ItemStack p_102007_2_, int p_102007_3_) {
-        return p_102007_1 < 2;
+        return p_102007_1_ < 2;
     }
 
     @Override
     public boolean canExtractItem(int p_102008_1_, ItemStack p_102008_2_, int p_102008_3_) {
-        if (p_102008_1 == 2) return cacheXPw();
+        if (p_102008_1_ == 2) return cacheXPw();
         return true;
     }
 }
