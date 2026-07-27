@@ -69,6 +69,11 @@ public class ContainerEnchanter extends ContainerEnderTileEntity<TileEnchanter> 
             }
 
             @Override
+            public ItemStack getStack() {
+                return te.getOutput();
+            }
+
+            @Override
             public void onPickupFromSlot(EntityPlayer player, ItemStack stack) {
                 if (!player.capabilities.isCreativeMode) {
                     player.addExperienceLevel(-te.getCurrentEnchantmentCost());
