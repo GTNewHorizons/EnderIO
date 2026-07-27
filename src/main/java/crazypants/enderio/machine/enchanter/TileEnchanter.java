@@ -148,7 +148,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         int LV = getCurrentEnchantmentCost();
         if (LV == 0) return true;
         return cacheXP(XpUtil.getExperienceForLevel(LV));
-    }   
+    }
 
     public boolean cacheXP(int xpCost) {
         if (drainFromCache(xpCost, false)) return true;
@@ -165,7 +165,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
                     iter.m + zCoord) instanceof TileExperienceObelisk obelisk) {
                 ExperienceContainer cont = obelisk.getContainer();
                 xp = cont.getExperienceTotal();
-                cachedXPsources.add(((char)iter.n << 16) + ((char)iter.l << 8) + (char)iter.m);
+                cachedXPsources.add(((char) iter.n << 16) + ((char) iter.l << 8) + (char) iter.m);
                 if (xp >= xpCost) return true;
                 xpCost -= xp;
             }
@@ -182,7 +182,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
                         iter.l + yCoord,
                         iter.m + zCoord) instanceof TileEntityJarXP jar) {
                     xp = jar.getXP();
-                    if (xp != 0) cachedXPsources.add(((char)iter.n << 16) + ((char)iter.l << 8) + (char)iter.m);
+                    if (xp != 0) cachedXPsources.add(((char) iter.n << 16) + ((char) iter.l << 8) + (char) iter.m);
                     if (xp >= xpCost) return true;
                     xpCost -= xp;
                 }
@@ -196,9 +196,9 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         ExperienceContainer cont;
         for (int nlm : cachedXPsources) {
             TileEntity te = worldObj.getTileEntity( // so retro
-                    (char)(nlm >> 16) + xCoord,
-                    (char)(nlm >> 8) + yCoord,
-                    (char)nlm + zCoord);
+                    (char) (nlm >> 16) + xCoord,
+                    (char) (nlm >> 8) + yCoord,
+                    (char) nlm + zCoord);
             if (te instanceof TileExperienceObelisk obelisk) {
                 cont = obelisk.getContainer();
                 int xp = cont.getExperienceTotal();
@@ -272,9 +272,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     @Override
     public void setInventorySlotContents(int slot, ItemStack contents) {
         if (slot == 2) {
-            if (contents == null
-                    || contents.stackSize < 0
-                    || contents.getItem() != Item.getItemFromBlock(Blocks.air)) return;
+            if (contents == null || contents.stackSize < 0 || contents.getItem() != Item.getItemFromBlock(Blocks.air)) return;
             checkAndDrainXP(1);
             return;
         };
