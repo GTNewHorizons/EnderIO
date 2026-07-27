@@ -19,6 +19,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import com.gtnewhorizon.gtnhlib.geometry.CubeIterator;
 
+import crazypants.enderio.Log;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.TileEntityEio;
 import crazypants.enderio.config.Config;
@@ -272,10 +273,11 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     @Override
     public void setInventorySlotContents(int slot, ItemStack contents) {
         if (slot == 2) {
-            if (contents == null || contents.stackSize < 0 || contents.getItem() != Item.getItemFromBlock(Blocks.air)) return;
-            checkAndDrainXP(1);
+            if (contents == null || contents.stackSize < 0 || contents.getItem() != Item.getItemFromBlock(Blocks.air))
+                return;
+            if (checkAndDrainXP(1)) Log.warn("Potentially duped books at: " + xCoord + " " + yCoord + " " + zCoord);
             return;
-        };
+        } ;
         if (contents == null) {
             inv[slot] = contents;
         } else {
