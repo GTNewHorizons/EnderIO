@@ -98,7 +98,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     @Override
     public ItemStack getStackInSlot(int slot) {
-        if (slot == 2) return inv[2] != null ? air : null;
+        if (slot == 2) return inv[2] != null ? new ItemStack(Items.enchanted_book, 0) : null;
         if (slot < 0 || slot >= inv.length - 1) {
             return null;
         }
