@@ -393,6 +393,10 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         markDirty();
     }
 
+    public ItemStack getOutput() {
+        return inv[2];
+    }
+
     @Override
     public int[] getAccessibleSlotsFromSide(int side) {
         return side == 0 ? new int[] { 2 } : new int[] { 0, 1 };
