@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -27,6 +28,8 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     private final ItemStack[] inv = new ItemStack[3];
     private byte[] stacksizes = new byte[2];
+
+    private final ArrayList<Integer> cachedXPsources = new ArrayList<>();
 
     private short facing = (short) ForgeDirection.NORTH.ordinal();
 
@@ -94,11 +97,11 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         return inv.length;
     }
 
-    private static ItemStack air = new ItemStack(Items.enchanted_book, 0);
+    // private static ItemStack air = new ItemStack(Blocks.air, 0);
 
     @Override
     public ItemStack getStackInSlot(int slot) {
-        if (slot == 2) return inv[2] != null ? new ItemStack(Items.enchanted_book, 0) : null;
+        // if (slot == 2) return inv[2] != null ? air : null;
         if (slot < 0 || slot >= inv.length - 1) {
             return null;
         }
@@ -133,63 +136,99 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         return result;
     }
 
+    public boolean cacheXPw() {
+        if (inv[2] == null) return false;
+        int LV = getCurrentEnchantmentCost();
+        if (LV == 0) return true;
+        return cacheXP(XpUtil.getExperienceForLevel(LV * amt));
+    }   
+
+    public boolean cacheXP(int xpCost) {
+        if (drainFromCache(xpCost, false)) return true;
+        cachedXPsources.clear();
+        int pleasedontcrashtheserver = 0;
+        int xp;
+        CubeIterator iter;
+        iter = new CubeIterator(8);
+        while (iter.hasNext()) {
+            iter.next();
+            if (worldObj.getTileEntity(
+                    iter.n + xCoord,
+                    iter.l + yCoord,
+                    iter.m + zCoord) instanceof TileExperienceObelisk obelisk) {
+                ExperienceContainer cont = obelisk.getContainer();
+                xp = cont.getExperienceTotal();
+                cachedXPsources.add(((char)iter.n << 16) + ((char)iter.l << 8) + (char)iter.m);
+                if (xp >= xpCost) return true;
+                xpCost -= xp;
+            }
+            if (pleasedontcrashtheserver++ == 200) return false;
+        }
+        if (hasAutomagy) {
+            iter.n = 0;
+            iter.l = 0;
+            iter.m = 0;
+            while (iter.hasNext()) {
+                iter.next();
+                if (worldObj.getTileEntity(
+                        iter.n + xCoord,
+                        iter.l + yCoord,
+                        iter.m + zCoord) instanceof TileEntityJarXP jar) {
+                    xp = jar.getXP();
+                    if (xp != 0) cachedXPsources.add(((char)iter.n << 16) + ((char)iter.l << 8) + (char)iter.m);
+                    if (xp >= xpCost) return true;
+                    xpCost -= xp;
+                }
+                if (pleasedontcrashtheserver++ == 200) return false;
+            }
+        }
+        return false;
+    }
+
+    public boolean drainFromCache(int xpCost, boolean actual) {
+        ExperienceContainer cont;
+        for (int nlm : cachedXPsources) {
+            TileEntity te = worldObj.getTileEntity( // so retro
+                    (char)(nlm >> 16) + xCoord,
+                    (char)(nlm >> 8) + yCoord,
+                    (char)nlm + zCoord);
+            if (te instanceof TileExperienceObelisk obelisk) {
+                cont = obelisk.getContainer();
+                int xp = cont.getExperienceTotal();
+                if (xp == 0) continue;
+                if (xp < xpCost) {
+                    xpCost -= xp;
+                    if (actual) obelisk.drain(null, Integer.MAX_VALUE, true);
+                    continue;
+                }
+                if (actual) obelisk.drain(null, xpCost, true);
+                return true;
+            }
+            if (te instanceof TileEntityJarXP jar) {
+                int xp = jar.getXP();
+                if (xp == 0) continue;
+                int ebx = xp - xpCost; // 5head JIT optimization
+                if (ebx < 0) {
+                    xpCost -= xp;
+                    if (actual) jar.setXP(0);
+                    continue;
+                }
+                if (actual) jar.setXP(ebx);
+                return true;
+            }
+            if (actual) cachedXPsources.remove(Integer.valueOf(nlm));
+        }
+        return false;
+    }
+
     // part of the next method
     public boolean absorbXP(int amt) {
-        if (inv[2] == null || amt <= 0 || inv[2].stackSize < amt) return true;
+        if (inv[2] == null) return true;
         int LV = getCurrentEnchantmentCost();
         if (LV == 0) return false;
         int xpCost = XpUtil.getExperienceForLevel(LV * amt);
-        int xp;
-        absorb: {
-            ArrayList<ExperienceContainer> obelisksToEmpty = new ArrayList<>();
-            if (true) {
-                CubeIterator iter = new CubeIterator(8);
-                while (iter.hasNext()) {
-                    iter.next();
-                    if (worldObj.getTileEntity(
-                            iter.n + xCoord,
-                            iter.l + yCoord,
-                            iter.m + zCoord) instanceof TileExperienceObelisk obelisk) {
-                        ExperienceContainer cont = obelisk.getContainer();
-                        xp = cont.getExperienceTotal();
-                        if (xp >= xpCost) {
-                            if (!worldObj.isRemote) {
-                                obelisksToEmpty.forEach(o -> o.drain(null, Integer.MAX_VALUE, true));
-                                cont.drain(null, Integer.MAX_VALUE, true);
-                                cont.addExperience(Math.max(0, xp - xpCost));
-                            }
-                            return false;
-                        }
-                        xpCost -= xp;
-                        obelisksToEmpty.add(cont);
-                    }
-                }
-            }
-            if (hasAutomagy) {
-                ArrayList<TileEntityJarXP> jarsToEmpty = new ArrayList<>();
-                CubeIterator iter = new CubeIterator(8);
-                while (iter.hasNext()) {
-                    iter.next();
-                    if (worldObj.getTileEntity(
-                            iter.n + xCoord,
-                            iter.l + yCoord,
-                            iter.m + zCoord) instanceof TileEntityJarXP jar) {
-                        xp = jar.getXP();
-                        if (xp >= xpCost) {
-                            if (!worldObj.isRemote) {
-                                obelisksToEmpty.forEach(o -> o.drain(null, Integer.MAX_VALUE, true));
-                                jarsToEmpty.forEach(j -> j.setXP(0));
-                                jar.setXP(xp - xpCost);
-                            }
-                            return false;
-                        }
-                        xpCost -= xp;
-                        jarsToEmpty.add(jar);
-                    }
-                }
-            }
-            return true;
-        }
+        if (!cacheXP(xpCost)) return true;
+        return !drainFromCache(xpCost, true); // spotless please let me remove the space before the exclam it looks cool
     }
 
     // checks AND drains XP; returns true if xp is NOT sufficient
@@ -225,7 +264,13 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     @Override
     public void setInventorySlotContents(int slot, ItemStack contents) {
-        if (slot == 2) return;
+        if (slot == 2) {
+            if (contents == null
+                    || contents.stackSize < 0
+                    || contents.getItem() != Item.getItemFromBlock(Blocks.air) return;
+            checkAndDrainXP(1);
+            return;
+        };
         if (contents == null) {
             inv[slot] = contents;
         } else {
@@ -403,11 +448,12 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     @Override
     public boolean canInsertItem(int p_102007_1_, ItemStack p_102007_2_, int p_102007_3_) {
-        return true;
+        return p_102007_1 < 2;
     }
 
     @Override
     public boolean canExtractItem(int p_102008_1_, ItemStack p_102008_2_, int p_102008_3_) {
+        if (p_102008_1 == 2) return cacheXPw();
         return true;
     }
 }
