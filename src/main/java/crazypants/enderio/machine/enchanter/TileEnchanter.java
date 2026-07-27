@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -95,11 +94,11 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         return inv.length;
     }
 
-    private static ItemStack air = new ItemStack(Blocks.air, 0);
+    private static ItemStack air = new ItemStack(Items.enchanted_book, 0);
 
     @Override
     public ItemStack getStackInSlot(int slot) {
-        if (slot == 2) return inv[2] != null ? new ItemStack(Blocks.air, 11) : null;
+        if (slot == 2) return inv[2] != null ? air : null;
         if (slot < 0 || slot >= inv.length - 1) {
             return null;
         }
