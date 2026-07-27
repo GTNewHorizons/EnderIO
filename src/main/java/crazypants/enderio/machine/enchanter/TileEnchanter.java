@@ -14,6 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.gtnewhorizon.gtnhlib.geometry.CubeIterator;
@@ -90,7 +91,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         facing = root.getShort("facing");
         cachedXPsources.clear();
         int[] xpcache = root.getIntArray("XpCache");
-        if (xpcache != null) Arrays.asList(xpcache).forEach(i->cachedXPsources.add(i));
+        if (xpcache != null) Arrays.stream(xpcache).forEach(i -> cachedXPsources.add(i));
     }
 
     @Override
