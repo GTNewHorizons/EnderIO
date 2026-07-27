@@ -3,6 +3,7 @@ package crazypants.enderio.machine.enchanter;
 import static crazypants.enderio.EnderIO.hasAutomagy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.player.EntityPlayer;
@@ -68,6 +69,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         root.setTag("Items", itemList);
         root.setByteArray("SizeCache", stacksizes);
         root.setShort("facing", facing);
+        root.setIntArray("XpCache", cachedXPsources.toArray());
     }
 
     @Override
@@ -85,6 +87,9 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         stacksizes = root.getByteArray("SizeCache");
         if (stacksizes == null || stacksizes.length < 2) stacksizes = new byte[2];
         facing = root.getShort("facing");
+        cachedXPsources.clear();
+        int[] xpcache = root.getIntArray("XpCache");
+        if (xpcache != null) Arrays.asList(xpcache).forEach(cachedXPsources::add);
     }
 
     @Override
@@ -267,7 +272,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         if (slot == 2) {
             if (contents == null
                     || contents.stackSize < 0
-                    || contents.getItem() != Item.getItemFromBlock(Blocks.air) return;
+                    || contents.getItem() != Item.getItemFromBlock(Blocks.air)) return;
             checkAndDrainXP(1);
             return;
         };
