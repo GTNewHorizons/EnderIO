@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -96,6 +97,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     @Override
     public ItemStack getStackInSlot(int slot) {
+        if (slot == 2) return new ItemStack(Blocks.air, 0);
         if (slot < 0 || slot >= inv.length - 1) {
             return null;
         }
@@ -222,6 +224,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     @Override
     public void setInventorySlotContents(int slot, ItemStack contents) {
+        if (slot == 2) return;
         if (contents == null) {
             inv[slot] = contents;
         } else {
