@@ -237,8 +237,8 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         if (LV == 0) return false;
         int xpCost = XpUtil.getExperienceForLevel(LV * amt);
         if (!cacheXP(xpCost)) return true;
-        return !drainFromCache(xpCost, !worldObj.isRemote); // spotless please let me remove the space before the exclam it looks cool
-    }
+        return !drainFromCache(xpCost, !worldObj.isRemote);
+    } // spotless please let me remove the space before the exclam it looks cool
 
     // checks AND drains XP; returns true if xp is NOT sufficient
     // also removes the items from the other two slots when automation does the recipe
