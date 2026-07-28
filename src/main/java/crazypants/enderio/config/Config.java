@@ -597,7 +597,7 @@ public final class Config {
 
     public static float fusedQuartzExplosionResistance = 2000.0f;
 
-    public static boolean enchanterEnableOutputBlockRestriction = false;
+    public static boolean enchanterOutputEnableBlockRestriction = false;
     public static boolean enchanterOutputAllowlistAsDenylist = false;
     public static String[] enchanterOutputFilterlist = new String[] { "minecraft:hopper", "EnderIO:blockConduitBundle" };
 
@@ -2983,12 +2983,12 @@ public final class Config {
                 Float.MAX_VALUE,
                 "How blast resistant the three Fused Quartz blocks should be.");
 
-        enchanterEnableOutputBlockRestriction = config.getBoolean(
-                "enchanterEnableOutputBlockRestriction",
+        enchanterOutputEnableBlockRestriction = config.getBoolean(
+                "enchanterOutputEnableBlockRestriction",
                 sectionMisc.name,
-                enchanterEnableOutputBlockRestriction,
+                enchanterOutputEnableBlockRestriction,
                 "Enable restricting the valid blocks that are allowed to pull from the output slot of an Enchanter, to prevent dupes");
-        enchanterEnableOutputAllowlistAsDenylist = config.getBoolean(
+        enchanterOutputAllowlistAsDenylist = config.getBoolean(
                 "enchanterOutputAllowlistAsDenylist",
                 sectionMisc.name,
                 enchanterOutputAllowlistAsDenylist,
@@ -2996,7 +2996,7 @@ public final class Config {
         enchanterOutputFilterlist = config.getStringList(
                 "enchanterOutputFilterlist",
                 sectionMisc.name,
-                enchanterOUtputFilterlist,
+                enchanterOutputFilterlist,
                 "These blocks are allowed/denied from pulling from the output slot of an Enchanter (default is allowlist)");
     }
 
