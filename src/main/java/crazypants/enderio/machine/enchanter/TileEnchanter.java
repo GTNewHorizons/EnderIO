@@ -275,7 +275,8 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     public void setInventorySlotContents(int slot, ItemStack contents) {
         if (slot == 2) {
             if (contents != null || contents.stackSize > 0
-                    || contents.getItem() == Items.enchanted_book && contents.stackSize == inv[2].stackSize) return;
+                    || contents.getItem() == Items.enchanted_book && contents.stackSize == inv[2].stackSize)
+                return;
             if (checkAndDrainXP(1)) Log.warn("Potentially duped books at: " + xCoord + " " + yCoord + " " + zCoord);
             // return;
         } ;
