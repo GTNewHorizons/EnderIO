@@ -206,12 +206,13 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
                 cont = obelisk.getContainer();
                 int xp = cont.getExperienceTotal();
                 if (xp == 0) continue;
-                if (xp < xpCost) {
-                    xpCost -= xp;
-                    if (actual) obelisk.drain(null, Integer.MAX_VALUE, true);
+                if (actual) obelisk.drain(null, Integer.MAX_VALUE, true);
+                int ebx = xp - xpCost;
+                if (ebx < 0) {
+                    xpCost = -ebx;
                     continue;
                 }
-                if (actual) obelisk.drain(null, xpCost, true);
+                if (actual) obelisk.addExperience(ebx);
                 return true;
             }
             if (te instanceof TileEntityJarXP jar) {
@@ -275,10 +276,10 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     @Override
     public void setInventorySlotContents(int slot, ItemStack contents) {
         if (slot == 2) {
-            if (contents == null || contents.stackSize < 0 || contents.getItem() != Item.getItemFromBlock(Blocks.air))
+            if (contents != null || contents.stackSize > 0 || contents.getItem() != Item.getItemFromBlock(Blocks.air))
                 return;
             if (checkAndDrainXP(1)) Log.warn("Potentially duped books at: " + xCoord + " " + yCoord + " " + zCoord);
-            return;
+            // return;
         } ;
         if (contents == null) {
             inv[slot] = contents;
