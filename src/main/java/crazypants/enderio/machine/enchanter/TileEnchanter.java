@@ -20,7 +20,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import com.gtnewhorizon.gtnhlib.geometry.CubeIterator;
 
-import crazypants.enderio.Config;
 import crazypants.enderio.Log;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.TileEntityEio;
@@ -468,8 +467,8 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     }
 
     public boolean isAllowedBlockBeneath() {
-        if (!Config.enchanterEnableOutputBlockRestriction) return true;
-        Block blockBeneath = worldObj.getBlock(this.xCoord, this.yCoord - 1, this.zCoord);
+        if (!Config.enchanterOutputEnableBlockRestriction) return true;
+        var blockBeneath = worldObj.getBlock(this.xCoord, this.yCoord - 1, this.zCoord);
         for (String blocknam : Config.enchanterOutputFilterlist) {
             String[] splitname = blocknam.split(":", 1);
             if (GameRegistry.findBlock(splitname[0], splitname[1]) != blockBeneath) continue;
