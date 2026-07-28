@@ -7,10 +7,8 @@ import java.util.Arrays;
 
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -276,8 +274,8 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     @Override
     public void setInventorySlotContents(int slot, ItemStack contents) {
         if (slot == 2) {
-            if (contents != null || contents.stackSize > 0 || contents.getItem() == Items.enchanted_book && contents.stackSize == inv[2].stackSize)
-                return;
+            if (contents != null || contents.stackSize > 0
+                    || contents.getItem() == Items.enchanted_book && contents.stackSize == inv[2].stackSize) return;
             if (checkAndDrainXP(1)) Log.warn("Potentially duped books at: " + xCoord + " " + yCoord + " " + zCoord);
             // return;
         } ;
