@@ -80,7 +80,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     protected void readCustomNBT(NBTTagCompound root) {
         NBTTagList itemList = (NBTTagList) root.getTag("Items");
         if (itemList != null) {
-            for (int i = 0; i < itemList.tag(); i++) {
+            for (int i = 0; i < itemList.tagCount(); i++) {
                 NBTTagCompound itemStack = itemList.getCompoundTagAt(i);
                 byte slot = itemStack.getByte("Slot");
                 if (slot >= 0 && slot < inv.length) {
