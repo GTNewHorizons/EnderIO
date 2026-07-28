@@ -599,7 +599,8 @@ public final class Config {
 
     public static boolean enchanterOutputEnableBlockRestriction = false;
     public static boolean enchanterOutputAllowlistAsDenylist = false;
-    public static String[] enchanterOutputFilterlist = new String[] { "minecraft:hopper", "EnderIO:blockConduitBundle" };
+    public static String[] enchanterOutputFilterlist = new String[] { "minecraft:hopper",
+            "EnderIO:blockConduitBundle" };
 
     public static void load(FMLPreInitializationEvent event) {
         PacketHandler.INSTANCE
