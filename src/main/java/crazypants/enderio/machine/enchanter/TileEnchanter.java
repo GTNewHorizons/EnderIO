@@ -5,7 +5,6 @@ import static crazypants.enderio.EnderIO.hasAutomagy;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -20,6 +19,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import com.gtnewhorizon.gtnhlib.geometry.CubeIterator;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import crazypants.enderio.Log;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.TileEntityEio;
