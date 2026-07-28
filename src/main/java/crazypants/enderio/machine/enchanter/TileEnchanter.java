@@ -80,7 +80,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     protected void readCustomNBT(NBTTagCompound root) {
         NBTTagList itemList = (NBTTagList) root.getTag("Items");
         if (itemList != null) {
-            for (int i = 0; i < itemList.tagCount(); i++) {
+            for (int i = 0; i < itemList.tag(); i++) {
                 NBTTagCompound itemStack = itemList.getCompoundTagAt(i);
                 byte slot = itemStack.getByte("Slot");
                 if (slot >= 0 && slot < inv.length) {
@@ -206,13 +206,13 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
                 cont = obelisk.getContainer();
                 int xp = cont.getExperienceTotal();
                 if (xp == 0) continue;
-                if (actual) obelisk.drain(null, Integer.MAX_VALUE, true);
+                if (actual) cont.drain(null, Integer.MAX_VALUE, true);
                 int ebx = xp - xpCost;
                 if (ebx < 0) {
                     xpCost = -ebx;
                     continue;
                 }
-                if (actual) obelisk.addExperience(ebx);
+                if (actual) cont.addExperience(ebx);
                 return true;
             }
             if (te instanceof TileEntityJarXP jar) {
@@ -276,7 +276,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     @Override
     public void setInventorySlotContents(int slot, ItemStack contents) {
         if (slot == 2) {
-            if (contents != null || contents.stackSize > 0 || contents.getItem() != Item.getItemFromBlock(Blocks.air))
+            if (contents != null || contents.stackSize > 0 || contents.getItem() == Items.enchanted_book && contents.stackSize == inv[2].stackSize)
                 return;
             if (checkAndDrainXP(1)) Log.warn("Potentially duped books at: " + xCoord + " " + yCoord + " " + zCoord);
             // return;
