@@ -218,7 +218,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
                 if (xp == 0) continue;
                 int ebx = xp - xpCost; // 5head JIT optimization
                 if (ebx < 0) {
-                    xpCost =- ebx;
+                    xpCost = -ebx;
                     if (actual) jar.setXP(0);
                     continue;
                 }
