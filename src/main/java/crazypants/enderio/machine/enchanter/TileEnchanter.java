@@ -183,7 +183,8 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
                         iter.l + yCoord,
                         iter.m + zCoord) instanceof TileEntityJarXP jar) {
                     xp = jar.getXP();
-                    if (xp != 0) cachedXPsources.add(((iter.n & 0xff) << 16) + ((iter.l & 0xff) << 8) + (iter.m & 0xff));
+                    if (xp != 0)
+                        cachedXPsources.add(((iter.n & 0xff) << 16) + ((iter.l & 0xff) << 8) + (iter.m & 0xff));
                     if (xp >= xpCost) return true;
                     xpCost -= xp;
                 }
