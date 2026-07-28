@@ -183,7 +183,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
                         iter.l + yCoord,
                         iter.m + zCoord) instanceof TileEntityJarXP jar) {
                     xp = jar.getXP();
-                    if (xp != 0) cachedXPsources.add(((char) iter.n << 16) + ((char) iter.l << 8) + (char) iter.m);
+                    if (xp != 0) cachedXPsources.add(((iter.n & 0xff) << 16) + ((iter.l & 0xff) << 8) + (iter.m & 0xff));
                     if (xp >= xpCost) return true;
                     xpCost -= xp;
                 }
@@ -197,9 +197,9 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         ExperienceContainer cont;
         for (int nlm : cachedXPsources) {
             TileEntity te = worldObj.getTileEntity( // so retro
-                    (char) (nlm >> 16) + xCoord,
-                    (char) (nlm >> 8) + yCoord,
-                    (char) nlm + zCoord);
+                    (byte) (nlm >> 16) + xCoord,
+                    (byte) (nlm >> 8) + yCoord,
+                    (byte) nlm + zCoord);
             if (te instanceof TileExperienceObelisk obelisk) {
                 cont = obelisk.getContainer();
                 int xp = cont.getExperienceTotal();
