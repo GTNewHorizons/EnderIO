@@ -5,6 +5,7 @@ import static crazypants.enderio.EnderIO.hasAutomagy;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -19,6 +20,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import com.gtnewhorizon.gtnhlib.geometry.CubeIterator;
 
+import crazypants.enderio.Config;
 import crazypants.enderio.Log;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.TileEntityEio;
@@ -461,7 +463,18 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     @Override
     public boolean canExtractItem(int p_102008_1_, ItemStack p_102008_2_, int p_102008_3_) {
-        if (p_102008_1_ == 2) return cacheXPw();
+        if (p_102008_1_ == 2 && isAllowedBlockBeneath()) return cacheXPw();
         return true;
     }
+
+    public boolean isAllowedBlockBeneath() {
+        if (!Config.enchanterEnableOutputBlockRestriction) return true;
+        Block blockBeneath = worldObj.getBlock(this.xCoord, this.yCoord - 1, this.zCoord);
+        for (String blocknam : Config.enchanterOutputFilterlist) {
+            String[] splitname = blocknam.split(":", 1);
+            if (GameRegistry.findBlock(splitname[0], splitname[1]) != blockBeneath) continue;
+            return !Config.enchanterOutputAllowlistAsDenylist;
+        }
+        return Config.enchanterOutputAllowlistAsDenylist;
+        
 }
