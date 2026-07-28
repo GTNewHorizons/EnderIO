@@ -476,5 +476,5 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         }
         return Config.enchanterOutputAllowlistAsDenylist;
     }
-        
+
 }
