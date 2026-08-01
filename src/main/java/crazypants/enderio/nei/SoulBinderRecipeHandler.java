@@ -24,6 +24,7 @@ import crazypants.enderio.machine.MachineRecipeRegistry;
 import crazypants.enderio.machine.soul.GuiSoulBinder;
 import crazypants.enderio.machine.soul.ISoulBinderRecipe;
 import crazypants.enderio.power.PowerDisplayUtil;
+import crazypants.util.ColorUtils;
 
 public class SoulBinderRecipeHandler extends TemplateRecipeHandler {
 
@@ -132,7 +133,7 @@ public class SoulBinderRecipeHandler extends TemplateRecipeHandler {
         SoulBinderRecipeNEI recipe = (SoulBinderRecipeNEI) arecipes.get(recipeIndex);
 
         String energyString = PowerDisplayUtil.formatPower(recipe.getEnergy()) + " " + PowerDisplayUtil.abrevation();
-        GuiDraw.drawStringC(energyString, 83, 45, 0x808080, false);
+        GuiDraw.drawStringC(energyString, 83, 45, ColorUtils.neiEnergyString.getColor(), false);
 
         int cost = recipe.getExperience();
         if (cost > 0) {

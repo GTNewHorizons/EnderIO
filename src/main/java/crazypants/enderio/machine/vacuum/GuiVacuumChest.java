@@ -1,6 +1,5 @@
 package crazypants.enderio.machine.vacuum;
 
-import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import com.enderio.core.client.gui.button.MultiIconButton;
 import com.enderio.core.client.gui.button.ToggleButton;
 import com.enderio.core.client.gui.widget.GhostSlot;
 import com.enderio.core.client.gui.widget.GuiToolTip;
-import com.enderio.core.client.render.ColorUtil;
 import com.enderio.core.client.render.EnderWidget;
 import com.enderio.core.common.util.BlockCoord;
 import com.google.common.collect.Lists;
@@ -27,6 +25,7 @@ import crazypants.enderio.gui.GuiContainerBaseEIO;
 import crazypants.enderio.gui.IconEIO;
 import crazypants.enderio.gui.RedstoneModeButton;
 import crazypants.enderio.network.PacketHandler;
+import crazypants.util.ColorUtils;
 
 public class GuiVacuumChest extends GuiContainerBaseEIO {
 
@@ -215,7 +214,11 @@ public class GuiVacuumChest extends GuiContainerBaseEIO {
         IconEIO.map.render(EnderWidget.BUTTON_DOWN, sx + RANGE_LEFT, sy + RANGE_TOP, RANGE_WIDTH, 16, 0, true);
         String str = Integer.toString((int) te.getRange().x);
         int sw = fr.getStringWidth(str);
-        fr.drawString(str, sx + RANGE_LEFT + RANGE_WIDTH - sw - 5, sy + RANGE_TOP + 5, ColorUtil.getRGB(Color.black));
+        fr.drawString(
+                str,
+                sx + RANGE_LEFT + RANGE_WIDTH - sw - 5,
+                sy + RANGE_TOP + 5,
+                ColorUtils.suctionString.getColor());
 
         super.drawGuiContainerBackgroundLayer(par1, mouseX, mouseY);
     }

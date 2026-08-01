@@ -32,7 +32,7 @@ public class GuiInhibitorObelisk extends GuiPoweredMachineBase<TileInhibitorObel
         drawCenteredString(
                 fontRendererObj,
                 EnderIO.lang.localize("gui.spawnGurad.range") + " " + range,
-                getGuiLeft() + sx / 2 + 9,
+                getGuiLeft() + sx / 2 - 25,
                 getGuiTop() + 68,
                 ColorUtil.getRGB(Color.white));
     }

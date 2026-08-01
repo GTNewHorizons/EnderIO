@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -425,7 +427,7 @@ public class NetworkedInventory {
         return inv;
     }
 
-    public ISidedInventory getInventoryRecheck() {
+    public @Nullable ISidedInventory getInventoryRecheck() {
         if (isInvalid()) {
             updateInventory();
         }
