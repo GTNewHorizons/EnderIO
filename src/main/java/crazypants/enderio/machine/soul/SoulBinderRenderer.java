@@ -4,8 +4,10 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
@@ -22,7 +24,7 @@ import crazypants.enderio.EnderIO;
 import crazypants.util.ForgeDirections;
 
 @ThreadSafeISBRH(perThread = true)
-public class SoulBinderRenderer implements ISimpleBlockRenderingHandler {
+public class SoulBinderRenderer implements ISimpleBlockRenderingHandler, IItemRenderer {
 
     private static final float skullScale = 0.5f;
     private final BoundingBox scaledBB = BoundingBox.UNIT_CUBE.scale(skullScale, skullScale, skullScale);
@@ -31,13 +33,23 @@ public class SoulBinderRenderer implements ISimpleBlockRenderingHandler {
 
     @Override
     public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
+        GL11.glPushMatrix();
+        GL11.glPushAttrib(GL11.GL_ENABLE_BIT | GL11.GL_LIGHTING_BIT | GL11.GL_CURRENT_BIT | GL11.GL_COLOR_BUFFER_BIT);
 
-        GL11.glDisable(GL11.GL_LIGHTING);
-        final Tessellator tessellator = Tessellator.instance;
-        tessellator.startDrawingQuads();
-        renderWorldBlock(null, 0, 0, 0, block, 0, renderer);
-        tessellator.draw();
-        GL11.glEnable(GL11.GL_LIGHTING);
+        try {
+            GL11.glDisable(GL11.GL_LIGHTING);
+
+            // Move the inventory render slightly down in the slot.
+            GL11.glTranslatef(0.0f, -0.1f, 0.0f);
+
+            final Tessellator tessellator = Tessellator.instance;
+            tessellator.startDrawingQuads();
+            renderWorldBlock(null, 0, 0, 0, block, 0, renderer);
+            tessellator.draw();
+        } finally {
+            GL11.glPopAttrib();
+            GL11.glPopMatrix();
+        }
     }
 
     @Override
@@ -97,6 +109,47 @@ public class SoulBinderRenderer implements ISimpleBlockRenderingHandler {
         return true;
     }
 
+    @Override
+    public boolean shouldRender3DInInventory(int modelId) {
+        return true;
+    }
+
+    @Override
+    public int getRenderId() {
+        return BlockSoulBinder.renderId;
+    }
+
+    @Override
+    public boolean handleRenderType(ItemStack item, ItemRenderType type) {
+        return type == ItemRenderType.EQUIPPED || type == ItemRenderType.EQUIPPED_FIRST_PERSON;
+    }
+
+    @Override
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
+        return true;
+    }
+
+    @Override
+    public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+        GL11.glPushMatrix();
+        GL11.glPushAttrib(GL11.GL_ENABLE_BIT | GL11.GL_LIGHTING_BIT | GL11.GL_CURRENT_BIT | GL11.GL_COLOR_BUFFER_BIT);
+
+        try {
+            GL11.glDisable(GL11.GL_LIGHTING);
+
+            final RenderBlocks renderer = (RenderBlocks) data[0];
+            final Block block = Block.getBlockFromItem(item.getItem());
+            final Tessellator tessellator = Tessellator.instance;
+
+            tessellator.startDrawingQuads();
+            renderWorldBlock(null, 0, 0, 0, block, 0, renderer);
+            tessellator.draw();
+        } finally {
+            GL11.glPopAttrib();
+            GL11.glPopMatrix();
+        }
+    }
+
     private ForgeDirection forFacing(ForgeDirection side, int facing) {
         return ForgeDirections.DIRECTIONS[ClientProxy.sideAndFacingToSpriteOffset[side.ordinal()][facing]];
     }
@@ -112,15 +165,5 @@ public class SoulBinderRenderer implements ISimpleBlockRenderingHandler {
         for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
             icons[dir.ordinal()] = override != null ? override : dir == faceSide ? faceIcon : defaultIcon;
         }
-    }
-
-    @Override
-    public boolean shouldRender3DInInventory(int modelId) {
-        return true;
-    }
-
-    @Override
-    public int getRenderId() {
-        return BlockSoulBinder.renderId;
     }
 }

@@ -42,13 +42,21 @@ public class ObeliskRenderer implements ISimpleBlockRenderingHandler {
     @Override
     public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
         final Tessellator tessellator = Tessellator.instance;
-        GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glEnable(GL11.GL_ALPHA_TEST);
-        tessellator.startDrawingQuads();
-        renderWorldBlock(null, 0, 0, 0, block, 0, renderer);
-        tessellator.draw();
-        GL11.glDisable(GL11.GL_ALPHA_TEST);
-        GL11.glEnable(GL11.GL_LIGHTING);
+
+        // Preserve GL state so this custom item renderer does not leak alpha/blend/color
+        // state into subsequent item renders, such as Backhand offhand items.
+        GL11.glPushAttrib(GL11.GL_ENABLE_BIT | GL11.GL_COLOR_BUFFER_BIT | GL11.GL_CURRENT_BIT | GL11.GL_LIGHTING_BIT);
+
+        try {
+            GL11.glDisable(GL11.GL_LIGHTING);
+            GL11.glEnable(GL11.GL_ALPHA_TEST);
+
+            tessellator.startDrawingQuads();
+            renderWorldBlock(null, 0, 0, 0, block, 0, renderer);
+            tessellator.draw();
+        } finally {
+            GL11.glPopAttrib();
+        }
     }
 
     @Override
