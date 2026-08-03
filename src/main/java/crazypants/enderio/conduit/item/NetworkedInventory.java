@@ -3,7 +3,6 @@ package crazypants.enderio.conduit.item;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -26,6 +25,7 @@ import crazypants.enderio.conduit.item.filter.ItemFilterLimited;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.invpanel.TileInventoryPanel;
 import crazypants.util.ForgeDirections;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 
 public class NetworkedInventory {
 
@@ -354,7 +354,11 @@ public class NetworkedInventory {
         }
         List<Target> result = new ArrayList<>();
 
-        for (NetworkedInventory other : network.inventories) {
+        // Indexed loops over these ArrayLists avoid the per-call Iterator allocation an enhanced-for
+        // would incur; this runs on the amortized per-tick sort path.
+        List<NetworkedInventory> others = network.inventories;
+        for (int i = 0, n = others.size(); i < n; i++) {
+            NetworkedInventory other = others.get(i);
             if ((con.isSelfFeedEnabled(conDir) || (other != this)) && other.canInsert()
                     && con.getInputColor(conDir) == other.con.getOutputColor(other.conDir)) {
 
@@ -370,10 +374,11 @@ public class NetworkedInventory {
             Collections.sort(sendPriority);
         } else {
             if (!result.isEmpty()) {
-                Map<BlockCoord, Integer> distances = network.getDistancesFrom(con.getLocation());
-                for (Target target : result) {
-                    Integer d = distances.get(target.inv.con.getLocation());
-                    if (d != null) {
+                Object2IntMap<BlockCoord> distances = network.getDistancesFrom(con.getLocation());
+                for (int i = 0, n = result.size(); i < n; i++) {
+                    Target target = result.get(i);
+                    int d = distances.getInt(target.inv.con.getLocation());
+                    if (d >= 0) {
                         target.distance = d;
                     }
                 }

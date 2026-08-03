@@ -18,6 +18,8 @@ import crazypants.enderio.conduit.AbstractConduitNetwork;
 import crazypants.enderio.conduit.item.NetworkedInventory.Target;
 import crazypants.enderio.conduit.item.filter.IItemFilter;
 import crazypants.enderio.machine.invpanel.server.InventoryDatabaseServer;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 
 public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IItemConduit> {
 
@@ -255,38 +257,42 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
     private static final class CachedDistances {
 
         final int topologyVersion;
-        final Map<BlockCoord, Integer> distances;
+        final Object2IntMap<BlockCoord> distances;
 
-        CachedDistances(int topologyVersion, Map<BlockCoord, Integer> distances) {
+        CachedDistances(int topologyVersion, Object2IntMap<BlockCoord> distances) {
             this.topologyVersion = topologyVersion;
             this.distances = distances;
         }
     }
 
-    Map<BlockCoord, Integer> getDistancesFrom(BlockCoord source) {
+    Object2IntMap<BlockCoord> getDistancesFrom(BlockCoord source) {
         CachedDistances cached = distanceCache.get(source);
         if (cached != null && cached.topologyVersion == topologyVersion) {
             return cached.distances;
         }
-        Map<BlockCoord, Integer> distances = computeDistances(source);
+        Object2IntMap<BlockCoord> distances = computeDistances(source);
         distanceCache.put(source, new CachedDistances(topologyVersion, distances));
         return distances;
     }
 
-    private Map<BlockCoord, Integer> computeDistances(BlockCoord source) {
-        Map<BlockCoord, Integer> distances = new HashMap<>();
+    private Object2IntMap<BlockCoord> computeDistances(BlockCoord source) {
+        // Object2IntOpenHashMap avoids the Integer box/unbox HashMap<BlockCoord, Integer> incurred on every
+        // put/get; missing coordinates return the -1 default rather than null.
+        Object2IntOpenHashMap<BlockCoord> distances = new Object2IntOpenHashMap<>();
+        distances.defaultReturnValue(-1);
         List<BlockCoord> steps = new ArrayList<>();
         steps.add(source);
         int distance = 0;
         while (!steps.isEmpty()) {
             List<BlockCoord> nextSteps = new ArrayList<>();
-            for (BlockCoord bc : steps) {
+            for (int i = 0, n = steps.size(); i < n; i++) {
+                BlockCoord bc = steps.get(i);
                 IItemConduit con = conMap.get(bc);
                 if (con == null) {
                     continue; // no live conduit at this coordinate
                 }
-                Integer prevDist = distances.get(bc);
-                if (prevDist != null && prevDist <= distance) {
+                int prevDist = distances.getInt(bc);
+                if (prevDist != -1 && prevDist <= distance) {
                     continue;
                 }
                 distances.put(bc, distance);
