@@ -27,7 +27,6 @@ public class PaintedItemRenderer implements IItemRenderer {
 
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
-
         if (data != null && data.length > 0) {
             if (type == ItemRenderType.EQUIPPED_FIRST_PERSON || type == ItemRenderType.EQUIPPED) {
                 renderEquipped(item, (RenderBlocks) data[0]);
@@ -38,9 +37,12 @@ public class PaintedItemRenderer implements IItemRenderer {
     }
 
     public void renderEquipped(ItemStack item, RenderBlocks renderBlocks) {
-
         GL11.glPushMatrix();
-        GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+
+        if (item.getItem() != Item.getItemFromBlock(EnderIO.blockTravelPlatform)) {
+            GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+        }
+
         renderToInventory(item, renderBlocks);
         GL11.glPopMatrix();
     }
