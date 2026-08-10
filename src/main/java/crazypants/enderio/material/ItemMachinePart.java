@@ -31,7 +31,7 @@ public class ItemMachinePart extends Item {
         setCreativeTab(EnderIOTab.tabEnderIO);
         setUnlocalizedName(ModObject.itemMachinePart.unlocalisedName);
 
-        icons = new IIcon[MachinePart.values().length];
+        icons = new IIcon[MachinePart.VALUES.length];
     }
 
     private void init() {
@@ -41,29 +41,29 @@ public class ItemMachinePart extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int damage) {
-        damage = MathHelper.clamp_int(damage, 0, MachinePart.values().length - 1);
+        damage = MathHelper.clamp_int(damage, 0, MachinePart.VALUES.length - 1);
         return icons[damage];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister IIconRegister) {
-        int numParts = MachinePart.values().length;
+        int numParts = MachinePart.VALUES.length;
         for (int i = 0; i < numParts; i++) {
-            icons[i] = IIconRegister.registerIcon(MachinePart.values()[i].iconKey);
+            icons[i] = IIconRegister.registerIcon(MachinePart.VALUES[i].iconKey);
         }
     }
 
     @Override
     public String getUnlocalizedName(ItemStack par1ItemStack) {
-        int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, MachinePart.values().length - 1);
-        return MachinePart.values()[i].unlocalisedName;
+        int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, MachinePart.VALUES.length - 1);
+        return MachinePart.VALUES[i].unlocalisedName;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
-        for (int j = 0; j < MachinePart.values().length; ++j) {
+        for (int j = 0; j < MachinePart.VALUES.length; ++j) {
             par3List.add(new ItemStack(par1, 1, j));
         }
     }
