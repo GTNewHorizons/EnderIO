@@ -115,8 +115,8 @@ public class NetworkState {
                 buf.readInt(),
                 buf.readInt(),
                 buf.readInt(),
-                RedstoneControlMode.values()[buf.readShort()],
-                RedstoneControlMode.values()[buf.readShort()],
+                RedstoneControlMode.VALUES[buf.readShort()],
+                RedstoneControlMode.VALUES[buf.readShort()],
                 buf.readBoolean() ? BlockCoord.readFromBuf(buf) : null,
                 buf.readFloat(),
                 buf.readFloat());
