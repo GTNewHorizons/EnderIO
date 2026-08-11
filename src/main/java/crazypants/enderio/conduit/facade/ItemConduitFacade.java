@@ -42,6 +42,7 @@ public class ItemConduitFacade extends Item implements IAdvancedTooltipProvider,
         HARDENED;
 
         public static final FacadeType[] VALUES = values();
+
         public String getUnlocName(Item me) {
             return this == BASIC ? me.getUnlocalizedName() : me.getUnlocalizedName() + ".hardened";
         }
