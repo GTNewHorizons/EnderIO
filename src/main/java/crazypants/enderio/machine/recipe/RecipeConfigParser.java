@@ -28,6 +28,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import com.enderio.core.common.util.OreDictionaryHelper;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import crazypants.enderio.Log;
 import crazypants.enderio.machine.crusher.CrusherRecipeManager;
@@ -62,6 +63,14 @@ public class RecipeConfigParser extends DefaultHandler {
     public static final String AT_CHANCE = "chance";
     public static final String AT_EXP = "exp";
     public static final String AT_ALLOW_MISSING = "allowMissing";
+
+    /// The `modID` marking an `itemName` of the form `<material>:<shape>` that names a MaterialLib stack.
+    private static final String MOD_ID_ML = "ml";
+
+    private static final String MATERIAL_LIB_MODID = "materiallib";
+
+    private static int materialLibResolved = 0;
+    private static int materialLibInvalid = 0;
 
     // Log prefix
     private static final String LP = "RecipeParser: ";
@@ -423,7 +432,10 @@ public class RecipeConfigParser extends DefaultHandler {
         String modId = getStringValue(AT_MOD_ID, attributes, null);
         String name = getStringValue(AT_ITEM_NAME, attributes, null);
 
-        if (modId != null && name != null) {
+        if (MOD_ID_ML.equals(modId)) {
+            res = getMaterialLibStack(name, stackSize);
+            useMeta = true;
+        } else if (modId != null && name != null) {
 
             Item i = GameRegistry.findItem(modId, name);
             if (i != null) {
@@ -445,6 +457,39 @@ public class RecipeConfigParser extends DefaultHandler {
                 useMeta,
                 getFloatValue(AT_MULTIPLIER, attributes, 1),
                 getIntValue(AT_SLOT, attributes, -1));
+    }
+
+    /// The stack a `modID="ml"` entry names through its `itemName` of the form `<material>:<shape>`, where the shape
+    /// token may contain `_` but never `:`. Null when MaterialLib is absent, the name is malformed, or nothing is
+    /// registered under it.
+    private static ItemStack getMaterialLibStack(String itemName, int stackSize) {
+        if (itemName == null || !Loader.isModLoaded(MATERIAL_LIB_MODID)) {
+            return null;
+        }
+        String[] parts = itemName.split(":", -1);
+        if (parts.length != 2 || parts[0].isEmpty() || parts[1].isEmpty()) {
+            Log.warn(LP + "Malformed MaterialLib reference \"" + itemName + "\", expected <material>:<shape>");
+            materialLibInvalid++;
+            return null;
+        }
+        ItemStack res = MaterialLibStacks.getStack(parts[0], parts[1], stackSize);
+        if (res == null) {
+            materialLibInvalid++;
+        } else {
+            materialLibResolved++;
+        }
+        return res;
+    }
+
+    /// Reports how many MaterialLib references EnderIO's config files named, once its config load has finished.
+    public static void logMaterialLibSummary() {
+        if (materialLibResolved + materialLibInvalid > 0) {
+            Log.info(
+                    "EnderIO: resolved " + materialLibResolved
+                            + " MaterialLib entries ("
+                            + materialLibInvalid
+                            + " invalid)");
+        }
     }
 
     public static boolean getBooleanValue(String qName, Attributes attributes, boolean def) {
