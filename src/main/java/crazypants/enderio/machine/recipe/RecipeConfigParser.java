@@ -64,7 +64,7 @@ public class RecipeConfigParser extends DefaultHandler {
     public static final String AT_EXP = "exp";
     public static final String AT_ALLOW_MISSING = "allowMissing";
 
-    /// The `modID` marking an `itemName` of the form `<material>:<shape>` that names a MaterialLib stack.
+    /// The `modID` under which an `itemName` of the form `<material>:<shape>` names a MaterialLib stack.
     private static final String MOD_ID_ML = "ml";
 
     private static final String MATERIAL_LIB_MODID = "materiallib";
@@ -434,6 +434,7 @@ public class RecipeConfigParser extends DefaultHandler {
 
         if (MOD_ID_ML.equals(modId)) {
             res = getMaterialLibStack(name, stackSize);
+            // A MaterialLib stack carries its material in the metadata, so itemMeta="*" cannot apply.
             useMeta = true;
         } else if (modId != null && name != null) {
 
@@ -459,9 +460,8 @@ public class RecipeConfigParser extends DefaultHandler {
                 getIntValue(AT_SLOT, attributes, -1));
     }
 
-    /// The stack a `modID="ml"` entry names through its `itemName` of the form `<material>:<shape>`, where the shape
-    /// token may contain `_` but never `:`. Null when MaterialLib is absent, the name is malformed, or nothing is
-    /// registered under it.
+    /// The stack `itemName` names, or null when MaterialLib is absent, the name is malformed, or the pair resolves
+    /// to nothing.
     private static ItemStack getMaterialLibStack(String itemName, int stackSize) {
         if (itemName == null || !Loader.isModLoaded(MATERIAL_LIB_MODID)) {
             return null;
@@ -481,11 +481,12 @@ public class RecipeConfigParser extends DefaultHandler {
         return res;
     }
 
-    /// Reports how many MaterialLib references EnderIO's config files named, once its config load has finished.
+    /// Logs how many MaterialLib references the recipe configs named. Call once config loading has finished.
     public static void logMaterialLibSummary() {
         if (materialLibResolved + materialLibInvalid > 0) {
             Log.info(
-                    "EnderIO: resolved " + materialLibResolved
+                    LP + "Resolved "
+                            + materialLibResolved
                             + " MaterialLib entries ("
                             + materialLibInvalid
                             + " invalid)");
