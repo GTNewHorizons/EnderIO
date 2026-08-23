@@ -26,12 +26,15 @@ public class PacketUtil {
         if (!(container instanceof IContainerWithTileEntity)) {
             Log.LOGGER.warn(
                     Log.securityMarker,
-                    "Player {} tried to send {} while not opening correct GUI. Target TileEntity at {}, {}, {}",
+                    "Player {} tried to send {} while not opening correct GUI. Target TileEntity {} at {}, {}, {} in {}. Current container {}",
                     player.getGameProfile(),
                     messageClass.getSimpleName(),
+                    receivedTile,
                     receivedTile.xCoord,
                     receivedTile.yCoord,
-                    receivedTile.zCoord);
+                    receivedTile.zCoord,
+                    receivedTile.getWorldObj().provider.dimensionId,
+                    container);
             return true;
         }
         TileEntity expectedTile = ((IContainerWithTileEntity) container).getTileEntity();
