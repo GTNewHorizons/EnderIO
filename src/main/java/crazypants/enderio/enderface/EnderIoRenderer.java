@@ -46,7 +46,10 @@ public class EnderIoRenderer extends TileEntitySpecialRenderer implements IItemR
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float f) {
 
         EntityLivingBase entityPlayer = Minecraft.getMinecraft().thePlayer;
-        Matrix4d lookMat = RenderUtil.createBillboardMatrix(te, entityPlayer);
+        EntityLivingBase viewEntity = Minecraft.getMinecraft().renderViewEntity != null
+                ? Minecraft.getMinecraft().renderViewEntity
+                : entityPlayer;
+        Matrix4d lookMat = RenderUtil.createBillboardMatrix(te, viewEntity);
 
         int brightness = RenderUtil.setTesselatorBrightness(entityPlayer.worldObj, te.xCoord, te.yCoord, te.zCoord);
         render(x, y, z, lookMat, brightness);

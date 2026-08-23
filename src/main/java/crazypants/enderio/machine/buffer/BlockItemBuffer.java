@@ -26,6 +26,7 @@ public class BlockItemBuffer extends ItemBlockWithMetadata {
         OMNI(true, true, false),
         CREATIVE(true, true, true);
 
+        public static final Type[] VALUES = values();
         final boolean hasInventory;
         final boolean hasPower;
         final boolean isCreative;
@@ -60,14 +61,14 @@ public class BlockItemBuffer extends ItemBlockWithMetadata {
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> list) {
-        for (Type type : Type.values()) {
+        for (Type type : Type.VALUES) {
             list.add(new ItemStack(item, 1, type.ordinal()));
         }
     }
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return Type.values()[stack.getItemDamage()].getUnlocalizedName();
+        return Type.VALUES[stack.getItemDamage()].getUnlocalizedName();
     }
 
     @Override
@@ -78,7 +79,7 @@ public class BlockItemBuffer extends ItemBlockWithMetadata {
             TileEntity te = world.getTileEntity(x, y, z);
             if (te instanceof TileBuffer) {
                 TileBuffer buffer = ((TileBuffer) te);
-                Type t = Type.values()[metadata];
+                Type t = Type.VALUES[metadata];
                 buffer.setHasInventory(t.hasInventory);
                 buffer.setHasPower(t.hasPower);
                 buffer.setCreative(t.isCreative);

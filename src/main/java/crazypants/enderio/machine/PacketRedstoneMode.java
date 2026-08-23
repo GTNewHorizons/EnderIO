@@ -46,7 +46,7 @@ public class PacketRedstoneMode implements IMessage, IMessageHandler<PacketRedst
         y = buf.readInt();
         z = buf.readInt();
         short ordinal = buf.readShort();
-        mode = RedstoneControlMode.values()[ordinal];
+        mode = RedstoneControlMode.VALUES[ordinal];
     }
 
     @Override
