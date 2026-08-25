@@ -111,7 +111,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         if (slot < 0 || slot > inv.length - 1) {
             return null;
         }
-        if (slot == 2 && !cacheXPw(slot)) return null;
+        if (slot == 2 && !cacheXPwrapper(slot)) return null;
         return inv[slot];
     }
 
@@ -143,7 +143,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         return result;
     }
 
-    public boolean cacheXPw() {
+    public boolean cacheXPwrapper() {
         if (inv[2] == null) return false;
         int LV = getCurrentEnchantmentCost();
         if (LV == 0) return true;
@@ -463,7 +463,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     @Override
     public boolean canExtractItem(int p_102008_1_, ItemStack p_102008_2_, int p_102008_3_) {
-        if (p_102008_1_ == 2 && isAllowedBlockBeneath()) return cacheXPw();
+        if (p_102008_1_ == 2 && isAllowedBlockBeneath()) return cacheXPwrapper();
         return true;
     }
 
