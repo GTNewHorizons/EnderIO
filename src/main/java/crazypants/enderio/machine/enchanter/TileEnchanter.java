@@ -225,7 +225,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
                 if (actual) jar.setXP(ebx);
                 return true;
             }
-            if (actual) cachedXPsources.remove(Integer.valueOf(nlm));
+            if (actual) cachedXPsources.remove(nlm);
         }
         return false;
     }
