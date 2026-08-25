@@ -111,7 +111,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         if (slot < 0 || slot > inv.length - 1) {
             return null;
         }
-        if (slot == 2 && !cacheXPwrapper(slot)) return null;
+        if (slot == 2 && !doesCraftHaveXP(slot)) return null;
         return inv[slot];
     }
 
@@ -143,14 +143,14 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         return result;
     }
 
-    public boolean cacheXPwrapper() {
+    public boolean doesCraftHaveXP() {
         if (inv[2] == null) return false;
         int LV = getCurrentEnchantmentCost();
         if (LV == 0) return true;
-        return cacheXP(XpUtil.getExperienceForLevel(LV));
+        return checkAndCacheXPSources(XpUtil.getExperienceForLevel(LV));
     }
 
-    public boolean cacheXP(int xpCost) {
+    public boolean checkAndCacheXPSources(int xpCost) {
         if (drainFromCache(xpCost, false)) return true;
         cachedXPsources.clear();
         int pleasedontcrashtheserver = 0; // prevents chunk data bloat from malicious players
@@ -236,7 +236,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         int LV = getCurrentEnchantmentCost();
         if (LV == 0) return false;
         int xpCost = XpUtil.getExperienceForLevel(LV * amt);
-        if (!cacheXP(xpCost)) return true;
+        if (!checkAndCacheXPSources(xpCost)) return true;
         return !drainFromCache(xpCost, !worldObj.isRemote);
     }
 
@@ -462,8 +462,8 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     }
 
     @Override
-    public boolean canExtractItem(int p_102008_1_, ItemStack p_102008_2_, int p_102008_3_) {
-        if (p_102008_1_ == 2 && isAllowedBlockBeneath()) return cacheXPwrapper();
+    public boolean canExtractItem(int slot, ItemStack p_102008_2_, int p_102008_3_) {
+        if (slot == 2 && isAllowedBlockBeneath()) return doesCraftHaveXP();
         return true;
     }
 
