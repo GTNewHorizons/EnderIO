@@ -32,7 +32,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     private final ItemStack[] inv = new ItemStack[3];
     private byte[] stacksizes = new byte[2];
 
-    private final LongList cachedXPsources = new LongArrayList<>();
+    private final IntList cachedXPsources = new IntArrayList<>();
 
     private short facing = (short) ForgeDirection.NORTH.ordinal();
 
@@ -71,7 +71,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         root.setTag("Items", itemList);
         root.setByteArray("SizeCache", stacksizes);
         root.setShort("facing", facing);
-        root.setIntArray("XpCache", cachedXPsources.toLongArray());
+        root.setIntArray("XpCache", cachedXPsources.toIntArray());
     }
 
     @Override
@@ -92,7 +92,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         cachedXPsources.clear();
         int[] xpcache = root.getIntArray("XpCache");
         if (xpcache != null) {
-          cachedXPsources.addAll(LongList.of(xpcache));
+          cachedXPsources.addAll(IntList.of(xpcache));
         }
     }
 
