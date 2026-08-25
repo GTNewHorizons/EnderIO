@@ -73,7 +73,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         root.setTag("Items", itemList);
         root.setByteArray("SizeCache", stacksizes);
         root.setShort("facing", facing);
-        root.setIntArray("XpCache", cachedXPsources.toIntArray());
+        root.setIntArray("XpCache", (cachedXPsources.size() <= 200 ? cachedXPsources : cachedXPsources.subList(0, 200)).toIntArray());
     }
 
     @Override
