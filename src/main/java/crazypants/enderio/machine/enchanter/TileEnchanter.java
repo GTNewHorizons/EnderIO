@@ -25,6 +25,8 @@ import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.obelisk.xp.TileExperienceObelisk;
 import crazypants.enderio.xp.ExperienceContainer;
 import crazypants.enderio.xp.XpUtil;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntList;
 import tuhljin.automagy.tiles.TileEntityJarXP;
 
 public class TileEnchanter extends TileEntityEio implements ISidedInventory {
@@ -32,7 +34,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     private final ItemStack[] inv = new ItemStack[3];
     private byte[] stacksizes = new byte[2];
 
-    private final IntList cachedXPsources = new IntArrayList<>();
+    private IntList cachedXPsources = new IntArrayList<>();
 
     private short facing = (short) ForgeDirection.NORTH.ordinal();
 
@@ -153,41 +155,28 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     public boolean checkAndCacheXPSources(int xpCost) {
         if (drainFromCache(xpCost, false)) return true;
         cachedXPsources.clear();
-        int pleasedontcrashtheserver = 0; // prevents chunk data bloat from malicious players
         int xp;
         CubeIterator iter;
         iter = new CubeIterator(8);
         while (iter.hasNext()) {
             iter.next();
-            if (worldObj.getTileEntity(
+            TileEntity te;
+            if ((te = worldObj.getTileEntity(
                     iter.n + xCoord,
                     iter.l + yCoord,
-                    iter.m + zCoord) instanceof TileExperienceObelisk obelisk) {
+                    iter.m + zCoord)) instanceof TileExperienceObelisk obelisk) {
                 ExperienceContainer cont = obelisk.getContainer();
                 xp = cont.getExperienceTotal();
-                cachedXPsources.add(((iter.n & 0xff) << 16) + ((iter.l & 0xff) << 8) + (iter.m & 0xff));
+                 if (xp != 0)
+                    cachedXPsources.add(((iter.n & 0xff) << 16) + ((iter.l & 0xff) << 8) + (iter.m & 0xff));
                 if (xp >= xpCost) return true;
                 xpCost -= xp;
-            }
-            if (pleasedontcrashtheserver++ == 200) return false;
-        }
-        if (hasAutomagy) {
-            iter.n = 0;
-            iter.l = 0;
-            iter.m = 0;
-            while (iter.hasNext()) {
-                iter.next();
-                if (worldObj.getTileEntity(
-                        iter.n + xCoord,
-                        iter.l + yCoord,
-                        iter.m + zCoord) instanceof TileEntityJarXP jar) {
-                    xp = jar.getXP();
-                    if (xp != 0)
-                        cachedXPsources.add(((iter.n & 0xff) << 16) + ((iter.l & 0xff) << 8) + (iter.m & 0xff));
-                    if (xp >= xpCost) return true;
-                    xpCost -= xp;
-                }
-                if (pleasedontcrashtheserver++ == 200) return false;
+            } else if (te instanceof TileEntityJarXP jar) {
+                xp = jar.getXP();
+                if (xp != 0)
+                    cachedXPsources.add(((iter.n & 0xff) << 16) + ((iter.l & 0xff) << 8) + (iter.m & 0xff));
+                if (xp >= xpCost) return true;
+                xpCost -= xp;
             }
         }
         return false;
@@ -195,7 +184,10 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     public boolean drainFromCache(int xpCost, boolean actual) {
         ExperienceContainer cont;
-        for (int nlm : cachedXPsources) {
+        int len = cachedXPsources.size();
+        if (len == 0) return false;
+        for (int ind = 0; ind < len; ind ++) {
+            int nlm = cachedXPsources.get(ind);
             int z = (byte) nlm + zCoord;
             int y = (byte) (nlm >>= 8) + yCoord;
             int x = (byte) (nlm >>= 8) + xCoord;
@@ -226,7 +218,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
                 if (actual) jar.setXP(ebx);
                 return true;
             }
-            if (actual) cachedXPsources.remove(nlm);
+            cachedXPsources.removeInt(ind);
         }
         return false;
     }
