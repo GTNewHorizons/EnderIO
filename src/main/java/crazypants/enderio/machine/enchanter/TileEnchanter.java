@@ -91,7 +91,9 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         facing = root.getShort("facing");
         cachedXPsources.clear();
         int[] xpcache = root.getIntArray("XpCache");
-        if (xpcache != null) Arrays.stream(xpcache).forEach(i -> cachedXPsources.add(i));
+        if (xpcache != null) {
+          cachedXPsources.addAll(LongList.of(xpcache));
+        }
     }
 
     @Override
