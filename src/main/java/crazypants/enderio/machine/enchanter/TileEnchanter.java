@@ -32,7 +32,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     private final ItemStack[] inv = new ItemStack[3];
     private byte[] stacksizes = new byte[2];
 
-    private final ArrayList<Integer> cachedXPsources = new ArrayList<>();
+    private final LongList cachedXPsources = new LongArrayList<>();
 
     private short facing = (short) ForgeDirection.NORTH.ordinal();
 
