@@ -106,11 +106,8 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         return inv.length;
     }
 
-    // private static ItemStack air = new ItemStack(Blocks.air, 0);
-
     @Override
     public ItemStack getStackInSlot(int slot) {
-        // if (slot == 2) return inv[2] != null ? air : null;
         if (slot < 0 || slot > inv.length - 1) {
             return null;
         }
@@ -155,7 +152,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     public boolean cacheXP(int xpCost) {
         if (drainFromCache(xpCost, false)) return true;
         cachedXPsources.clear();
-        int pleasedontcrashtheserver = 0;
+        int pleasedontcrashtheserver = 0; // prevents chunk data bloat from malicious players
         int xp;
         CubeIterator iter;
         iter = new CubeIterator(8);
@@ -240,7 +237,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         int xpCost = XpUtil.getExperienceForLevel(LV * amt);
         if (!cacheXP(xpCost)) return true;
         return !drainFromCache(xpCost, !worldObj.isRemote);
-    } // spotless please let me remove the space before the exclam it looks cool
+    }
 
     // checks AND drains XP; returns true if xp is NOT sufficient
     // also removes the items from the other two slots when automation does the recipe
@@ -459,8 +456,8 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     }
 
     @Override
-    public boolean canInsertItem(int p_102007_1_, ItemStack p_102007_2_, int p_102007_3_) {
-        return p_102007_1_ < 2;
+    public boolean canInsertItem(int slot, ItemStack p_102007_2_, int p_102007_3_) {
+        return slot & -2 == 0; // most optimal way to check if 0 or 1
     }
 
     @Override
