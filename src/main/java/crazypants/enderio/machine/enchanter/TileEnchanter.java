@@ -233,18 +233,18 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     // part of the next method
     public boolean absorbXP(int amt) {
-        if (inv[2] == null) return true;
+        if (inv[2] == null) return false;
         int LV = getCurrentEnchantmentCost();
-        if (LV == 0) return false;
+        if (LV == 0) return true;
         int xpCost = XpUtil.getExperienceForLevel(LV * amt);
-        if (!checkAndCacheXPSources(xpCost)) return true;
-        return !drainFromCache(xpCost, !worldObj.isRemote);
+        if (!checkAndCacheXPSources(xpCost)) return false;
+        return drainFromCache(xpCost, !worldObj.isRemote);
     }
 
-    // checks AND drains XP; returns true if xp is NOT sufficient
+    // checks AND drains XP; returns false if xp is not sufficient
     // also removes the items from the other two slots when automation does the recipe
     public boolean checkAndDrainXP(int amt) {
-        if (absorbXP(amt)) return true;
+        if (!absorbXP(amt)) return false;
         EnchantmentData enchData = getCurrentEnchantmentData();
         EnchanterRecipe recipe = getCurrentEnchantmentRecipe();
         ItemStack curStack = inv[1];
@@ -264,7 +264,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         if (!worldObj.isRemote) {
             worldObj.playSoundEffect(xCoord + 0.5d, yCoord + 0.5d, zCoord + 0.5d, "random.anvil_land", 0.2f, 1.0f);
         }
-        return false;
+        return true;
     }
 
     @Override
