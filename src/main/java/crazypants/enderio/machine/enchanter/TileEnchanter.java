@@ -111,6 +111,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         if (slot < 0 || slot > inv.length - 1) {
             return null;
         }
+        if (slot == 2 && !cacheXPw(slot)) return null;
         return inv[slot];
     }
 
