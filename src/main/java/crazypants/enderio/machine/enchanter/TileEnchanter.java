@@ -34,7 +34,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     private final ItemStack[] inv = new ItemStack[3];
     private byte[] stacksizes = new byte[2];
 
-    private IntList cachedXPsources = new IntArrayList<>();
+    private IntList cachedXPsources = new IntArrayList();
 
     private short facing = (short) ForgeDirection.NORTH.ordinal();
 
@@ -113,7 +113,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         if (slot < 0 || slot > inv.length - 1) {
             return null;
         }
-        if (slot == 2 && !doesCraftHaveXP(slot)) return null;
+        if (slot == 2 && !doesCraftHaveXP()) return null;
         return inv[slot];
     }
 
