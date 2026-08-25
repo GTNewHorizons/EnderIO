@@ -300,10 +300,11 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
             output = new ItemStack(Items.enchanted_book);
             Items.enchanted_book.addEnchantment(output, enchantment);
         }
-        setOutput(output);
 
         if (inv[0] != null) stacksizes[0] = (byte) inv[0].stackSize;
         if (inv[1] != null) stacksizes[1] = (byte) inv[1].stackSize;
+
+        setOutput(output);
     }
 
     @Override
