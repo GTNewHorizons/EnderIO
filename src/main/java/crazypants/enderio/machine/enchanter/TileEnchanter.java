@@ -458,7 +458,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     @Override
     public boolean canInsertItem(int slot, ItemStack p_102007_2_, int p_102007_3_) {
-        return slot & -2 == 0; // most optimal way to check if 0 or 1
+        return slot == 0 || slot == 1;
     }
 
     @Override
