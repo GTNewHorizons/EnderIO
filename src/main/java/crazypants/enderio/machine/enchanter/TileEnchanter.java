@@ -212,7 +212,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
                 if (actual) cont.addExperience(ebx);
                 return true;
             }
-            if (te instanceof TileEntityJarXP jar) {
+            if (hasAutomagy && te instanceof TileEntityJarXP jar) {
                 int xp = jar.getXP();
                 if (xp == 0) continue;
                 int ebx = xp - xpCost; // 5head JIT optimization
