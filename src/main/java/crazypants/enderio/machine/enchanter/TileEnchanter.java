@@ -464,8 +464,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     @Override
     public boolean canExtractItem(int slot, ItemStack p_102008_2_, int p_102008_3_) {
-        if (slot == 2 && isAllowedBlockBeneath()) return doesCraftHaveXP();
-        return true;
+        return slot == 2 ? isAllowedBlockBeneath() : true;
     }
 
     public boolean isAllowedBlockBeneath() {
