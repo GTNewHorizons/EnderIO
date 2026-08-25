@@ -196,10 +196,11 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     public boolean drainFromCache(int xpCost, boolean actual) {
         ExperienceContainer cont;
         for (int nlm : cachedXPsources) {
-            TileEntity te = worldObj.getTileEntity( // so retro
-                    (byte) (nlm >> 16) + xCoord,
-                    (byte) (nlm >> 8) + yCoord,
-                    (byte) nlm + zCoord);
+            int z = (byte) nlm + zCoord;
+            int y = (byte) (nlm >>= 8) + yCoord;
+            int x = (byte) (nlm >>= 8) + xCoord;
+            if (!worldObj.blockExists(x, y, z)) continue;
+            TileEntity te = worldObj.getTileEntity(x, y, z);
             if (te instanceof TileExperienceObelisk obelisk) {
                 cont = obelisk.getContainer();
                 int xp = cont.getExperienceTotal();
