@@ -100,7 +100,7 @@ public class TileReservoir extends TileEntityEio implements IFluidHandler, ITank
 
             if (regenTank.isFull() && !tank.isFull()) {
                 ++ticksSinceFill;
-                if (ticksSinceFill >= 10) {
+                if (ticksSinceFill >= 5) {
                     ticksSinceFill = 0;
                     tank.fill(WATER_BUCKET, true);
                     tankDirty = true;
