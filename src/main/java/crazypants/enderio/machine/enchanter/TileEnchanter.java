@@ -160,11 +160,11 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         iter = new CubeIterator(8);
         while (iter.hasNext()) {
             iter.next();
-            TileEntity te;
-            if ((te = worldObj.getTileEntity(
+            final TileEntity te = worldObj.getTileEntity(
                     iter.n + xCoord,
                     iter.l + yCoord,
-                    iter.m + zCoord)) instanceof TileExperienceObelisk obelisk) {
+                    iter.m + zCoord);
+            if (te instanceof TileExperienceObelisk obelisk) {
                 ExperienceContainer cont = obelisk.getContainer();
                 xp = cont.getExperienceTotal();
                  if (xp != 0)
