@@ -2,9 +2,6 @@ package crazypants.enderio.machine.enchanter;
 
 import static crazypants.enderio.EnderIO.hasAutomagy;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -73,7 +70,9 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         root.setTag("Items", itemList);
         root.setByteArray("SizeCache", stacksizes);
         root.setShort("facing", facing);
-        root.setIntArray("XpCache", (cachedXPsources.size() <= 200 ? cachedXPsources : cachedXPsources.subList(0, 200)).toIntArray());
+        root.setIntArray(
+                "XpCache",
+                (cachedXPsources.size() <= 200 ? cachedXPsources : cachedXPsources.subList(0, 200)).toIntArray());
     }
 
     @Override
@@ -94,7 +93,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         cachedXPsources.clear();
         int[] xpcache = root.getIntArray("XpCache");
         if (xpcache != null) {
-          cachedXPsources.addAll(IntList.of(xpcache));
+            cachedXPsources.addAll(IntList.of(xpcache));
         }
     }
 
@@ -160,21 +159,16 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         iter = new CubeIterator(8);
         while (iter.hasNext()) {
             iter.next();
-            final TileEntity te = worldObj.getTileEntity(
-                    iter.n + xCoord,
-                    iter.l + yCoord,
-                    iter.m + zCoord);
+            final TileEntity te = worldObj.getTileEntity(iter.n + xCoord, iter.l + yCoord, iter.m + zCoord);
             if (te instanceof TileExperienceObelisk obelisk) {
                 ExperienceContainer cont = obelisk.getContainer();
                 xp = cont.getExperienceTotal();
-                 if (xp != 0)
-                    cachedXPsources.add(((iter.n & 0xff) << 16) + ((iter.l & 0xff) << 8) + (iter.m & 0xff));
+                if (xp != 0) cachedXPsources.add(((iter.n & 0xff) << 16) + ((iter.l & 0xff) << 8) + (iter.m & 0xff));
                 if (xp >= xpCost) return true;
                 xpCost -= xp;
             } else if (hasAutomagy && te instanceof TileEntityJarXP jar) {
                 xp = jar.getXP();
-                if (xp != 0)
-                    cachedXPsources.add(((iter.n & 0xff) << 16) + ((iter.l & 0xff) << 8) + (iter.m & 0xff));
+                if (xp != 0) cachedXPsources.add(((iter.n & 0xff) << 16) + ((iter.l & 0xff) << 8) + (iter.m & 0xff));
                 if (xp >= xpCost) return true;
                 xpCost -= xp;
             }
@@ -186,7 +180,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         ExperienceContainer cont;
         int len = cachedXPsources.size();
         if (len == 0) return false;
-        for (int ind = 0; ind < len; ind ++) {
+        for (int ind = 0; ind < len; ind++) {
             int nlm = cachedXPsources.get(ind);
             int z = (byte) nlm + zCoord;
             int y = (byte) (nlm >>= 8) + yCoord;
@@ -267,9 +261,10 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
     @Override
     public void setInventorySlotContents(int slot, ItemStack contents) {
         if (slot == 2) {
-            if (inv[2] == null || inv[2].stackSize <= 0 || contents != null && contents.stackSize > 0
-                    && contents.getItem() == Items.enchanted_book
-                    && contents.stackSize == inv[2].stackSize)
+            if (inv[2] == null || inv[2].stackSize <= 0
+                    || contents != null && contents.stackSize > 0
+                            && contents.getItem() == Items.enchanted_book
+                            && contents.stackSize == inv[2].stackSize)
                 return;
             if (checkAndDrainXP(1)) Log.warn("Potentially duped books at: " + xCoord + " " + yCoord + " " + zCoord);
             // return;
