@@ -185,7 +185,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
         int len = cachedXPsources.size();
         if (len == 0) return false;
         for (int ind = 0; ind < len; ind++) {
-            int nlm = cachedXPsources.get(ind);
+            int nlm = cachedXPsources.getInt(ind);
             int z = (byte) nlm + zCoord;
             int y = (byte) (nlm >>= 8) + yCoord;
             int x = (byte) (nlm >>= 8) + xCoord;
