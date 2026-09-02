@@ -24,7 +24,10 @@ public class WirelessChargedLocation {
          * use (unless ~4B changes happen in between). Do this instead directly updating so that WirelessChargedLocation
          * can be used while the TileEntity is still in construction (or loading).
          */
-        this.lastChangeCount = EnderIO.proxy.wirelessChargerController.getChangeCount() - 1;
+        // The controller only exists on the server (created in FMLServerAboutToStartEvent), so it is null on
+        // clients connected to a dedicated server. Chargers are only queried server-side, so stay inert there.
+        WirelessChargerController wcc = EnderIO.proxy.wirelessChargerController;
+        this.lastChangeCount = wcc == null ? 0 : wcc.getChangeCount() - 1;
     }
 
     private void updateChargers() {
@@ -41,7 +44,8 @@ public class WirelessChargedLocation {
     }
 
     private void checkChangeCount() {
-        if (lastChangeCount != EnderIO.proxy.wirelessChargerController.getChangeCount()) {
+        WirelessChargerController wcc = EnderIO.proxy.wirelessChargerController;
+        if (wcc != null && lastChangeCount != wcc.getChangeCount()) {
             updateChargers();
         }
     }

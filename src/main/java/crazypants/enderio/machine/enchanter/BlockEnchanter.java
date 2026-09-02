@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
@@ -139,5 +140,26 @@ public class BlockEnchanter extends BlockEio implements IGuiHandler, IResourceTo
     @Override
     public String getUnlocalizedNameForTooltip(ItemStack itemStack) {
         return getUnlocalizedName();
+    }
+
+    @Override
+    public boolean hasComparatorInputOverride() {
+        return true;
+    }
+
+    // 0, 1, 2, 3, 4, 5, 8, 12, 20, 24, 32, 36, 48, 60, 64 are 0-15 respectively
+    // the power values are all possible values of the second slot to make automation possible
+    // (it has to be able to differentiate from them all)
+    @Override
+    public int getComparatorInputOverride(World worldIn, int x, int y, int z, int side) {
+        if (worldIn.getTileEntity(x, y, z) instanceof IInventory inv) {
+            ItemStack stuff = inv.getStackInSlot(1);
+            int size;
+            return stuff == null ? 0
+                    : (size = stuff.stackSize) < 6 ? size
+                            : size < 40 ? size / 4 + (size < 28 ? 4 : 3)
+                                    : size < 48 ? 12 : size < 60 ? 13 : size < 64 ? 14 : 15;
+        }
+        return 0;
     }
 }

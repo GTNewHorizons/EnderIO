@@ -41,6 +41,8 @@ public class ItemConduitFacade extends Item implements IAdvancedTooltipProvider,
         BASIC,
         HARDENED;
 
+        public static final FacadeType[] VALUES = values();
+
         public String getUnlocName(Item me) {
             return this == BASIC ? me.getUnlocalizedName() : me.getUnlocalizedName() + ".hardened";
         }
@@ -69,14 +71,14 @@ public class ItemConduitFacade extends Item implements IAdvancedTooltipProvider,
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs p_150895_2_, List<ItemStack> list) {
-        for (FacadeType t : FacadeType.values()) {
+        for (FacadeType t : FacadeType.VALUES) {
             list.add(new ItemStack(item, 1, t.ordinal()));
         }
     }
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return FacadeType.values()[stack.getItemDamage()].getUnlocName(this);
+        return FacadeType.VALUES[stack.getItemDamage()].getUnlocName(this);
     }
 
     @Override
@@ -87,7 +89,7 @@ public class ItemConduitFacade extends Item implements IAdvancedTooltipProvider,
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister IIconRegister) {
-        icons = new IIcon[FacadeType.values().length];
+        icons = new IIcon[FacadeType.VALUES.length];
         icons[0] = itemIcon = IIconRegister.registerIcon("enderio:conduitFacade");
         icons[1] = IIconRegister.registerIcon("enderio:conduitFacadeHardened");
         overlayIcon = IIconRegister.registerIcon("enderio:conduitFacadeOverlay");
@@ -131,7 +133,7 @@ public class ItemConduitFacade extends Item implements IAdvancedTooltipProvider,
                 facadeMeta = PainterUtil.adjustFacadeMetadata(facadeID, facadeMeta, side);
                 bundle.setFacadeId(facadeID);
                 bundle.setFacadeMetadata(facadeMeta);
-                bundle.setFacadeType(FacadeType.values()[itemStack.getItemDamage()]);
+                bundle.setFacadeType(FacadeType.VALUES[itemStack.getItemDamage()]);
                 ConduitUtil.playPlaceSound(facadeID.stepSound, world, x, y, z);
                 if (!player.capabilities.isCreativeMode) {
                     itemStack.stackSize--;
