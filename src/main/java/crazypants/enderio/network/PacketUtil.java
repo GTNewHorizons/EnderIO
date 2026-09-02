@@ -41,15 +41,18 @@ public class PacketUtil {
         if (receivedTile != expectedTile) {
             Log.LOGGER.warn(
                     Log.securityMarker,
-                    "Player {} tried to send {} which attempts to modify setting of TileEntity at {}, {}, {}. Expected: {}, {}, {}",
+                    "Player {} tried to send {} which attempts to modify setting of TileEntity at {}, {}, {} in {}. Expected: {}, {}, {} in {}. Current container {}",
                     player.getGameProfile(),
                     messageClass.getSimpleName(),
                     receivedTile.xCoord,
                     receivedTile.yCoord,
                     receivedTile.zCoord,
+                    receivedTile.getWorldObj().provider.dimensionId,
                     expectedTile.xCoord,
                     expectedTile.yCoord,
-                    expectedTile.zCoord);
+                    expectedTile.zCoord,
+                    expectedTile.getWorldObj().provider.dimensionId,
+                    container);
             return true;
         }
         return false;
