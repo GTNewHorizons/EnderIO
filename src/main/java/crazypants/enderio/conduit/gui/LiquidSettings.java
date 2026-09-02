@@ -284,6 +284,8 @@ public class LiquidSettings extends BaseSettingsPanel {
         rsB.onGuiInit();
         colorB.onGuiInit();
 
+        gui.getContainer().setInventorySlotsVisible(true);
+
         if (!isEnder) {
             return;
         }
@@ -295,7 +297,6 @@ public class LiquidSettings extends BaseSettingsPanel {
         roundRobinB.onGuiInit();
         roundRobinB.setSelected(eConduit.isRoundRobin(gui.getDir()));
 
-        gui.getContainer().setInventorySlotsVisible(true);
         if (isFilterVisible()) {
             addFilterTooltips();
 
