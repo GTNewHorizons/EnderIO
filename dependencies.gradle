@@ -1,9 +1,9 @@
 // Add your dependencies here
 
 dependencies {
-    api('com.github.GTNewHorizons:EnderCore:99.99.01:dev') {transitive = false}
+    api('com.github.GTNewHorizons:EnderCore:0.5.15:dev') {transitive = false}
     compileOnly('com.github.GTNewHorizons:ForestryMC:4.11.36:dev')
-    compileOnly('com.github.GTNewHorizons:NotEnoughItems:2.8.124-GTNH:dev')
+    devOnlyNonPublishable('com.github.GTNewHorizons:NotEnoughItems:2.8.129-GTNH:dev')
     api("com.github.GTNewHorizons:GTNHLib:0.11.37:dev")
     compileOnly('com.github.GTNewHorizons:BuildCraft:7.1.63:dev')
     api('curse.maven:cofh-lib-220333:2388748') // https://www.curseforge.com/minecraft/mc-mods/cofh-lib/files/2388748
