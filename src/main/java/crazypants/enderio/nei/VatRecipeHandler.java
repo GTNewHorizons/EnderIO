@@ -7,11 +7,8 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import crazypants.enderio.EnderIO;
-import gregtech.api.util.GTUtility;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -28,7 +25,7 @@ import codechicken.nei.recipe.GuiCraftingRecipe;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.GuiUsageRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import crazypants.enderio.fluid.Fluids;
+import crazypants.enderio.EnderIO;
 import crazypants.enderio.gui.GuiContainerBaseEIO;
 import crazypants.enderio.machine.recipe.IRecipe;
 import crazypants.enderio.machine.recipe.RecipeInput;
@@ -36,6 +33,7 @@ import crazypants.enderio.machine.vat.GuiVat;
 import crazypants.enderio.machine.vat.VatRecipeManager;
 import crazypants.enderio.power.PowerDisplayUtil;
 import crazypants.util.ColorUtils;
+import gregtech.api.util.GTUtility;
 
 public class VatRecipeHandler extends TemplateRecipeHandler {
 
@@ -337,7 +335,7 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
     private static ItemStack getItemStackFromFluid(Fluid fluid, int amount) {
         ItemStack stack = null;
 
-        if (EnderIO.hasGT5)  {
+        if (EnderIO.hasGT5) {
             stack = GTUtility.getFluidDisplayStack(new FluidStack(fluid, amount), false);
         }
 
