@@ -59,9 +59,19 @@ public class PacketTeleport extends MessageTileEntity<TileTelePad>
 
     @Override
     public IMessage onMessage(PacketTeleport message, MessageContext ctx) {
-        World world = ctx.side.isClient() ? EnderIO.proxy.getClientWorld() : message.getWorld(ctx);
+        boolean isClient = ctx.side.isClient();
+        World world = isClient ? EnderIO.proxy.getClientWorld() : message.getWorld(ctx);
         TileTelePad te = message.getTileEntity(world);
-        if (PacketUtil.isInvalidPacketForGui(ctx, te, getClass())) return null;
+        if (te == null) return null;
+        if (!isClient) {
+            // BEGIN is the only type of PacketTeleport that originates from a TE GUI
+            if (message.type == Type.BEGIN && PacketUtil.isInvalidPacketForGui(ctx, te, getClass())) {
+                return null;
+            }
+            // TELEPORT is never sent to server
+            if (message.type == Type.TELEPORT) return null;
+            // other types are sent in background without a gui, so no checks
+        }
         Entity e = world.getEntityByID(message.entityId);
         switch (message.type) {
             case BEGIN:
