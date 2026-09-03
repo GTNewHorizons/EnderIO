@@ -152,28 +152,7 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GuiDraw.changeTexture(getGuiTexture());
         GuiDraw.drawTexturedModalRect(22, 0, 27, 11, 123, 52);
-    }
 
-    @Override
-    public List<String> handleItemTooltip(GuiRecipe<?> gui, ItemStack stack, List<String> currenttip, int recipe) {
-        currenttip = super.handleItemTooltip(gui, stack, currenttip, recipe);
-        final CachedRecipe crecipe = arecipes.get(recipe);
-        if (crecipe instanceof InnerVatRecipe r) {
-            if (gui.isMouseOver(r.inFluidStack, recipe)) {
-                currenttip
-                        .add(1, EnumChatFormatting.GRAY.toString() + r.inFluidStack.item.stackSize + " " + Fluids.MB());
-            }
-            if (gui.isMouseOver(r.resultStack, recipe)) {
-                currenttip
-                        .add(1, EnumChatFormatting.GRAY.toString() + r.resultStack.item.stackSize + " " + Fluids.MB());
-            }
-        }
-
-        return currenttip;
-    }
-
-    @Override
-    public void drawExtras(int recipeIndex) {
         InnerVatRecipe rec = (InnerVatRecipe) arecipes.get(recipeIndex);
         if (rec.inFluid != null && rec.inFluid.getFluid() != null) {
             RenderUtil.renderGuiTank(
@@ -209,7 +188,26 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
             String str = "x" + mult;
             GuiDraw.drawStringC(str, ps.relx + 8, ps.rely + 19, ColorUtils.neiMultiplierString.getColor(), false);
         }
+    }
 
+    @Override
+    public List<String> handleItemTooltip(GuiRecipe<?> gui, ItemStack stack, List<String> currenttip, int recipe) {
+        if (EnderIO.hasGT5) return super.handleItemTooltip(gui, stack, currenttip, recipe);
+
+        currenttip = super.handleItemTooltip(gui, stack, currenttip, recipe);
+        final CachedRecipe crecipe = arecipes.get(recipe);
+        if (crecipe instanceof InnerVatRecipe r) {
+            if (gui.isMouseOver(r.inFluidStack, recipe)) {
+                currenttip
+                        .add(1, EnumChatFormatting.GRAY.toString() + r.inFluidStack.item.stackSize + " " + Fluids.MB());
+            }
+            if (gui.isMouseOver(r.resultStack, recipe)) {
+                currenttip
+                        .add(1, EnumChatFormatting.GRAY.toString() + r.resultStack.item.stackSize + " " + Fluids.MB());
+            }
+        }
+
+        return currenttip;
     }
 
     @Override
@@ -356,7 +354,7 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
         ItemStack stack = null;
 
         if (EnderIO.hasGT5) {
-            stack = GTUtility.getFluidDisplayStack(new FluidStack(fluid, amount), false);
+            stack = GTUtility.getFluidDisplayStack(new FluidStack(fluid, amount), true);
         }
 
         if (stack == null && fluid.getBlock() != null) {
