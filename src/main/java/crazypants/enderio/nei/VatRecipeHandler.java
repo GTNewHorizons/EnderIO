@@ -9,6 +9,7 @@ import java.util.List;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -26,6 +27,7 @@ import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.GuiUsageRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import crazypants.enderio.EnderIO;
+import crazypants.enderio.fluid.Fluids;
 import crazypants.enderio.gui.GuiContainerBaseEIO;
 import crazypants.enderio.machine.recipe.IRecipe;
 import crazypants.enderio.machine.recipe.RecipeInput;
@@ -150,6 +152,24 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GuiDraw.changeTexture(getGuiTexture());
         GuiDraw.drawTexturedModalRect(22, 0, 27, 11, 123, 52);
+    }
+
+    @Override
+    public List<String> handleItemTooltip(GuiRecipe<?> gui, ItemStack stack, List<String> currenttip, int recipe) {
+        currenttip = super.handleItemTooltip(gui, stack, currenttip, recipe);
+        final CachedRecipe crecipe = arecipes.get(recipe);
+        if (crecipe instanceof InnerVatRecipe r) {
+            if (gui.isMouseOver(r.inFluidStack, recipe)) {
+                currenttip
+                        .add(1, EnumChatFormatting.GRAY.toString() + r.inFluidStack.item.stackSize + " " + Fluids.MB());
+            }
+            if (gui.isMouseOver(r.resultStack, recipe)) {
+                currenttip
+                        .add(1, EnumChatFormatting.GRAY.toString() + r.resultStack.item.stackSize + " " + Fluids.MB());
+            }
+        }
+
+        return currenttip;
     }
 
     @Override
@@ -403,8 +423,8 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
                 final ItemStack inStack = getItemStackFromFluid(this.inFluid.getFluid(), this.inputAmount);
                 if (inStack != null) {
                     this.inFluidStack = new PositionedStack.Placeholder(inStack, inTankBounds.x, inTankBounds.y, false);
-                    this.inFluidStack.width = inTankBounds.width - 1;
-                    this.inFluidStack.height = inTankBounds.height - 1;
+                    this.inFluidStack.width = inTankBounds.width;
+                    this.inFluidStack.height = inTankBounds.height;
                 }
             }
             if (this.result != null && this.result.getFluid() != null) {
@@ -415,8 +435,8 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
                             outTankBounds.x,
                             outTankBounds.y,
                             false);
-                    this.resultStack.width = outTankBounds.width - 1;
-                    this.resultStack.height = outTankBounds.height - 1;
+                    this.resultStack.width = outTankBounds.width;
+                    this.resultStack.height = outTankBounds.height;
                 }
             }
 
