@@ -571,14 +571,15 @@ public class DarkSteelController {
             return;
         }
         PotionEffect effect = player.getActivePotionEffect(Potion.nightVision);
-        if (isNightVisionUpgradeOrEnchEquipped(player) && isActive(player, Type.NIGHT_VISION)) {
-            // Only (re)apply if there is no effect yet or ours is about to enter the sub-200-tick flicker window.
-            // Skipping non-ambient effects avoids flipping isAmbient via PotionEffect.combine(),
-            // which would prevent removal on toggle-off and strand the player with night vision indefinitely.
+        boolean hasNVUpgrade = isNightVisionUpgradeOrEnchEquipped(player);
+        boolean isNVUpgradeEnabled = isActive(player, Type.NIGHT_VISION);
+        if (hasNVUpgrade && isNVUpgradeEnabled) {
+            // only (re)apply effect if ours is missing or about to expire
             if (effect == null || (effect.getIsAmbient() && effect.getDuration() < 220)) {
                 player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 400, 0, true));
             }
-        } else if (isNightVisionUpgradeOrEnchEquipped(player) && effect != null && effect.getIsAmbient()) {
+        } else if (effect != null && effect.getIsAmbient() && (hasNVUpgrade || isNVUpgradeEnabled)) {
+            // if our effect exists and the player removed the upgrade item or toggled it off (both can't be true here)
             player.removePotionEffect(Potion.nightVision.getId());
         }
     }
@@ -613,8 +614,6 @@ public class DarkSteelController {
         }
         return false;
     }
-
-    // ---
 
     public boolean isNightVisionUpgradeOrEnchEquipped(EntityPlayer player) {
         ItemStack helmet = player.getEquipmentInSlot(4);
