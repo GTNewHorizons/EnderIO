@@ -570,13 +570,16 @@ public class DarkSteelController {
         if (player.worldObj.isRemote) {
             return;
         }
+        PotionEffect effect = player.getActivePotionEffect(Potion.nightVision);
         if (isNightVisionUpgradeOrEnchEquipped(player) && isActive(player, Type.NIGHT_VISION)) {
-            player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 999999, 0, true));
-        } else {
-            PotionEffect effect = player.getActivePotionEffect(Potion.nightVision);
-            if (effect != null && effect.getIsAmbient()) {
-                player.removePotionEffect(Potion.nightVision.getId());
+            // Only (re)apply if there is no effect yet or ours is about to enter the sub-200-tick flicker window.
+            // Skipping non-ambient effects avoids flipping isAmbient via PotionEffect.combine(),
+            // which would prevent removal on toggle-off and strand the player with night vision indefinitely.
+            if (effect == null || (effect.getIsAmbient() && effect.getDuration() < 220)) {
+                player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 400, 0, true));
             }
+        } else if (isNightVisionUpgradeOrEnchEquipped(player) && effect != null && effect.getIsAmbient()) {
+            player.removePotionEffect(Potion.nightVision.getId());
         }
     }
 

@@ -337,8 +337,17 @@ public class KeyTracker {
     }
 
     private void handleNightVision() {
-        if (nightVisionKey.isPressed() && DarkSteelController.instance
-                .isNightVisionUpgradeOrEnchEquipped(Minecraft.getMinecraft().thePlayer)) {
+        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+        if (nightVisionKey.isPressed() && DarkSteelController.instance.isNightVisionUpgradeOrEnchEquipped(player)) {
+            boolean turningOn = !DarkSteelController.instance.isActive(player, Type.NIGHT_VISION);
+            player.worldObj.playSound(
+                    player.posX,
+                    player.posY,
+                    player.posZ,
+                    EnderIO.DOMAIN + (turningOn ? ":ds.nightvision.on" : ":ds.nightvision.off"),
+                    0.1f,
+                    turningOn ? player.worldObj.rand.nextFloat() * 0.4f - 0.2f + 1.0f : 1.0f,
+                    false);
             toggleDarkSteelController(Type.NIGHT_VISION, "darksteel.upgrade.nightVision");
         }
     }
