@@ -107,9 +107,6 @@ public class DarkSteelController {
 
     private final Map<UUID, EnumSet<Type>> allActive = new HashMap<>();
 
-    private boolean nightVisionActive = false;
-    private boolean removeNightvision = false;
-
     private DarkSteelController() {
         PacketHandler.INSTANCE.registerMessage(
                 PacketDarkSteelPowerPacket.class,
@@ -196,6 +193,8 @@ public class DarkSteelController {
             updateSwim(player);
 
             updateSolar(player);
+
+            updateNightvision(player);
         }
     }
 
@@ -447,7 +446,6 @@ public class DarkSteelController {
             if (player == null) {
                 return;
             }
-            updateNightvision(player);
             if (player.capabilities.isFlying) {
                 return;
             }
@@ -569,16 +567,16 @@ public class DarkSteelController {
     }
 
     private void updateNightvision(EntityPlayer player) {
-        if (isNightVisionUpgradeOrEnchEquipped(player) && nightVisionActive) {
-            player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 210, 0, true));
+        if (player.worldObj.isRemote) {
+            return;
         }
-        if (!isNightVisionUpgradeOrEnchEquipped(player) && nightVisionActive) {
-            nightVisionActive = false;
-            removeNightvision = true;
-        }
-        if (removeNightvision) {
-            player.removePotionEffect(Potion.nightVision.getId());
-            removeNightvision = false;
+        if (isNightVisionUpgradeOrEnchEquipped(player) && isActive(player, Type.NIGHT_VISION)) {
+            player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 999999, 0, true));
+        } else {
+            PotionEffect effect = player.getActivePotionEffect(Potion.nightVision);
+            if (effect != null && effect.getIsAmbient()) {
+                player.removePotionEffect(Potion.nightVision.getId());
+            }
         }
     }
 
@@ -620,14 +618,4 @@ public class DarkSteelController {
         return (NightVisionUpgrade.loadFromItem(helmet) != null || isNightVisionEnch(helmet));
     }
 
-    public void setNightVisionActive(boolean isNightVisionActive) {
-        if (nightVisionActive && !isNightVisionActive) {
-            removeNightvision = true;
-        }
-        this.nightVisionActive = isNightVisionActive;
-    }
-
-    public boolean isNightVisionActive() {
-        return nightVisionActive;
-    }
 }
