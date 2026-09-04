@@ -1,9 +1,9 @@
 // Add your dependencies here
 
 dependencies {
-    api('com.github.GTNewHorizons:EnderCore:0.5.14:dev') {transitive = false}
+    api('com.github.GTNewHorizons:EnderCore:0.5.15:dev') {transitive = false}
     compileOnly('com.github.GTNewHorizons:ForestryMC:4.11.37:dev')
-    compileOnly('com.github.GTNewHorizons:NotEnoughItems:2.8.129-GTNH:dev')
+    devOnlyNonPublishable('com.github.GTNewHorizons:NotEnoughItems:2.8.130-GTNH:dev')
     api("com.github.GTNewHorizons:GTNHLib:0.11.44:dev")
     compileOnly('com.github.GTNewHorizons:BuildCraft:7.1.63:dev')
     api('curse.maven:cofh-lib-220333:2388748') // https://www.curseforge.com/minecraft/mc-mods/cofh-lib/files/2388748
@@ -16,7 +16,7 @@ dependencies {
     compileOnly("com.github.GTNewHorizons:Backhand:1.8.14:dev") { transitive = false }
     compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-999-GTNH:api') {transitive = false}
     compileOnly('com.github.GTNewHorizons:Baubles-Expanded:2.2.22-GTNH:dev') {transitive = false}
-    compileOnly('com.github.GTNewHorizons:GT5-Unofficial:5.09.54.122:dev') {transitive = false}
+    compileOnly('com.github.GTNewHorizons:GT5-Unofficial:5.09.54.124:dev') {transitive = false}
     compileOnly("com.github.GTNewHorizons:ModularUI2:2.3.88-1.7.10:dev") {transitive = false}
     compileOnly('com.github.GTNewHorizons:Railcraft:9.17.31:dev') {transitive = false}
     compileOnly('com.github.GTNewHorizons:StorageDrawers:2.2.29-GTNH:api') {transitive = false}
@@ -29,7 +29,7 @@ dependencies {
     compileOnly(rfg.deobf('curse.maven:mekanism-268560:2475797')) // https://www.curseforge.com/minecraft/mc-mods/mekanism/files/2475797
     compileOnly(rfg.deobf('maven.modrinth:immibis-microblocks:59.1.2')) // https://modrinth.com/mod/immibis-microblocks/version/59.1.2
 
-    compileOnlyApi('com.github.GTNewHorizons:Angelica:2.2.8:api') {transitive = false}
-    compileOnly("com.github.GTNewHorizons:Hodgepodge:2.7.194:dev")
+    compileOnlyApi('com.github.GTNewHorizons:Angelica:2.2.9:api') {transitive = false}
+    compileOnly("com.github.GTNewHorizons:Hodgepodge:2.7.195:dev")
     compileOnly('curse.maven:automagy-222153:2285272')
 }
