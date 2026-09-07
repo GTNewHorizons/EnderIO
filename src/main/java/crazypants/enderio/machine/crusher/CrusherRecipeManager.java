@@ -152,8 +152,9 @@ public class CrusherRecipeManager {
         if (input == null) {
             return null;
         }
+        MachineRecipeInput[] machineInputs = { new MachineRecipeInput(0, input) };
         for (Recipe recipe : recipes) {
-            if (recipe.isInputForRecipe(new MachineRecipeInput(0, input))) {
+            if (recipe.isInputForRecipe(machineInputs)) {
                 return recipe;
             }
         }
