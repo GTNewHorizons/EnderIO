@@ -78,6 +78,16 @@ public class NEIEnderIOConfig implements IConfigureNEI {
             API.hideItem(new ItemStack(EnderIO.itemGasConduit));
         }
         API.hideItem(new ItemStack(EnderIO.blockHyperCube));
+
+        API.hideItem(new ItemStack(EnderIO.blockNutrientDistillation));
+        API.hideItem(new ItemStack(EnderIO.blockHootch));
+        API.hideItem(new ItemStack(EnderIO.blockRocketFuel));
+        API.hideItem(new ItemStack(EnderIO.blockFireWater));
+        API.hideItem(new ItemStack(EnderIO.blockLiquidSunshine));
+        API.hideItem(new ItemStack(EnderIO.blockCloudSeed));
+        API.hideItem(new ItemStack(EnderIO.blockCloudSeedConcentrated));
+        API.hideItem(new ItemStack(EnderIO.blockEnderDistillation));
+        API.hideItem(new ItemStack(EnderIO.blockVapourOfLevity));
     }
 
     @Override

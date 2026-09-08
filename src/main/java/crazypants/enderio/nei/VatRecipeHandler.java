@@ -1,6 +1,5 @@
 package crazypants.enderio.nei;
 
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +8,6 @@ import java.util.Map;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -17,17 +15,13 @@ import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
 
-import com.enderio.core.client.render.RenderUtil;
 import com.enderio.core.common.util.FluidUtil;
 
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.ItemStackMap;
 import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.GuiCraftingRecipe;
-import codechicken.nei.recipe.GuiRecipe;
-import codechicken.nei.recipe.GuiUsageRecipe;
+import codechicken.nei.recipe.StackInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import crazypants.enderio.fluid.Fluids;
 import crazypants.enderio.gui.GuiContainerBaseEIO;
 import crazypants.enderio.machine.recipe.IRecipe;
 import crazypants.enderio.machine.recipe.RecipeInput;
@@ -37,9 +31,6 @@ import crazypants.enderio.power.PowerDisplayUtil;
 import crazypants.util.ColorUtils;
 
 public class VatRecipeHandler extends TemplateRecipeHandler {
-
-    private final Rectangle inTankBounds = new Rectangle(25, 1, 15, 47);
-    private final Rectangle outTankBounds = new Rectangle(127, 1, 15, 47);
 
     public VatRecipeHandler() {}
 
@@ -94,7 +85,7 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadCraftingRecipes(ItemStack result) {
-        FluidStack fluid = FluidUtil.getFluidFromItem(result);
+        FluidStack fluid = getFluidFromNeiItem(result);
         if (fluid != null) {
             loadCraftingRecipes(fluid);
         }
@@ -122,7 +113,7 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
-        FluidStack fluid = FluidUtil.getFluidFromItem(ingredient);
+        FluidStack fluid = getFluidFromNeiItem(ingredient);
         if (fluid != null) {
             loadUsageRecipes(fluid);
         }
@@ -159,109 +150,41 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
     @Override
     public void drawExtras(int recipeIndex) {
         InnerVatRecipe rec = (InnerVatRecipe) arecipes.get(recipeIndex);
-        if (rec.inFluid != null && rec.inFluid.getFluid() != null) {
-            RenderUtil.renderGuiTank(
-                    rec.inFluid,
-                    FluidContainerRegistry.BUCKET_VOLUME * 8,
-                    rec.getInputFluidAmount(),
-                    inTankBounds.x,
-                    inTankBounds.y,
-                    0,
-                    inTankBounds.width,
-                    inTankBounds.height);
-        }
-
-        if (rec.result != null && rec.result.getFluid() != null) {
-            RenderUtil.renderGuiTank(
-                    rec.result,
-                    FluidContainerRegistry.BUCKET_VOLUME * 8,
-                    rec.getResultFluidAmount(),
-                    outTankBounds.x,
-                    outTankBounds.y,
-                    0,
-                    outTankBounds.width,
-                    outTankBounds.height);
-        }
 
         String energyString = PowerDisplayUtil.formatPower(rec.energy) + " " + PowerDisplayUtil.abrevation();
         GuiDraw.drawStringC(energyString, 86, 54, ColorUtils.neiEnergyString.getColor(), false);
 
-        Fluid outputFluid = rec.result.getFluid();
+        Fluid outputFluid = rec.resultFluid.getFluid();
         List<PositionedStack> stacks = rec.getIngredients();
         for (PositionedStack ps : stacks) {
+            if (ps instanceof PositionedStack.Fluid) {
+                continue;
+            }
             float mult = VatRecipeManager.getInstance()
                     .getMultiplierForInput(rec.inFluid.getFluid(), ps.item, outputFluid);
-            String str = "x" + mult;
-            GuiDraw.drawStringC(str, ps.relx + 8, ps.rely + 19, ColorUtils.neiMultiplierString.getColor(), false);
+            GuiDraw.drawStringC(
+                    "x" + mult,
+                    ps.relx + 8,
+                    ps.rely + 19,
+                    ColorUtils.neiMultiplierString.getColor(),
+                    false);
         }
 
     }
 
-    @Override
-    public List<String> handleItemTooltip(GuiRecipe<?> gui, ItemStack stack, List<String> currenttip, int recipeIndex) {
-        return currenttip;
+    private static FluidStack getFluidFromNeiItem(ItemStack stack) {
+        FluidStack fluid = StackInfo.getFluid(stack);
+        return fluid != null ? fluid : FluidUtil.getFluidFromItem(stack);
     }
 
-    @Override
-    public List<String> handleTooltip(GuiRecipe<?> gui, List<String> currenttip, int recipeIndex) {
-        final InnerVatRecipe rec = (InnerVatRecipe) arecipes.get(recipeIndex);
-        final Point pos = GuiDraw.getMousePosition();
-        final Point offset = gui.getRecipePosition(recipeIndex);
-        final Point relMouse = new Point(pos.x - gui.guiLeft - offset.x, pos.y - gui.guiTop - offset.y);
-
-        if (inTankBounds.contains(relMouse) && rec.inFluid != null && rec.inFluid.getFluid() != null) {
-            currenttip.add(rec.inFluid.getFluid().getLocalizedName(rec.inFluid));
-            currenttip.add(EnumChatFormatting.GRAY.toString() + rec.getInputFluidAmount() + " " + Fluids.MB());
-        } else if (outTankBounds.contains(relMouse) && rec.result != null && rec.result.getFluid() != null) {
-            currenttip.add(rec.result.getFluid().getLocalizedName(rec.result));
-            currenttip.add(EnumChatFormatting.GRAY.toString() + rec.getResultFluidAmount() + " " + Fluids.MB());
-        }
-
-        return super.handleTooltip(gui, currenttip, recipeIndex);
+    private static PositionedStack.Fluid createTank(FluidStack fluid, int x, int y) {
+        return new PositionedStack.Fluid(fluid, x, y, 15, 47, FluidContainerRegistry.BUCKET_VOLUME * 8);
     }
 
-    @Override
-    public boolean mouseClicked(GuiRecipe<?> gui, int button, int recipeIndex) {
-        if (button == 0) {
-            if (this.transferFluidTanks(gui, recipeIndex, false)) {
-                return true;
-            }
-        } else if (button == 1) {
-            if (this.transferFluidTanks(gui, recipeIndex, true)) {
-                return true;
-            }
-        }
-        return super.mouseClicked(gui, button, recipeIndex);
-    }
-
-    private boolean transferFluidTanks(GuiRecipe<?> gui, int recipeIndex, boolean usage) {
-        InnerVatRecipe rec = (InnerVatRecipe) arecipes.get(recipeIndex);
-        Point pos = GuiDraw.getMousePosition();
-        Point offset = gui.getRecipePosition(recipeIndex);
-        Point relMouse = new Point(pos.x - gui.guiLeft - offset.x, pos.y - gui.guiTop - offset.y);
-
-        if (inTankBounds.contains(relMouse)) {
-            transferFluidTank(rec.inFluid, usage);
-        } else if (outTankBounds.contains(relMouse)) {
-            transferFluidTank(rec.result, usage);
-        }
-        return false;
-    }
-
-    private boolean transferFluidTank(FluidStack tank, boolean usage) {
-        if (tank != null && tank.amount > 0) {
-            if (usage) {
-                if (!GuiUsageRecipe.openRecipeGui("liquid", new Object[] { tank.copy() })) {
-                    return false;
-                }
-            } else {
-                if (!GuiCraftingRecipe.openRecipeGui("liquid", new Object[] { tank.copy() })) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
+    private static FluidStack withAmount(FluidStack fluid, int amount) {
+        FluidStack copy = fluid.copy();
+        copy.amount = amount;
+        return copy;
     }
 
     public List<ItemStack> getInputs(RecipeInput input) {
@@ -279,12 +202,17 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
     public class InnerVatRecipe extends TemplateRecipeHandler.CachedRecipe {
 
         private final List<PositionedStack> inputs = new ArrayList<>();
-        private final ItemStackMap<Float> firstItemMultiplier = new ItemStackMap();
-        private final ItemStackMap<Float> secondItemMultiplier = new ItemStackMap();
+        private final ItemStackMap<Float> firstItemMultiplier = new ItemStackMap<Float>();
+        private final ItemStackMap<Float> secondItemMultiplier = new ItemStackMap<Float>();
         private final Map<FluidStack, Float> fluidMultiplier = new HashMap<>();
+        private final FluidStack resultFluid;
         private final int energy;
-        private final FluidStack result;
         private FluidStack inFluid;
+
+        private int inTankIndex = -1;
+        private int lastInputAmount;
+        private PositionedStack resultTank;
+        private int lastResultAmount;
 
         public int getEnergy() {
             return energy;
@@ -292,7 +220,14 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
 
         @Override
         public List<PositionedStack> getIngredients() {
-            return getCycledIngredients(cycleticks / 30, this.inputs);
+            if (this.inTankIndex >= 0) {
+                int amount = getInputFluidAmount();
+                if (amount != this.lastInputAmount) {
+                    this.lastInputAmount = amount;
+                    this.inputs.set(this.inTankIndex, createTank(withAmount(this.inFluid, amount), 25, 1));
+                }
+            }
+            return this.inputs;
         }
 
         public int getInputFluidAmount() {
@@ -321,7 +256,12 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
 
         @Override
         public PositionedStack getResult() {
-            return null;
+            int amount = getResultFluidAmount();
+            if (amount != this.lastResultAmount || this.resultTank == null) {
+                this.lastResultAmount = amount;
+                this.resultTank = createTank(withAmount(this.resultFluid, amount), 127, 1);
+            }
+            return this.resultTank;
         }
 
         public InnerVatRecipe(int energy, RecipeInput[] ingredients, FluidStack result) {
@@ -355,15 +295,24 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
 
             }
 
+            // Item stacks must stay at indices 0/1: getFirstItemMultiplier()/getSecondItemMultiplier() rely on it.
             if (!inputsOne.isEmpty()) {
                 this.inputs.add(new PositionedStack(inputsOne, 51, 1));
             }
             if (!inputsTwo.isEmpty()) {
                 this.inputs.add(new PositionedStack(inputsTwo, 100, 1));
             }
-
             this.energy = energy;
-            this.result = result;
+            this.resultFluid = result;
+
+            if (this.inFluid != null) {
+                this.inTankIndex = this.inputs.size();
+                this.lastInputAmount = getInputFluidAmount();
+                this.inputs.add(createTank(withAmount(this.inFluid, this.lastInputAmount), 25, 1));
+            }
+
+            this.lastResultAmount = getResultFluidAmount();
+            this.resultTank = createTank(withAmount(this.resultFluid, this.lastResultAmount), 127, 1);
         }
     }
 }
