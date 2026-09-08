@@ -969,6 +969,7 @@ enderio.darksteel.upgrade.glider.name=Glider
 enderio.darksteel.upgrade.glider.tooltip.detailed.line1=Enables gliding
 enderio.darksteel.upgrade.glider.enabled=Glider Active
 enderio.darksteel.upgrade.glider.disabled=Glider Disabled
+enderio.darksteel.upgrade.glider.blocklisted=The Glider does not seem to work in this dimension...
 
 enderio.darksteel.upgrade.sound.name=Sound Locator
 enderio.darksteel.upgrade.sound.tooltip.detailed.line1=Displays the location of
