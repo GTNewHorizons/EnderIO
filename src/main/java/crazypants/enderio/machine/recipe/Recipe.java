@@ -38,38 +38,46 @@ public class Recipe implements IRecipe {
             return false;
         }
 
-        List<RecipeInput> requiredInputs = new ArrayList<>();
-        for (RecipeInput input : inputs) {
-            if (input.getFluidInput() != null || input.getInput() != null) {
-                requiredInputs.add(input.copy());
+        int[] remaining = new int[inputs.length];
+        for (int i = 0; i < inputs.length; i++) {
+            RecipeInput input = inputs[i];
+            if (input.isFluid()) {
+                remaining[i] = input.getFluidInput().amount;
+            } else if (input.getInput() != null) {
+                remaining[i] = input.getInput().stackSize;
             }
         }
 
-        for (MachineRecipeInput input : machineInputs) {
-            if (input != null && (input.fluid != null || input.item != null)) {
-                RecipeInput required = null;
-                for (int i = 0; i < requiredInputs.size() && required == null; i++) {
-                    RecipeInput tst = requiredInputs.get(i);
-                    if ((tst.isInput(input.item) && tst.getInput().stackSize > 0) || tst.isInput(input.fluid)) {
-                        required = tst;
-                    }
+        for (MachineRecipeInput machineInput : machineInputs) {
+            if (machineInput == null || (machineInput.item == null && machineInput.fluid == null)) {
+                continue;
+            }
+
+            int matchedInput = -1;
+            for (int i = 0; i < inputs.length; i++) {
+                if (remaining[i] <= 0) {
+                    continue;
                 }
-                if (required == null) {
-                    return false;
-                }
-                // reduce the required input quantity by the available amount
-                if (input.isFluid()) {
-                    required.getFluidInput().amount -= input.fluid.amount;
-                } else {
-                    required.getInput().stackSize -= input.item.stackSize;
+
+                RecipeInput required = inputs[i];
+                boolean matches = machineInput.isFluid() ? required.isInput(machineInput.fluid)
+                        : required.isInput(machineInput.item);
+
+                if (matches) {
+                    matchedInput = i;
+                    break;
                 }
             }
-        }
 
-        for (RecipeInput required : requiredInputs) {
-            if (required.isFluid() && required.getFluidInput().amount > 0) {
+            if (matchedInput < 0) {
                 return false;
-            } else if (!required.isFluid() && required.getInput().stackSize > 0) {
+            }
+
+            remaining[matchedInput] -= machineInput.isFluid() ? machineInput.fluid.amount : machineInput.item.stackSize;
+        }
+
+        for (int amount : remaining) {
+            if (amount > 0) {
                 return false;
             }
         }
