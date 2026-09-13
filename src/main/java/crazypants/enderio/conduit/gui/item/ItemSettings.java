@@ -31,6 +31,7 @@ import crazypants.enderio.gui.RedstoneModeButton;
 import crazypants.enderio.machine.IRedstoneModeControlable;
 import crazypants.enderio.machine.RedstoneControlMode;
 import crazypants.enderio.network.PacketHandler;
+import crazypants.util.ColorUtils;
 
 public class ItemSettings extends BaseSettingsPanel {
 
@@ -239,7 +240,7 @@ public class ItemSettings extends BaseSettingsPanel {
 
         String priority = EnderIO.lang.localize("gui.conduit.item.priority");
         fr.drawString(priority, left + 12, top1 + 25, ColorUtil.getRGB(Color.black));
-        fr.drawString(str, left + priLeft + priWidth - sw - gap, top1 + 25, ColorUtil.getRGB(Color.black));
+        fr.drawString(str, left + priLeft + priWidth - sw - gap, top1 + 25, ColorUtils.priorityString.getColor());
 
         if (insertFilterGui != null) insertFilterGui.renderCustomOptions(top1, par1, par2, par3);
         if (extractFilterGui != null) extractFilterGui.renderCustomOptions(top1, par1, par2, par3);

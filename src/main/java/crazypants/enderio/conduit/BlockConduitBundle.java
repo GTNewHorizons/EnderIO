@@ -771,7 +771,7 @@ public class BlockConduitBundle extends BlockEio
 
         bundle.setFacadeId(facadeID);
         bundle.setFacadeMetadata(facadeMeta);
-        bundle.setFacadeType(FacadeType.values()[facadeType]);
+        bundle.setFacadeType(FacadeType.VALUES[facadeType]);
         if (!world.isRemote) {
             ConduitUtil.playPlaceSound(facadeID.stepSound, world, x, y, z);
         }

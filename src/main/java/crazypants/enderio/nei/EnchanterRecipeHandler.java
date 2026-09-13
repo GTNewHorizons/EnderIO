@@ -24,6 +24,7 @@ import crazypants.enderio.machine.enchanter.EnchanterRecipeManager;
 import crazypants.enderio.machine.enchanter.GuiEnchanter;
 import crazypants.enderio.machine.enchanter.TileEnchanter;
 import crazypants.enderio.machine.recipe.RecipeInput;
+import crazypants.util.ColorUtils;
 
 public class EnchanterRecipeHandler extends TemplateRecipeHandler {
 
@@ -113,7 +114,7 @@ public class EnchanterRecipeHandler extends TemplateRecipeHandler {
     public void drawExtras(int recipeIndex) {
         EnchanterRecipeNEI recipe = (EnchanterRecipeNEI) arecipes.get(recipeIndex);
 
-        GuiDraw.drawStringC(recipe.getEnchantName(), 83, 10, 0x808080, false);
+        GuiDraw.drawStringC(recipe.getEnchantName(), 83, 10, ColorUtils.neiEnchantString.getColor(), false);
 
         int level = 1;
         List<PositionedStack> ingredients = recipe.getIngredients();

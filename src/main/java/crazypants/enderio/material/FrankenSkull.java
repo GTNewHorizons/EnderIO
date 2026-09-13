@@ -10,6 +10,7 @@ public enum FrankenSkull {
     SKELETAL_CONTRACTOR("skullSkeletalContractor", "enderio:skullSkeletalContractor", false),
     GUARDIAN_DIODE("skullGuardianDiode", "enderio:skullGuardianDiode", false);
 
+    public static final FrankenSkull[] VALUES = values();
     public final String unlocalisedName;
     public final String iconKey;
     public final boolean isAnimated;

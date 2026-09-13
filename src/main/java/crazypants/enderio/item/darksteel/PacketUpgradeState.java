@@ -15,7 +15,8 @@ public class PacketUpgradeState implements IMessage, IMessageHandler<PacketUpgra
         GLIDE,
         SPEED,
         STEP_ASSIST,
-        JUMP
+        JUMP,
+        NIGHT_VISION
     }
 
     public PacketUpgradeState() {}

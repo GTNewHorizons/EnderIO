@@ -31,6 +31,7 @@ public class BlockItemElectricLight extends ItemBlockWithMetadata implements IRe
         WIRELESS("item.itemWirelessLight", false, true, true),
         WIRELESS_INV("item.itemWirelessLightInverted", true, true, true);
 
+        public static final Type[] VALUES = values();
         final String unlocName;
         final boolean isInverted;
         final boolean isPowered;
@@ -52,14 +53,14 @@ public class BlockItemElectricLight extends ItemBlockWithMetadata implements IRe
     @Override
     public String getUnlocalizedName(ItemStack par1ItemStack) {
         int meta = par1ItemStack.getItemDamage();
-        meta = MathHelper.clamp_int(meta, 0, Type.values().length - 1);
-        return Type.values()[meta].unlocName;
+        meta = MathHelper.clamp_int(meta, 0, Type.VALUES.length - 1);
+        return Type.VALUES[meta].unlocName;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
-        for (Type type : Type.values()) {
+        for (Type type : Type.VALUES) {
             par3List.add(new ItemStack(this, 1, type.ordinal()));
         }
     }
@@ -76,7 +77,7 @@ public class BlockItemElectricLight extends ItemBlockWithMetadata implements IRe
             if (te instanceof TileElectricLight) {
                 TileElectricLight el = ((TileElectricLight) te);
                 el.setFace(onFace);
-                Type t = Type.values()[metadata];
+                Type t = Type.VALUES[metadata];
                 el.setInverted(t.isInverted);
                 el.setRequiresPower(t.isPowered);
                 el.setWireless(t.isWireless);

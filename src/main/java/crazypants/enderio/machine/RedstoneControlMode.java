@@ -19,6 +19,8 @@ public enum RedstoneControlMode implements ICycleEnum {
     OFF(IconEIO.REDSTONE_MODE_WITHOUT_SIGNAL),
     NEVER(IconEIO.REDSTONE_MODE_NEVER);
 
+    public static final RedstoneControlMode[] VALUES = values();
+
     private final IWidgetIcon icon;
 
     RedstoneControlMode(IWidgetIcon icon) {
@@ -63,20 +65,20 @@ public enum RedstoneControlMode implements ICycleEnum {
 
     public RedstoneControlMode next() {
         int ord = ordinal();
-        if (ord == values().length - 1) {
+        if (ord == VALUES.length - 1) {
             ord = 0;
         } else {
             ord++;
         }
-        return values()[ord];
+        return VALUES[ord];
     }
 
     public RedstoneControlMode previous() {
         int ord = ordinal();
         ord--;
         if (ord < 0) {
-            ord = values().length - 1;
+            ord = VALUES.length - 1;
         }
-        return values()[ord];
+        return VALUES[ord];
     }
 }

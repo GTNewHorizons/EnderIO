@@ -826,7 +826,7 @@ public class TileHyperCube extends TileEntityEio
         recieveBuffer.readFromNBT(nbtRoot);
 
         if (nbtRoot.hasKey("rsMode")) {
-            redstoneControlMode = RedstoneControlMode.values()[nbtRoot.getShort("rsMode")];
+            redstoneControlMode = RedstoneControlMode.VALUES[nbtRoot.getShort("rsMode")];
         } else {
             redstoneControlMode = RedstoneControlMode.IGNORE;
         }

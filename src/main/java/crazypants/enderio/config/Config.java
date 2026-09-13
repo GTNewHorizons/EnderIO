@@ -597,6 +597,11 @@ public final class Config {
 
     public static float fusedQuartzExplosionResistance = 2000.0f;
 
+    public static boolean enchanterOutputEnableBlockRestriction = false;
+    public static boolean enchanterOutputAllowlistAsDenylist = false;
+    public static String[] enchanterOutputFilterlist = new String[] { "minecraft:hopper",
+            "EnderIO:blockConduitBundle" };
+
     public static void load(FMLPreInitializationEvent event) {
         PacketHandler.INSTANCE
                 .registerMessage(PacketConfigSync.class, PacketConfigSync.class, PacketHandler.nextID(), Side.CLIENT);
@@ -2978,6 +2983,22 @@ public final class Config {
                 0.0f,
                 Float.MAX_VALUE,
                 "How blast resistant the three Fused Quartz blocks should be.");
+
+        enchanterOutputEnableBlockRestriction = config.getBoolean(
+                "enchanterOutputEnableBlockRestriction",
+                sectionMisc.name,
+                enchanterOutputEnableBlockRestriction,
+                "Enable restricting the valid blocks that are allowed to pull from the output slot of an Enchanter, to prevent dupes");
+        enchanterOutputAllowlistAsDenylist = config.getBoolean(
+                "enchanterOutputAllowlistAsDenylist",
+                sectionMisc.name,
+                enchanterOutputAllowlistAsDenylist,
+                "Treat the list of blocks allowed to pull from an Enchanter's output slot as a denylist instead (if you know only some specific blocks bypass inventory APIs)");
+        enchanterOutputFilterlist = config.getStringList(
+                "enchanterOutputFilterlist",
+                sectionMisc.name,
+                enchanterOutputFilterlist,
+                "These blocks are allowed/denied from pulling from the output slot of an Enchanter (default is allowlist)");
     }
 
     public static void checkYetaAccess() {

@@ -34,6 +34,7 @@ import crazypants.enderio.machine.recipe.RecipeInput;
 import crazypants.enderio.machine.vat.GuiVat;
 import crazypants.enderio.machine.vat.VatRecipeManager;
 import crazypants.enderio.power.PowerDisplayUtil;
+import crazypants.util.ColorUtils;
 
 public class VatRecipeHandler extends TemplateRecipeHandler {
 
@@ -183,7 +184,7 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
         }
 
         String energyString = PowerDisplayUtil.formatPower(rec.energy) + " " + PowerDisplayUtil.abrevation();
-        GuiDraw.drawStringC(energyString, 86, 54, 0x808080, false);
+        GuiDraw.drawStringC(energyString, 86, 54, ColorUtils.neiEnergyString.getColor(), false);
 
         Fluid outputFluid = rec.result.getFluid();
         List<PositionedStack> stacks = rec.getIngredients();
@@ -191,7 +192,7 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
             float mult = VatRecipeManager.getInstance()
                     .getMultiplierForInput(rec.inFluid.getFluid(), ps.item, outputFluid);
             String str = "x" + mult;
-            GuiDraw.drawStringC(str, ps.relx + 8, ps.rely + 19, 0x808080, false);
+            GuiDraw.drawStringC(str, ps.relx + 8, ps.rely + 19, ColorUtils.neiMultiplierString.getColor(), false);
         }
 
     }
