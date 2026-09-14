@@ -320,7 +320,7 @@ public class ConduitUtil {
         }
 
         int signalStrength = getInternalSignalForColor(bundle, col);
-        if (signalStrength < 15 && DyeColor.RED == col && bundle != null && bundle.getEntity() != null) {
+        if (signalStrength < 15 && bundle != null && bundle.getEntity() != null) {
             TileEntity te = bundle.getEntity();
             signalStrength = Math
                     .max(signalStrength, te.getWorldObj().getStrongestIndirectPower(te.xCoord, te.yCoord, te.zCoord));
