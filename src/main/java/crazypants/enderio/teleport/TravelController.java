@@ -137,10 +137,10 @@ public class TravelController {
         ItemStack equippedItem = toTp.getCurrentEquippedItem();
 
         if (equippedItem == null || !(equippedItem.getItem() instanceof IItemOfTravel)
-            || !((IItemOfTravel) equippedItem.getItem()).isActive(toTp, equippedItem)) {
+                || !((IItemOfTravel) equippedItem.getItem()).isActive(toTp, equippedItem)) {
             for (ItemStack armor : toTp.inventory.armorInventory) {
                 if (armor != null && armor.getItem() instanceof IItemOfTravel
-                    && ((IItemOfTravel) armor.getItem()).isActive(toTp, armor)) {
+                        && ((IItemOfTravel) armor.getItem()).isActive(toTp, armor)) {
                     equippedItem = armor;
                     break;
                 }
@@ -187,7 +187,8 @@ public class TravelController {
                 // tp staff is creative version of traveling staff
                 // no energy check or anything else needed
                 // but the player must actually be equipped with one of these
-                if (equippedItem != null && (equippedItem.getItem() instanceof ItemTeleportStaff || equippedItem.getItem() instanceof IItemOfTravel)) {
+                if (equippedItem != null && (equippedItem.getItem() instanceof ItemTeleportStaff
+                        || equippedItem.getItem() instanceof IItemOfTravel)) {
                     return null;
                 }
                 return "not staff";
@@ -572,10 +573,10 @@ public class TravelController {
         ItemStack equipped = ep.getCurrentEquippedItem();
 
         if (equipped == null || !(equipped.getItem() instanceof IItemOfTravel)
-            || !((IItemOfTravel) equipped.getItem()).isActive(ep, equipped)) {
+                || !((IItemOfTravel) equipped.getItem()).isActive(ep, equipped)) {
             for (ItemStack armor : ep.inventory.armorInventory) {
                 if (armor != null && armor.getItem() instanceof IItemOfTravel
-                    && ((IItemOfTravel) armor.getItem()).isActive(ep, armor)) {
+                        && ((IItemOfTravel) armor.getItem()).isActive(ep, armor)) {
                     equipped = armor;
                     break;
                 }
@@ -615,7 +616,7 @@ public class TravelController {
     public ItemStack findTravelItemInInventoryOrBaubles(EntityPlayer ep) {
         for (ItemStack armor : ep.inventory.armorInventory) {
             if (armor != null && armor.getItem() instanceof IItemOfTravel
-                && ((IItemOfTravel) armor.getItem()).isActive(ep, armor)) {
+                    && ((IItemOfTravel) armor.getItem()).isActive(ep, armor)) {
                 return armor;
             }
         }
@@ -660,7 +661,7 @@ public class TravelController {
         for (int i = 0; i < ep.inventory.armorInventory.length; i++) {
             ItemStack armor = ep.inventory.armorInventory[i];
             if (armor != null && armor.getItem() instanceof IItemOfTravel
-                && ((IItemOfTravel) armor.getItem()).isActive(ep, armor)) {
+                    && ((IItemOfTravel) armor.getItem()).isActive(ep, armor)) {
                 return ep.inventory.mainInventory.length + i;
             }
         }
