@@ -89,21 +89,4 @@ public class TileEntityPainter extends AbstractPoweredTaskEntity implements ISid
     private MachineRecipeInput paintSource() {
         return MachineRecipeInput.create(1, inventory[1]);
     }
-
-    @Override
-    protected int getNumCanMerge(ItemStack itemStack, ItemStack result) {
-        if (result == null || !result.isItemEqual(inventory[2])) {
-            // next result is a different item type
-            return 0;
-        } else if (result.hasTagCompound() && inventory[2].hasTagCompound()) {
-            if (inventory[2].getTagCompound().hasKey("Items")) return 0; // presence of internal items
-            String cookedId = result.getTagCompound().getString(BlockPainter.KEY_SOURCE_BLOCK_ID);
-            String invId = inventory[2].getTagCompound().getString(BlockPainter.KEY_SOURCE_BLOCK_ID);
-            if (!cookedId.equals(invId)) {
-                // next result has a different source item than the current one
-                return 0;
-            }
-        }
-        return Math.min(itemStack.getMaxStackSize() - itemStack.stackSize, result.stackSize);
-    }
 }

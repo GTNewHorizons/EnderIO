@@ -224,7 +224,7 @@ public abstract class AbstractPoweredTaskEntity extends AbstractPowerConsumerEnt
         ItemStack copy = item.copy();
         // try to add it to existing stacks first
         for (ItemStack outStack : outputStacks) {
-            if (outStack != null && copy != null) {
+            if (outStack != null) {
                 int num = getNumCanMerge(outStack, copy);
                 outStack.stackSize += num;
                 copy.stackSize -= num;
@@ -322,7 +322,7 @@ public abstract class AbstractPoweredTaskEntity extends AbstractPowerConsumerEnt
     }
 
     protected int getNumCanMerge(ItemStack itemStack, ItemStack result) {
-        if (!itemStack.isItemEqual(result)) {
+        if (!itemStack.isItemEqual(result) || !ItemStack.areItemStackTagsEqual(itemStack, result)) {
             return 0;
         }
         return Math.min(itemStack.getMaxStackSize() - itemStack.stackSize, result.stackSize);
