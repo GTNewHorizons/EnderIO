@@ -15,7 +15,9 @@ import crazypants.enderio.machine.SlotDefinition;
 
 public class TileEntityPainter extends AbstractPoweredTaskEntity implements ISidedInventory {
 
-    // private static final short MAX_POWER_USE_PER_TICK = 6;
+    private static final int SLOT_INPUT = 0;
+    private static final int SLOT_PAINT_SOURCE = 1;
+    private static final int SLOT_OUTPUT = 2;
 
     public TileEntityPainter() {
         // 0 = input slot, 1 = paint source, 2 = output slot
@@ -24,7 +26,8 @@ public class TileEntityPainter extends AbstractPoweredTaskEntity implements ISid
 
     @Override
     public boolean canExtractItem(int i, ItemStack itemstack, int j) {
-        return super.canExtractItem(i, itemstack, j) && PainterUtil.isMetadataEquivelent(itemstack, inventory[2]);
+        return super.canExtractItem(i, itemstack, j)
+                && PainterUtil.isMetadataEquivelent(itemstack, inventory[SLOT_OUTPUT]);
     }
 
     @Override
@@ -33,48 +36,43 @@ public class TileEntityPainter extends AbstractPoweredTaskEntity implements ISid
     }
 
     @Override
-    public boolean hasCustomInventoryName() {
-        return false;
-    }
-
-    @Override
     public boolean isMachineItemValidForSlot(int i, ItemStack itemStack) {
-        if (i > 1) {
-            return false;
-        }
-        if (i == 0) {
+        if (i == SLOT_INPUT) {
             List<IMachineRecipe> recipes = MachineRecipeRegistry.instance
                     .getRecipesForInput(getMachineName(), MachineRecipeInput.create(i, itemStack));
-            if (inventory[1] == null) {
+            if (inventory[SLOT_PAINT_SOURCE] == null) {
                 return !recipes.isEmpty();
             } else {
                 for (IMachineRecipe rec : recipes) {
-                    if (rec instanceof BasicPainterTemplate) {
-                        BasicPainterTemplate temp = (BasicPainterTemplate) rec;
-                        if (temp.isValidPaintSource(inventory[1])) {
+                    if (rec instanceof BasicPainterTemplate temp) {
+                        if (temp.isValidPaintSource(inventory[SLOT_PAINT_SOURCE])) {
                             return true;
                         }
                     }
                 }
+                return false;
             }
-            return false;
-        }
-        if (inventory[0] == null) {
-            Map<String, IMachineRecipe> recipes = MachineRecipeRegistry.instance.getRecipesForMachine(getMachineName());
-            for (IMachineRecipe rec : recipes.values()) {
-                if (rec instanceof BasicPainterTemplate) {
-                    BasicPainterTemplate temp = (BasicPainterTemplate) rec;
-                    if (temp.isValidPaintSource(itemStack)) {
-                        return true;
+        } else if (i == SLOT_PAINT_SOURCE) {
+            if (inventory[SLOT_INPUT] == null) {
+                Map<String, IMachineRecipe> recipes = MachineRecipeRegistry.instance
+                        .getRecipesForMachine(getMachineName());
+                for (IMachineRecipe rec : recipes.values()) {
+                    if (rec instanceof BasicPainterTemplate temp) {
+                        if (temp.isValidPaintSource(itemStack)) {
+                            return true;
+                        }
                     }
                 }
+                return PaintSourceValidator.instance.isValidSourceDefault(itemStack);
+            } else {
+                return MachineRecipeRegistry.instance.getRecipeForInputs(
+                        getMachineName(),
+                        targetInput(),
+                        MachineRecipeInput.create(SLOT_PAINT_SOURCE, itemStack)) != null;
             }
-            return PaintSourceValidator.instance.isValidSourceDefault(itemStack);
+        } else {
+            return false;
         }
-        return MachineRecipeRegistry.instance.getRecipeForInputs(
-                getMachineName(),
-                i == 0 ? MachineRecipeInput.create(0, itemStack) : targetInput(),
-                i == 1 ? MachineRecipeInput.create(1, itemStack) : paintSource()) != null;
     }
 
     @Override
@@ -83,10 +81,10 @@ public class TileEntityPainter extends AbstractPoweredTaskEntity implements ISid
     }
 
     private MachineRecipeInput targetInput() {
-        return MachineRecipeInput.create(0, inventory[0]);
+        return MachineRecipeInput.create(SLOT_INPUT, inventory[SLOT_INPUT]);
     }
 
     private MachineRecipeInput paintSource() {
-        return MachineRecipeInput.create(1, inventory[1]);
+        return MachineRecipeInput.create(SLOT_PAINT_SOURCE, inventory[SLOT_PAINT_SOURCE]);
     }
 }
