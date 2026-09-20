@@ -52,7 +52,7 @@ public abstract class AbstractPoweredTaskEntity extends AbstractPowerConsumerEnt
 
     @Override
     public boolean isActive() {
-        return currentTask == null ? false : currentTask.getProgress() >= 0 && hasPower() && redstoneCheckPassed;
+        return currentTask != null && currentTask.getProgress() >= 0 && hasPower() && redstoneCheckPassed;
     }
 
     @Override
