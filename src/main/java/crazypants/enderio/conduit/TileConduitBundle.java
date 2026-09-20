@@ -274,7 +274,9 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle {
     @Override
     public void doUpdate() {
         for (IConduit conduit : conduits) {
-            conduit.updateEntity(worldObj);
+            if (worldObj.isRemote || conduit.needsUpdateEntityTick()) {
+                conduit.updateEntity(worldObj);
+            }
         }
 
         if (conduitsDirty) {
