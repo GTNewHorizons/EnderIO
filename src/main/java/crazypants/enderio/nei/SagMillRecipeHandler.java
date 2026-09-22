@@ -157,8 +157,9 @@ public class SagMillRecipeHandler extends TemplateRecipeHandler {
         protected int numTargetOuput;
         protected int indexOfTargetOutput;
         private final List<PositionedStack> input;
-        private final PositionedStack output;
         private final ArrayList<PositionedStack> otherOutputs;
+        private final ArrayList<PositionedStack> allOutputs;
+        private final ArrayList<PositionedStack> balls;
         private final float[] outputChance;
         private final int energy;
 
@@ -170,13 +171,10 @@ public class SagMillRecipeHandler extends TemplateRecipeHandler {
             if (stack == null) {
                 return -1;
             }
-            if (output.item.equals(stack)) {
-                return outputChance[0];
-            }
-            for (int i = 0; i < otherOutputs.size(); i++) {
-                PositionedStack oo = otherOutputs.get(i);
-                if (oo != null && oo.item.equals(stack) && i + 1 < outputChance.length) {
-                    return outputChance[i + 1];
+            for (int i = 0; i < allOutputs.size(); i++) {
+                PositionedStack oo = allOutputs.get(i);
+                if (oo != null && oo.item.equals(stack) && i < outputChance.length) {
+                    return outputChance[i];
                 }
             }
             return -1;
@@ -184,12 +182,22 @@ public class SagMillRecipeHandler extends TemplateRecipeHandler {
 
         @Override
         public List<PositionedStack> getIngredients() {
-            return getCycledIngredients(cycleticks / 20, input);
+            return input;
         }
 
         @Override
         public PositionedStack getResult() {
-            return output;
+            return allOutputs.get(0);
+        }
+
+        @Override
+        public List<PositionedStack> getResults() {
+            return allOutputs;
+        }
+
+        @Override
+        public List<PositionedStack> getCatalysts() {
+            return balls;
         }
 
         @Override
@@ -204,21 +212,22 @@ public class SagMillRecipeHandler extends TemplateRecipeHandler {
         public MillRecipe(ItemStack targetedResult, int energy, RecipeInput ingredient, RecipeOutput[] outputs) {
             this.energy = energy;
 
-            input = new ArrayList<>(2);
+            input = new ArrayList<PositionedStack>(2);
             input.add(new PositionedStack(getInputs(ingredient), 74, 2));
 
-            input.add(new PositionedStack(getBalls(), 116, 12));
+            balls = new ArrayList<>(1);
+            balls.add(new PositionedStack(getBalls(), 116, 12));
 
-            output = new PositionedStack(outputs[0].getOutput(), 43, 46);
-            otherOutputs = new ArrayList<>();
-            if (outputs.length > 1) {
-                otherOutputs.add(new PositionedStack(outputs[1].getOutput(), 64, 46));
-            }
-            if (outputs.length > 2) {
-                otherOutputs.add(new PositionedStack(outputs[2].getOutput(), 85, 46));
-            }
-            if (outputs.length > 3) {
-                otherOutputs.add(new PositionedStack(outputs[3].getOutput(), 106, 46));
+            // Maintain this for legacy reasons
+            otherOutputs = new ArrayList<>(outputs.length - 1);
+            allOutputs = new ArrayList<>(outputs.length);
+
+            for (int i = 0; i < outputs.length; i++) {
+                PositionedStack ps = new PositionedStack(outputs[i].getOutput(), 43 + 21 * i, 46);
+                allOutputs.add(ps);
+                if (i > 0) {
+                    otherOutputs.add(ps);
+                }
             }
 
             outputChance = new float[outputs.length];
