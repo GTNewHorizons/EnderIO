@@ -15,8 +15,14 @@ public class SoulBinderEnderCystalRecipe extends AbstractSoulBinderRecipe {
                 Config.soulBinderEnderCystalRF,
                 Config.soulBinderEnderCystalLevels,
                 "SoulBinderEnderCystalRecipe",
-                "SpecialMobs.SpecialEnderman",
-                "Enderman");
+                "Enderman",
+                "SpecialMobs.BlindingEnderman",
+                "SpecialMobs.CursedEnderman",
+                "SpecialMobs.IcyEnderman",
+                "SpecialMobs.LightningEnderman",
+                "SpecialMobs.MiniEnderman",
+                "SpecialMobs.MirageEnderman",
+                "SpecialMobs.ThiefEnderman");
     }
 
     @Override
