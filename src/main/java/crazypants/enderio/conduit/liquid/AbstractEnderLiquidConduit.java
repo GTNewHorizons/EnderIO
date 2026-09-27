@@ -87,7 +87,17 @@ public abstract class AbstractEnderLiquidConduit extends AbstractLiquidConduit {
 
         MELODIC(() -> Config.melodicEnderFluidConduitExtractRate, () -> Config.melodicEnderFluidConduitMaxIoRate),
 
-        STELLAR(() -> Config.stellarEnderFluidConduitExtractRate, () -> Config.stellarEnderFluidConduitMaxIoRate);
+        STELLAR(() -> Config.stellarEnderFluidConduitExtractRate, () -> Config.stellarEnderFluidConduitMaxIoRate),
+
+        PRISMATIC_NAQUADAH(() -> Config.prismaticNaquadahEnderFluidConduitExtractRate,
+                () -> Config.prismaticNaquadahEnderFluidConduitMaxIoRate),
+
+        FLUXED(() -> Config.fluxedEnderFluidConduitExtractRate, () -> Config.fluxedEnderFluidConduitMaxIoRate),
+
+        TRANSCENDENT(() -> Config.transcendentEnderFluidConduitExtractRate,
+                () -> Config.transcendentEnderFluidConduitMaxIoRate),
+
+        COSMIC(() -> Config.cosmicEnderFluidConduitExtractRate, () -> Config.cosmicEnderFluidConduitMaxIoRate);
 
         private final IntSupplier getMaxExtractPerTick;
         private final IntSupplier getMaxIoPerTick;
