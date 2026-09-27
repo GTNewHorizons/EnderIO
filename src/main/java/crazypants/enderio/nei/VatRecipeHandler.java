@@ -157,7 +157,7 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
         Fluid outputFluid = rec.resultFluid.getFluid();
         List<PositionedStack> stacks = rec.getIngredients();
         for (PositionedStack ps : stacks) {
-            if (ps instanceof PositionedStack.Fluid) {
+            if (ps instanceof PositionedStack.Tank) {
                 continue;
             }
             float mult = VatRecipeManager.getInstance()
@@ -175,10 +175,6 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
     private static FluidStack getFluidFromNeiItem(ItemStack stack) {
         FluidStack fluid = StackInfo.getFluid(stack);
         return fluid != null ? fluid : FluidUtil.getFluidFromItem(stack);
-    }
-
-    private static PositionedStack.Fluid createTank(FluidStack fluid, int x, int y) {
-        return new PositionedStack.Fluid(fluid, x, y, 15, 47, FluidContainerRegistry.BUCKET_VOLUME * 8);
     }
 
     private static FluidStack withAmount(FluidStack fluid, int amount) {
@@ -313,6 +309,10 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
 
             this.lastResultAmount = getResultFluidAmount();
             this.resultTank = createTank(withAmount(this.resultFluid, this.lastResultAmount), 127, 1);
+        }
+
+        private static PositionedStack.Tank createTank(FluidStack fluid, int x, int y) {
+            return new PositionedStack.Tank(fluid, x, y, 15, 47, FluidContainerRegistry.BUCKET_VOLUME * 8);
         }
     }
 }
