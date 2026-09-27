@@ -135,6 +135,18 @@ public class TravelController {
         // allow 4 blocks of c/s player pos desync
         if (getPower(toTp, source, target, -4F) > powerUse) return "power use too little";
         ItemStack equippedItem = toTp.getCurrentEquippedItem();
+
+        if (equippedItem == null || !(equippedItem.getItem() instanceof IItemOfTravel)
+                || !((IItemOfTravel) equippedItem.getItem()).isActive(toTp, equippedItem)) {
+            for (ItemStack armor : toTp.inventory.armorInventory) {
+                if (armor != null && armor.getItem() instanceof IItemOfTravel
+                        && ((IItemOfTravel) armor.getItem()).isActive(toTp, armor)) {
+                    equippedItem = armor;
+                    break;
+                }
+            }
+        }
+
         switch (source) {
             case TELEPAD:
                 // this source is invalid for this type of packet
@@ -175,7 +187,8 @@ public class TravelController {
                 // tp staff is creative version of traveling staff
                 // no energy check or anything else needed
                 // but the player must actually be equipped with one of these
-                if (equippedItem != null && equippedItem.getItem() instanceof ItemTeleportStaff) {
+                if (equippedItem != null && (equippedItem.getItem() instanceof ItemTeleportStaff
+                        || equippedItem.getItem() instanceof IItemOfTravel)) {
                     return null;
                 }
                 return "not staff";
@@ -557,6 +570,19 @@ public class TravelController {
             return null;
         }
 
+        ItemStack equipped = ep.getCurrentEquippedItem();
+
+        if (equipped == null || !(equipped.getItem() instanceof IItemOfTravel)
+                || !((IItemOfTravel) equipped.getItem()).isActive(ep, equipped)) {
+            for (ItemStack armor : ep.inventory.armorInventory) {
+                if (armor != null && armor.getItem() instanceof IItemOfTravel
+                        && ((IItemOfTravel) armor.getItem()).isActive(ep, armor)) {
+                    equipped = armor;
+                    break;
+                }
+            }
+        }
+
         if (BackhandUtil.backhandLoaded) {
             final ItemStack offhand = BackhandUtils.getOffhandItem(ep);
             if (offhand != null && offhand.getItem() != null) {
@@ -567,7 +593,6 @@ public class TravelController {
             }
         }
 
-        ItemStack equipped = ep.getCurrentEquippedItem();
         if (checkInventoryAndBaubles) {
             if (equipped == null || !(equipped.getItem() instanceof IItemOfTravel)
                     || !((IItemOfTravel) equipped.getItem()).isActive(ep, equipped)) {
@@ -589,6 +614,13 @@ public class TravelController {
      */
     @Nullable
     public ItemStack findTravelItemInInventoryOrBaubles(EntityPlayer ep) {
+        for (ItemStack armor : ep.inventory.armorInventory) {
+            if (armor != null && armor.getItem() instanceof IItemOfTravel
+                    && ((IItemOfTravel) armor.getItem()).isActive(ep, armor)) {
+                return armor;
+            }
+        }
+
         ItemStack travelItem = null;
         for (int i = 0; i < ep.inventory.getSizeInventory(); i++) {
             ItemStack stack = ep.inventory.getStackInSlot(i);
@@ -626,6 +658,14 @@ public class TravelController {
      * @return -1 if no travel item found. 0 or more if item found in inventory. -2 or less if item found in Baubles.
      */
     public int findTravelItemSlotInInventoryOrBaubles(EntityPlayer ep) {
+        for (int i = 0; i < ep.inventory.armorInventory.length; i++) {
+            ItemStack armor = ep.inventory.armorInventory[i];
+            if (armor != null && armor.getItem() instanceof IItemOfTravel
+                    && ((IItemOfTravel) armor.getItem()).isActive(ep, armor)) {
+                return ep.inventory.mainInventory.length + i;
+            }
+        }
+
         int travelItemSlot = -1;
         for (int i = 0; i < ep.inventory.getSizeInventory(); i++) {
             ItemStack stack = ep.inventory.getStackInSlot(i);
@@ -1218,5 +1258,9 @@ public class TravelController {
                     true,
                     true);
         }
+    }
+
+    public void forceUpdateTarget(EntityPlayer player) {
+        updateSelectedTarget(player);
     }
 }
