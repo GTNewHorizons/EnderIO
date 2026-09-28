@@ -16,7 +16,13 @@ public class SoulBinderSentientRecipe extends AbstractSoulBinderRecipe {
                 Config.soulBinderReanimationLevels,
                 "SoulBinderSentientRecipe",
                 "Witch",
-                "enderzoo.WitherWitch");
+                "enderzoo.WitherWitch",
+                "SpecialMobs.DominationWitch",
+                "SpecialMobs.RageWitch",
+                "SpecialMobs.ShadowsWitch",
+                "SpecialMobs.UndeadWitch",
+                "SpecialMobs.WildsWitch",
+                "SpecialMobs.WindWitch");
     }
 
     @Override

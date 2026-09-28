@@ -16,7 +16,12 @@ public class SoulBinderReanimationRecipe extends AbstractSoulBinderRecipe {
                 Config.soulBinderReanimationLevels,
                 "SoulBinderReanimationRecipe",
                 "Zombie",
-                "SpecialMobs.SpecialZombie");
+                "SpecialMobs.BrutishZombie",
+                "SpecialMobs.FireZombie",
+                "SpecialMobs.FishingZombie",
+                "SpecialMobs.GiantZombie",
+                "SpecialMobs.HungryZombie",
+                "SpecialMobs.PlagueZombie");
     }
 
     @Override
