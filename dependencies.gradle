@@ -3,6 +3,7 @@
 dependencies {
     api('com.github.GTNewHorizons:EnderCore:0.5.15:dev') {transitive = false}
     compileOnly('com.github.GTNewHorizons:ForestryMC:4.11.37:dev')
+
     compileOnly('com.github.GTNewHorizons:NotEnoughItems:2.8.130-GTNH:dev')
     api("com.github.GTNewHorizons:GTNHLib:0.11.45:dev")
     compileOnly('com.github.GTNewHorizons:BuildCraft:7.1.63:dev')
@@ -16,6 +17,7 @@ dependencies {
     compileOnly("com.github.GTNewHorizons:Backhand:1.8.14:dev") { transitive = false }
     compileOnly('com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-999-GTNH:api') {transitive = false}
     compileOnly('com.github.GTNewHorizons:Baubles-Expanded:2.2.22-GTNH:dev') {transitive = false}
+
     compileOnly('com.github.GTNewHorizons:GT5-Unofficial:5.09.54.129:dev') {transitive = false}
     compileOnly("com.github.GTNewHorizons:ModularUI2:2.3.88-1.7.10:dev") {transitive = false}
     compileOnly('com.github.GTNewHorizons:Railcraft:9.17.31:dev') {transitive = false}
@@ -31,5 +33,6 @@ dependencies {
 
     compileOnlyApi('com.github.GTNewHorizons:Angelica:2.2.10:api') {transitive = false}
     compileOnly("com.github.GTNewHorizons:Hodgepodge:2.7.196:dev")
+    
     compileOnly('curse.maven:automagy-222153:2285272')
 }
