@@ -871,6 +871,7 @@ enderio.darksteel.upgrade.glider.name=Gleiter
 enderio.darksteel.upgrade.glider.tooltip.detailed.line1=Ermöglicht Gleiten
 enderio.darksteel.upgrade.glider.enabled=Gleiter Aktiv
 enderio.darksteel.upgrade.glider.disabled=Gleiter Inaktiv
+enderio.darksteel.upgrade.glider.blocklisted=Der Gleiter scheint nicht in dieser Dimension zu funktionieren...
 
 enderio.darksteel.upgrade.sound.name=Schalldetektor
 enderio.darksteel.upgrade.sound.tooltip.detailed.line1=Zeigt die Position von

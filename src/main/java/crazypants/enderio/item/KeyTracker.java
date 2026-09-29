@@ -329,10 +329,13 @@ public class KeyTracker {
 
     private void handleGlide() {
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-        if (glideKey.isPressed() && DarkSteelController.instance.isGliderUpgradeEquipped(player)
-                && (DarkSteelController.instance.isGlideActive(player)
-                        || DarkSteelController.instance.canActivateGlide(player))) {
-            toggleDarkSteelController(Type.GLIDE, "darksteel.upgrade.glider");
+        if (glideKey.isPressed() && DarkSteelController.instance.isGliderUpgradeEquipped(player)) {
+            if ((DarkSteelController.instance.isGlideActive(player)
+                    || DarkSteelController.instance.canActivateGlide(player))) {
+                toggleDarkSteelController(Type.GLIDE, "darksteel.upgrade.glider");
+            } else if (!DarkSteelController.instance.isGlideAllowedInDimension(player)) {
+                ChatUtil.sendNoSpamClientUnloc(EnderIO.lang, "darksteel.upgrade.glider.blocklisted");
+            }
         }
     }
 
