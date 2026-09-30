@@ -213,7 +213,8 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
             if (inv.hasTarget(con, dir)) {
                 IItemFilter f = inv.con.getInputFilter(inv.conDir);
                 if (input == null || f == null || f.doesItemPassFilter(inv, input)) {
-                    result.add(new ChatComponentText(inv.getLocalizedInventoryName() + " " + inv.location.chatString()));
+                    result.add(
+                            new ChatComponentText(inv.getLocalizedInventoryName() + " " + inv.location.chatString()));
                 }
             }
         }
