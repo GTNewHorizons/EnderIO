@@ -216,8 +216,9 @@ public class PacketConduitProbe implements IMessage, IMessageHandler<PacketCondu
     }
 
     private static IChatComponent power(long amount, long max) {
-        return new ChatComponentText(PowerDisplayUtil.formatPower(amount) + " ").appendSibling(tr("gui.powerMonitor.of"))
-                .appendText(" " + PowerDisplayUtil.formatPower(max) + " ").appendSibling(tr("power.rf"));
+        return new ChatComponentText(PowerDisplayUtil.formatPower(amount) + " ")
+                .appendSibling(tr("gui.powerMonitor.of")).appendText(" " + PowerDisplayUtil.formatPower(max) + " ")
+                .appendSibling(tr("power.rf"));
     }
 
     private static IChatComponent label(String key) {
@@ -257,7 +258,8 @@ public class PacketConduitProbe implements IMessage, IMessageHandler<PacketCondu
             int maxRec, int request) {
         ChatUtil.sendNoSpam(
                 player,
-                line(EnumChatFormatting.GREEN).appendSibling(new ChatComponentTranslation(block.getUnlocalizedName() + ".name"))
+                line(EnumChatFormatting.GREEN)
+                        .appendSibling(new ChatComponentTranslation(block.getUnlocalizedName() + ".name"))
                         .appendSibling(
                                 line(EnumChatFormatting.BLUE).appendSibling(label("gui.mjReader.conduitBuffer"))
                                         .appendSibling(power(stored, maxStored))),

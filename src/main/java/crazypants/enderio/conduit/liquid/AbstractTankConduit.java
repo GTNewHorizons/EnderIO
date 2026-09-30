@@ -133,8 +133,7 @@ public abstract class AbstractTankConduit extends AbstractLiquidConduit {
                         ChatUtil.sendNoSpam(
                                 player,
                                 new ChatComponentTranslation(EnderIO.lang.addPrefix("itemLiquidConduit.lockedType"))
-                                        .appendText(" ")
-                                        .appendText(fluid.getLocalizedName()));
+                                        .appendText(" ").appendText(fluid.getLocalizedName()));
                     }
                 }
                 return true;

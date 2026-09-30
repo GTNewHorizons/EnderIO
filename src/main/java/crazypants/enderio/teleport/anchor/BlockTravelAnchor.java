@@ -171,8 +171,7 @@ public class BlockTravelAnchor extends BlockEio
             ChatUtil.sendNoSpam(
                     player,
                     new ChatComponentTranslation(EnderIO.lang.addPrefix("gui.travelAccessable.privateBlock1"))
-                            .appendText(" ").appendSibling(ownerName).appendText(" ")
-                            .appendSibling(
+                            .appendText(" ").appendSibling(ownerName).appendText(" ").appendSibling(
                                     new ChatComponentTranslation(
                                             EnderIO.lang.addPrefix("gui.travelAccessable.privateBlock2"))));
         }
