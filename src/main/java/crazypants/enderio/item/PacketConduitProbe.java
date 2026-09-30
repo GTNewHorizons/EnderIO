@@ -1,11 +1,16 @@
 package crazypants.enderio.item;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -31,23 +36,6 @@ import crazypants.enderio.power.PowerDisplayUtil;
 import io.netty.buffer.ByteBuf;
 
 public class PacketConduitProbe implements IMessage, IMessageHandler<PacketConduitProbe, IMessage> {
-
-    private static final String OF = " " + EnderIO.lang.localize("gui.powerMonitor.of") + " ";
-    private static final String CON_STORAGE = " " + EnderIO.lang.localize("gui.powerMonitor.monHeading1") + ": ";
-    private static final String CAP_BANK_STOR = " " + EnderIO.lang.localize("gui.powerMonitor.monHeading2") + ": ";
-    private static final String MACH_BUF_STOR = " " + EnderIO.lang.localize("gui.powerMonitor.monHeading3") + ": ";
-    private static final String AVE_OUT = " " + EnderIO.lang.localize("gui.powerMonitor.monHeading4") + ": ";
-    private static final String AVE_IN = " " + EnderIO.lang.localize("gui.powerMonitor.monHeading5") + ": ";
-
-    private static final String NET_HEADING = EnderIO.lang.localize("gui.mjReader.networkHeading");
-    private static final String CON_BUF = " " + EnderIO.lang.localize("gui.mjReader.conduitBuffer") + ": ";
-
-    private static final String ITEM_HEADING = EnderIO.lang.localize("gui.mjReader.itemHeading");
-    private static final String ITEM_NO_CONNECTIONS = EnderIO.lang.localize("gui.mjReader.itemNoConnections");
-
-    private static final String ENERGY_CONDUIT = EnderIO.lang.localize("itemPowerConduit");
-    private static final String REQUEST_RANGE = " " + EnderIO.lang.localize("gui.mjReader.requestRange") + ": ";;
-    private static final String CUR_REQUEST = " " + EnderIO.lang.localize("gui.mjReader.currentRequest") + ": ";;
 
     public static boolean canCreatePacket(World world, int x, int y, int z) {
         Block block = world.getBlock(x, y, z);
@@ -154,191 +142,129 @@ public class PacketConduitProbe implements IMessage, IMessageHandler<PacketCondu
     }
 
     public static void sendInfoMessage(EntityPlayer player, IItemConduit conduit, ItemStack input) {
-        String color = "\u00A7a ";
-        StringBuilder sb = new StringBuilder();
-        sb.append(color);
+        List<IChatComponent> lines = new ArrayList<>();
 
         if (conduit.getExternalConnections().isEmpty()) {
-            sb.append(ITEM_HEADING);
-            sb.append(" ");
-            sb.append(ITEM_NO_CONNECTIONS);
-            sb.append("\n");
+            lines.add(
+                    line(EnumChatFormatting.GREEN).appendSibling(tr("gui.mjReader.itemHeading")).appendText(" ")
+                            .appendSibling(tr("gui.mjReader.itemNoConnections")));
         } else {
             for (ForgeDirection dir : conduit.getExternalConnections()) {
                 ConnectionMode mode = conduit.getConnectionMode(dir);
 
-                sb.append(ITEM_HEADING);
-                sb.append(" ");
-                sb.append(EnderIO.lang.localize("gui.mjReader.connectionDir"));
-                sb.append(" ");
-                sb.append(dir);
-                sb.append("\n");
+                lines.add(
+                        line(EnumChatFormatting.GREEN).appendSibling(tr("gui.mjReader.itemHeading")).appendText(" ")
+                                .appendSibling(tr("gui.mjReader.connectionDir")).appendText(" " + dir));
 
                 ItemConduitNetwork icn = (ItemConduitNetwork) conduit.getNetwork();
                 if (icn != null && mode.acceptsInput()) {
-                    color = "\u00A79 ";
-                    sb.append(color);
-
+                    IChatComponent line = line(EnumChatFormatting.BLUE);
                     if (input == null) {
-                        sb.append(EnderIO.lang.localize("gui.mjReader.extractedItems"));
+                        line.appendSibling(tr("gui.mjReader.extractedItems"));
                     } else {
-                        sb.append(EnderIO.lang.localize("gui.mjReader.extractedItem"));
-                        sb.append(" ");
-                        sb.append(input.getDisplayName());
+                        line.appendSibling(tr("gui.mjReader.extractedItem")).appendText(" " + input.getDisplayName());
                     }
-                    sb.append(" ");
-                    List<String> targets = icn
+                    line.appendText(" ");
+                    List<IChatComponent> targets = icn
                             .getTargetsForExtraction(conduit.getLocation().getLocation(dir), conduit, input);
                     if (targets.isEmpty()) {
-                        sb.append(" ");
-                        sb.append(EnderIO.lang.localize("gui.mjReader.noOutputs"));
-                        sb.append(".\n");
+                        lines.add(line.appendSibling(tr("gui.mjReader.noOutputs")).appendText("."));
                     } else {
-                        sb.append(" ");
-                        sb.append(EnderIO.lang.localize("gui.mjReader.insertedInto"));
-                        sb.append("\n");
-                        for (String str : targets) {
-                            sb.append("  - ");
-                            sb.append(str);
-                            sb.append(" ");
-                            sb.append("\n");
+                        lines.add(line.appendSibling(tr("gui.mjReader.insertedInto")));
+                        for (IChatComponent target : targets) {
+                            lines.add(new ChatComponentText("  - ").appendSibling(target));
                         }
                     }
                 }
                 if (icn != null && mode.acceptsOutput()) {
-                    color = "\u00A79 ";
-                    sb.append(color);
-
-                    List<String> targets = icn.getInputSourcesFor(conduit, dir, input);
+                    IChatComponent line = line(EnumChatFormatting.BLUE);
+                    List<IChatComponent> targets = icn.getInputSourcesFor(conduit, dir, input);
                     if (targets.isEmpty()) {
                         if (input == null) {
-                            sb.append(EnderIO.lang.localize("gui.mjReader.noItems"));
+                            line.appendSibling(tr("gui.mjReader.noItems"));
                         } else {
-                            sb.append(EnderIO.lang.localize("gui.mjReader.noItem"));
-                            sb.append(" ");
-                            sb.append(input.getDisplayName());
+                            line.appendSibling(tr("gui.mjReader.noItem")).appendText(" " + input.getDisplayName());
                         }
+                        lines.add(line);
                     } else {
                         if (input == null) {
-                            sb.append(EnderIO.lang.localize("gui.mjReader.receiveItems"));
+                            line.appendSibling(tr("gui.mjReader.receiveItems"));
                         } else {
-                            sb.append(EnderIO.lang.localize("gui.mjReader.receiveItem1"));
-                            sb.append(" ");
-                            sb.append(input.getDisplayName());
-                            sb.append(" ");
-                            sb.append(EnderIO.lang.localize("gui.mjReader.receiveItem2"));
+                            line.appendSibling(tr("gui.mjReader.receiveItem1"))
+                                    .appendText(" " + input.getDisplayName() + " ")
+                                    .appendSibling(tr("gui.mjReader.receiveItem2"));
                         }
-                        sb.append("\n");
-                        for (String str : targets) {
-                            sb.append("  - ");
-                            sb.append(str);
-                            sb.append("\n");
+                        lines.add(line);
+                        for (IChatComponent target : targets) {
+                            lines.add(new ChatComponentText("  - ").appendSibling(target));
                         }
                     }
                 }
             }
         }
-        String[] lines = sb.toString().split("\n");
-        ChatUtil.sendNoSpam(player, lines);
+        ChatUtil.sendNoSpam(player, lines.toArray(new IChatComponent[0]));
+    }
+
+    private static IChatComponent tr(String key) {
+        return new ChatComponentTranslation(EnderIO.lang.addPrefix(key));
+    }
+
+    private static IChatComponent line(EnumChatFormatting color) {
+        IChatComponent line = new ChatComponentText(" ");
+        line.getChatStyle().setColor(color);
+        return line;
+    }
+
+    private static IChatComponent power(long amount, long max) {
+        return new ChatComponentText(PowerDisplayUtil.formatPower(amount) + " ").appendSibling(tr("gui.powerMonitor.of"))
+                .appendText(" " + PowerDisplayUtil.formatPower(max) + " ").appendSibling(tr("power.rf"));
+    }
+
+    private static IChatComponent label(String key) {
+        return new ChatComponentText(" ").appendSibling(tr(key)).appendText(": ");
     }
 
     public static void sendInfoMessage(EntityPlayer player, NetworkPowerManager pm) {
         PowerTracker tracker = pm.getNetworkPowerTracker();
-        String color = "\u00A7a ";
-        StringBuilder sb = new StringBuilder();
-        sb.append(color);
-        sb.append(NET_HEADING);
-        sb.append("\n");
-
-        color = "\u00A79 ";
-        sb.append(color);
-        sb.append(CON_STORAGE);
-        sb.append(PowerDisplayUtil.formatPower(pm.getPowerInConduits()));
-        sb.append(OF);
-        sb.append(PowerDisplayUtil.formatPower(pm.getMaxPowerInConduits()));
-        sb.append(" ");
-        sb.append(PowerDisplayUtil.abrevation());
-        sb.append("\n");
-        sb.append(CAP_BANK_STOR);
-        sb.append(PowerDisplayUtil.formatPower(pm.getPowerInCapacitorBanks()));
-        sb.append(OF);
-        sb.append(PowerDisplayUtil.formatPower(pm.getMaxPowerInCapacitorBanks()));
-        sb.append(" ");
-        sb.append(PowerDisplayUtil.abrevation());
-        sb.append("\n");
-        sb.append(MACH_BUF_STOR);
-        sb.append(PowerDisplayUtil.formatPower(pm.getPowerInReceptors()));
-        sb.append(OF);
-        sb.append(PowerDisplayUtil.formatPower(pm.getMaxPowerInReceptors()));
-        sb.append(" ");
-        sb.append(PowerDisplayUtil.abrevation());
-        sb.append("\n");
-        sb.append(AVE_OUT);
-        sb.append(PowerDisplayUtil.formatPowerFloat(tracker.getAverageRfTickSent()));
-        sb.append("\n");
-        sb.append(AVE_IN);
-        sb.append(PowerDisplayUtil.formatPowerFloat(tracker.getAverageRfTickRecieved()));
-
-        String[] lines = sb.toString().split("\n");
-        ChatUtil.sendNoSpam(player, lines);
+        ChatUtil.sendNoSpam(
+                player,
+                line(EnumChatFormatting.GREEN).appendSibling(tr("gui.mjReader.networkHeading")),
+                line(EnumChatFormatting.BLUE).appendSibling(label("gui.powerMonitor.monHeading1"))
+                        .appendSibling(power(pm.getPowerInConduits(), pm.getMaxPowerInConduits())),
+                label("gui.powerMonitor.monHeading2")
+                        .appendSibling(power(pm.getPowerInCapacitorBanks(), pm.getMaxPowerInCapacitorBanks())),
+                label("gui.powerMonitor.monHeading3")
+                        .appendSibling(power(pm.getPowerInReceptors(), pm.getMaxPowerInReceptors())),
+                label("gui.powerMonitor.monHeading4")
+                        .appendText(PowerDisplayUtil.formatPowerFloat(tracker.getAverageRfTickSent())),
+                label("gui.powerMonitor.monHeading5")
+                        .appendText(PowerDisplayUtil.formatPowerFloat(tracker.getAverageRfTickRecieved())));
     }
 
     public static void sendPowerConduitInfo(EntityPlayer player, IPowerConduit con, PowerTracker tracker) {
-        String color = "\u00A7a ";
-        StringBuilder sb = new StringBuilder();
-        sb.append(color);
-        sb.append(ENERGY_CONDUIT);
-
-        color = "\u00A79 ";
-        sb.append(color);
-        sb.append(CON_BUF);
-        sb.append(PowerDisplayUtil.formatPower(con.getEnergyStored()));
-        sb.append(OF);
-        sb.append(PowerDisplayUtil.formatPower(con.getMaxEnergyStored()));
-        sb.append(" ");
-        sb.append(PowerDisplayUtil.abrevation());
-        sb.append("\n");
-        sb.append(AVE_OUT);
-        sb.append(PowerDisplayUtil.formatPowerFloat(tracker.getAverageRfTickSent()));
-        sb.append("\n");
-        sb.append(AVE_IN);
-        sb.append(PowerDisplayUtil.formatPowerFloat(tracker.getAverageRfTickRecieved()));
-
-        String[] lines = sb.toString().split("\n");
-        ChatUtil.sendNoSpam(player, lines);
+        ChatUtil.sendNoSpam(
+                player,
+                line(EnumChatFormatting.GREEN).appendSibling(tr("itemPowerConduit.name")).appendSibling(
+                        line(EnumChatFormatting.BLUE).appendSibling(label("gui.mjReader.conduitBuffer"))
+                                .appendSibling(power(con.getEnergyStored(), con.getMaxEnergyStored()))),
+                label("gui.powerMonitor.monHeading4")
+                        .appendText(PowerDisplayUtil.formatPowerFloat(tracker.getAverageRfTickSent())),
+                label("gui.powerMonitor.monHeading5")
+                        .appendText(PowerDisplayUtil.formatPowerFloat(tracker.getAverageRfTickRecieved())));
     }
 
     private void sendPowerReciptorInfo(EntityPlayer player, Block block, int stored, int maxStored, int minRec,
             int maxRec, int request) {
-        String color = "\u00A7a ";
-        StringBuilder sb = new StringBuilder();
-        sb.append(color);
-        sb.append(block.getLocalizedName());
-
-        color = "\u00A79 ";
-        sb.append(color);
-        sb.append(CON_BUF);
-        sb.append(PowerDisplayUtil.formatPower(stored));
-        sb.append(OF);
-        sb.append(PowerDisplayUtil.formatPower(maxStored));
-        sb.append(" ");
-        sb.append(PowerDisplayUtil.abrevation());
-        sb.append("\n");
-
-        sb.append(REQUEST_RANGE);
-        sb.append(PowerDisplayUtil.formatPower(minRec));
-        sb.append(" - ");
-        sb.append(PowerDisplayUtil.formatPower(maxRec));
-        sb.append(" ");
-        sb.append(PowerDisplayUtil.abrevation());
-        sb.append("\n");
-
-        sb.append(CUR_REQUEST);
-        sb.append(PowerDisplayUtil.formatPower(request));
-        sb.append(" ");
-        sb.append(PowerDisplayUtil.abrevation());
-
-        String[] lines = sb.toString().split("\n");
-        ChatUtil.sendNoSpam(player, lines);
+        ChatUtil.sendNoSpam(
+                player,
+                line(EnumChatFormatting.GREEN).appendSibling(new ChatComponentTranslation(block.getUnlocalizedName() + ".name"))
+                        .appendSibling(
+                                line(EnumChatFormatting.BLUE).appendSibling(label("gui.mjReader.conduitBuffer"))
+                                        .appendSibling(power(stored, maxStored))),
+                label("gui.mjReader.requestRange").appendText(
+                        PowerDisplayUtil.formatPower(minRec) + " - " + PowerDisplayUtil.formatPower(maxRec) + " ")
+                        .appendSibling(tr("power.rf")),
+                label("gui.mjReader.currentRequest").appendText(PowerDisplayUtil.formatPower(request) + " ")
+                        .appendSibling(tr("power.rf")));
     }
 }

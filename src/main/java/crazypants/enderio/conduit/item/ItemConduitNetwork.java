@@ -8,10 +8,14 @@ import java.util.Map;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.IChatComponent;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.enderio.core.common.util.BlockCoord;
 
+import crazypants.enderio.EnderIO;
 import crazypants.enderio.conduit.AbstractConduitNetwork;
 import crazypants.enderio.conduit.item.NetworkedInventory.Target;
 import crazypants.enderio.conduit.item.filter.IItemFilter;
@@ -176,8 +180,8 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
         }
     }
 
-    public List<String> getTargetsForExtraction(BlockCoord extractFrom, IItemConduit con, ItemStack input) {
-        List<String> result = new ArrayList<>();
+    public List<IChatComponent> getTargetsForExtraction(BlockCoord extractFrom, IItemConduit con, ItemStack input) {
+        List<IChatComponent> result = new ArrayList<>();
 
         List<NetworkedInventory> invs = getOrCreate(extractFrom);
         for (NetworkedInventory source : invs) {
@@ -187,12 +191,13 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
                     for (Target t : source.sendPriority) {
                         IItemFilter f = t.inv.con.getOutputFilter(t.inv.conDir);
                         if (input == null || f == null || f.doesItemPassFilter(t.inv, input)) {
-                            String s = t.inv.getLocalizedInventoryName() + " "
-                                    + t.inv.location.chatString()
-                                    + " Distance ["
-                                    + t.distance
-                                    + "] ";
-                            result.add(s);
+                            result.add(
+                                    new ChatComponentText(
+                                            t.inv.getLocalizedInventoryName() + " " + t.inv.location.chatString() + " ")
+                                                    .appendSibling(
+                                                            new ChatComponentTranslation(
+                                                                    EnderIO.lang.addPrefix("gui.mjReader.distance"),
+                                                                    t.distance)));
                         }
                     }
                 }
@@ -202,13 +207,13 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
         return result;
     }
 
-    public List<String> getInputSourcesFor(IItemConduit con, ForgeDirection dir, ItemStack input) {
-        List<String> result = new ArrayList<>();
+    public List<IChatComponent> getInputSourcesFor(IItemConduit con, ForgeDirection dir, ItemStack input) {
+        List<IChatComponent> result = new ArrayList<>();
         for (NetworkedInventory inv : inventories) {
             if (inv.hasTarget(con, dir)) {
                 IItemFilter f = inv.con.getInputFilter(inv.conDir);
                 if (input == null || f == null || f.doesItemPassFilter(inv, input)) {
-                    result.add(inv.getLocalizedInventoryName() + " " + inv.location.chatString());
+                    result.add(new ChatComponentText(inv.getLocalizedInventoryName() + " " + inv.location.chatString()));
                 }
             }
         }

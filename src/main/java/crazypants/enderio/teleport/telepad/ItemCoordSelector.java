@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
@@ -103,8 +103,9 @@ public class ItemCoordSelector extends Item implements IResourceTooltipProvider 
                     }
                     if (!world.isRemote) {
                         player.addChatMessage(
-                                new ChatComponentText(
-                                        EnderIO.lang.localize("itemCoordSelector.chat.setCoords", bc.chatString())));
+                                new ChatComponentTranslation(
+                                        EnderIO.lang.addPrefix("itemCoordSelector.chat.setCoords"),
+                                        bc.chatString()));
                     }
                 }
 
@@ -116,11 +117,10 @@ public class ItemCoordSelector extends Item implements IResourceTooltipProvider 
                     }
                     if (!world.isRemote) {
                         player.addChatMessage(
-                                new ChatComponentText(
-                                        EnderIO.lang.localize(
-                                                "itemCoordSelector.chat.setDimension",
-                                                EnumChatFormatting.GREEN.toString(),
-                                                Integer.toString(dim))));
+                                new ChatComponentTranslation(
+                                        EnderIO.lang.addPrefix("itemCoordSelector.chat.setDimension"),
+                                        EnumChatFormatting.GREEN.toString(),
+                                        Integer.toString(dim)));
                     }
                 }
 
@@ -194,18 +194,19 @@ public class ItemCoordSelector extends Item implements IResourceTooltipProvider 
     private void onCoordsChanged(EntityPlayer player, BlockCoord bc) {
         if (!player.worldObj.isRemote) {
             player.addChatMessage(
-                    new ChatComponentText(EnderIO.lang.localize("itemCoordSelector.chat.newCoords", bc.chatString())));
+                    new ChatComponentTranslation(
+                            EnderIO.lang.addPrefix("itemCoordSelector.chat.newCoords"),
+                            bc.chatString()));
         }
     }
 
     private void onDimensionChanged(EntityPlayer player, int dim) {
         if (!player.worldObj.isRemote) {
             player.addChatMessage(
-                    new ChatComponentText(
-                            EnderIO.lang.localize(
-                                    "itemCoordSelector.chat.newDimension",
-                                    EnumChatFormatting.GREEN.toString(),
-                                    Integer.toString(dim))));
+                    new ChatComponentTranslation(
+                            EnderIO.lang.addPrefix("itemCoordSelector.chat.newDimension"),
+                            EnumChatFormatting.GREEN.toString(),
+                            Integer.toString(dim)));
         }
     }
 

@@ -8,6 +8,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
@@ -67,7 +68,7 @@ public class ItemExistingItemFilter extends Item implements IItemFilterUpgrade, 
                 ExistingItemFilter filter = (ExistingItemFilter) createFilterFromStack(item);
                 String unloc = "item.itemExistingItemFilter."
                         + (filter.mergeSnapshot(inv) ? "filterUpdated" : "filterNotUpdated");
-                ChatUtil.sendNoSpamUnloc(player, EnderIO.lang, unloc);
+                ChatUtil.sendNoSpam(player, new ChatComponentTranslation(EnderIO.lang.addPrefix(unloc)));
                 FilterRegister.writeFilterToStack(filter, item);
                 return true;
             }
