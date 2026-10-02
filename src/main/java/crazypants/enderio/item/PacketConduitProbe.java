@@ -193,8 +193,8 @@ public class PacketConduitProbe implements IMessage, IMessageHandler<PacketCondu
                         if (input == null) {
                             line.appendSibling(tr("gui.mjReader.receiveItems"));
                         } else {
-                            line.appendSibling(tr("gui.mjReader.receiveItem1"))
-                                    .appendText(" ").appendSibling(new ChatComponentItemName(input)).appendText(" ")
+                            line.appendSibling(tr("gui.mjReader.receiveItem1")).appendText(" ")
+                                    .appendSibling(new ChatComponentItemName(input)).appendText(" ")
                                     .appendSibling(tr("gui.mjReader.receiveItem2"));
                         }
                         lines.add(line);
