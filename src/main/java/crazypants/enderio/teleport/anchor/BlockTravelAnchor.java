@@ -10,7 +10,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -163,14 +166,14 @@ public class BlockTravelAnchor extends BlockEio
 
     public static void sendPrivateChatMessage(EntityPlayer player, UserIdent owner) {
         if (!player.isSneaking()) {
+            IChatComponent ownerName = new ChatComponentText(owner.getPlayerName());
+            ownerName.getChatStyle().setColor(EnumChatFormatting.RED);
             ChatUtil.sendNoSpam(
                     player,
-                    EnderIO.lang.localize("gui.travelAccessable.privateBlock1") + " "
-                            + EnumChatFormatting.RED
-                            + owner.getPlayerName()
-                            + EnumChatFormatting.WHITE
-                            + " "
-                            + EnderIO.lang.localize("gui.travelAccessable.privateBlock2"));
+                    new ChatComponentTranslation(EnderIO.lang.addPrefix("gui.travelAccessable.privateBlock1"))
+                            .appendText(" ").appendSibling(ownerName).appendText(" ").appendSibling(
+                                    new ChatComponentTranslation(
+                                            EnderIO.lang.addPrefix("gui.travelAccessable.privateBlock2"))));
         }
     }
 

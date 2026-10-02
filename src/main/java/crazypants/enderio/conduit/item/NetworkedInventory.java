@@ -12,7 +12,9 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -442,15 +444,17 @@ public class NetworkedInventory {
         this.inventorySide = inventorySide;
     }
 
-    public String getLocalizedInventoryName() {
+    public IChatComponent getInventoryNameComponent() {
         String inventoryName = getInventory().getInventoryName();
         if (inventoryName == null) {
-            return "null";
-        } else {
-            // don't use Lang.localize as that passes the localized string to
-            // String.format which might crash when it contains formatting specifiers
-            return StatCollector.translateToLocal(inventoryName);
+            return new ChatComponentText("null");
         }
+        // The client parses a translation key as a format string, so a name with '%' could crash it.
+        // Custom names are fine as keys: a missing key is shown as is.
+        if (inventoryName.contains("%")) {
+            return new ChatComponentText(inventoryName);
+        }
+        return new ChatComponentTranslation(inventoryName);
     }
 
     static class Target implements Comparable<Target> {
