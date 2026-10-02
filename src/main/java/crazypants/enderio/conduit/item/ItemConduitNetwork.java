@@ -8,7 +8,6 @@ import java.util.Map;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -192,12 +191,11 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
                         IItemFilter f = t.inv.con.getOutputFilter(t.inv.conDir);
                         if (input == null || f == null || f.doesItemPassFilter(t.inv, input)) {
                             result.add(
-                                    new ChatComponentText(
-                                            t.inv.getLocalizedInventoryName() + " " + t.inv.location.chatString() + " ")
-                                                    .appendSibling(
-                                                            new ChatComponentTranslation(
-                                                                    EnderIO.lang.addPrefix("gui.mjReader.distance"),
-                                                                    t.distance)));
+                                    t.inv.getInventoryNameComponent()
+                                            .appendText(" " + t.inv.location.chatString() + " ").appendSibling(
+                                                    new ChatComponentTranslation(
+                                                            EnderIO.lang.addPrefix("gui.mjReader.distance"),
+                                                            t.distance)));
                         }
                     }
                 }
@@ -213,8 +211,7 @@ public class ItemConduitNetwork extends AbstractConduitNetwork<IItemConduit, IIt
             if (inv.hasTarget(con, dir)) {
                 IItemFilter f = inv.con.getInputFilter(inv.conDir);
                 if (input == null || f == null || f.doesItemPassFilter(inv, input)) {
-                    result.add(
-                            new ChatComponentText(inv.getLocalizedInventoryName() + " " + inv.location.chatString()));
+                    result.add(inv.getInventoryNameComponent().appendText(" " + inv.location.chatString()));
                 }
             }
         }
