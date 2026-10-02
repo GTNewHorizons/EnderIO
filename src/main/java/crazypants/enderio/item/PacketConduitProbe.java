@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.enderio.core.common.util.ChatUtil;
+import com.gtnewhorizon.gtnhlib.chat.customcomponents.ChatComponentItemName;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -162,7 +163,8 @@ public class PacketConduitProbe implements IMessage, IMessageHandler<PacketCondu
                     if (input == null) {
                         line.appendSibling(tr("gui.mjReader.extractedItems"));
                     } else {
-                        line.appendSibling(tr("gui.mjReader.extractedItem")).appendText(" " + input.getDisplayName());
+                        line.appendSibling(tr("gui.mjReader.extractedItem")).appendText(" ")
+                                .appendSibling(new ChatComponentItemName(input));
                     }
                     line.appendText(" ");
                     List<IChatComponent> targets = icn
@@ -183,7 +185,8 @@ public class PacketConduitProbe implements IMessage, IMessageHandler<PacketCondu
                         if (input == null) {
                             line.appendSibling(tr("gui.mjReader.noItems"));
                         } else {
-                            line.appendSibling(tr("gui.mjReader.noItem")).appendText(" " + input.getDisplayName());
+                            line.appendSibling(tr("gui.mjReader.noItem")).appendText(" ")
+                                    .appendSibling(new ChatComponentItemName(input));
                         }
                         lines.add(line);
                     } else {
@@ -191,7 +194,7 @@ public class PacketConduitProbe implements IMessage, IMessageHandler<PacketCondu
                             line.appendSibling(tr("gui.mjReader.receiveItems"));
                         } else {
                             line.appendSibling(tr("gui.mjReader.receiveItem1"))
-                                    .appendText(" " + input.getDisplayName() + " ")
+                                    .appendText(" ").appendSibling(new ChatComponentItemName(input)).appendText(" ")
                                     .appendSibling(tr("gui.mjReader.receiveItem2"));
                         }
                         lines.add(line);

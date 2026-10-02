@@ -16,6 +16,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.enderio.core.common.util.BlockCoord;
 import com.enderio.core.common.util.ChatUtil;
+import com.gtnewhorizon.gtnhlib.chat.customcomponents.ChatComponentFluidName;
 
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.conduit.AbstractConduitNetwork;
@@ -133,7 +134,7 @@ public abstract class AbstractTankConduit extends AbstractLiquidConduit {
                         ChatUtil.sendNoSpam(
                                 player,
                                 new ChatComponentTranslation(EnderIO.lang.addPrefix("itemLiquidConduit.lockedType"))
-                                        .appendText(" ").appendText(fluid.getLocalizedName()));
+                                        .appendText(" ").appendSibling(new ChatComponentFluidName(fluid)));
                     }
                 }
                 return true;
