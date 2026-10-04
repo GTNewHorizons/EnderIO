@@ -119,7 +119,6 @@ public class ItemCoordSelector extends Item implements IResourceTooltipProvider 
                         player.addChatMessage(
                                 new ChatComponentTranslation(
                                         EnderIO.lang.addPrefix("itemCoordSelector.chat.setDimension"),
-                                        EnumChatFormatting.GREEN.toString(),
                                         Integer.toString(dim)));
                     }
                 }
@@ -205,7 +204,6 @@ public class ItemCoordSelector extends Item implements IResourceTooltipProvider 
             player.addChatMessage(
                     new ChatComponentTranslation(
                             EnderIO.lang.addPrefix("itemCoordSelector.chat.newDimension"),
-                            EnumChatFormatting.GREEN.toString(),
                             Integer.toString(dim)));
         }
     }

@@ -449,9 +449,11 @@ public class NetworkedInventory {
         if (inventoryName == null) {
             return new ChatComponentText("null");
         }
+        // Ask the tile entity: InventoryWrapper always reports no custom name.
         // The client parses a translation key as a format string, so a name with '%' could crash it.
-        // Custom names are fine as keys: a missing key is shown as is.
-        if (inventoryName.contains("%")) {
+        boolean customName = connectedTileEntity instanceof IInventory
+                && ((IInventory) connectedTileEntity).hasCustomInventoryName();
+        if (customName || inventoryName.contains("%")) {
             return new ChatComponentText(inventoryName);
         }
         return new ChatComponentTranslation(inventoryName);

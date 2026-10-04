@@ -684,8 +684,8 @@ item.itemCoordSelector.tooltip.detailed.line5=den spezifischen Block auszuwähle
 item.itemCoordSelector.tooltip.detailed.line6=Kann aus einer Entfernung auswählen
 enderio.itemCoordSelector.chat.newCoords=Neue Koordinaten: %s
 enderio.itemCoordSelector.chat.setCoords=Festgelegte Koordinaten: %s
-enderio.itemCoordSelector.chat.newDimension=Neue Dimension: %s%s
-enderio.itemCoordSelector.chat.setDimension=Festgelegte Dimension: %s%s
+enderio.itemCoordSelector.chat.newDimension=Neue Dimension: §a%s
+enderio.itemCoordSelector.chat.setDimension=Festgelegte Dimension: §a%s
 
 #Painter
 tile.blockPainter.name=Färbemaschine

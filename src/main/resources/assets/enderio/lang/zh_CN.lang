@@ -727,8 +727,8 @@ item.itemCoordSelector.tooltip.detailed.line5=选取特定方块.
 item.itemCoordSelector.tooltip.detailed.line6=可以在远处选取.
 enderio.itemCoordSelector.chat.newCoords=新坐标: %s
 enderio.itemCoordSelector.chat.setCoords=设置坐标: %s
-enderio.itemCoordSelector.chat.newDimension=新世界: %s%s
-enderio.itemCoordSelector.chat.setDimension=设置世界: %s%s
+enderio.itemCoordSelector.chat.newDimension=新世界: §a%s
+enderio.itemCoordSelector.chat.setDimension=设置世界: §a%s
 
 #Painter
 tile.blockPainter.name=喷涂机
