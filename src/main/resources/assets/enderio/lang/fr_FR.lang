@@ -520,8 +520,8 @@ item.itemCoordSelector.tooltip.detailed.line5=sélectionner ce bloc.
 item.itemCoordSelector.tooltip.detailed.line6=Peut sélectioner à distance.
 enderio.itemCoordSelector.chat.newCoords=Nouvelles Coords: %s
 enderio.itemCoordSelector.chat.setCoords=Définir Coords: %s
-enderio.itemCoordSelector.chat.newDimension=Nouvelle Dimension: §a%s
-enderio.itemCoordSelector.chat.setDimension=Définir Dimension: §a%s
+enderio.itemCoordSelector.chat.newDimension=Nouvelle Dimension: %s
+enderio.itemCoordSelector.chat.setDimension=Définir Dimension: %s
 
 #Painter
 tile.blockPainter.name=Machine à Enduction

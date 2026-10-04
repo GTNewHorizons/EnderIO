@@ -517,8 +517,8 @@ item.itemCoordSelector.tooltip.detailed.line3=Shift+Clic-derecho a un bloque par
 item.itemCoordSelector.tooltip.detailed.line4=Se puede seleccionar desde la distancia.
 enderio.itemCoordSelector.chat.newCoords=Nuevas Coordenadas: %s
 enderio.itemCoordSelector.chat.setCoords=Establecer Coordenadas: %s
-enderio.itemCoordSelector.chat.newDimension=Nueva Dimensión: §a%s
-enderio.itemCoordSelector.chat.setDimension=Establecer Dimensión: §a%s
+enderio.itemCoordSelector.chat.newDimension=Nueva Dimensión: %s
+enderio.itemCoordSelector.chat.setDimension=Establecer Dimensión: %s
 
 #Painter
 tile.blockPainter.name=Máquina de Pintar
