@@ -684,8 +684,7 @@ enderio.stirlingGenerator.output=Generuje:
 enderio.stirlingGenerator.burnRate=Hodnota spalování:
 
 #Travel Blocks
-enderio.gui.travelAccessable.privateBlock1=Pouze
-enderio.gui.travelAccessable.privateBlock2=může změnit nastavení tohoto bloku.
+enderio.gui.travelAccessable.privateBlock=Pouze %s může změnit nastavení tohoto bloku.
 enderio.gui.travelAccessable.public=Veřejné
 enderio.gui.travelAccessable.private=Soukromé
 enderio.gui.travelAccessable.protected=Chráněné

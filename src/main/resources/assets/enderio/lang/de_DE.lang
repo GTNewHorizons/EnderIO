@@ -1096,8 +1096,7 @@ enderio.stirlingGenerator.upgrades={0} gibt eine Effizienz von {2}{1,number,#.#}
 enderio.stirlingGenerator.remaining={0,number,percent}|{1,choice,0#|0<{1}m }{2,number}s|{3,number,#,###} RF verbleibend
 
 #Travel Blocks
-enderio.gui.travelAccessable.privateBlock1=Nur
-enderio.gui.travelAccessable.privateBlock2=darf die Einstellungen dieses Blocks ändern.
+enderio.gui.travelAccessable.privateBlock=Nur %s darf die Einstellungen dieses Blocks ändern.
 enderio.gui.travelAccessable.public=Öffentlich
 enderio.gui.travelAccessable.private=Privat
 enderio.gui.travelAccessable.protected=Geschützt

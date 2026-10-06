@@ -1141,8 +1141,7 @@ enderio.stirlingGenerator.upgrades={0} 提供 {2}{1,number,#.#}x{3} 的效率
 enderio.stirlingGenerator.remaining=残余 {0,number,percent}|{1,choice,0#|0<{1}m }{2,number}s|{3,number,#,###} RF
 
 #Travel Blocks
-enderio.gui.travelAccessable.privateBlock1=只有
-enderio.gui.travelAccessable.privateBlock2=才能改变该方块的设置.
+enderio.gui.travelAccessable.privateBlock=只有 %s 才能改变该方块的设置.
 enderio.gui.travelAccessable.public=公共
 enderio.gui.travelAccessable.private=私有
 enderio.gui.travelAccessable.protected=被保护

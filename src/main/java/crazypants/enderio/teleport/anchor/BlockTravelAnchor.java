@@ -170,10 +170,9 @@ public class BlockTravelAnchor extends BlockEio
             ownerName.getChatStyle().setColor(EnumChatFormatting.RED);
             ChatUtil.sendNoSpam(
                     player,
-                    new ChatComponentTranslation(EnderIO.lang.addPrefix("gui.travelAccessable.privateBlock1"))
-                            .appendText(" ").appendSibling(ownerName).appendText(" ").appendSibling(
-                                    new ChatComponentTranslation(
-                                            EnderIO.lang.addPrefix("gui.travelAccessable.privateBlock2"))));
+                    new ChatComponentTranslation(
+                            EnderIO.lang.addPrefix("gui.travelAccessable.privateBlock"),
+                            ownerName));
         }
     }
 

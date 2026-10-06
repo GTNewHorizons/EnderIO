@@ -15,6 +15,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -450,10 +451,11 @@ public class NetworkedInventory {
             return new ChatComponentText("null");
         }
         // Ask the tile entity: InventoryWrapper always reports no custom name.
-        // The client parses a translation key as a format string, so a name with '%' could crash it.
+        // The client parses the translation as a format string and falls back to en_US if it fails, so a '%' in the
+        // en_US text (or in the key when untranslated) could crash it. A dedicated server translates to en_US.
         boolean customName = connectedTileEntity instanceof IInventory
                 && ((IInventory) connectedTileEntity).hasCustomInventoryName();
-        if (customName || inventoryName.contains("%")) {
+        if (customName || StatCollector.translateToLocal(inventoryName).contains("%")) {
             return new ChatComponentText(inventoryName);
         }
         return new ChatComponentTranslation(inventoryName);

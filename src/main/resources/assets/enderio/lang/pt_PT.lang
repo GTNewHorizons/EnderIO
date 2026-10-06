@@ -776,8 +776,7 @@ enderio.stirlingGenerator.output=A Gerar:
 enderio.stirlingGenerator.burnRate=Taxa de Queima:
 
 #Travel Blocks
-enderio.gui.travelAccessable.privateBlock1=Apenas
-enderio.gui.travelAccessable.privateBlock2=pode mudar as configurações desse bloco
+enderio.gui.travelAccessable.privateBlock=Apenas %s pode mudar as configurações desse bloco
 enderio.gui.travelAccessable.public=Público
 enderio.gui.travelAccessable.private=Privado
 enderio.gui.travelAccessable.protected=Protegido

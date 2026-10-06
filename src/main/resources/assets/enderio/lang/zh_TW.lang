@@ -744,8 +744,7 @@ enderio.stirlingGenerator.output=產能速率:
 enderio.stirlingGenerator.burnRate=燃燒速率:
 
 #Travel Blocks
-enderio.gui.travelAccessable.privateBlock1=只有
-enderio.gui.travelAccessable.privateBlock2=才能改變該方塊的設置.
+enderio.gui.travelAccessable.privateBlock=只有 %s 才能改變該方塊的設置.
 enderio.gui.travelAccessable.public=公共
 enderio.gui.travelAccessable.private=私有
 enderio.gui.travelAccessable.protected=被保護
