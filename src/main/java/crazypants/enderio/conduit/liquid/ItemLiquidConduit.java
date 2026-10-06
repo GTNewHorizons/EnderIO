@@ -1,6 +1,8 @@
 package crazypants.enderio.conduit.liquid;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -36,7 +38,19 @@ public class ItemLiquidConduit extends AbstractItemConduit implements IAdvancedT
                     "enderio:itemLiquidConduitMelodicEnder"),
             new ItemConduitSubtype(
                     ModObject.itemLiquidConduit.name() + "StellarEnder",
-                    "enderio:itemLiquidConduitStellarEnder") };
+                    "enderio:itemLiquidConduitStellarEnder"),
+            new ItemConduitSubtype(
+                    ModObject.itemLiquidConduit.name() + "PrismaticNaquadahEnder",
+                    "enderio:itemLiquidConduitPrismaticNaquadahEnder"),
+            new ItemConduitSubtype(
+                    ModObject.itemLiquidConduit.name() + "FluxedEnder",
+                    "enderio:itemLiquidConduitFluxedEnder"),
+            new ItemConduitSubtype(
+                    ModObject.itemLiquidConduit.name() + "TranscendentEnder",
+                    "enderio:itemLiquidConduitTranscendentEnder"),
+            new ItemConduitSubtype(
+                    ModObject.itemLiquidConduit.name() + "CosmicEnder",
+                    "enderio:itemLiquidConduitCosmicEnder") };
 
     public static ItemLiquidConduit create() {
         ItemLiquidConduit result = new ItemLiquidConduit();
@@ -70,6 +84,14 @@ public class ItemLiquidConduit extends AbstractItemConduit implements IAdvancedT
                 return new MelodicEnderLiquidConduit();
             case StellarEnderLiquidConduit.METADATA:
                 return new StellarEnderLiquidConduit();
+            case PrismaticNaquadahEnderLiquidConduit.METADATA:
+                return new PrismaticNaquadahEnderLiquidConduit();
+            case FluxedEnderLiquidConduit.METADATA:
+                return new FluxedEnderLiquidConduit();
+            case TranscendentEnderLiquidConduit.METADATA:
+                return new TranscendentEnderLiquidConduit();
+            case CosmicEnderLiquidConduit.METADATA:
+                return new CosmicEnderLiquidConduit();
             default:
                 throw new IllegalArgumentException("Unrecognized ender fluid conduit type: " + stack.getItemDamage());
         }
@@ -125,14 +147,40 @@ public class ItemLiquidConduit extends AbstractItemConduit implements IAdvancedT
                 maxIo = StellarEnderLiquidConduit.TYPE.getMaxIoPerTick();
                 break;
 
+            case PrismaticNaquadahEnderLiquidConduit.METADATA:
+                extractRate = PrismaticNaquadahEnderLiquidConduit.TYPE.getMaxExtractPerTick();
+                maxIo = PrismaticNaquadahEnderLiquidConduit.TYPE.getMaxIoPerTick();
+                break;
+
+            case FluxedEnderLiquidConduit.METADATA:
+                extractRate = FluxedEnderLiquidConduit.TYPE.getMaxExtractPerTick();
+                maxIo = FluxedEnderLiquidConduit.TYPE.getMaxIoPerTick();
+                break;
+
+            case TranscendentEnderLiquidConduit.METADATA:
+                extractRate = TranscendentEnderLiquidConduit.TYPE.getMaxExtractPerTick();
+                maxIo = TranscendentEnderLiquidConduit.TYPE.getMaxIoPerTick();
+                break;
+
+            case CosmicEnderLiquidConduit.METADATA:
+                extractRate = CosmicEnderLiquidConduit.TYPE.getMaxExtractPerTick();
+                maxIo = CosmicEnderLiquidConduit.TYPE.getMaxIoPerTick();
+                break;
+
             default:
                 throw new IllegalArgumentException(
                         "Unrecognized ender fluid conduit type: " + itemstack.getItemDamage());
         }
 
         String mbt = " " + EnderIO.lang.localize("fluid.millibucketsTick");
-        list.add(EnderIO.lang.localize("itemLiquidConduit.tooltip.maxExtract") + " " + extractRate + mbt);
-        list.add(EnderIO.lang.localize("itemLiquidConduit.tooltip.maxIo") + " " + maxIo + mbt);
+        list.add(
+                EnderIO.lang.localize("itemLiquidConduit.tooltip.maxExtract") + " "
+                        + NumberFormat.getIntegerInstance(Locale.ROOT).format(extractRate)
+                        + mbt);
+        list.add(
+                EnderIO.lang.localize("itemLiquidConduit.tooltip.maxIo") + " "
+                        + NumberFormat.getIntegerInstance(Locale.ROOT).format(maxIo)
+                        + mbt);
 
         if (itemstack.getItemDamage() == 0) {
             SpecialTooltipHandler.addDetailedTooltipFromResources(list, "enderio.itemLiquidConduit");
