@@ -38,6 +38,24 @@ import io.netty.buffer.ByteBuf;
 
 public class PacketConduitProbe implements IMessage, IMessageHandler<PacketConduitProbe, IMessage> {
 
+    private static final String OF = "gui.powerMonitor.of";
+    private static final String CON_STORAGE = "gui.powerMonitor.monHeading1";
+    private static final String CAP_BANK_STOR = "gui.powerMonitor.monHeading2";
+    private static final String MACH_BUF_STOR = "gui.powerMonitor.monHeading3";
+    private static final String AVE_OUT = "gui.powerMonitor.monHeading4";
+    private static final String AVE_IN = "gui.powerMonitor.monHeading5";
+
+    private static final String NET_HEADING = "gui.mjReader.networkHeading";
+    private static final String CON_BUF = "gui.mjReader.conduitBuffer";
+
+    private static final String ITEM_HEADING = "gui.mjReader.itemHeading";
+    private static final String ITEM_NO_CONNECTIONS = "gui.mjReader.itemNoConnections";
+
+    private static final String ENERGY_CONDUIT = "itemPowerConduit.name";
+    private static final String REQUEST_RANGE = "gui.mjReader.requestRange";
+    private static final String CUR_REQUEST = "gui.mjReader.currentRequest";
+    private static final String RF = "power.rf";
+
     public static boolean canCreatePacket(World world, int x, int y, int z) {
         Block block = world.getBlock(x, y, z);
         if (block == null) {
@@ -147,14 +165,14 @@ public class PacketConduitProbe implements IMessage, IMessageHandler<PacketCondu
 
         if (conduit.getExternalConnections().isEmpty()) {
             lines.add(
-                    line(EnumChatFormatting.GREEN).appendSibling(tr("gui.mjReader.itemHeading")).appendText(" ")
-                            .appendSibling(tr("gui.mjReader.itemNoConnections")));
+                    line(EnumChatFormatting.GREEN).appendSibling(tr(ITEM_HEADING)).appendText(" ")
+                            .appendSibling(tr(ITEM_NO_CONNECTIONS)));
         } else {
             for (ForgeDirection dir : conduit.getExternalConnections()) {
                 ConnectionMode mode = conduit.getConnectionMode(dir);
 
                 lines.add(
-                        line(EnumChatFormatting.GREEN).appendSibling(tr("gui.mjReader.itemHeading")).appendText(" ")
+                        line(EnumChatFormatting.GREEN).appendSibling(tr(ITEM_HEADING)).appendText(" ")
                                 .appendSibling(tr("gui.mjReader.connectionDir")).appendText(" " + dir));
 
                 ItemConduitNetwork icn = (ItemConduitNetwork) conduit.getNetwork();
@@ -219,9 +237,8 @@ public class PacketConduitProbe implements IMessage, IMessageHandler<PacketCondu
     }
 
     private static IChatComponent power(long amount, long max) {
-        return new ChatComponentText(PowerDisplayUtil.formatPower(amount) + " ")
-                .appendSibling(tr("gui.powerMonitor.of")).appendText(" " + PowerDisplayUtil.formatPower(max) + " ")
-                .appendSibling(tr("power.rf"));
+        return new ChatComponentText(PowerDisplayUtil.formatPower(amount) + " ").appendSibling(tr(OF))
+                .appendText(" " + PowerDisplayUtil.formatPower(max) + " ").appendSibling(tr(RF));
     }
 
     private static IChatComponent label(String key) {
@@ -232,29 +249,24 @@ public class PacketConduitProbe implements IMessage, IMessageHandler<PacketCondu
         PowerTracker tracker = pm.getNetworkPowerTracker();
         ChatUtil.sendNoSpam(
                 player,
-                line(EnumChatFormatting.GREEN).appendSibling(tr("gui.mjReader.networkHeading")),
-                line(EnumChatFormatting.BLUE).appendSibling(label("gui.powerMonitor.monHeading1"))
+                line(EnumChatFormatting.GREEN).appendSibling(tr(NET_HEADING)),
+                line(EnumChatFormatting.BLUE).appendSibling(label(CON_STORAGE))
                         .appendSibling(power(pm.getPowerInConduits(), pm.getMaxPowerInConduits())),
-                label("gui.powerMonitor.monHeading2")
+                label(CAP_BANK_STOR)
                         .appendSibling(power(pm.getPowerInCapacitorBanks(), pm.getMaxPowerInCapacitorBanks())),
-                label("gui.powerMonitor.monHeading3")
-                        .appendSibling(power(pm.getPowerInReceptors(), pm.getMaxPowerInReceptors())),
-                label("gui.powerMonitor.monHeading4")
-                        .appendText(PowerDisplayUtil.formatPowerFloat(tracker.getAverageRfTickSent())),
-                label("gui.powerMonitor.monHeading5")
-                        .appendText(PowerDisplayUtil.formatPowerFloat(tracker.getAverageRfTickRecieved())));
+                label(MACH_BUF_STOR).appendSibling(power(pm.getPowerInReceptors(), pm.getMaxPowerInReceptors())),
+                label(AVE_OUT).appendText(PowerDisplayUtil.formatPowerFloat(tracker.getAverageRfTickSent())),
+                label(AVE_IN).appendText(PowerDisplayUtil.formatPowerFloat(tracker.getAverageRfTickRecieved())));
     }
 
     public static void sendPowerConduitInfo(EntityPlayer player, IPowerConduit con, PowerTracker tracker) {
         ChatUtil.sendNoSpam(
                 player,
-                line(EnumChatFormatting.GREEN).appendSibling(tr("itemPowerConduit.name")).appendSibling(
-                        line(EnumChatFormatting.BLUE).appendSibling(label("gui.mjReader.conduitBuffer"))
+                line(EnumChatFormatting.GREEN).appendSibling(tr(ENERGY_CONDUIT)).appendSibling(
+                        line(EnumChatFormatting.BLUE).appendSibling(label(CON_BUF))
                                 .appendSibling(power(con.getEnergyStored(), con.getMaxEnergyStored()))),
-                label("gui.powerMonitor.monHeading4")
-                        .appendText(PowerDisplayUtil.formatPowerFloat(tracker.getAverageRfTickSent())),
-                label("gui.powerMonitor.monHeading5")
-                        .appendText(PowerDisplayUtil.formatPowerFloat(tracker.getAverageRfTickRecieved())));
+                label(AVE_OUT).appendText(PowerDisplayUtil.formatPowerFloat(tracker.getAverageRfTickSent())),
+                label(AVE_IN).appendText(PowerDisplayUtil.formatPowerFloat(tracker.getAverageRfTickRecieved())));
     }
 
     private void sendPowerReciptorInfo(EntityPlayer player, Block block, int stored, int maxStored, int minRec,
@@ -264,12 +276,11 @@ public class PacketConduitProbe implements IMessage, IMessageHandler<PacketCondu
                 line(EnumChatFormatting.GREEN)
                         .appendSibling(new ChatComponentTranslation(block.getUnlocalizedName() + ".name"))
                         .appendSibling(
-                                line(EnumChatFormatting.BLUE).appendSibling(label("gui.mjReader.conduitBuffer"))
+                                line(EnumChatFormatting.BLUE).appendSibling(label(CON_BUF))
                                         .appendSibling(power(stored, maxStored))),
-                label("gui.mjReader.requestRange").appendText(
+                label(REQUEST_RANGE).appendText(
                         PowerDisplayUtil.formatPower(minRec) + " - " + PowerDisplayUtil.formatPower(maxRec) + " ")
-                        .appendSibling(tr("power.rf")),
-                label("gui.mjReader.currentRequest").appendText(PowerDisplayUtil.formatPower(request) + " ")
-                        .appendSibling(tr("power.rf")));
+                        .appendSibling(tr(RF)),
+                label(CUR_REQUEST).appendText(PowerDisplayUtil.formatPower(request) + " ").appendSibling(tr(RF)));
     }
 }

@@ -686,6 +686,12 @@ enderio.itemCoordSelector.chat.newCoords=Neue Koordinaten: %s
 enderio.itemCoordSelector.chat.setCoords=Festgelegte Koordinaten: %s
 enderio.itemCoordSelector.chat.newDimension=Neue Dimension: %s
 enderio.itemCoordSelector.chat.setDimension=Festgelegte Dimension: %s
+enderio.itemConduitProbe.chat.copied=Conduit Einstellungen kopiert
+enderio.itemOCConduit.chat.channel=Kanal %s zu %s
+enderio.itemOCConduit.chat.connectedTo=Verbunden mit: %s
+enderio.itemOCConduit.chat.nodeAt=%s zu %s
+enderio.itemOCConduit.chat.noConnections=Keine Verbindungen an %s
+enderio.itemOCConduit.chat.noNetwork=Netzwerk nicht verbunden mit %s
 
 #Painter
 tile.blockPainter.name=Färbemaschine

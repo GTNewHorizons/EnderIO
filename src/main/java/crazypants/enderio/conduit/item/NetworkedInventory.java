@@ -445,6 +445,21 @@ public class NetworkedInventory {
         this.inventorySide = inventorySide;
     }
 
+    /**
+     * @deprecated Translates on the server. Use {@link #getInventoryNameComponent()} for chat.
+     */
+    @Deprecated
+    public String getLocalizedInventoryName() {
+        String inventoryName = getInventory().getInventoryName();
+        if (inventoryName == null) {
+            return "null";
+        } else {
+            // don't use Lang.localize as that passes the localized string to
+            // String.format which might crash when it contains formatting specifiers
+            return StatCollector.translateToLocal(inventoryName);
+        }
+    }
+
     public IChatComponent getInventoryNameComponent() {
         String inventoryName = getInventory().getInventoryName();
         if (inventoryName == null) {
