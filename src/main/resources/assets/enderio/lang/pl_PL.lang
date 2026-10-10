@@ -208,8 +208,7 @@ enderio.gui.alloy.mode.alloy=Tylko stopy
 enderio.gui.alloy.mode.furnace=Tylko jak zwykły piec
 
 #Travel Blocks
-enderio.gui.travelAccessable.privateBlock1=Można
-enderio.gui.travelAccessable.privateBlock2=zmienić tylko te ustawienia.
+enderio.gui.travelAccessable.privateBlock=Można %s zmienić tylko te ustawienia.
 enderio.gui.travelAccessable.public=Publiczny
 enderio.gui.travelAccessable.private=Prywatny
 enderio.gui.travelAccessable.protected=Chroniony

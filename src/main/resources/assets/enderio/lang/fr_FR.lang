@@ -520,8 +520,8 @@ item.itemCoordSelector.tooltip.detailed.line5=sélectionner ce bloc.
 item.itemCoordSelector.tooltip.detailed.line6=Peut sélectioner à distance.
 enderio.itemCoordSelector.chat.newCoords=Nouvelles Coords: %s
 enderio.itemCoordSelector.chat.setCoords=Définir Coords: %s
-enderio.itemCoordSelector.chat.newDimension=Nouvelle Dimension: %s%s
-enderio.itemCoordSelector.chat.setDimension=Définir Dimension: %s%s
+enderio.itemCoordSelector.chat.newDimension=Nouvelle Dimension: %s
+enderio.itemCoordSelector.chat.setDimension=Définir Dimension: %s
 
 #Painter
 tile.blockPainter.name=Machine à Enduction
@@ -865,8 +865,7 @@ enderio.stirlingGenerator.upgrades={0} donne efficacité {2}{1,number,#.#}x{3}
 enderio.stirlingGenerator.remaining=Reste {0,number,percent}|{1,choice,0#|0<{1}m }{2,number}s|{3,number,#,###} RF
 
 #Travel Blocks
-enderio.gui.travelAccessable.privateBlock1=Seulement
-enderio.gui.travelAccessable.privateBlock2=peut modifier les paramètres de ce bloc.
+enderio.gui.travelAccessable.privateBlock=Seulement %s peut modifier les paramètres de ce bloc.
 enderio.gui.travelAccessable.public=Publique
 enderio.gui.travelAccessable.private=Privé
 enderio.gui.travelAccessable.protected=Protégé

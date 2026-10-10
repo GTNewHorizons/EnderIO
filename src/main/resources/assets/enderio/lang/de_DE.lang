@@ -684,8 +684,14 @@ item.itemCoordSelector.tooltip.detailed.line5=den spezifischen Block auszuwähle
 item.itemCoordSelector.tooltip.detailed.line6=Kann aus einer Entfernung auswählen
 enderio.itemCoordSelector.chat.newCoords=Neue Koordinaten: %s
 enderio.itemCoordSelector.chat.setCoords=Festgelegte Koordinaten: %s
-enderio.itemCoordSelector.chat.newDimension=Neue Dimension: %s%s
-enderio.itemCoordSelector.chat.setDimension=Festgelegte Dimension: %s%s
+enderio.itemCoordSelector.chat.newDimension=Neue Dimension: %s
+enderio.itemCoordSelector.chat.setDimension=Festgelegte Dimension: %s
+enderio.itemConduitProbe.chat.copied=Conduit Einstellungen kopiert
+enderio.itemOCConduit.chat.channel=Kanal %s zu %s
+enderio.itemOCConduit.chat.connectedTo=Verbunden mit: %s
+enderio.itemOCConduit.chat.nodeAt=%s zu %s
+enderio.itemOCConduit.chat.noConnections=Keine Verbindungen an %s
+enderio.itemOCConduit.chat.noNetwork=Netzwerk nicht verbunden mit %s
 
 #Painter
 tile.blockPainter.name=Färbemaschine
@@ -1096,8 +1102,7 @@ enderio.stirlingGenerator.upgrades={0} gibt eine Effizienz von {2}{1,number,#.#}
 enderio.stirlingGenerator.remaining={0,number,percent}|{1,choice,0#|0<{1}m }{2,number}s|{3,number,#,###} RF verbleibend
 
 #Travel Blocks
-enderio.gui.travelAccessable.privateBlock1=Nur
-enderio.gui.travelAccessable.privateBlock2=darf die Einstellungen dieses Blocks ändern.
+enderio.gui.travelAccessable.privateBlock=Nur %s darf die Einstellungen dieses Blocks ändern.
 enderio.gui.travelAccessable.public=Öffentlich
 enderio.gui.travelAccessable.private=Privat
 enderio.gui.travelAccessable.protected=Geschützt
