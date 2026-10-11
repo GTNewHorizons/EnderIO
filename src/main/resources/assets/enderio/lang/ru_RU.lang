@@ -727,8 +727,14 @@ item.itemCoordSelector.tooltip.detailed.line5=выбрать конкретны�
 item.itemCoordSelector.tooltip.detailed.line6=Можно выбирать блоки на расстоянии.
 enderio.itemCoordSelector.chat.newCoords=Новые координаты: %s
 enderio.itemCoordSelector.chat.setCoords=Выбранные координаты: %s
-enderio.itemCoordSelector.chat.newDimension=Новое измерение: %s%s
-enderio.itemCoordSelector.chat.setDimension=Выбранное измерение: %s%s
+enderio.itemCoordSelector.chat.newDimension=Новое измерение: %s
+enderio.itemCoordSelector.chat.setDimension=Выбранное измерение: %s
+enderio.itemConduitProbe.chat.copied=Настройки труб скопированы
+enderio.itemOCConduit.chat.channel=Канал %s на %s
+enderio.itemOCConduit.chat.connectedTo=Подключено к: %s
+enderio.itemOCConduit.chat.nodeAt=%s на %s
+enderio.itemOCConduit.chat.noConnections=Нет подключений на %s
+enderio.itemOCConduit.chat.noNetwork=Нет сети на %s
 
 #Painter
 tile.blockPainter.name=Покрасочный механизм
@@ -1088,6 +1094,7 @@ enderio.gui.mjReader.noItem=Не может получать
 enderio.gui.mjReader.receiveItems=Может получать предметы от:
 enderio.gui.mjReader.receiveItem1=Может получать
 enderio.gui.mjReader.receiveItem2=от:
+enderio.gui.mjReader.distance=Расстояние [%s]
 
 #CapactorBank
 enderio.gui.capBank.inputRs=Режим красного камня на входе
@@ -1141,8 +1148,7 @@ enderio.stirlingGenerator.upgrades={0} даёт {2}{1,number,#.#}x{3} эффек
 enderio.stirlingGenerator.remaining=Осталось {0,number,percent}|{1,choice,0#|0<{1}m }{2,number}s|{3,number,#,###} RF
 
 #Travel Blocks
-enderio.gui.travelAccessable.privateBlock1=Только
-enderio.gui.travelAccessable.privateBlock2=может управлять настройками этого блока.
+enderio.gui.travelAccessable.privateBlock=Только %s может изменить настройки этого блока.
 enderio.gui.travelAccessable.public=Общедоступный
 enderio.gui.travelAccessable.private=Частный
 enderio.gui.travelAccessable.protected=Защищённый

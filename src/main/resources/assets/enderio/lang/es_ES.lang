@@ -519,8 +519,8 @@ item.itemCoordSelector.tooltip.detailed.line3=Shift+Clic-derecho a un bloque par
 item.itemCoordSelector.tooltip.detailed.line4=Se puede seleccionar desde la distancia.
 enderio.itemCoordSelector.chat.newCoords=Nuevas Coordenadas: %s
 enderio.itemCoordSelector.chat.setCoords=Establecer Coordenadas: %s
-enderio.itemCoordSelector.chat.newDimension=Nueva Dimensión: %s%s
-enderio.itemCoordSelector.chat.setDimension=Establecer Dimensión: %s%s
+enderio.itemCoordSelector.chat.newDimension=Nueva Dimensión: %s
+enderio.itemCoordSelector.chat.setDimension=Establecer Dimensión: %s
 
 #Painter
 tile.blockPainter.name=Máquina de Pintar
@@ -847,8 +847,7 @@ enderio.stirlingGenerator.upgrades={0} proporciona {2}{1,number,#.#}x{3} de efic
 enderio.stirlingGenerator.remaining={0,number,percent}|{1,choice,0#|0<{1}m }{2,number}s|{3,number,#,###} RF Restantes.
 
 #Travel Blocks
-enderio.gui.travelAccessable.privateBlock1=Solo
-enderio.gui.travelAccessable.privateBlock2=Puede cambiar los ajustes de este bloque.
+enderio.gui.travelAccessable.privateBlock=Solo %s puede cambiar los ajustes de este bloque.
 enderio.gui.travelAccessable.public=Público
 enderio.gui.travelAccessable.private=Privado
 enderio.gui.travelAccessable.protected=Protegido

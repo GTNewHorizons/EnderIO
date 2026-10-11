@@ -684,8 +684,7 @@ enderio.stirlingGenerator.output=Generuje:
 enderio.stirlingGenerator.burnRate=Hodnota spalování:
 
 #Travel Blocks
-enderio.gui.travelAccessable.privateBlock1=Pouze
-enderio.gui.travelAccessable.privateBlock2=může změnit nastavení tohoto bloku.
+enderio.gui.travelAccessable.privateBlock=Pouze %s může změnit nastavení tohoto bloku.
 enderio.gui.travelAccessable.public=Veřejné
 enderio.gui.travelAccessable.private=Soukromé
 enderio.gui.travelAccessable.protected=Chráněné
@@ -1061,8 +1060,8 @@ item.itemCoordSelector.tooltip.detailed.line5=select that specific block.
 item.itemCoordSelector.tooltip.detailed.line6=Can select from a distance.
 enderio.itemCoordSelector.chat.newCoords=New Coords: %s
 enderio.itemCoordSelector.chat.setCoords=Set Coords: %s
-enderio.itemCoordSelector.chat.newDimension=New Dimension: %s%s
-enderio.itemCoordSelector.chat.setDimension=Set Dimension: %s%s
+enderio.itemCoordSelector.chat.newDimension=New Dimension: %s
+enderio.itemCoordSelector.chat.setDimension=Set Dimension: %s
 enderio.item.itemSoulVessel.tooltip.health=Health:
 enderio.item.itemSoulVessel.tooltip.fluidname=Fluid Name:
 enderio.item.itemSoulVessel.tooltip.color=Color:
