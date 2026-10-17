@@ -2,9 +2,7 @@ package crazypants.enderio.conduit.item;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -27,6 +25,7 @@ import crazypants.enderio.conduit.item.filter.ItemFilterLimited;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.invpanel.TileInventoryPanel;
 import crazypants.util.ForgeDirections;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 
 public class NetworkedInventory {
 
@@ -38,6 +37,14 @@ public class NetworkedInventory {
 
     List<Target> sendPriority = new ArrayList<>();
     RoundRobinIterator<Target> rrIter = new RoundRobinIterator<>(sendPriority);
+
+    private boolean hasBeenSorted = false;
+
+    // Stamped by ItemConduitNetwork.sortOne() with the network's sortEpoch at the moment this
+    // inventory was last sorted. Lets the cursor sweep tell "already sorted this pass" (skip for
+    // free) apart from "still pending" without a second, separate tracking structure. Never
+    // serialized; purely a same-instance scheduling aid, discarded with the owning network.
+    int sortedInEpoch = 0;
 
     private int extractFromSlot = -1;
 
@@ -111,6 +118,12 @@ public class NetworkedInventory {
             if (isInvalid()) {
                 return;
             }
+        }
+
+        if (!hasBeenSorted) {
+            // Sort pass has not reached this inventory yet; sendPriority is still empty.
+            // ItemConduitNetwork.doNetworkTick() will sort it within its per-tick budget.
+            return;
         }
 
         if (tickDeficit > 0 || !canExtract() || !con.isExtractionRedstoneConditionMet(conDir)) {
@@ -334,13 +347,18 @@ public class NetworkedInventory {
     }
 
     void updateInsertOrder() {
+        hasBeenSorted = true;
         sendPriority.clear();
         if (!canExtract()) {
             return;
         }
         List<Target> result = new ArrayList<>();
 
-        for (NetworkedInventory other : network.inventories) {
+        // Indexed loops over these ArrayLists avoid the per-call Iterator allocation an enhanced-for
+        // would incur; this runs on the amortized per-tick sort path.
+        List<NetworkedInventory> others = network.inventories;
+        for (int i = 0, n = others.size(); i < n; i++) {
+            NetworkedInventory other = others.get(i);
             if ((con.isSelfFeedEnabled(conDir) || (other != this)) && other.canInsert()
                     && con.getInputColor(conDir) == other.con.getOutputColor(other.conDir)) {
 
@@ -356,67 +374,20 @@ public class NetworkedInventory {
             Collections.sort(sendPriority);
         } else {
             if (!result.isEmpty()) {
-                Map<BlockCoord, Integer> visited = new HashMap<>();
-                List<BlockCoord> steps = new ArrayList<>();
-                steps.add(con.getLocation());
-                calculateDistances(result, visited, steps, 0);
+                Object2IntMap<BlockCoord> distances = network.getDistancesFrom(con.getLocation());
+                for (int i = 0, n = result.size(); i < n; i++) {
+                    Target target = result.get(i);
+                    int d = distances.getInt(target.inv.con.getLocation());
+                    if (d >= 0) {
+                        target.distance = d;
+                    }
+                }
 
                 sendPriority.addAll(result);
 
                 Collections.sort(sendPriority);
             }
         }
-    }
-
-    private void calculateDistances(List<Target> targets, Map<BlockCoord, Integer> visited, List<BlockCoord> steps,
-            int distance) {
-        if (steps == null || steps.isEmpty()) {
-            return;
-        }
-
-        ArrayList<BlockCoord> nextSteps = new ArrayList<>();
-        for (BlockCoord bc : steps) {
-            IItemConduit con = network.conMap.get(bc);
-            if (con != null) {
-                for (ForgeDirection dir : con.getExternalConnections()) {
-                    Target target = getTarget(targets, con, dir);
-                    if (target != null && target.distance > distance) {
-                        target.distance = distance;
-                    }
-                }
-
-                if (!visited.containsKey(bc)) {
-                    visited.put(bc, distance);
-                } else {
-                    int prevDist = visited.get(bc);
-                    if (prevDist <= distance) {
-                        continue;
-                    }
-                    visited.put(bc, distance);
-                }
-
-                for (ForgeDirection dir : con.getConduitConnections()) {
-                    nextSteps.add(bc.getLocation(dir));
-                }
-            }
-        }
-        calculateDistances(targets, visited, nextSteps, distance + 1);
-    }
-
-    private Target getTarget(List<Target> targets, IItemConduit con, ForgeDirection dir) {
-        if (targets == null || con == null || con.getLocation() == null) {
-            return null;
-        }
-        for (Target target : targets) {
-            BlockCoord targetConLoc = null;
-            if (target != null && target.inv != null && target.inv.con != null) {
-                targetConLoc = target.inv.con.getLocation();
-            }
-            if (targetConLoc != null && target.inv.conDir == dir && targetConLoc.equals(con.getLocation())) {
-                return target;
-            }
-        }
-        return null;
     }
 
     private int distanceTo(NetworkedInventory other) {
