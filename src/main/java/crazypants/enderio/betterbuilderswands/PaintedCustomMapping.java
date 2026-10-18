@@ -2,7 +2,14 @@ package crazypants.enderio.betterbuilderswands;
 
 import com.github.bsideup.jabel.Desugar;
 import crazypants.enderio.EnderIO;
-import crazypants.enderio.machine.painter.*;
+import crazypants.enderio.machine.painter.BlockPaintedCarpet;
+import crazypants.enderio.machine.painter.BlockPaintedFence;
+import crazypants.enderio.machine.painter.BlockPaintedFenceGate;
+import crazypants.enderio.machine.painter.BlockPaintedGlowstone;
+import crazypants.enderio.machine.painter.BlockPaintedSlab;
+import crazypants.enderio.machine.painter.BlockPaintedStair;
+import crazypants.enderio.machine.painter.BlockPaintedWall;
+import crazypants.enderio.machine.painter.TileEntityPaintedBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import portablejim.bbw.BetterBuildersWandsMod;
@@ -12,7 +19,6 @@ import portablejim.bbw.shims.IPlayerShim;
 import portablejim.bbw.shims.IWorldShim;
 
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.function.IntFunction;
 
 @Desugar
