@@ -11,6 +11,8 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Locale;
 
+import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
+import crazypants.enderio.betterbuilderswands.PaintedCustomMapping;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -839,8 +841,22 @@ public class EnderIO {
                 Log.info("Failed to registered Capacitor Banks as Tinkers Construct Flux Upgrades");
             }
         }
+        if (isAcceptableBuildersWandVersion()) {
+            PaintedCustomMapping.registerMappings();
+        }
 
         ThaumcraftCompat.load();
+    }
+    private static boolean isAcceptableBuildersWandVersion() {
+        if (!Loader.isModLoaded("betterbuilderswands")) {
+            return false;
+        }
+        String version = Loader.instance().getIndexedModList().get("betterbuilderswands").getProcessedVersion().getVersionString();
+        if (!version.endsWith("-GTNH")) {
+            return false;
+        }
+        DefaultArtifactVersion minVersion = new DefaultArtifactVersion("0.13.12");
+        return new DefaultArtifactVersion(version.substring(0, version.length() - "-GTNH".length())).compareTo(minVersion) >= 0;
     }
 
     @EventHandler
