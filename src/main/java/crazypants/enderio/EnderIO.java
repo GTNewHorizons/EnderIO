@@ -11,8 +11,6 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Locale;
 
-import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
-import crazypants.enderio.betterbuilderswands.PaintedCustomMapping;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -47,8 +45,10 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
 import cpw.mods.fml.relauncher.Side;
 import crazypants.enderio.api.IMC;
+import crazypants.enderio.betterbuilderswands.PaintedCustomMapping;
 import crazypants.enderio.block.BlockDarkSteelAnvil;
 import crazypants.enderio.block.BlockDarkSteelLadder;
 import crazypants.enderio.block.BlockDarkSteelPressurePlate;
@@ -847,16 +847,19 @@ public class EnderIO {
 
         ThaumcraftCompat.load();
     }
+
     private static boolean isAcceptableBuildersWandVersion() {
         if (!Loader.isModLoaded("betterbuilderswands")) {
             return false;
         }
-        String version = Loader.instance().getIndexedModList().get("betterbuilderswands").getProcessedVersion().getVersionString();
+        String version = Loader.instance().getIndexedModList().get("betterbuilderswands").getProcessedVersion()
+                .getVersionString();
         if (!version.endsWith("-GTNH")) {
             return false;
         }
         DefaultArtifactVersion minVersion = new DefaultArtifactVersion("0.13.12");
-        return new DefaultArtifactVersion(version.substring(0, version.length() - "-GTNH".length())).compareTo(minVersion) >= 0;
+        return new DefaultArtifactVersion(version.substring(0, version.length() - "-GTNH".length()))
+                .compareTo(minVersion) >= 0;
     }
 
     @EventHandler
