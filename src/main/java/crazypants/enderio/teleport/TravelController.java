@@ -172,6 +172,10 @@ public class TravelController {
                 return null;
             case TELEPORT_STAFF_BLINK:
             case TELEPORT_STAFF:
+                if (source == TravelSource.TELEPORT_STAFF_BLINK && Config.travelStaffKeybindEnabled
+                        && (equippedItem == null || !(equippedItem.getItem() instanceof ItemTeleportStaff))) {
+                    equippedItem = findTravelItemInInventoryOrBaubles(toTp);
+                }
                 // tp staff is creative version of traveling staff
                 // no energy check or anything else needed
                 // but the player must actually be equipped with one of these
@@ -196,6 +200,9 @@ public class TravelController {
             boolean alsoDoTeleport) {
         if (!hasTarget()) {
             if (alsoDoTeleport) {
+                if (source == TravelSource.TELEPORT_STAFF && Config.teleportStaffUseBlink) {
+                    return doBlink(equipped, player);
+                }
                 Optional<BlockCoord> destinationOptional = findTeleportDestination(player);
                 if (destinationOptional.isPresent()) {
                     BlockCoord destination = destinationOptional.get();
@@ -338,6 +345,9 @@ public class TravelController {
 
     /** This is the teleport staff super-teleport. */
     public boolean doTeleport(EntityPlayer player) {
+        if (Config.teleportStaffUseBlink) {
+            return doBlink(player.getHeldItem(), player);
+        }
         Optional<BlockCoord> destinationOptional = findTeleportDestination(player);
         if (destinationOptional.isPresent()) {
             return travelToLocation(player, TravelSource.TELEPORT_STAFF_BLINK, destinationOptional.get(), false);

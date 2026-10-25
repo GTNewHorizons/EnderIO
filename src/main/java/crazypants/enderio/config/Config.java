@@ -173,6 +173,7 @@ public final class Config {
      * The distance travelled when no block is found within {@link #teleportStaffMaxBlinkDistance}.
      */
     public static int teleportStaffFailedBlinkDistance = 64;
+    public static boolean teleportStaffUseBlink = false;
 
     /**
      * Sets the teleport staff right-click action.
@@ -1322,6 +1323,13 @@ public final class Config {
                         + "    2: Teleport to anchor\n"
                         + "    3: Teleport to anchor, or look if no anchor")
                 .getInt(teleportStaffSneakAction);
+
+        teleportStaffUseBlink = config.get(
+                sectionPersonal.name,
+                "teleportStaffUseBlink",
+                teleportStaffUseBlink,
+                "Use the Staff of Traveling blink instead of long-range teleportation with the Staff of Teleportation.")
+                .getBoolean(teleportStaffUseBlink);
 
         enderIoRange = config.get(
                 sectionEfficiency.name,

@@ -36,6 +36,7 @@ import crazypants.enderio.item.darksteel.upgrade.SoundDetectorUpgrade;
 import crazypants.enderio.item.darksteel.upgrade.SpeedUpgrade;
 import crazypants.enderio.item.darksteel.upgrade.TrackmanGogglesUpgrade;
 import crazypants.enderio.network.PacketHandler;
+import crazypants.enderio.teleport.ItemTeleportStaff;
 import crazypants.enderio.teleport.TravelController;
 import crazypants.enderio.thaumcraft.GogglesOfRevealingUpgrade;
 import crazypants.util.BaublesUtil;
@@ -66,6 +67,8 @@ public class KeyTracker {
     private final KeyBinding magnetKey;
 
     private final KeyBinding staffOfTravelingTPKey;
+
+    private final KeyBinding teleportStaffModeKey;
 
     private static long lastBlinkTick = -1;
 
@@ -132,6 +135,12 @@ public class KeyTracker {
                 Keyboard.KEY_NONE,
                 EnderIO.lang.localize("category.tools"));
         ClientRegistry.registerKeyBinding(staffOfTravelingTPKey);
+
+        teleportStaffModeKey = new KeyBinding(
+                EnderIO.lang.localize("keybind.teleportstaffmode"),
+                Keyboard.KEY_NONE,
+                EnderIO.lang.localize("category.tools"));
+        ClientRegistry.registerKeyBinding(teleportStaffModeKey);
     }
 
     @SubscribeEvent
@@ -158,6 +167,7 @@ public class KeyTracker {
         handleSpeed();
         handleJump();
         handleMagnet();
+        handleTeleportStaffMode();
         handleStaffOfTravelingTP();
     }
 
@@ -171,6 +181,16 @@ public class KeyTracker {
         sendEnabledChatMessage(messageBase, isActive);
         DarkSteelController.instance.setActive(Minecraft.getMinecraft().thePlayer, type, isActive);
         PacketHandler.INSTANCE.sendToServer(new PacketUpgradeState(type, isActive));
+    }
+
+    private void handleTeleportStaffMode() {
+        if (teleportStaffModeKey.isPressed() && Minecraft.getMinecraft().thePlayer != null) {
+            Config.teleportStaffUseBlink = !Config.teleportStaffUseBlink;
+            Config.config.get(Config.sectionPersonal.name, "teleportStaffUseBlink", false)
+                    .set(Config.teleportStaffUseBlink);
+            Config.config.save();
+            sendEnabledChatMessage("teleportStaff.blinkMode", Config.teleportStaffUseBlink);
+        }
     }
 
     private void handleStaffOfTravelingTP() {
@@ -191,7 +211,10 @@ public class KeyTracker {
                             lastBlinkTick = -1;
                         }
                         if (ticksSinceBlink >= Config.travelStaffBlinkPauseTicks) {
-                            if (TravelController.instance.doBlink(travelItem, player)) {
+                            boolean teleported = travelItem.getItem() instanceof ItemTeleportStaff
+                                    ? TravelController.instance.doTeleport(player)
+                                    : TravelController.instance.doBlink(travelItem, player);
+                            if (teleported) {
                                 lastBlinkTick = EnderIO.proxy.getTickCount();
                             }
                         }
