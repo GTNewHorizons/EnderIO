@@ -1,6 +1,6 @@
 package crazypants.enderio.machine.farm.farmers.compat;
 
-git import net.minecraft.block.Block;
+import net.minecraft.block.Block;
 
 import crazypants.enderio.machine.farm.farmers.FarmersCommune;
 import crazypants.enderio.machine.farm.farmers.TreeFarmer;
