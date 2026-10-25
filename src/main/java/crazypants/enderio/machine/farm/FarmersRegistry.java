@@ -8,8 +8,29 @@ import net.minecraft.item.ItemStack;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
-import crazypants.enderio.machine.farm.farmers.*;
-import crazypants.enderio.machine.farm.farmers.compat.*;
+import crazypants.enderio.machine.farm.farmers.CocoaFarmer;
+import crazypants.enderio.machine.farm.farmers.CustomSeedFarmer;
+import crazypants.enderio.machine.farm.farmers.FarmersCommune;
+import crazypants.enderio.machine.farm.farmers.FlowerPicker;
+import crazypants.enderio.machine.farm.farmers.ForestryFarmer;
+import crazypants.enderio.machine.farm.farmers.MelonFarmer;
+import crazypants.enderio.machine.farm.farmers.NaturaBerryFarmer;
+import crazypants.enderio.machine.farm.farmers.NetherWartFarmer;
+import crazypants.enderio.machine.farm.farmers.PickableFarmer;
+import crazypants.enderio.machine.farm.farmers.PlantableFarmer;
+import crazypants.enderio.machine.farm.farmers.RubberTreeFarmerIC2;
+import crazypants.enderio.machine.farm.farmers.StemFarmer;
+import crazypants.enderio.machine.farm.farmers.TreeFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.BoPFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.EtFuturumFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.GTPlusPlusFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.HarvestTheNetherFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.PamsHarvestcraftFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.TConstructFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.ThaumcraftFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.ThaumicBasesFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.TwilightFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.WitcheryFarmer;
 
 public final class FarmersRegistry {
 
