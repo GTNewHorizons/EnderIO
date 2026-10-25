@@ -201,6 +201,14 @@ public class TreeFarmer implements IFarmerJoe {
         return ignoreMeta;
     }
 
+    protected boolean allowAllLogsToBeMined() {
+        return false;
+    }
+
+    protected int extraTreeHeight() {
+        return 0;
+    }
+
     private static class HeightComparator implements Comparator<BlockCoord> {
 
         @Override
