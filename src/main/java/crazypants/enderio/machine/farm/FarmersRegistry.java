@@ -1,7 +1,5 @@
 package crazypants.enderio.machine.farm;
 
-import crazypants.enderio.machine.farm.farmers.*;
-import crazypants.enderio.machine.farm.farmers.compat.*;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -10,6 +8,8 @@ import net.minecraft.item.ItemStack;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
+import crazypants.enderio.machine.farm.farmers.*;
+import crazypants.enderio.machine.farm.farmers.compat.*;
 
 public final class FarmersRegistry {
 

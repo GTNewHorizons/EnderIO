@@ -1,5 +1,9 @@
 package crazypants.enderio.machine.farm.farmers;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.block.BlockNewLeaf;
@@ -10,10 +14,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import com.enderio.core.common.util.BlockCoord;
 
 import crazypants.enderio.machine.farm.TileFarmStation;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 public class TreeHarvestUtil {
 
@@ -43,7 +43,8 @@ public class TreeHarvestUtil {
         harvestUp(world, bc, res, new HarvestTarget(wood, woodMeta));
     }
 
-    private void harvest(World world, BlockCoord origin, BlockCoord bc, HarvestResult res, boolean ignoreMeta, TreeFarmer farmer) {
+    private void harvest(World world, BlockCoord origin, BlockCoord bc, HarvestResult res, boolean ignoreMeta,
+            TreeFarmer farmer) {
         this.origin = new BlockCoord(origin);
         if (farmer.allowAllLogsToBeMined()) {
             Set<Block> woods = new HashSet<>(Arrays.asList(farmer.woods));

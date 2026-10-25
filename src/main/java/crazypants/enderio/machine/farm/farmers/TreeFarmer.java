@@ -205,9 +205,6 @@ public class TreeFarmer implements IFarmerJoe {
         return false;
     }
 
-    protected int extraTreeWidth() {
-        return 0;
-    }
     protected int extraTreeHeight() {
         return 0;
     }

@@ -18,8 +18,7 @@ public class FarmersCommune implements IFarmerJoe {
     public static void joinCommune(IFarmerJoe joe) {
         if (joe instanceof CustomSeedFarmer) {
             CustomSeedFarmer customSeedFarmer = (CustomSeedFarmer) joe;
-            if (customSeedFarmer.doesDisableTreeFarm())
-                disableTrees.add(customSeedFarmer.getSeeds());
+            if (customSeedFarmer.doesDisableTreeFarm()) disableTrees.add(customSeedFarmer.getSeeds());
         }
         instance.farmers.add(joe);
     }
