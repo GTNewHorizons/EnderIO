@@ -640,8 +640,7 @@ enderio.gui.mjReader.insertedInto=bude vložen do:
 enderio.gui.mjReader.noItems=Nepřijímá zádné předměty.
 enderio.gui.mjReader.noItem=Nemůže přijmout
 enderio.gui.mjReader.receiveItems=Může přijmout předměty z:
-enderio.gui.mjReader.receiveItem1=Může přijmout
-enderio.gui.mjReader.receiveItem2=z:
+enderio.gui.mjReader.receiveItem=Může přijmout %s z:
 
 #CapactorBank
 enderio.gui.capBank.inputRs=Vstupní ruditový mód

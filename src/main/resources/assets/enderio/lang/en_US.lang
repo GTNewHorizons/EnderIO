@@ -1152,8 +1152,7 @@ enderio.gui.mjReader.insertedInto=will be inserted into:
 enderio.gui.mjReader.noItems=Receives no items.
 enderio.gui.mjReader.noItem=Can not receive
 enderio.gui.mjReader.receiveItems=Can receive items from:
-enderio.gui.mjReader.receiveItem1=Can receive
-enderio.gui.mjReader.receiveItem2=from:
+enderio.gui.mjReader.receiveItem=Can receive %s from:
 enderio.gui.mjReader.distance=Distance [%s]
 
 #CapactorBank

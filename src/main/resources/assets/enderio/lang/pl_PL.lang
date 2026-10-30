@@ -179,8 +179,7 @@ enderio.gui.mjReader.insertedInto=zostanie wysłany do:
 enderio.gui.mjReader.noItems=Nie otrzymuje rzeczy.
 enderio.gui.mjReader.noItem=Nie można przesłać
 enderio.gui.mjReader.receiveItems=Może otrzymać rzeczy z:
-enderio.gui.mjReader.receiveItem1=Przyjmie
-enderio.gui.mjReader.receiveItem2=z:
+enderio.gui.mjReader.receiveItem=Przyjmie %s z:
 
 #CapactorBank
 enderio.gui.capBank.inputRs=Włącznik przyrostu energii

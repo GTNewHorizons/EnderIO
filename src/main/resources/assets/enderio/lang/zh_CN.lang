@@ -1086,8 +1086,7 @@ enderio.gui.mjReader.insertedInto=会被输入于:
 enderio.gui.mjReader.noItems=未接收到物品.
 enderio.gui.mjReader.noItem=无法接收
 enderio.gui.mjReader.receiveItems=合法的接收对象:
-enderio.gui.mjReader.receiveItem1=可以接收
-enderio.gui.mjReader.receiveItem2=从:
+enderio.gui.mjReader.receiveItem=可以接收 %s 从:
 
 #CapactorBank
 enderio.gui.capBank.inputRs=输入红石控制

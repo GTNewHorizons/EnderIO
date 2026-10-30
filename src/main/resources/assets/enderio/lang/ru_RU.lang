@@ -1092,8 +1092,7 @@ enderio.gui.mjReader.insertedInto=будет направлен:
 enderio.gui.mjReader.noItems=Не получает предметов.
 enderio.gui.mjReader.noItem=Не может получать
 enderio.gui.mjReader.receiveItems=Может получать предметы от:
-enderio.gui.mjReader.receiveItem1=Может получать
-enderio.gui.mjReader.receiveItem2=от:
+enderio.gui.mjReader.receiveItem=Может получать %s от:
 enderio.gui.mjReader.distance=Расстояние [%s]
 
 #CapactorBank

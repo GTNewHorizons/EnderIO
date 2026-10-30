@@ -788,8 +788,7 @@ enderio.gui.mjReader.insertedInto=Será insertado a:
 enderio.gui.mjReader.noItems=No recibe objetos.
 enderio.gui.mjReader.noItem=No puede recibir.
 enderio.gui.mjReader.receiveItems=Puede recibir objetos de:
-enderio.gui.mjReader.receiveItem1=Puede recibir
-enderio.gui.mjReader.receiveItem2=de:
+enderio.gui.mjReader.receiveItem=Puede recibir %s de:
 
 #CapactorBank
 enderio.gui.capBank.inputRs=Modo de Entrada de Redstone
