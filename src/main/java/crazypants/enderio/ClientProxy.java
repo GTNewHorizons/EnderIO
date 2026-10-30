@@ -33,12 +33,16 @@ import crazypants.enderio.conduit.gas.GasUtil;
 import crazypants.enderio.conduit.item.ItemConduit;
 import crazypants.enderio.conduit.liquid.AbstractEnderLiquidConduit;
 import crazypants.enderio.conduit.liquid.AdvancedLiquidConduit;
+import crazypants.enderio.conduit.liquid.CosmicEnderLiquidConduit;
 import crazypants.enderio.conduit.liquid.CrystallineEnderLiquidConduit;
 import crazypants.enderio.conduit.liquid.CrystallinePinkSlimeEnderLiquidConduit;
 import crazypants.enderio.conduit.liquid.EnderLiquidConduit;
+import crazypants.enderio.conduit.liquid.FluxedEnderLiquidConduit;
 import crazypants.enderio.conduit.liquid.LiquidConduit;
 import crazypants.enderio.conduit.liquid.MelodicEnderLiquidConduit;
+import crazypants.enderio.conduit.liquid.PrismaticNaquadahEnderLiquidConduit;
 import crazypants.enderio.conduit.liquid.StellarEnderLiquidConduit;
+import crazypants.enderio.conduit.liquid.TranscendentEnderLiquidConduit;
 import crazypants.enderio.conduit.me.MEConduit;
 import crazypants.enderio.conduit.me.MEUtil;
 import crazypants.enderio.conduit.oc.OCConduit;
@@ -203,6 +207,10 @@ public class ClientProxy extends CommonProxy {
         CrystallinePinkSlimeEnderLiquidConduit.initIcons();
         MelodicEnderLiquidConduit.initIcons();
         StellarEnderLiquidConduit.initIcons();
+        PrismaticNaquadahEnderLiquidConduit.initIcons();
+        FluxedEnderLiquidConduit.initIcons();
+        TranscendentEnderLiquidConduit.initIcons();
+        CosmicEnderLiquidConduit.initIcons();
         ItemConduit.initIcons();
         if (GasUtil.isGasConduitEnabled()) {
             GasConduit.initIcons();
