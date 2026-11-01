@@ -18,6 +18,7 @@ import com.enderio.core.common.util.ChatUtil;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import crazypants.enderio.EnderIO;
 import crazypants.enderio.EnderIOTab;
 import crazypants.enderio.ModObject;
 import crazypants.enderio.api.tool.IHideFacades;
@@ -76,7 +77,7 @@ public class ItemConduitProbe extends Item implements IResourceTooltipProvider, 
         }
 
         if (isCopy && performedAction && player.worldObj.isRemote) {
-            ChatUtil.sendNoSpamClient("Copied conduit settings");
+            ChatUtil.sendNoSpamClientUnloc(EnderIO.lang, "itemConduitProbe.chat.copied");
         }
 
         return performedAction;
