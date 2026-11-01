@@ -678,8 +678,7 @@ enderio.gui.mjReader.insertedInto=will be inserted into:
 enderio.gui.mjReader.noItems=Receives no items.
 enderio.gui.mjReader.noItem=Can not receive
 enderio.gui.mjReader.receiveItems=Can receive items from:
-enderio.gui.mjReader.receiveItem1=Can receive
-enderio.gui.mjReader.receiveItem2=from:
+enderio.gui.mjReader.receiveItem=Can receive %s from:
 
 #CapactorBank
 enderio.gui.capBank.inputRs=Input Redstone Mode
@@ -724,8 +723,7 @@ enderio.stirlingGenerator.output=Generating:
 enderio.stirlingGenerator.burnRate=Burn Rate:
 
 #Travel Blocks
-enderio.gui.travelAccessable.privateBlock1=Only
-enderio.gui.travelAccessable.privateBlock2=may change this blocks settings.
+enderio.gui.travelAccessable.privateBlock=Only %s may change this blocks settings.
 enderio.gui.travelAccessable.public=Public
 enderio.gui.travelAccessable.private=Private
 enderio.gui.travelAccessable.protected=Protected
