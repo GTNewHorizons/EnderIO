@@ -31,12 +31,15 @@ public class BasicManyToOneRecipe implements IManyToOneRecipe {
     @Override
     public boolean isValidRecipeComponents(ItemStack... items) {
 
-        List<RecipeInput> inputs = new ArrayList<>(Arrays.asList(recipe.getInputs()));
-        for (ItemStack is : items) {
+        List<RecipeInput> inputs = new ArrayList<RecipeInput>(Arrays.asList(recipe.getInputs()));
+        for (int slot = 0; slot < items.length; slot++) {
+            ItemStack is = items[slot];
             if (is != null) {
                 RecipeInput remove = null;
                 for (RecipeInput ri : inputs) {
-                    if (ri.isInput(is)) {
+                    int riSlot = ri.getSlotNumber();
+                    // Match by item type and, if the recipe specifies a slot, also by slot index
+                    if (ri.isInput(is) && (riSlot == -1 || riSlot == slot)) {
                         remove = ri;
                         break;
                     }
