@@ -698,8 +698,7 @@ enderio.gui.mjReader.insertedInto=會被輸入于:
 enderio.gui.mjReader.noItems=未接收到物品.
 enderio.gui.mjReader.noItem=無法接收
 enderio.gui.mjReader.receiveItems=合法的接收對象:
-enderio.gui.mjReader.receiveItem1=可以接收
-enderio.gui.mjReader.receiveItem2=從:
+enderio.gui.mjReader.receiveItem=可以接收 %s 從:
 
 #CapactorBank
 enderio.gui.capBank.inputRs=輸入紅石控制
@@ -744,8 +743,7 @@ enderio.stirlingGenerator.output=產能速率:
 enderio.stirlingGenerator.burnRate=燃燒速率:
 
 #Travel Blocks
-enderio.gui.travelAccessable.privateBlock1=只有
-enderio.gui.travelAccessable.privateBlock2=才能改變該方塊的設置.
+enderio.gui.travelAccessable.privateBlock=只有 %s 才能改變該方塊的設置.
 enderio.gui.travelAccessable.public=公共
 enderio.gui.travelAccessable.private=私有
 enderio.gui.travelAccessable.protected=被保護
@@ -1080,8 +1078,8 @@ item.itemCoordSelector.tooltip.detailed.line5=select that specific block.
 item.itemCoordSelector.tooltip.detailed.line6=Can select from a distance.
 enderio.itemCoordSelector.chat.newCoords=New Coords: %s
 enderio.itemCoordSelector.chat.setCoords=Set Coords: %s
-enderio.itemCoordSelector.chat.newDimension=New Dimension: %s%s
-enderio.itemCoordSelector.chat.setDimension=Set Dimension: %s%s
+enderio.itemCoordSelector.chat.newDimension=New Dimension: %s
+enderio.itemCoordSelector.chat.setDimension=Set Dimension: %s
 enderio.item.itemSoulVessel.tooltip.health=Health:
 enderio.item.itemSoulVessel.tooltip.fluidname=Fluid Name:
 enderio.item.itemSoulVessel.tooltip.color=Color:
