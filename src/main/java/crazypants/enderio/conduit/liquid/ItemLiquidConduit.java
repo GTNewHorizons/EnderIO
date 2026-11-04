@@ -1,8 +1,6 @@
 package crazypants.enderio.conduit.liquid;
 
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -18,6 +16,7 @@ import crazypants.enderio.conduit.AbstractItemConduit;
 import crazypants.enderio.conduit.IConduit;
 import crazypants.enderio.conduit.ItemConduitSubtype;
 import crazypants.enderio.config.Config;
+import crazypants.enderio.power.PowerDisplayUtil;
 
 public class ItemLiquidConduit extends AbstractItemConduit implements IAdvancedTooltipProvider {
 
@@ -175,11 +174,11 @@ public class ItemLiquidConduit extends AbstractItemConduit implements IAdvancedT
         String mbt = " " + EnderIO.lang.localize("fluid.millibucketsTick");
         list.add(
                 EnderIO.lang.localize("itemLiquidConduit.tooltip.maxExtract") + " "
-                        + NumberFormat.getIntegerInstance(Locale.ROOT).format(extractRate)
+                        + PowerDisplayUtil.formatPower(extractRate)
                         + mbt);
         list.add(
                 EnderIO.lang.localize("itemLiquidConduit.tooltip.maxIo") + " "
-                        + NumberFormat.getIntegerInstance(Locale.ROOT).format(maxIo)
+                        + PowerDisplayUtil.formatPower(maxIo)
                         + mbt);
 
         if (itemstack.getItemDamage() == 0) {
