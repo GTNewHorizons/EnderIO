@@ -34,6 +34,12 @@ public class TileBuffer extends AbstractPowerConsumerEntity implements IPaintabl
     }
 
     @Override
+    public String getInventoryName() {
+        // getMachineName will return the key without the suffix ".name"
+        return getMachineName() + ".name";
+    }
+
+    @Override
     public String getMachineName() {
         return BlockItemBuffer.Type.get(this).getUnlocalizedName();
     }

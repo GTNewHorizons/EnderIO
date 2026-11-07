@@ -42,7 +42,7 @@ public class TileEntityStirlingGenerator extends AbstractGeneratorEntity impleme
 
     @Override
     public String getInventoryName() {
-        return "Stirling Generator";
+        return "tile.blockStirlingGenerator.name";
     }
 
     @Override

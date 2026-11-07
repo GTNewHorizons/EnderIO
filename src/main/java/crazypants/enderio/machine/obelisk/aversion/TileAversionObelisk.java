@@ -107,6 +107,11 @@ public class TileAversionObelisk extends AbstractPowerConsumerEntity implements 
     }
 
     @Override
+    public String getInventoryName() {
+        return "tile.blockSpawnGuard.name";
+    }
+
+    @Override
     public String getMachineName() {
         return ModObject.blockSpawnGuard.unlocalisedName;
     }
