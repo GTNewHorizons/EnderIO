@@ -58,8 +58,8 @@ public class YetaWrenchOverlayRenderer {
             lastTick = ClientHandler.getTicksElapsed();
         }
 
-        boolean showSelector = displayTickCount > 0;
-        if (showSelector && Config.yetaWrenchOverlayMode == 0 && lastTick < ClientHandler.getTicksElapsed()) {
+        boolean showSelector = displayTickCount > 0 && Config.yetaWrenchOverlayMode == 0;
+        if (showSelector && lastTick < ClientHandler.getTicksElapsed()) {
             lastTick++;
             displayTickCount--;
         }

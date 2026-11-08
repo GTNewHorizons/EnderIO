@@ -64,8 +64,7 @@ public final class DashboardHud {
 
     /** The selector while it shows, otherwise the corner icon, the column or the group of icons. */
     static boolean beginWrench(ScaledResolution resolution, boolean showSelector) {
-        boolean selector = showSelector && Config.yetaWrenchOverlayMode == 0;
-        return HudRegistry.beginRender(selector ? WRENCH_SELECTOR : WRENCH_MODE, resolution);
+        return HudRegistry.beginRender(showSelector ? WRENCH_SELECTOR : WRENCH_MODE, resolution);
     }
 
     static void endRender() {
