@@ -58,6 +58,7 @@ import crazypants.enderio.gui.TooltipHandlerBurnTime;
 import crazypants.enderio.gui.TooltipHandlerFluid;
 import crazypants.enderio.gui.TooltipHandlerGrinding;
 import crazypants.enderio.item.ConduitProbeOverlayRenderer;
+import crazypants.enderio.item.DashboardHud;
 import crazypants.enderio.item.KeyTracker;
 import crazypants.enderio.item.ToolTickHandler;
 import crazypants.enderio.item.YetaWrenchOverlayRenderer;
@@ -401,6 +402,9 @@ public class ClientProxy extends CommonProxy {
 
         new YetaWrenchOverlayRenderer();
         new ConduitProbeOverlayRenderer();
+        if (EnderIO.hasDashboard) {
+            DashboardHud.register();
+        }
         if (Config.useSneakMouseWheelYetaWrench) {
             ToolTickHandler th = new ToolTickHandler();
             MinecraftForge.EVENT_BUS.register(th);
