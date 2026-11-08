@@ -101,7 +101,7 @@ public class TilePowerMonitor extends AbstractPowerConsumerEntity implements IIn
 
     @Override
     public String getInventoryName() {
-        return EnderIO.blockPowerMonitor.getUnlocalizedName() + ".name";
+        return "tile.blockPowerMonitor.name";
     }
 
     @Override
