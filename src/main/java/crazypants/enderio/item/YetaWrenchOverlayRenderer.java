@@ -57,20 +57,22 @@ public class YetaWrenchOverlayRenderer {
             lastTick = ClientHandler.getTicksElapsed();
         }
 
-        ScaledResolution res = event.resolution;
+        boolean showSelector = displayTickCount > 0;
+        if (showSelector && Config.yetaWrenchOverlayMode == 0 && lastTick < ClientHandler.getTicksElapsed()) {
+            lastTick++;
+            displayTickCount--;
+        }
+        draw(mode, event.resolution, showSelector);
+    }
+
+    static void draw(ConduitDisplayMode mode, ScaledResolution res, boolean showSelector) {
         Tessellator tess = Tessellator.instance;
         int modeCount = ConduitDisplayMode.registrySize();
         Iterable<ConduitDisplayMode> renderable = ConduitDisplayMode.getRenderableModes();
 
         switch (Config.yetaWrenchOverlayMode) {
             case 0:
-                if (displayTickCount > 0) {
-
-                    if (lastTick < ClientHandler.getTicksElapsed()) {
-                        lastTick++;
-                        displayTickCount--;
-                    }
-
+                if (showSelector) {
                     int x = res.getScaledWidth() / 2 - 8;
                     int y = res.getScaledHeight() / 2 - 24;
 
