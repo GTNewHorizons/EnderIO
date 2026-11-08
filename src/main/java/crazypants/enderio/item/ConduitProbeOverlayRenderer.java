@@ -38,7 +38,13 @@ public class ConduitProbeOverlayRenderer {
     }
 
     private void doRenderOverlay(RenderGameOverlayEvent event, ItemStack equippedProbe) {
+        if (EnderIO.hasDashboard && !DashboardHud.beginProbe(event.resolution)) {
+            return;
+        }
         draw(equippedProbe.getItemDamage() == 0, event.resolution);
+        if (EnderIO.hasDashboard) {
+            DashboardHud.endRender();
+        }
     }
 
     static void draw(boolean probeMode, ScaledResolution res) {

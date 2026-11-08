@@ -17,6 +17,7 @@ import com.enderio.core.client.render.RenderUtil;
 import com.enderio.core.common.vecmath.Vector4f;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import crazypants.enderio.EnderIO;
 import crazypants.enderio.api.tool.IConduitControl;
 import crazypants.enderio.conduit.ConduitDisplayMode;
 import crazypants.enderio.config.Config;
@@ -62,7 +63,13 @@ public class YetaWrenchOverlayRenderer {
             lastTick++;
             displayTickCount--;
         }
+        if (EnderIO.hasDashboard && !DashboardHud.beginWrench(event.resolution, showSelector)) {
+            return;
+        }
         draw(mode, event.resolution, showSelector);
+        if (EnderIO.hasDashboard) {
+            DashboardHud.endRender();
+        }
     }
 
     static void draw(ConduitDisplayMode mode, ScaledResolution res, boolean showSelector) {
