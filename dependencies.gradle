@@ -28,7 +28,7 @@ dependencies {
     compileOnly(rfg.deobf('curse.maven:computercraft-67504:2269339')) // https://www.curseforge.com/minecraft/mc-mods/computercraft/files/2269339
     compileOnly(rfg.deobf('curse.maven:mekanism-268560:2475797')) // https://www.curseforge.com/minecraft/mc-mods/mekanism/files/2475797
     compileOnly(rfg.deobf('maven.modrinth:immibis-microblocks:59.1.2')) // https://modrinth.com/mod/immibis-microblocks/version/59.1.2
-
+    compileOnly('com.github.GTNewHorizons:BetterBuildersWands:0.13.12-GTNH:dev@jar')
     compileOnlyApi('com.github.GTNewHorizons:Angelica:2.2.10:api') {transitive = false}
     compileOnly("com.github.GTNewHorizons:Hodgepodge:2.7.196:dev")
     compileOnly('curse.maven:automagy-222153:2285272')
