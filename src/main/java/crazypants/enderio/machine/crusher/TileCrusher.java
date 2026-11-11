@@ -28,7 +28,7 @@ public class TileCrusher extends AbstractPoweredTaskEntity {
 
     @Override
     public String getInventoryName() {
-        return ModObject.blockSagMill.unlocalisedName;
+        return "tile.blockSagMill.name";
     }
 
     @Override

@@ -101,6 +101,11 @@ public class TileSliceAndSplice extends AbstractPoweredTaskEntity {
     }
 
     @Override
+    public String getInventoryName() {
+        return "tile.blockSliceAndSplice.name";
+    }
+
+    @Override
     public String getMachineName() {
         return ModObject.blockSliceAndSplice.unlocalisedName;
     }
