@@ -185,8 +185,8 @@ public class TravelController {
             case TELEPORT_STAFF_BLINK:
             case TELEPORT_STAFF:
                 if (equippedItem != null && equippedItem.getItem() instanceof IItemOfTravel travelItem
-                    && travelItem.isActive(toTp, equippedItem)
-                    && travelItem.isTeleportStaff(toTp, equippedItem)) {
+                        && travelItem.isActive(toTp, equippedItem)
+                        && travelItem.isTeleportStaff(toTp, equippedItem)) {
                     return null;
                 }
                 return "not staff";
