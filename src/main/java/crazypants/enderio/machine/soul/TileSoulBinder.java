@@ -114,6 +114,11 @@ public class TileSoulBinder extends AbstractPoweredTaskEntity implements IHaveEx
     }
 
     @Override
+    public String getInventoryName() {
+        return "tile.blockSoulBinder.name";
+    }
+
+    @Override
     public String getMachineName() {
         return ModObject.blockSoulBinder.unlocalisedName;
     }

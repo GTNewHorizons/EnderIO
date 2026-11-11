@@ -158,6 +158,11 @@ public class TileTransceiver extends AbstractPoweredTaskEntity
     }
 
     @Override
+    public String getInventoryName() {
+        return "tile.blockTransceiver.name";
+    }
+
+    @Override
     public String getMachineName() {
         return ModObject.blockTransceiver.unlocalisedName;
     }
