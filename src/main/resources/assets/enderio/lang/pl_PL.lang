@@ -179,8 +179,7 @@ enderio.gui.mjReader.insertedInto=zostanie wysłany do:
 enderio.gui.mjReader.noItems=Nie otrzymuje rzeczy.
 enderio.gui.mjReader.noItem=Nie można przesłać
 enderio.gui.mjReader.receiveItems=Może otrzymać rzeczy z:
-enderio.gui.mjReader.receiveItem1=Przyjmie
-enderio.gui.mjReader.receiveItem2=z:
+enderio.gui.mjReader.receiveItem=Przyjmie %s z:
 
 #CapactorBank
 enderio.gui.capBank.inputRs=Włącznik przyrostu energii
@@ -208,8 +207,7 @@ enderio.gui.alloy.mode.alloy=Tylko stopy
 enderio.gui.alloy.mode.furnace=Tylko jak zwykły piec
 
 #Travel Blocks
-enderio.gui.travelAccessable.privateBlock1=Można
-enderio.gui.travelAccessable.privateBlock2=zmienić tylko te ustawienia.
+enderio.gui.travelAccessable.privateBlock=Można %s zmienić tylko te ustawienia.
 enderio.gui.travelAccessable.public=Publiczny
 enderio.gui.travelAccessable.private=Prywatny
 enderio.gui.travelAccessable.protected=Chroniony

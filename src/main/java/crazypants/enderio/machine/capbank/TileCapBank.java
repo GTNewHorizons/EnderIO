@@ -882,12 +882,12 @@ public class TileCapBank extends TileEntityEio
         }
 
         if (nbtRoot.hasKey("inputControlMode")) {
-            inputControlMode = RedstoneControlMode.values()[nbtRoot.getShort("inputControlMode")];
+            inputControlMode = RedstoneControlMode.VALUES[nbtRoot.getShort("inputControlMode")];
         } else {
             inputControlMode = RedstoneControlMode.IGNORE;
         }
         if (nbtRoot.hasKey("outputControlMode")) {
-            outputControlMode = RedstoneControlMode.values()[nbtRoot.getShort("outputControlMode")];
+            outputControlMode = RedstoneControlMode.VALUES[nbtRoot.getShort("outputControlMode")];
         } else {
             outputControlMode = RedstoneControlMode.IGNORE;
         }

@@ -184,8 +184,8 @@ public abstract class AbstractGasConduit extends AbstractConduit implements IGas
             String key = "extRM." + dir.name();
             if (nbtRoot.hasKey(key)) {
                 short ord = nbtRoot.getShort(key);
-                if (ord >= 0 && ord < RedstoneControlMode.values().length) {
-                    extractionModes.put(dir, RedstoneControlMode.values()[ord]);
+                if (ord >= 0 && ord < RedstoneControlMode.VALUES.length) {
+                    extractionModes.put(dir, RedstoneControlMode.VALUES[ord]);
                 }
             }
             key = "extSC." + dir.name();

@@ -13,6 +13,7 @@ public enum MachinePart {
     SOUL_MACHINE_CHASSIS("soulMachineChassi"),
     END_STEEL_MACHINE_CHASSIS("endSteelMachineChassi");
 
+    public static final MachinePart[] VALUES = values();
     public final String unlocalisedName;
     public final String iconKey;
     public final String oreDict;
@@ -24,7 +25,7 @@ public enum MachinePart {
     }
 
     public static void registerOres(Item item) {
-        for (MachinePart m : values()) {
+        for (MachinePart m : VALUES) {
             OreDictionary.registerOre(m.oreDict, new ItemStack(item, 1, m.ordinal()));
         }
     }

@@ -238,6 +238,8 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockPainter), machRen);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockCrafter), machRen);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockBuffer), machRen);
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockPoweredSpawner), machRen);
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockSliceAndSplice), machRen);
 
         MinecraftForgeClient.registerItemRenderer(EnderIO.itemBrokenSpawner, new BrokenSpawnerRenderer());
 
@@ -256,7 +258,9 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileFarmStation.class, new FarmingStationSpecialRenderer());
 
         BlockSoulBinder.renderId = RenderingRegistry.getNextAvailableRenderId();
-        RenderingRegistry.registerBlockHandler(new SoulBinderRenderer());
+        SoulBinderRenderer soulBinderRenderer = new SoulBinderRenderer();
+        RenderingRegistry.registerBlockHandler(soulBinderRenderer);
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockSoulFuser), soulBinderRenderer);
 
         ObeliskRenderer defaultObeliskRenderer = new ObeliskRenderer();
         BlockObeliskAbstract.defaultObeliskRenderId = RenderingRegistry.getNextAvailableRenderId();
@@ -360,6 +364,7 @@ public class ClientProxy extends CommonProxy {
         TelePadRenderer telePadRenderer = new TelePadRenderer();
         RenderingRegistry.registerBlockHandler(telePadRenderer);
         ClientRegistry.bindTileEntitySpecialRenderer(TileTelePad.class, new TelePadSpecialRenderer(telePadRenderer));
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockTelePad), telePadRenderer);
 
         MinecraftForgeClient.registerItemRenderer(EnderIO.itemMachinePart, new MachinePartRenderer());
         MinecraftForgeClient.registerItemRenderer(EnderIO.itemConduitFacade, new FacadeRenderer());

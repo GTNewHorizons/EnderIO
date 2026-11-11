@@ -203,7 +203,7 @@ public abstract class AbstractLiquidConduit extends AbstractConduit implements I
     @Override
     protected void readTypeSettings(ForgeDirection dir, NBTTagCompound dataRoot) {
         setExtractionSignalColor(dir, DyeColor.VALUES[dataRoot.getShort("extractionSignalColor")]);
-        setExtractionRedstoneMode(RedstoneControlMode.values()[dataRoot.getShort("extractionRedstoneMode")], dir);
+        setExtractionRedstoneMode(RedstoneControlMode.VALUES[dataRoot.getShort("extractionRedstoneMode")], dir);
     }
 
     @Override
@@ -239,8 +239,8 @@ public abstract class AbstractLiquidConduit extends AbstractConduit implements I
             String key = "extRM." + dir.name();
             if (nbtRoot.hasKey(key)) {
                 short ord = nbtRoot.getShort(key);
-                if (ord >= 0 && ord < RedstoneControlMode.values().length) {
-                    extractionModes.put(dir, RedstoneControlMode.values()[ord]);
+                if (ord >= 0 && ord < RedstoneControlMode.VALUES.length) {
+                    extractionModes.put(dir, RedstoneControlMode.VALUES[ord]);
                 }
             }
             key = "extSC." + dir.name();

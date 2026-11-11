@@ -30,7 +30,7 @@ public class ItemFrankenSkull extends Item {
         setMaxDamage(0);
         setCreativeTab(EnderIOTab.tabEnderIO);
         setUnlocalizedName(ModObject.itemFrankenSkull.unlocalisedName);
-        icons = new IIcon[FrankenSkull.values().length];
+        icons = new IIcon[FrankenSkull.VALUES.length];
     }
 
     private void init() {
@@ -48,20 +48,20 @@ public class ItemFrankenSkull extends Item {
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister IIconRegister) {
         for (int i = 0; i < icons.length; i++) {
-            icons[i] = IIconRegister.registerIcon(FrankenSkull.values()[i].iconKey);
+            icons[i] = IIconRegister.registerIcon(FrankenSkull.VALUES[i].iconKey);
         }
     }
 
     @Override
     public String getUnlocalizedName(ItemStack par1ItemStack) {
-        int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, FrankenSkull.values().length - 1);
-        return FrankenSkull.values()[i].unlocalisedName;
+        int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, FrankenSkull.VALUES.length - 1);
+        return FrankenSkull.VALUES[i].unlocalisedName;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
-        for (int j = 0; j < FrankenSkull.values().length; ++j) {
+        for (int j = 0; j < FrankenSkull.VALUES.length; ++j) {
             par3List.add(new ItemStack(par1, 1, j));
         }
     }
@@ -69,7 +69,7 @@ public class ItemFrankenSkull extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public boolean hasEffect(ItemStack par1ItemStack, int pass) {
-        int meta = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, FrankenSkull.values().length - 1);
-        return FrankenSkull.values()[meta].isAnimated;
+        int meta = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, FrankenSkull.VALUES.length - 1);
+        return FrankenSkull.VALUES[meta].isAnimated;
     }
 }
