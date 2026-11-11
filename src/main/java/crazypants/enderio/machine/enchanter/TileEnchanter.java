@@ -16,7 +16,6 @@ import com.gtnewhorizon.gtnhlib.geometry.CubeIterator;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import crazypants.enderio.Log;
-import crazypants.enderio.ModObject;
 import crazypants.enderio.TileEntityEio;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.obelisk.xp.TileExperienceObelisk;
@@ -300,7 +299,7 @@ public class TileEnchanter extends TileEntityEio implements ISidedInventory {
 
     @Override
     public String getInventoryName() {
-        return ModObject.blockEnchanter.unlocalisedName;
+        return "tile.blockEnchanter.name";
     }
 
     @Override
