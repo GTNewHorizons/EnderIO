@@ -20,4 +20,8 @@ public interface IItemOfTravel extends IEnergyContainerItem {
     default int canExtractInternal(ItemStack equipped, int power) {
         return Config.strictTPItemChecking ? 0 : -1;
     }
+
+    default boolean isTeleportStaff(EntityPlayer player, ItemStack stack) {
+        return false;
+    }
 }

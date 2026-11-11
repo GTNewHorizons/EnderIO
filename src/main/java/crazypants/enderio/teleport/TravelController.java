@@ -184,11 +184,9 @@ public class TravelController {
                 return null;
             case TELEPORT_STAFF_BLINK:
             case TELEPORT_STAFF:
-                // tp staff is creative version of traveling staff
-                // no energy check or anything else needed
-                // but the player must actually be equipped with one of these
-                if (equippedItem != null && (equippedItem.getItem() instanceof ItemTeleportStaff
-                        || equippedItem.getItem() instanceof IItemOfTravel)) {
+                if (equippedItem != null && equippedItem.getItem() instanceof IItemOfTravel travelItem
+                    && travelItem.isActive(toTp, equippedItem)
+                    && travelItem.isTeleportStaff(toTp, equippedItem)) {
                     return null;
                 }
                 return "not staff";
@@ -1260,6 +1258,7 @@ public class TravelController {
         }
     }
 
+    @SideOnly(Side.CLIENT)
     public void forceUpdateTarget(EntityPlayer player) {
         updateSelectedTarget(player);
     }
