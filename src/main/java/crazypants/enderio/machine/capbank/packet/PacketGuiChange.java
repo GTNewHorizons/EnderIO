@@ -39,8 +39,8 @@ public class PacketGuiChange extends PacketCapBank<PacketGuiChange, IMessage> {
         super.fromBytes(buf);
         maxSend = buf.readInt();
         maxRec = buf.readInt();
-        inputMode = RedstoneControlMode.values()[buf.readShort()];
-        outputMode = RedstoneControlMode.values()[buf.readShort()];
+        inputMode = RedstoneControlMode.VALUES[buf.readShort()];
+        outputMode = RedstoneControlMode.VALUES[buf.readShort()];
     }
 
     @Override

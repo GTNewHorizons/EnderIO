@@ -378,10 +378,10 @@ public class TileVacuumChest extends TileEntityEio
         }
 
         int rsContr = nbtRoot.getInteger("redstoneControlMode");
-        if (rsContr < 0 || rsContr >= RedstoneControlMode.values().length) {
+        if (rsContr < 0 || rsContr >= RedstoneControlMode.VALUES.length) {
             rsContr = 0;
         }
-        redstoneControlMode = RedstoneControlMode.values()[rsContr];
+        redstoneControlMode = RedstoneControlMode.VALUES[rsContr];
     }
 
     @Override

@@ -209,7 +209,7 @@ public class PowerConduit extends AbstractConduit implements IPowerConduit {
     @Override
     protected void readTypeSettings(ForgeDirection dir, NBTTagCompound dataRoot) {
         setExtractionSignalColor(dir, DyeColor.VALUES[dataRoot.getShort("extractionSignalColor")]);
-        setExtractionRedstoneMode(RedstoneControlMode.values()[dataRoot.getShort("extractionRedstoneMode")], dir);
+        setExtractionRedstoneMode(RedstoneControlMode.VALUES[dataRoot.getShort("extractionRedstoneMode")], dir);
     }
 
     @Override
@@ -253,8 +253,8 @@ public class PowerConduit extends AbstractConduit implements IPowerConduit {
             String key = "pRsMode." + dir.name();
             if (nbtRoot.hasKey(key)) {
                 short ord = nbtRoot.getShort(key);
-                if (ord >= 0 && ord < RedstoneControlMode.values().length) {
-                    rsModes.put(dir, RedstoneControlMode.values()[ord]);
+                if (ord >= 0 && ord < RedstoneControlMode.VALUES.length) {
+                    rsModes.put(dir, RedstoneControlMode.VALUES[ord]);
                 }
             }
             key = "pRsCol." + dir.name();

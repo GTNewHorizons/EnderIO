@@ -40,7 +40,7 @@ public class PacketExtractMode extends AbstractConduitPacket<IExtractor>
     public void fromBytes(ByteBuf buf) {
         super.fromBytes(buf);
         dir = ForgeDirections.DIRECTIONS[buf.readShort()];
-        mode = RedstoneControlMode.values()[buf.readShort()];
+        mode = RedstoneControlMode.VALUES[buf.readShort()];
         color = DyeColor.VALUES[buf.readShort()];
     }
 

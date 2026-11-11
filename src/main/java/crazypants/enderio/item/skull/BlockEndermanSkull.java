@@ -29,6 +29,7 @@ public class BlockEndermanSkull extends BlockEio implements IInfusionStabiliser 
         TORMENTED("tormented", false),
         REANIMATED_TORMENTED("reanimatedTormented", true);
 
+        public static final SkullType[] VALUES = values();
         final String name;
         final boolean showEyes;
 
@@ -74,8 +75,8 @@ public class BlockEndermanSkull extends BlockEio implements IInfusionStabiliser 
     public IIcon getIcon(int side, int meta) {
         ForgeDirection orint = ForgeDirection.getOrientation(side);
         if (orint == ForgeDirection.NORTH) {
-            meta = MathHelper.clamp_int(meta, 0, SkullType.values().length - 1);
-            return SkullType.values()[meta].showEyes ? frontIconEyes : frontIcon;
+            meta = MathHelper.clamp_int(meta, 0, SkullType.VALUES.length - 1);
+            return SkullType.VALUES[meta].showEyes ? frontIconEyes : frontIcon;
         }
         if (orint == ForgeDirection.UP || orint == ForgeDirection.DOWN || orint == ForgeDirection.SOUTH) {
             return topIcon;

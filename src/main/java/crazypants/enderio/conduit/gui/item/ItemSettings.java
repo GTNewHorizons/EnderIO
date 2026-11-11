@@ -175,6 +175,7 @@ public class ItemSettings extends BaseSettingsPanel {
     private void updateButtons() {
         rsB.onGuiInit();
         rsB.setMode(itemConduit.getExtractionRedstoneMode(gui.getDir()));
+        colorB.onGuiInit();
 
         loopB.onGuiInit();
         loopB.setSelected(itemConduit.isSelfFeedEnabled(gui.getDir()));
