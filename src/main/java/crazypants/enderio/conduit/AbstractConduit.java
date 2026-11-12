@@ -504,6 +504,15 @@ public abstract class AbstractConduit implements IConduit {
         clientStateDirty = true;
     }
 
+    /**
+     * True if the base updateEntity would still find work to do this tick: no network formed yet, a connection recheck
+     * pending, or a client-state change waiting to be forwarded. This mirrors updateEntity's own no-op conditions, so
+     * it only applies to conduit types that do not add extra per-tick work of their own.
+     */
+    protected final boolean isBaseUpdateWorkPending() {
+        return connectionsDirty || needUpdateConnections || clientStateDirty || getNetwork() == null;
+    }
+
     protected void updateNetwork(World world) {
         BlockCoord pos = getLocation();
         if (getNetwork() == null && world.blockExists(pos.x, pos.y, pos.z)) {
