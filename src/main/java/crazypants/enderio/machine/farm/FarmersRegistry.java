@@ -8,13 +8,11 @@ import net.minecraft.item.ItemStack;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
-import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.farm.farmers.CocoaFarmer;
 import crazypants.enderio.machine.farm.farmers.CustomSeedFarmer;
 import crazypants.enderio.machine.farm.farmers.FarmersCommune;
 import crazypants.enderio.machine.farm.farmers.FlowerPicker;
 import crazypants.enderio.machine.farm.farmers.ForestryFarmer;
-import crazypants.enderio.machine.farm.farmers.ManaBeanFarmer;
 import crazypants.enderio.machine.farm.farmers.MelonFarmer;
 import crazypants.enderio.machine.farm.farmers.NaturaBerryFarmer;
 import crazypants.enderio.machine.farm.farmers.NetherWartFarmer;
@@ -23,6 +21,16 @@ import crazypants.enderio.machine.farm.farmers.PlantableFarmer;
 import crazypants.enderio.machine.farm.farmers.RubberTreeFarmerIC2;
 import crazypants.enderio.machine.farm.farmers.StemFarmer;
 import crazypants.enderio.machine.farm.farmers.TreeFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.BoPFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.EtFuturumFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.GTPlusPlusFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.HarvestTheNetherFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.PamsHarvestcraftFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.TConstructFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.ThaumcraftFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.ThaumicBasesFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.TwilightFarmer;
+import crazypants.enderio.machine.farm.farmers.compat.WitcheryFarmer;
 
 public final class FarmersRegistry {
 
@@ -34,10 +42,39 @@ public final class FarmersRegistry {
         addNatura();
         addTiC();
         addIC2();
-        addThaumcraft();
         addFlowers();
+        if (Loader.isModLoaded("BiomesOPlenty")) {
+            BoPFarmer.init();
+        }
+        if (Loader.isModLoaded("etfuturum")) {
+            EtFuturumFarmer.init();
+        }
         if (Loader.isModLoaded("Forestry")) {
             ForestryFarmer.init();
+        }
+        if (Loader.isModLoaded("harvestcraft")) {
+            PamsHarvestcraftFarmer.init();
+        }
+        if (Loader.isModLoaded("harvestthenether")) {
+            HarvestTheNetherFarmer.init();
+        }
+        if (Loader.isModLoaded("miscutils")) {
+            GTPlusPlusFarmer.init();
+        }
+        if (Loader.isModLoaded("TConstruct")) {
+            TConstructFarmer.init();
+        }
+        if (Loader.isModLoaded("Thaumcraft")) {
+            ThaumcraftFarmer.init();
+        }
+        if (Loader.isModLoaded("thaumicbases")) {
+            ThaumicBasesFarmer.init();
+        }
+        if (Loader.isModLoaded("TwilightForest")) {
+            TwilightFarmer.init();
+        }
+        if (Loader.isModLoaded("witchery")) {
+            WitcheryFarmer.init();
         }
 
         FarmersCommune.joinCommune(new StemFarmer(Blocks.reeds, new ItemStack(Items.reeds)));
@@ -174,17 +211,6 @@ public final class FarmersRegistry {
         saplingBlock = GameRegistry.findBlock(mod, blockName);
         if (saplingBlock != null) {
             FarmersCommune.joinCommune(new TreeFarmer(saplingBlock, GameRegistry.findBlock(mod, "Rare Tree")));
-        }
-    }
-
-    private static void addThaumcraft() {
-        String mod = "Thaumcraft";
-        String manaBean = "ItemManaBean";
-        String manaPod = "blockManaPod";
-        Block block = GameRegistry.findBlock(mod, manaPod);
-        Item item = GameRegistry.findItem(mod, manaBean);
-        if (Config.farmManaBeansEnabled && block != null && item != null) {
-            FarmersCommune.joinCommune(new ManaBeanFarmer(block, new ItemStack(item)));
         }
     }
 
