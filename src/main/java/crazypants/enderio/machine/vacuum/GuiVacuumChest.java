@@ -148,6 +148,7 @@ public class GuiVacuumChest extends GuiContainerBaseEIO {
                 break;
             case RANGE_ID:
                 te.setShowRange(showRangeB.isSelected());
+                break;
             case ID_WHITELIST:
                 itemFilter = te.getItemFilter();
                 if (itemFilter != null) {

@@ -94,6 +94,11 @@ public class TileZombieGenerator extends AbstractGeneratorEntity
     }
 
     @Override
+    public String getInventoryName() {
+        return "tile.blockZombieGenerator.name";
+    }
+
+    @Override
     public String getMachineName() {
         return ModObject.blockZombieGenerator.unlocalisedName;
     }

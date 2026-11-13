@@ -91,6 +91,11 @@ public class TileCombustionGenerator extends AbstractGeneratorEntity implements 
     }
 
     @Override
+    public String getInventoryName() {
+        return "tile.blockCombustionGenerator.name";
+    }
+
+    @Override
     public String getMachineName() {
         return ModObject.blockCombustionGenerator.unlocalisedName;
     }
