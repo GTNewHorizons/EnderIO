@@ -104,6 +104,7 @@ public enum ModObject {
     blockPaintedDoubleSlab,
     blockPaintedGlowstone,
     blockPaintedCarpet,
+    blockPaintedConcrete,
 
     itemConduitProbe,
     itemYetaWrench,

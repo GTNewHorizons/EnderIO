@@ -10,6 +10,7 @@ import com.github.bsideup.jabel.Desugar;
 
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.machine.painter.BlockPaintedCarpet;
+import crazypants.enderio.machine.painter.BlockPaintedConcrete;
 import crazypants.enderio.machine.painter.BlockPaintedFence;
 import crazypants.enderio.machine.painter.BlockPaintedFenceGate;
 import crazypants.enderio.machine.painter.BlockPaintedGlowstone;
@@ -75,6 +76,11 @@ public record PaintedCustomMapping(Block lookBlock, BiFunction<Block, Integer, I
                 i -> new PaintedCustomMapping(
                         EnderIO.blockPaintedCarpet,
                         BlockPaintedCarpet::createItemStackForSourceBlock,
+                        i));
+        register(
+                i -> new PaintedCustomMapping(
+                        EnderIO.blockPaintedConcrete,
+                        BlockPaintedConcrete::createItemStackForSourceBlock,
                         i));
         register(
                 i -> new PaintedCustomMapping(
