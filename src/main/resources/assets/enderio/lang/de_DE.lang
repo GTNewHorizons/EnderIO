@@ -704,6 +704,7 @@ tile.blockPaintedSlab.name=Bemalte Stufe
 tile.blockPaintedDoubleSlab.name=Bemalte Stufe
 tile.blockPaintedGlowstone.name=Bemaltes Glowstone
 tile.blockPaintedCarpet.name=Bemalter Teppich
+tile.blockPaintedConcrete.name=Bemalter Beton
 enderio.painter.tooltip.wasPainted=§oWas denkst du, wird das wohl tun?
 
 tile.blockPainter.tooltip.detailed.line1=Verwendet, um folgendes zu bemalen:

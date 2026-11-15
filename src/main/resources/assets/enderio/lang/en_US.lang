@@ -803,6 +803,7 @@ tile.blockPaintedSlabDouble.name=Painted Slab
 tile.blockPaintedDoubleSlab.name=Painted Slab
 tile.blockPaintedGlowstone.name=Painted Glowstone
 tile.blockPaintedCarpet.name=Painted Carpet
+tile.blockPaintedConcrete.name=Painted Concrete
 enderio.painter.tooltip.wasPainted=§oWhat did you think that would do?
 
 tile.blockPainter.tooltip.detailed.line1=Used to paint:

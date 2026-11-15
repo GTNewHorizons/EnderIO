@@ -76,6 +76,7 @@ public class BlockPaintedConcrete extends BlockEio
         if (baseBlock.isPresent()) {
             MachineRecipeRegistry.instance
                     .registerRecipe(ModObject.blockPainter.unlocalisedName, new PainterTemplate());
+            setStepSound(baseBlock.get().stepSound);
         }
     }
 
