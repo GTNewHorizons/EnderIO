@@ -24,7 +24,6 @@ import com.enderio.core.common.vecmath.Vector3d;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import crazypants.enderio.EnderIO;
-import crazypants.enderio.ModObject;
 import crazypants.enderio.TileEntityEio;
 import crazypants.enderio.conduit.item.FilterRegister;
 import crazypants.enderio.conduit.item.filter.IItemFilter;
@@ -212,7 +211,7 @@ public class TileVacuumChest extends TileEntityEio
 
     @Override
     public String getInventoryName() {
-        return ModObject.blockVacuumChest.unlocalisedName;
+        return "tile.blockVacuumChest.name";
     }
 
     @Override

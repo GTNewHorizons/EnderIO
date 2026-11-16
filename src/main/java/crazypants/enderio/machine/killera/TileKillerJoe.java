@@ -158,6 +158,11 @@ public class TileKillerJoe extends AbstractMachineEntity
     }
 
     @Override
+    public String getInventoryName() {
+        return "tile.blockKillerJoe.name";
+    }
+
+    @Override
     public String getMachineName() {
         return ModObject.blockKillerJoe.unlocalisedName;
     }

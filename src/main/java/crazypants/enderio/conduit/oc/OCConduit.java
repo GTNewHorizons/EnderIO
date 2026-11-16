@@ -15,7 +15,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -213,14 +215,20 @@ public class OCConduit extends AbstractConduit implements IOCConduit {
         return null;
     }
 
-    private static String prettyNode(Node o) {
-        String at = "";
+    private static IChatComponent prettyNode(Node o) {
         Environment host = o.host();
+        String name = host.getClass().getName().replaceFirst("^.*\\.", "");
         if (host instanceof TileEntity) {
-            BlockCoord bc = new BlockCoord((TileEntity) host);
-            at = " at " + bc.x + "/" + bc.y + "/" + bc.z;
+            return new ChatComponentTranslation(
+                    EnderIO.lang.addPrefix("itemOCConduit.chat.nodeAt"),
+                    name,
+                    coords(new BlockCoord((TileEntity) host)));
         }
-        return host.getClass().getName().replaceFirst("^.*\\.", "") + at;
+        return new ChatComponentText(name);
+    }
+
+    private static String coords(BlockCoord bc) {
+        return bc.x + "/" + bc.y + "/" + bc.z;
     }
 
     private static EnumChatFormatting dye2chat(DyeColor dyeColor) {
@@ -277,23 +285,34 @@ public class OCConduit extends AbstractConduit implements IOCConduit {
                     for (DyeColor color : DyeColor.VALUES) {
                         if (node(color).neighbors().iterator().hasNext()) {
                             noconnections = false;
-                            ChatComponentText coltxt = new ChatComponentText(color.getLocalisedName());
+                            ChatComponentTranslation coltxt = new ChatComponentTranslation(
+                                    DyeColor.DYE_ORE_UNLOCAL_NAMES[color.ordinal()]);
                             coltxt.getChatStyle().setColor(dye2chat(color));
-                            ChatComponentText chantxt = new ChatComponentText("Channel ");
-                            chantxt.appendSibling(coltxt);
-                            chantxt.appendText(" at " + bc.x + "/" + bc.y + "/" + bc.z);
-                            player.addChatMessage(chantxt);
+                            player.addChatMessage(
+                                    new ChatComponentTranslation(
+                                            EnderIO.lang.addPrefix("itemOCConduit.chat.channel"),
+                                            coltxt,
+                                            coords(bc)));
                             for (Node other : node(color).neighbors()) {
-                                player.addChatMessage(new ChatComponentText("  Connected to: " + prettyNode(other)));
+                                player.addChatMessage(
+                                        new ChatComponentText("  ").appendSibling(
+                                                new ChatComponentTranslation(
+                                                        EnderIO.lang.addPrefix("itemOCConduit.chat.connectedTo"),
+                                                        prettyNode(other))));
                             }
                         }
                     }
                     if (noconnections) {
                         player.addChatMessage(
-                                new ChatComponentText("No connections at " + bc.x + "/" + bc.y + "/" + bc.z));
+                                new ChatComponentTranslation(
+                                        EnderIO.lang.addPrefix("itemOCConduit.chat.noConnections"),
+                                        coords(bc)));
                     }
                 } else {
-                    player.addChatMessage(new ChatComponentText("No network at " + bc.x + "/" + bc.y + "/" + bc.z));
+                    player.addChatMessage(
+                            new ChatComponentTranslation(
+                                    EnderIO.lang.addPrefix("itemOCConduit.chat.noNetwork"),
+                                    coords(bc)));
                 }
             }
             return true;

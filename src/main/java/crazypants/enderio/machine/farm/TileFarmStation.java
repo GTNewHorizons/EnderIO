@@ -822,7 +822,7 @@ public class TileFarmStation extends AbstractPoweredTaskEntity implements IRange
 
     @Override
     public String getInventoryName() {
-        return EnderIO.blockFarmStation.getLocalizedName();
+        return "tile.blockFarmStation.name";
     }
 
     @Override

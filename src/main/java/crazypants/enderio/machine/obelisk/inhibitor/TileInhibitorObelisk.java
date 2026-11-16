@@ -20,6 +20,11 @@ public class TileInhibitorObelisk extends AbstractPowerConsumerEntity implements
     }
 
     @Override
+    public String getInventoryName() {
+        return "tile.blockInhibitorObelisk.name";
+    }
+
+    @Override
     public String getMachineName() {
         return ModObject.blockInhibitorObelisk.unlocalisedName;
     }

@@ -33,6 +33,11 @@ public class TileExperienceObelisk extends AbstractMachineEntity
     }
 
     @Override
+    public String getInventoryName() {
+        return "tile.blockExperienceObelisk.name";
+    }
+
+    @Override
     public String getMachineName() {
         return ModObject.blockExperienceObelisk.unlocalisedName;
     }

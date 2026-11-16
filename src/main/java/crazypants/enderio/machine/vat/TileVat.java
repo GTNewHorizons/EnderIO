@@ -42,7 +42,7 @@ public class TileVat extends AbstractPoweredTaskEntity implements IFluidHandler,
 
     @Override
     public String getInventoryName() {
-        return ModObject.blockVat.unlocalisedName;
+        return "tile.blockVat.name";
     }
 
     @Override

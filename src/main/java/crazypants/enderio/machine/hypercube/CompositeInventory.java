@@ -11,8 +11,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import com.enderio.core.common.util.InventoryWrapper;
 
-import crazypants.enderio.ModObject;
-
 public class CompositeInventory implements ISidedInventory {
 
     private final List<InvEntry> inventories = new ArrayList<>();
@@ -157,7 +155,7 @@ public class CompositeInventory implements ISidedInventory {
 
     @Override
     public String getInventoryName() {
-        return ModObject.blockHyperCube.unlocalisedName;
+        return "tile.blockHyperCube.name";
     }
 
     @Override

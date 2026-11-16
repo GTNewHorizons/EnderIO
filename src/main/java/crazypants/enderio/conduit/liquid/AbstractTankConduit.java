@@ -7,15 +7,16 @@ import java.util.Set;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.enderio.core.common.util.BlockCoord;
 import com.enderio.core.common.util.ChatUtil;
+import com.gtnewhorizon.gtnhlib.chat.customcomponents.ChatComponentFluidName;
 
 import crazypants.enderio.EnderIO;
 import crazypants.enderio.conduit.AbstractConduitNetwork;
@@ -110,7 +111,9 @@ public abstract class AbstractTankConduit extends AbstractLiquidConduit {
                     if (network.fluidTypeLocked) {
                         network.setFluidTypeLocked(false);
                         numEmptyEvents = 0;
-                        ChatUtil.sendNoSpamUnloc(player, EnderIO.lang, "itemLiquidConduit.unlockedType");
+                        ChatUtil.sendNoSpam(
+                                player,
+                                new ChatComponentTranslation(EnderIO.lang.addPrefix("itemLiquidConduit.unlockedType")));
                     }
                 } else if (network != null) {
                     network.setFluidType(null);
@@ -128,11 +131,10 @@ public abstract class AbstractTankConduit extends AbstractLiquidConduit {
                             || LiquidConduitNetwork.areFluidsCompatable(getFluidType(), fluid))) {
                         network.setFluidType(fluid);
                         network.setFluidTypeLocked(true);
-                        ChatUtil.sendNoSpamUnloc(
+                        ChatUtil.sendNoSpam(
                                 player,
-                                EnderIO.lang,
-                                "itemLiquidConduit.lockedType",
-                                " " + FluidRegistry.getFluidName(fluid));
+                                new ChatComponentTranslation(EnderIO.lang.addPrefix("itemLiquidConduit.lockedType"))
+                                        .appendText(" ").appendSibling(new ChatComponentFluidName(fluid)));
                     }
                 }
                 return true;

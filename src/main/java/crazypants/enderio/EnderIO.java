@@ -47,6 +47,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import crazypants.enderio.api.IMC;
+import crazypants.enderio.betterbuilderswands.PaintedCustomMapping;
 import crazypants.enderio.block.BlockDarkSteelAnvil;
 import crazypants.enderio.block.BlockDarkSteelLadder;
 import crazypants.enderio.block.BlockDarkSteelPressurePlate;
@@ -190,7 +191,8 @@ import crazypants.util.EE3Util;
         after:Waila@[1.5.8,);\
         after:Thaumcraft;\
         after:appliedenergistics2@[rv2-beta-8,);\
-        after:Railcraft@[9.16.7,)\
+        after:Railcraft@[9.16.7,);\
+        after:betterbuilderswands@[0.13.12,)\
         """, guiFactory = "crazypants.enderio.config.ConfigFactoryEIO")
 public class EnderIO {
 
@@ -838,6 +840,9 @@ public class EnderIO {
                 // Doesn't matter if it didnt work
                 Log.info("Failed to registered Capacitor Banks as Tinkers Construct Flux Upgrades");
             }
+        }
+        if (Loader.isModLoaded("betterbuilderswands")) {
+            PaintedCustomMapping.registerMappings();
         }
 
         ThaumcraftCompat.load();
