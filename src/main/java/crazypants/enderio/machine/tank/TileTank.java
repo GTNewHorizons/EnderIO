@@ -226,6 +226,11 @@ public class TileTank extends AbstractMachineEntity implements IFluidHandler, IT
     }
 
     @Override
+    public String getInventoryName() {
+        return "tile.blockTank.name";
+    }
+
+    @Override
     public String getMachineName() {
         return "tank";
     }

@@ -41,7 +41,7 @@ public class TileAlloySmelter extends AbstractPoweredTaskEntity {
 
     @Override
     public String getInventoryName() {
-        return "Alloy Smelter";
+        return "tile.blockAlloySmelter.name";
     }
 
     public Mode getMode() {
