@@ -122,6 +122,14 @@ public final class Config {
 
     public static int stellarEnderFluidConduitExtractRate = 20_000;
     public static int stellarEnderFluidConduitMaxIoRate = 80_000;
+    public static int prismaticNaquadahEnderFluidConduitExtractRate = 100_000;
+    public static int prismaticNaquadahEnderFluidConduitMaxIoRate = 400_000;
+    public static int fluxedEnderFluidConduitExtractRate = 1_000_000;
+    public static int fluxedEnderFluidConduitMaxIoRate = 4_000_000;
+    public static int transcendentEnderFluidConduitExtractRate = 20_000_000;
+    public static int transcendentEnderFluidConduitMaxIoRate = 80_000_000;
+    public static int cosmicEnderFluidConduitExtractRate = 200_000_000;
+    public static int cosmicEnderFluidConduitMaxIoRate = 800_000_000;
     public static int melodicEnderFluidConduitExtractRate = 10_000;
     public static int melodicEnderFluidConduitMaxIoRate = 40_000;
     public static int crystallinePinkSlimeEnderFluidConduitExtractRate = 2_000;
@@ -145,6 +153,7 @@ public final class Config {
     public static int travelAnchorCooldown = 0;
     public static boolean travelAnchorSneak = true;
     public static boolean travelAnchorSkipWarning = true;
+    public static double travelAnchorSnapAngle = 0.175;
 
     public static int travelStaffMaxDistance = 128;
     public static float travelStaffPowerPerBlockRF = 250;
@@ -1004,6 +1013,65 @@ public final class Config {
                 "Number of liters per tick that can pass through a single connection to a stellar ender fluid conduit.")
                 .getInt(stellarEnderFluidConduitMaxIoRate);
 
+        prismaticNaquadahEnderFluidConduitExtractRate = config.get(
+                sectionEfficiency.name,
+                "prismaticNaquadahEnderFluidConduitExtractRate",
+                prismaticNaquadahEnderFluidConduitExtractRate,
+                "Number of liters per tick extracted by prismatic naquadah ender fluid conduits auto extracting")
+                .getInt(prismaticNaquadahEnderFluidConduitExtractRate);
+
+        prismaticNaquadahEnderFluidConduitMaxIoRate = config.get(
+                sectionEfficiency.name,
+                "prismaticNaquadahEnderFluidConduitMaxIoRate",
+                prismaticNaquadahEnderFluidConduitMaxIoRate,
+                "Number of liters per tick that can pass through a single connection to a prismatic naquadah ender fluid conduit.")
+                .getInt(prismaticNaquadahEnderFluidConduitMaxIoRate);
+
+        fluxedEnderFluidConduitExtractRate = config
+                .get(
+                        sectionEfficiency.name,
+                        "fluxedEnderFluidConduitExtractRate",
+                        fluxedEnderFluidConduitExtractRate,
+                        "Number of liters per tick extracted by fluxed ender fluid conduits auto extracting")
+                .getInt(fluxedEnderFluidConduitExtractRate);
+
+        fluxedEnderFluidConduitMaxIoRate = config.get(
+                sectionEfficiency.name,
+                "fluxedEnderFluidConduitMaxIoRate",
+                fluxedEnderFluidConduitMaxIoRate,
+                "Number of liters per tick that can pass through a single connection to a fluxed ender fluid conduit.")
+                .getInt(fluxedEnderFluidConduitMaxIoRate);
+
+        transcendentEnderFluidConduitExtractRate = config
+                .get(
+                        sectionEfficiency.name,
+                        "transcendentEnderFluidConduitExtractRate",
+                        transcendentEnderFluidConduitExtractRate,
+                        "Number of liters per tick extracted by transcendent ender fluid conduits auto extracting")
+                .getInt(transcendentEnderFluidConduitExtractRate);
+
+        transcendentEnderFluidConduitMaxIoRate = config.get(
+                sectionEfficiency.name,
+                "transcendentEnderFluidConduitMaxIoRate",
+                transcendentEnderFluidConduitMaxIoRate,
+                "Number of liters per tick that can pass through a single connection to a transcendent ender fluid conduit.")
+                .getInt(transcendentEnderFluidConduitMaxIoRate);
+
+        cosmicEnderFluidConduitExtractRate = config
+                .get(
+                        sectionEfficiency.name,
+                        "cosmicEnderFluidConduitExtractRate",
+                        cosmicEnderFluidConduitExtractRate,
+                        "Number of liters per tick extracted by cosmic ender fluid conduits auto extracting")
+                .getInt(cosmicEnderFluidConduitExtractRate);
+
+        cosmicEnderFluidConduitMaxIoRate = config.get(
+                sectionEfficiency.name,
+                "cosmicEnderFluidConduitMaxIoRate",
+                cosmicEnderFluidConduitMaxIoRate,
+                "Number of liters per tick that can pass through a single connection to a cosmic ender fluid conduit.")
+                .getInt(cosmicEnderFluidConduitMaxIoRate);
+
         gasConduitExtractRate = config
                 .get(
                         sectionEfficiency.name,
@@ -1166,6 +1234,14 @@ public final class Config {
                         travelAnchorSkipWarning,
                         "Travel Anchors send a chat warning when skipping inaccessible anchors")
                 .getBoolean(travelAnchorSkipWarning);
+
+        travelAnchorSnapAngle = Math.toRadians(
+                config.get(
+                        sectionAnchor.name,
+                        "travelAnchorSnapAngle",
+                        Math.round(Math.toDegrees(travelAnchorSnapAngle)),
+                        "The maximum angle to snap to an anchor when selecting target")
+                        .getDouble(Math.toDegrees(travelAnchorSnapAngle)));
 
         travelStaffMaxDistance = config
                 .get(

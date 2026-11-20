@@ -198,6 +198,11 @@ public class TilePoweredSpawner extends AbstractPoweredTaskEntity implements IRa
     }
 
     @Override
+    public String getInventoryName() {
+        return "tile.blockPoweredSpawner.name";
+    }
+
+    @Override
     public String getMachineName() {
         return ModObject.blockPoweredSpawner.unlocalisedName;
     }

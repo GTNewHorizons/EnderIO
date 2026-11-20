@@ -62,6 +62,10 @@ enderio.itemLiquidConduitCrystallineEnder.name=Crystalline Ender Fluid Conduit
 enderio.itemLiquidConduitCrystallinePinkSlimeEnder.name=Crystalline Pink Slime Ender Fluid Conduit
 enderio.itemLiquidConduitMelodicEnder.name=Melodic Ender Fluid Conduit
 enderio.itemLiquidConduitStellarEnder.name=Stellar Ender Fluid Conduit
+enderio.itemLiquidConduitPrismaticNaquadahEnder.name=Prismatic Naquadah Ender Fluid Conduit
+enderio.itemLiquidConduitFluxedEnder.name=Fluxed Ender Fluid Conduit
+enderio.itemLiquidConduitTranscendentEnder.name=Transcendent Ender Fluid Conduit
+enderio.itemLiquidConduitCosmicEnder.name=Cosmic Ender Fluid Conduit
 enderio.itemLiquidConduit.lockedType=Fluid type locked to
 enderio.itemLiquidConduit.unlockedType=Fluid type unlocked
 enderio.itemLiquidConduit.lockedWaila=Locked to 
@@ -650,6 +654,8 @@ tile.blockWeatherObelisk.tooltip.detailed.line3=of one of the following liquids:
 tile.blockWeatherObelisk.tooltip.detailed.line4=Liquid Sunshine: Sun
 tile.blockWeatherObelisk.tooltip.detailed.line5=Cloud Seed: Rain
 tile.blockWeatherObelisk.tooltip.detailed.line6=Concentrated Cloud Seed: Thunder
+
+tile.blockInhibitorObelisk.name=Inhibitor Obelisk
 
 tile.blockBuffer.name=Buffer 
 tile.blockBuffer.item.name=Item Buffer

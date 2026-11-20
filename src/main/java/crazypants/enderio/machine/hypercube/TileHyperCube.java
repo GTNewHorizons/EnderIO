@@ -26,7 +26,6 @@ import com.enderio.core.common.util.PlayerUtil;
 import com.enderio.core.common.vecmath.VecmathUtil;
 
 import crazypants.enderio.EnderIO;
-import crazypants.enderio.ModObject;
 import crazypants.enderio.TileEntityEio;
 import crazypants.enderio.config.Config;
 import crazypants.enderio.machine.IRedstoneModeControlable;
@@ -769,7 +768,7 @@ public class TileHyperCube extends TileEntityEio
 
     @Override
     public String getInventoryName() {
-        return ModObject.blockHyperCube.unlocalisedName;
+        return "tile.blockHyperCube.name";
     }
 
     @Override
