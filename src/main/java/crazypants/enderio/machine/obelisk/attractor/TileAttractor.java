@@ -127,6 +127,11 @@ public class TileAttractor extends AbstractPowerConsumerEntity implements IRange
     }
 
     @Override
+    public String getInventoryName() {
+        return "tile.blockAttractor.name";
+    }
+
+    @Override
     public String getMachineName() {
         return ModObject.blockAttractor.unlocalisedName;
     }

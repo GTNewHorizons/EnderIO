@@ -122,6 +122,11 @@ public class TileWeatherObelisk extends AbstractPowerConsumerEntity
     }
 
     @Override
+    public String getInventoryName() {
+        return "tile.blockWeatherObelisk.name";
+    }
+
+    @Override
     public String getMachineName() {
         return ModObject.blockWeatherObelisk.unlocalisedName;
     }
