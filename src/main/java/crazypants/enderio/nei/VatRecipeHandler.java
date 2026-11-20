@@ -9,7 +9,6 @@ import java.util.Map;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -20,7 +19,6 @@ import com.enderio.core.common.util.FluidUtil;
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.ItemStackMap;
 import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.StackInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import crazypants.enderio.gui.GuiContainerBaseEIO;
 import crazypants.enderio.machine.recipe.IRecipe;
@@ -85,7 +83,7 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadCraftingRecipes(ItemStack result) {
-        FluidStack fluid = getFluidFromNeiItem(result);
+        FluidStack fluid = FluidUtil.getFluidFromItem(result);
         if (fluid != null) {
             loadCraftingRecipes(fluid);
         }
@@ -113,7 +111,7 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
-        FluidStack fluid = getFluidFromNeiItem(ingredient);
+        FluidStack fluid = FluidUtil.getFluidFromItem(ingredient);
         if (fluid != null) {
             loadUsageRecipes(fluid);
         }
@@ -154,33 +152,19 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
         String energyString = PowerDisplayUtil.formatPower(rec.energy) + " " + PowerDisplayUtil.abrevation();
         GuiDraw.drawStringC(energyString, 86, 54, ColorUtils.neiEnergyString.getColor(), false);
 
-        Fluid outputFluid = rec.resultFluid.getFluid();
-        List<PositionedStack> stacks = rec.getIngredients();
-        for (PositionedStack ps : stacks) {
-            if (ps instanceof PositionedStack.Tank) {
-                continue;
-            }
-            float mult = VatRecipeManager.getInstance()
-                    .getMultiplierForInput(rec.inFluid.getFluid(), ps.item, outputFluid);
+        drawMultiplier(rec.firstStack, rec.getFirstItemMultiplier());
+        drawMultiplier(rec.secondStack, rec.getSecondItemMultiplier());
+    }
+
+    private static void drawMultiplier(PositionedStack stack, float multiplier) {
+        if (stack != null) {
             GuiDraw.drawStringC(
-                    "x" + mult,
-                    ps.relx + 8,
-                    ps.rely + 19,
+                    "x" + multiplier,
+                    stack.relx + 8,
+                    stack.rely + 19,
                     ColorUtils.neiMultiplierString.getColor(),
                     false);
         }
-
-    }
-
-    private static FluidStack getFluidFromNeiItem(ItemStack stack) {
-        FluidStack fluid = StackInfo.getFluid(stack);
-        return fluid != null ? fluid : FluidUtil.getFluidFromItem(stack);
-    }
-
-    private static FluidStack withAmount(FluidStack fluid, int amount) {
-        FluidStack copy = fluid.copy();
-        copy.amount = amount;
-        return copy;
     }
 
     public List<ItemStack> getInputs(RecipeInput input) {
@@ -198,12 +182,14 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
     public class InnerVatRecipe extends TemplateRecipeHandler.CachedRecipe {
 
         private final List<PositionedStack> inputs = new ArrayList<>();
-        private final ItemStackMap<Float> firstItemMultiplier = new ItemStackMap<Float>();
-        private final ItemStackMap<Float> secondItemMultiplier = new ItemStackMap<Float>();
+        private final ItemStackMap<Float> firstItemMultiplier = new ItemStackMap<>();
+        private final ItemStackMap<Float> secondItemMultiplier = new ItemStackMap<>();
         private final Map<FluidStack, Float> fluidMultiplier = new HashMap<>();
         private final FluidStack resultFluid;
         private final int energy;
         private FluidStack inFluid;
+        private PositionedStack firstStack;
+        private PositionedStack secondStack;
 
         private int inTankIndex = -1;
         private int lastInputAmount;
@@ -220,7 +206,7 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
                 int amount = getInputFluidAmount();
                 if (amount != this.lastInputAmount) {
                     this.lastInputAmount = amount;
-                    this.inputs.set(this.inTankIndex, createTank(withAmount(this.inFluid, amount), 25, 1));
+                    this.inputs.set(this.inTankIndex, createTank(new FluidStack(this.inFluid, amount), 25, 1));
                 }
             }
             return this.inputs;
@@ -239,11 +225,11 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
         }
 
         public float getFirstItemMultiplier() {
-            return this.inputs.isEmpty() ? 1f : this.firstItemMultiplier.getOrDefault(this.inputs.get(0).item, 1f);
+            return this.firstStack == null ? 1f : this.firstItemMultiplier.getOrDefault(this.firstStack.item, 1f);
         }
 
         public float getSecondItemMultiplier() {
-            return this.inputs.size() < 2 ? 1f : this.secondItemMultiplier.getOrDefault(this.inputs.get(1).item, 1f);
+            return this.secondStack == null ? 1f : this.secondItemMultiplier.getOrDefault(this.secondStack.item, 1f);
         }
 
         public float getFluidMultiplier() {
@@ -253,9 +239,9 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
         @Override
         public PositionedStack getResult() {
             int amount = getResultFluidAmount();
-            if (amount != this.lastResultAmount || this.resultTank == null) {
+            if (amount != this.lastResultAmount) {
                 this.lastResultAmount = amount;
-                this.resultTank = createTank(withAmount(this.resultFluid, amount), 127, 1);
+                this.resultTank = createTank(new FluidStack(this.resultFluid, amount), 127, 1);
             }
             return this.resultTank;
         }
@@ -291,24 +277,27 @@ public class VatRecipeHandler extends TemplateRecipeHandler {
 
             }
 
-            // Item stacks must stay at indices 0/1: getFirstItemMultiplier()/getSecondItemMultiplier() rely on it.
             if (!inputsOne.isEmpty()) {
-                this.inputs.add(new PositionedStack(inputsOne, 51, 1));
+                this.firstStack = new PositionedStack(inputsOne, 51, 1);
+                this.inputs.add(this.firstStack);
             }
+
             if (!inputsTwo.isEmpty()) {
-                this.inputs.add(new PositionedStack(inputsTwo, 100, 1));
+                this.secondStack = new PositionedStack(inputsTwo, 100, 1);
+                this.inputs.add(this.secondStack);
             }
+
             this.energy = energy;
             this.resultFluid = result;
 
             if (this.inFluid != null) {
                 this.inTankIndex = this.inputs.size();
                 this.lastInputAmount = getInputFluidAmount();
-                this.inputs.add(createTank(withAmount(this.inFluid, this.lastInputAmount), 25, 1));
+                this.inputs.add(createTank(new FluidStack(this.inFluid, this.lastInputAmount), 25, 1));
             }
 
             this.lastResultAmount = getResultFluidAmount();
-            this.resultTank = createTank(withAmount(this.resultFluid, this.lastResultAmount), 127, 1);
+            this.resultTank = createTank(new FluidStack(this.resultFluid, this.lastResultAmount), 127, 1);
         }
 
         private static PositionedStack.Tank createTank(FluidStack fluid, int x, int y) {
