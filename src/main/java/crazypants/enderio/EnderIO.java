@@ -134,6 +134,7 @@ import crazypants.enderio.machine.painter.BlockPaintedWall;
 import crazypants.enderio.machine.painter.BlockPainter;
 import crazypants.enderio.machine.painter.PaintSourceValidator;
 import crazypants.enderio.machine.ranged.RangeEntity;
+import crazypants.enderio.machine.recipe.RecipeConfigParser;
 import crazypants.enderio.machine.reservoir.BlockReservoir;
 import crazypants.enderio.machine.slicensplice.BlockSliceAndSplice;
 import crazypants.enderio.machine.slicensplice.SliceAndSpliceRecipeManager;
@@ -768,6 +769,7 @@ public class EnderIO {
         FarmersRegistry.addFarmers();
         SoulBinderRecipeManager.getInstance().addDefaultRecipes();
         PaintSourceValidator.instance.loadConfig();
+        RecipeConfigParser.logMaterialLibSummary();
 
         if (fluidXpJuice == null) { // should have been registered by open blocks
             fluidXpJuice = FluidRegistry.getFluid(getXPJuiceName());
