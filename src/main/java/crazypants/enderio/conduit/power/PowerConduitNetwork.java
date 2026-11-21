@@ -69,6 +69,7 @@ public class PowerConduitNetwork extends AbstractConduitNetwork<IPowerConduit, I
             }
         }
         if (powerManager != null) {
+            powerManager.energyChanged();
             con.setActive(powerManager.isActive());
         }
     }

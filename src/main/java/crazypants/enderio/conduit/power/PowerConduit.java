@@ -383,6 +383,9 @@ public class PowerConduit extends AbstractConduit implements IPowerConduit {
         int result = (int) Math.min(maxReceive, freeSpace);
         if (!simulate && result > 0) {
             setEnergyStored(getEnergyStored() + result);
+            if (network != null && network.powerManager != null) {
+                network.powerManager.energyChanged();
+            }
 
             if (getBundle() != null) {
                 if (recievedTicks == null) {
@@ -423,6 +426,11 @@ public class PowerConduit extends AbstractConduit implements IPowerConduit {
     public boolean setNetwork(AbstractConduitNetwork<?, ?> network) {
         this.network = (PowerConduitNetwork) network;
         return true;
+    }
+
+    @Override
+    public boolean needsUpdateEntityTick() {
+        return isBaseUpdateWorkPending();
     }
 
     @Override

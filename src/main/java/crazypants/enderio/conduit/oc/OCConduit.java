@@ -196,6 +196,11 @@ public class OCConduit extends AbstractConduit implements IOCConduit {
     }
 
     @Override
+    public boolean needsUpdateEntityTick() {
+        return isBaseUpdateWorkPending();
+    }
+
+    @Override
     public IIcon getTextureForState(CollidableComponent component) {
         int state = Config.enableOCConduitsAnimatedTexture ? 1 : 0;
         if (component.dir == ForgeDirection.UNKNOWN) {
