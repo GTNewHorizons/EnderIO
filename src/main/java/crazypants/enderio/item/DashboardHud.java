@@ -75,7 +75,7 @@ public final class DashboardHud {
     private static HudBounds getWrenchModeBounds(int screenWidth, int screenHeight) {
         int modeCount = ConduitDisplayMode.registrySize();
         return switch (Config.yetaWrenchOverlayMode) {
-            case 1 -> new HudBounds(screenWidth - 23, screenHeight - modeCount * 18 - 6, 23, modeCount * 18 + 6);
+            case 1 -> new HudBounds(screenWidth - 17, screenHeight - modeCount * 18 - 6, 24, modeCount * 18 + 6);
             case 2 -> new HudBounds(screenWidth - modeCount * 8 - 16, screenHeight - 40, (modeCount + 1) / 2 * 16, 32);
             default -> new HudBounds(screenWidth - 20, screenHeight - 20, 16, 16);
         };
