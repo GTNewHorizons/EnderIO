@@ -17,6 +17,7 @@ import com.enderio.core.client.render.RenderUtil;
 import com.enderio.core.common.vecmath.Vector4f;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import crazypants.enderio.EnderIO;
 import crazypants.enderio.api.tool.IConduitControl;
 import crazypants.enderio.conduit.ConduitDisplayMode;
 import crazypants.enderio.config.Config;
@@ -57,20 +58,28 @@ public class YetaWrenchOverlayRenderer {
             lastTick = ClientHandler.getTicksElapsed();
         }
 
-        ScaledResolution res = event.resolution;
+        boolean showSelector = displayTickCount > 0 && Config.yetaWrenchOverlayMode == 0;
+        if (showSelector && lastTick < ClientHandler.getTicksElapsed()) {
+            lastTick++;
+            displayTickCount--;
+        }
+        if (EnderIO.hasDashboard && !DashboardHud.beginWrench(event.resolution, showSelector)) {
+            return;
+        }
+        draw(mode, event.resolution, showSelector);
+        if (EnderIO.hasDashboard) {
+            DashboardHud.endRender();
+        }
+    }
+
+    static void draw(ConduitDisplayMode mode, ScaledResolution res, boolean showSelector) {
         Tessellator tess = Tessellator.instance;
         int modeCount = ConduitDisplayMode.registrySize();
         Iterable<ConduitDisplayMode> renderable = ConduitDisplayMode.getRenderableModes();
 
         switch (Config.yetaWrenchOverlayMode) {
             case 0:
-                if (displayTickCount > 0) {
-
-                    if (lastTick < ClientHandler.getTicksElapsed()) {
-                        lastTick++;
-                        displayTickCount--;
-                    }
-
+                if (showSelector) {
                     int x = res.getScaledWidth() / 2 - 8;
                     int y = res.getScaledHeight() / 2 - 24;
 

@@ -38,15 +38,24 @@ public class ConduitProbeOverlayRenderer {
     }
 
     private void doRenderOverlay(RenderGameOverlayEvent event, ItemStack equippedProbe) {
+        if (EnderIO.hasDashboard && !DashboardHud.beginProbe(event.resolution)) {
+            return;
+        }
+        draw(equippedProbe.getItemDamage() == 0, event.resolution);
+        if (EnderIO.hasDashboard) {
+            DashboardHud.endRender();
+        }
+    }
+
+    static void draw(boolean probeMode, ScaledResolution res) {
         IconEIO icon1, icon2;
-        if (equippedProbe.getItemDamage() == 0) {
+        if (probeMode) {
             icon1 = IconEIO.PROBE_OVERLAY_PROBE;
             icon2 = IconEIO.PROBE_OVERLAY_COPY_OFF;
         } else {
             icon1 = IconEIO.PROBE_OVERLAY_PROBE_OFF;
             icon2 = IconEIO.PROBE_OVERLAY_COPY;
         }
-        ScaledResolution res = event.resolution;
 
         double offsetX = res.getScaledWidth() - 48;
         double offsetY = res.getScaledHeight() - 16;

@@ -192,6 +192,7 @@ import crazypants.util.EE3Util;
         after:Thaumcraft;\
         after:appliedenergistics2@[rv2-beta-8,);\
         after:Railcraft@[9.16.7,);\
+        after:dashboard@[1.0.19,);\
         after:betterbuilderswands@[0.13.12,)\
         """, guiFactory = "crazypants.enderio.config.ConfigFactoryEIO")
 public class EnderIO {
@@ -219,6 +220,7 @@ public class EnderIO {
     public static final boolean hasEtFuturum = Loader.isModLoaded("etfuturum");
     public static final boolean hasWailaPlugins = Loader.isModLoaded("wailaplugins");
     public static final boolean hasAutomagy = Loader.isModLoaded("Automagy");
+    public static final boolean hasDashboard = Loader.isModLoaded("dashboard");
 
     // Materials
     public static ItemCapacitor itemBasicCapacitor;
