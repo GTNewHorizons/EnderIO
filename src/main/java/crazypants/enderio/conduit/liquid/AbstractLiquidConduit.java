@@ -56,9 +56,9 @@ public abstract class AbstractLiquidConduit extends AbstractConduit implements I
             return false;
         }
 
-        if (EnderIO.hasGT5 && h instanceof IGregTechTileEntity) {
-            IMetaTileEntity mte = ((IGregTechTileEntity) h).getMetaTileEntity();
-            return mte != null && mte.getCapacity() > 0;
+        if (EnderIO.hasGT5 && h instanceof IGregTechTileEntity gte) {
+            IMetaTileEntity mte = gte.getMetaTileEntity();
+            return mte != null && (mte.getCapacity() > 0 || gte.isSteampowered());
         }
 
         // TODO: This check was added to work around a bug in dynamic tanks, but
