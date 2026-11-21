@@ -430,6 +430,13 @@ public class NetworkedInventory {
         return inv;
     }
 
+    public TileEntity getConnectedTileEntity() {
+        if (isInvalid()) {
+            updateInventory();
+        }
+        return connectedTileEntity;
+    }
+
     public @Nullable ISidedInventory getInventoryRecheck() {
         if (isInvalid()) {
             updateInventory();
