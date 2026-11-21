@@ -107,6 +107,11 @@ public class ItemTeleportStaff extends ItemTravelStaff {
     }
 
     @Override
+    public boolean isTeleportStaff(EntityPlayer player, ItemStack stack) {
+        return true;
+    }
+
+    @Override
     public int getEnergyStored(ItemStack item) {
         // Has infinite energy, always report as being full of energy for any validation-code purposes.
         return this.capacity;
