@@ -49,6 +49,7 @@ public class PaintedItemRenderer implements IItemRenderer {
 
     public void renderToInventory(ItemStack item, RenderBlocks renderBlocks) {
         if (item.getItem() == Item.getItemFromBlock(EnderIO.blockPaintedGlowstone)
+                || item.getItem() == Item.getItemFromBlock(EnderIO.blockPaintedConcrete)
                 || item.getItem() == Item.getItemFromBlock(EnderIO.blockTravelPlatform)) {
             Block block = PainterUtil.getSourceBlock(item);
             int meta;

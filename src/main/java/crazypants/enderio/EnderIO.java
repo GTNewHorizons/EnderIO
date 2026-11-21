@@ -125,6 +125,7 @@ import crazypants.enderio.machine.obelisk.weather.BlockWeatherObelisk;
 import crazypants.enderio.machine.obelisk.xp.BlockExperienceObelisk;
 import crazypants.enderio.machine.obelisk.xp.ItemXpTransfer;
 import crazypants.enderio.machine.painter.BlockPaintedCarpet;
+import crazypants.enderio.machine.painter.BlockPaintedConcrete;
 import crazypants.enderio.machine.painter.BlockPaintedFence;
 import crazypants.enderio.machine.painter.BlockPaintedFenceGate;
 import crazypants.enderio.machine.painter.BlockPaintedGlowstone;
@@ -187,6 +188,7 @@ import crazypants.util.EE3Util;
         required-after:endercore;\
         required-after:gtnhlib@[0.9.47,);\
         after:MineFactoryReloaded;\
+        after:gregtech;\
         after:Forestry;\
         after:Waila@[1.5.8,);\
         after:Thaumcraft;\
@@ -259,6 +261,7 @@ public class EnderIO {
     public static BlockPaintedSlab blockPaintedDoubleSlab;
     public static BlockPaintedGlowstone blockPaintedGlowstone;
     public static BlockPaintedCarpet blockPaintedCarpet;
+    public static BlockPaintedConcrete blockPaintedConcrete;
 
     // Conduits
     public static BlockConduitBundle blockConduitBundle;
@@ -413,6 +416,7 @@ public class EnderIO {
         blockCrafter = BlockCrafter.create();
         blockPaintedGlowstone = BlockPaintedGlowstone.create();
         blockPaintedCarpet = BlockPaintedCarpet.create();
+        blockPaintedConcrete = BlockPaintedConcrete.create();
 
         blockVat = BlockVat.create();
         blockPowerMonitor = BlockPowerMonitor.create();

@@ -47,6 +47,7 @@ public class NEIEnderIOConfig implements IConfigureNEI {
         API.hideItem(new ItemStack(EnderIO.blockLightNode));
         API.hideItem(new ItemStack(EnderIO.itemEnderface));
         API.hideItem(PainterUtil.applyDefaultPaintedState(new ItemStack(EnderIO.blockPaintedCarpet)));
+        API.hideItem(PainterUtil.applyDefaultPaintedState(new ItemStack(EnderIO.blockPaintedConcrete)));
         API.hideItem(PainterUtil.applyDefaultPaintedState(new ItemStack(EnderIO.blockPaintedSlab)));
         API.hideItem(PainterUtil.applyDefaultPaintedState(new ItemStack(EnderIO.blockPaintedFence)));
         API.hideItem(PainterUtil.applyDefaultPaintedState(new ItemStack(EnderIO.blockPaintedFenceGate)));

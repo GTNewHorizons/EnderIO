@@ -102,6 +102,7 @@ import crazypants.enderio.machine.obelisk.aversion.TileAversionObelisk;
 import crazypants.enderio.machine.obelisk.weather.TileWeatherObelisk;
 import crazypants.enderio.machine.obelisk.weather.WeatherObeliskSpecialRenderer;
 import crazypants.enderio.machine.obelisk.xp.TileExperienceObelisk;
+import crazypants.enderio.machine.painter.BlockPaintedConcrete;
 import crazypants.enderio.machine.painter.BlockPaintedFenceGate;
 import crazypants.enderio.machine.painter.BlockPaintedFenceGateRenderer;
 import crazypants.enderio.machine.painter.BlockPaintedGlowstone;
@@ -357,12 +358,16 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockPaintedSlab), pir);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockPaintedGlowstone), pir);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockPaintedCarpet), pir);
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockPaintedConcrete), pir);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockDarkSteelPressurePlate), pir);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnderIO.blockTravelPlatform), pir);
 
         BlockPaintedGlowstone.renderId = RenderingRegistry.getNextAvailableRenderId();
         RenderingRegistry
                 .registerBlockHandler(new PaintedBlockRenderer(BlockPaintedGlowstone.renderId, Blocks.glowstone));
+        BlockPaintedConcrete.renderId = RenderingRegistry.getNextAvailableRenderId();
+        RenderingRegistry
+                .registerBlockHandler(new PaintedBlockRenderer(BlockPaintedConcrete.renderId, Blocks.glowstone));
 
         BlockTravelAnchor.renderId = RenderingRegistry.getNextAvailableRenderId();
         RenderingRegistry.registerBlockHandler(
