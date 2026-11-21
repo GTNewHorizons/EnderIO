@@ -2,6 +2,7 @@ package crazypants.enderio.config;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -288,6 +289,8 @@ public final class Config {
     public static double darkSteelGliderHorizontalSpeed = 0.03;
     public static double darkSteelGliderVerticalSpeed = -0.05;
     public static double darkSteelGliderVerticalSpeedSprinting = -0.15;
+    public static int[] darkSteelGliderDimensionBlocklist = {};
+    public static HashSet<Integer> darkSteelGliderDimensionBlocklistHash = new HashSet<>();
 
     public static int darkSteelGogglesOfRevealingCost = 10;
 
@@ -1656,6 +1659,11 @@ public final class Config {
                         darkSteelGliderVerticalSpeedSprinting,
                         "Rate of altitude loss when sprinting and gliding.")
                 .getDouble(darkSteelGliderVerticalSpeedSprinting);
+        darkSteelGliderDimensionBlocklist = config.get(
+                sectionDarkSteel.name,
+                "darkSteelGliderDimensionBlocklist",
+                darkSteelGliderDimensionBlocklist,
+                "List of numeric IDs of dimensions in which the 'Glider' upgrade will not work.").getIntList();
 
         darkSteelSoundLocatorCost = config.get(
                 sectionDarkSteel.name,
@@ -3093,6 +3101,11 @@ public final class Config {
             if (hoe != null) {
                 farmHoes.add(hoe);
             }
+        }
+
+        darkSteelGliderDimensionBlocklistHash.clear();
+        for (int dimId : darkSteelGliderDimensionBlocklist) {
+            darkSteelGliderDimensionBlocklistHash.add(dimId);
         }
     }
 
